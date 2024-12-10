@@ -1,0 +1,43 @@
+<!-- Tabla de solicitudes de reclamaciones -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+	<md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+			<div>
+			 	<md-button class="dark-blue btnSuperior btnNuevo" ng-click="$ctrl.abrirNuevaReclamacion()">
+		            Nueva reclamación
+		        </md-button>
+	        </div>
+	     <md-tab label="{{$ctrl.txtTabLabel}}">
+	     	<div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+	     	</div>
+	        <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+	            <div class="centered" style="display:table-cell; vertical-align: middle;">
+	                <div class="blob-3"></div>
+	                <div class="blob-4"></div>
+	           </div>
+	        </div>
+	        <div id="mensajeNingunResultado" class="mensajesBusqueda" ng-if="$ctrl.vista == 3">
+	            <h2>No se ha encontrado ninguna reclamación</h2>
+	        </div>
+	            <div ng-if="$ctrl.vista == 4 && $ctrl.parent.tipo == 'reclamaciones'" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="resizeHeight(138)"></div>
+	     </md-tab>
+	     <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+	         <md-tab-label ng-if="detalles != null">
+			   	<span ng-if="detalles != null">Reclamaci&oacute;n: {{detalles.ID_SOLICITUD}}</span>
+			   	<span ng-if="detalles == null">{{$ctrl.heading}}</span>
+			   	<div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+	             	<span aria-hidden="true">×</span>
+	            </div>
+			</md-tab-label> 
+	     <md-tab-body>   
+ 	         <detalle-sd ng-if="detalles.ID_SOLICITUD != undefined && detalles.ID_SOLICITUD != null" id-detalle="detalles" tipo="'reclamaciones'"></detalle-sd>
+ 	         <reclamacion-solicitud ng-if="detalles.ID_SOLICITUD == undefined || detalles.ID_SOLICITUD == null" tipo-head="$ctrl.headTipo" detalle-cliente="$ctrl.detalleCliente"></reclamacion-solicitud> 		
+		 </md-tab-body>		    
+	        </md-tab>
+    </md-tabs>
+</div>
+
+
+        

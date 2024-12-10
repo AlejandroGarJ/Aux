@@ -1,0 +1,118 @@
+.dashboard {
+    min-height: calc(100vh - 150px) !important;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerDashboard{
+	height: 247px;
+    width: 150%;
+    border: 1px solid #0066ff;
+    margin: 13px;
+    border-radius: 20px;
+    background-color: #0066ff;
+    -webkit-box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+	transition: 0.4s;
+}
+
+.containerDashboard:hover {
+	transition: 0.4s;
+	background-color: #ffffff;
+	-webkit-box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	-moz-box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+}
+
+.containerDashboard h2, .containerDashboard h4, .containerDashboard p , .containerTotales h2{
+	text-align: center;
+	color: #ffff;
+}
+
+.containerDashboard:hover h2, .containerDashboard:hover h4, .containerDashboard:hover p {
+	text-align: center;
+	color: #0066ff;
+}
+
+.containerDashboardPorcentaje, .containerTotales {
+	height: 25%;
+    width: 100%;
+    border: 1px solid #003584;
+    margin: 13px;
+    border-radius: 20px;
+    background-color: #003584;
+    -webkit-box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    justify-content: center;
+    align-items: center;
+	transition: 0.4s;
+    padding: 0px 40px;
+}
+
+.containerDashboardPorcentaje:hover{
+	transition: 0.4s;
+	border: 1px solid #003584;
+	background-color: #ffffff;
+	-webkit-box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	-moz-box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+}
+
+.containerDashboardPorcentaje p {
+	text-align: center;
+	color: #ffffff;
+	margin: -16px 0 10px ;
+}
+
+.containerDashboardPorcentaje:hover p {
+	text-align: center;
+	color: #003584;
+}
+
+#chartPendienteGestion, #chartGestionados, #chartAutomaticos, #chartTotales, #chartEnProceso, #chartPorcentaje {
+	width: 120px !important;
+	height: 120px !important;
+	margin-bottom: 20px;
+}
+
+.containerDashboardPorcentaje p{
+    font-size: 17px;
+}
+
+.numeroPorcentaje {
+    font-size: 55px;
+}
+.numeroRecibos {
+    font-size: 58px;
+}
+
+.divPorcentaje {
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+    height: 90px;
+    padding-top: 7%;
+}
+
+.containerTotales{
+	background-color:#003584 !important;
+	border: 1px solid #003584;
+}
+.containerTotales:hover {
+	transition: 0.4s;
+	border: 1px solid #003584;
+	background-color: #ffffff !important;
+	-webkit-box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	-moz-box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	
+}
+.containerTotales:hover h2{
+	color: #003584 !important;
+}

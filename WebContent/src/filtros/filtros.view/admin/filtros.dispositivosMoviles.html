@@ -1,0 +1,56 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toolbar>
+	<div class="md-toolbar-tools" style="height:44px">
+		<h2>Búsqueda de dispositivos móviles <i class="fa fa-magnifying-glass"></i></h2>
+        <md-button class="md-icon-button filtroLateral" ng-click="$ctrl.filtro.lateral()" style="right:20px; position:absolute">
+            <md-icon aria-label="Close dialog">arrow_back_ios</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+	<form class="formClass" id="form" ng-submit="$ctrl.buscar('tipo-terminales')">
+		<div>
+			<div layout-gt-sm="row" class="margin-top-20">
+				<md-autocomplete name="Brand" flex-gt-sm md-no-cache="$ctrl.noCache"
+					md-selected-item="$ctrl.selBrand" md-search-text="$ctrl.form.brandName.value"
+					md-items="brand in $ctrl.querySearch($ctrl.form.brandName.value, $ctrl.lstBrandsF, 'brandName')"
+					md-item-text="brand.brandName" md-min-length="1" md-require-match
+					md-floating-label="{{ 'BRAND' | translate }}">
+					<md-item-template>
+						<span md-highlight-text="$ctrl.searchBrand"
+							md-highlight-flags="^i">{{brand.brandName}}</span>
+					</md-item-template>
+					<md-not-found>
+						No existe la marca "{{$ctrl.searchBrand}}".
+					</md-not-found>
+				</md-autocomplete>
+				<md-input-container class="md-block" flex-gt-sm>
+		         	<label>{{ 'MODEL' | translate }}</label>
+		         	<input ng-model="$ctrl.form.modelName.value">
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>{{ 'COD_PRECOM' | translate }}</label>
+		         	<input ng-model="$ctrl.form.codPrecom.value">
+		       	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>{{ 'BAND' | translate }}</label>
+		         	<input ng-model="$ctrl.form.idBanda.value">
+		       	</md-input-container>
+			</div>
+		</div>
+		<div style="text-align:center;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				Buscar
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-trash"></i>
+				LIMPIAR
+			</md-button>
+		</div>
+	</form>
+</md-content>

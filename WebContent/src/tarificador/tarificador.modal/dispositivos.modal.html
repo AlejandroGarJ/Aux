@@ -1,0 +1,23 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Seleccione su terminal</h2>
+			<!-- <md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button> -->
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="container_modal_lstDevices">
+			<div layout="column">
+				<div ng-repeat="device in $ctrl.lstDevices" layout="row" class="modal_device" ng-click="$ctrl.selDevice(device)">
+					TERMINAL: {{device.brandName}} - {{device.modelName}} - IMEI: {{device.imei}} - {{device.creationUser}}
+				</div>
+				
+			</div>
+		</div>
+	</md-dialog-content>
+</md-dialog>

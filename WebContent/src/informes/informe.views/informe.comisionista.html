@@ -1,0 +1,121 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="formClass" id="form" ng-form="$ctrl.informeComisionista"
+     ng-init="$ctrl.LIQ_TEL = true; $ctrl.getFechaMediador()">
+    <div class="filtroInformesContainer">
+        <div>
+            <div class="tituloFiltroInformes">
+                <h3>Liquidación mediador</h3>
+            </div>
+            <div layout-gt-sm="row" class="margin-top-20">
+                <md-input-container class="md-block" flex-gt-sm="15">
+                    <label>Liquidado</label>
+                    <md-select ng-init="$ctrl.form.IN_ENVIO_LIQ = false" ng-change="$ctrl.changeLiqTel()"
+                               ng-model="$ctrl.form.IN_ENVIO_LIQ">
+                        <md-option ng-value=true>
+                            Sí
+                        </md-option>
+                        <md-option ng-value=false>
+                            No
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container ng-if="$ctrl.form.IN_ENVIO_LIQ != false"
+                                    class="md-block datepicker-min-w hide-validation-error" flex-gt-sm="20">
+                    <label>{{ 'DATE_SETTLEMENT' | translate }}</label>
+                    <md-datepicker class="hide-validation-error"
+                                   ng-click="($ctrl.fechaMes == null || $ctrl.fechaMes == undefined) ? $ctrl.fechaMes = null : ''"
+                                   ng-model="$ctrl.fechaMes" required
+                                   md-mode="month" md-date-locale="$ctrl.myDateFormat" md-max-date="$ctrl.maxDate"
+                                   ng-change="$ctrl.changeFechaMesMediador('FD_LIQUIDADO_')"></md-datepicker>
+                </md-input-container>
+                <md-input-container class="md-block ic-margin" flex-gt-sm="25">
+                    <label>{{ 'PRODUCT' | translate }}</label>
+                    <md-select ng-model="$ctrl.form.ID_PROGRAMA" required>
+                        <md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+                            {{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+                            <!-- 	              {{programa.DS_PROGRAMA}} -->
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Nombre mediador</label>
+                    <md-select ng-model="$ctrl.form.ID_COMPANIA" ng-required="$ctrl.form.IN_ENVIO_LIQ != false">
+                        <md-option ng-repeat="tipo in $ctrl.tipos.comisionistas" ng-value="tipo.ID_COMPANIA">
+                            {{tipo.NO_COMPANIA}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <div layout="row" layout-align="start center" ng-if="$ctrl.cargando == false" style="margin-top: 20px">
+                <div>
+                    <md-button class="fade-out md-raised md-primary medium-blue button-action-main" form="formInforme"
+                               ng-click="$ctrl.validarFormulario($ctrl.informeComisionista.$valid, 'informe', 'liquidacionMediador')"
+                               ng-if="$ctrl.form.IN_ENVIO_LIQ != false">
+                        <i class="fa-duotone fa-download" style="margin-right: 5px"></i>
+                        {{ 'GENERATE_REPORT' | translate | uppercase}}
+                    </md-button>
+                    <md-button class="fade-out md-raised md-primary medium-blue button-action-main" form="formInforme"
+                               ng-click="$ctrl.validar($ctrl.informeComisionista.$invalid)"
+                               ng-if="$ctrl.form.IN_ENVIO_LIQ != false">
+                        <i class="fa-duotone fa-paper-plane"></i>
+                        ENVIAR LIQUIDACIÓN
+                    </md-button>
+                </div>
+                <div>
+                    <md-button class="md-raised md-primary medium-blue button-action-main" form="formInforme"
+                               ng-click="$ctrl.changeSelected($ctrl.informeComisionista)">
+                        <i class="fa-light fa-magnifying-glass" style="margin-right: 5px"></i>
+                        MOSTRAR RECIBOS
+                    </md-button>
+                    <md-button class="md-raised md-primary medium-blue button-action-erase"
+                               ng-click="$ctrl.limpiar($ctrl.form)">
+                        <i class="fa fa-trash" style="margin-right: 5px"></i>
+                        {{ 'CLEAN' | translate | uppercase }}
+                    </md-button>
+                </div>
+            </div>
+        </div>
+
+        <div layout="row" layout-align="start center"
+             ng-if="$ctrl.exports && !$ctrl.form.IN_ENVIO_LIQ && $ctrl.mostrarRecibos == true && $ctrl.gridInformesLiq.data.length > 0"
+             ng-hide="$ctrl.mostrarRecibos == false" style="margin-bottom: 10px">
+            <md-button ng-disabled="$ctrl.listaSeleccionados.length == 0"
+                       class="md-raised md-primary medium-blue button-action-main" form="formInforme"
+                       ng-click="$ctrl.liquidarMediador()">
+                <i class="fa-duotone fa-check-to-slot" style="margin-right: 5px"></i>
+                LIQUIDAR MEDIADOR
+            </md-button>
+            <div class="infoLiquidarRecibosInformes" layout="row">
+                <div layout="row" layout-align="center center">
+                    Selecciona uno o varios recibos y haz click en "<b>LIQUIDAR MEDIADOR</b>" para realizar una
+                    liquidación
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="$ctrl.mostrarRecibos == true && $ctrl.gridInformesLiq.data.length > 0" class="ui-grid"
+             class="margin-top-20" ui-grid="$ctrl.gridInformesLiq" ui-grid-pagination ui-grid-resize-columns
+             ui-grid-auto-resize ui-grid-grouping ui-grid-selection resize></div>
+
+        <div ng-if="$ctrl.cargando == true">
+            <div layout="row" layout-align="center center">
+                <div class="cs-loader" style="height: 40px; width: 97%; position: relative">
+                    <div class="cs-loader-inner">
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                    </div>
+                </div>
+            </div>
+            <div layout-gt-sm="row" layout-align="center">
+                <p style="text-align:center;font-size: 11px">¡Recibido! Estamos procesando tu solicitud...</p>
+            </div>
+        </div>
+    </div>
+</div>

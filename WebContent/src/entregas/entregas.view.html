@@ -1,0 +1,28 @@
+<!-- Tabla de ENTREGAS -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+	<div>
+		<h3 style="text-transform: uppercase; padding-left: 15px; margin-bottom: 20px"><span style="color:#2b3447!important" class="ng-binding"><i class="fas fa-search"></i> Búsqueda</span><span style="color:#0066ff!important" class="ng-binding"> Entregas </span></h3>
+	</div>
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="$ctrl.screenHeight < 620 ? $ctrl.getTableHeight() : $ctrl.gridOptions.totalItems < 30 ? resizeHeight(256) : $ctrl.getTableHeight()"></div>
+        </md-tab>
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+            <md-tab-label ng-if="detalles != null">
+                <span>{{ $ctrl.getNombreEntrega(detalles)}}</span>
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </md-tab-label>
+            <md-tab-body>
+            	<entrega-sd datos="detalles"></entrega-sd>
+            </md-tab-body>
+
+        </md-tab>
+
+    </md-tabs>
+
+</div>

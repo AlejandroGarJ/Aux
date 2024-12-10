@@ -1,0 +1,154 @@
+
+.container_adminpanel, .container_token {
+    max-width: 95%;
+    margin: 0 auto;
+    opacity: 1;
+}
+
+.operative-box-column {
+    border-bottom: 2px solid #64cd7a;
+}
+
+.operative-box-column-selected {
+    border-bottom: 2px solid #64cd7a;
+}
+
+.operative-box-column:hover {
+    border-bottom: 2px solid #cee5f0;
+    cursor:default;
+}
+
+.operative-box-column-content {
+    padding: 15px;
+    border-bottom: 1px solid #cee5f0;
+    margin-bottom: 25px;
+}
+
+.operative-box-content {
+    padding: 20px 10px;
+    text-align: center;
+    margin-left: 90px;
+    height: 100%;
+    border: 1px solid #d6d5d5;
+}
+
+.operative-box-text {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    font-family: 'TelefonicaWebRegular';
+    color: #2f617b;
+}
+
+.operative-box-subtext {
+    text-transform: uppercase;
+    font-size: 0.9em;
+    color: #4b4f50;
+    font-family: 'TelefonicaWebRegular';
+}
+
+.operative-box-subsection {
+    padding-top: 12px;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    color: #4b4f50;
+    font-family: 'TelefonicaWebRegular';
+    border-bottom: 1px solid #cee5f0;
+}
+
+.label-promo {
+    background-color: #8a1a93;
+    color: white;
+    text-align: center;
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.ui-card-segment {
+    position: relative;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);
+    margin: 1rem 0;
+    padding: 1em;
+    border-radius: .28571429rem;
+    border: 1px solid rgba(34,36,38,.15);
+}
+
+.ui-ribbon {
+    margin-bottom: 1.8em;
+    cursor: default;
+    border-color: #4f5a70!important;
+    background-color: #2b3447!important;
+    color: #fff !important;
+    left: calc(-1.2rem - 1.2em);
+    margin-right: -1.2em;
+    position: relative;
+    min-width: max-content;
+    border-radius: 0 .28571429rem .28571429rem 0;
+    padding: 5px 1.2em 5px calc(1rem + 1.2em);
+    text-decoration: none;
+    font-family: 'TelefonicaWebLight';
+}
+
+.ui-ribbon:after {
+    position: absolute;
+    content: '';
+    top: 100%;
+    left: 0;
+    background-color: transparent!important;
+    border-style: solid;
+    border-width: 0 1.2em 1.2em 0;
+    border-color: transparent;
+    border-right-color: inherit;
+    width: 0;
+    height: 0;
+}
+
+/*BUTTONS*/
+.button-circle {
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 100;
+    font-family: "Segoe UI";
+    letter-spacing: 1px;
+}
+.button-circle:before {
+    border-radius: 100px;
+    border: 2px solid #468cdc;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.15), 0 0 15px rgba(0, 255, 204, 0.15) inset;
+    content: "";
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 110px;
+    width: 110px;
+    margin-left: -57px;
+    margin-top: -57px;
+    opacity: 1;
+    transform: scale(1);
+    transition: all 300ms;
+}
+.button-circle:hover:before {
+    transform: scale(1.05);
+}
+.button-circle.circle {
+    background: #23466e;
+    border: none;
+    border-radius: 900px;
+    color: #e4ecfa;
+    cursor: pointer;
+    display: block;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    position: relative;
+    margin: auto;
+    margin-top: 25px;
+    transition: 0.5s;
+}
+.button-circle.circle:hover {
+    background: #3e70aa;
+    padding: -2px;
+}

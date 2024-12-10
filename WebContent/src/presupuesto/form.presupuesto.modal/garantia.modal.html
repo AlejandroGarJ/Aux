@@ -1,0 +1,45 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="background-color:#FFF">
+			<img layout-align="center center" src="src/img/aseguradoras/{{$ctrl.tarifa.ID_COMPANIA}}.png"/> <h4 ng-if="$ctrl.tarifa.IM_PRIMA_ANUAL_TOT!=undefined || $ctrl.tarifa.IM_PRIMA_ANUAL_TOT!=null" layout-align="none center" style="right:100px; position:absolute; color:#2593B5">{{$ctrl.tarifa.NO_MODALIDAD}}</h4>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon style="color:blue" aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+    </md-toolbar>
+    <div style="height:1px; background-color:#2593B5"></div>
+	<ng-dialog-content style="height: 250px" class="md-dialog-content formCliente formClass form-scroll">
+		<div ng-if="$ctrl.vista==3">
+			<div layout="row" layout-align="center center" style="height:50px !important;">
+				<div flex="100" layout="row">
+					<h4>No se han encontrado garantías</h4>
+				</div>
+			</div>
+		</div>
+		<div ng-if="$ctrl.vista==4">
+			<div layout="row" layout-align="center center" style="height:50px !important;">
+				<div flex="50">
+					<h4>Garantía</h4>
+				</div>
+				<div flex="50">
+					<h4>Capital</h4>
+				</div>
+				<md-divider></md-divider>
+			</div>
+			<div ng-repeat="garantia in $ctrl.garantias">
+				<div layout="row" layout-align="center center" style="height:50px !important;">
+					<div flex="50">
+						{{garantia.NO_GARANTIA}}
+					</div>
+					<div flex="50">
+						Incluida
+					</div>
+				</div>
+				<md-divider ng-if="!$last"></md-divider>
+			</div>
+		</div>
+	</ng-dialog-content>
+</md-dialog>

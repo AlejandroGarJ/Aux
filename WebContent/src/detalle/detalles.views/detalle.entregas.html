@@ -1,0 +1,16 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div ng-if="$ctrl.datos.ID_TIPO_ENTREGA != 3">
+    <div class="detalleEntrega">
+		{{ $ctrl.templateString }}
+		<md-button class="medium-blue btnNuevo" ng-click="$ctrl.descargarArchivo()">
+			<md-icon>picture_as_pdf</md-icon>
+			Descargar
+		</md-button>
+    </div>
+</div>
+
+<div ng-if="$ctrl.datos.ID_TIPO_ENTREGA == 3">
+	<iframe ng-src="{{$ctrl.changelogHtml | trusted}}" class="delivery-iframe" width="100%" frameborder="0" resize ng-style="resizeHeight(248)"></iframe>
+</div>

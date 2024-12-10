@@ -1,0 +1,18 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+	<span ng-if="$ctrl.tarifa.NO_MODALIDAD!=undefined && $ctrl.tarifa.NO_MODALIDAD!=''">{{$ctrl.tarifa.NO_MODALIDAD}}</span>
+
+	<div ng-if="Array.isArray($ctrl.men)" ng-repeat="mensaje in $ctrl.men">
+		<ng-switch on="mensaje.CO_MESSAGE_TYPE">
+			<h6 ng-switch-when="WARN|INFO|ERROR" ng-switch-when-separator="|">* {{mensaje.DS_MESSAGE}}</h6>
+		</ng-switch>
+	</div>
+	<div ng-if="!Array.isArray($ctrl.men) && $ctrl.men.DS_MESSAGE != undefined">
+		<h6>* {{$ctrl.men.DS_MESSAGE}}</h6>
+	</div>
+	<div ng-if="$ctrl.men.MENSAJE!=undefined">
+		<ng-switch on="$ctrl.men.MENSAJE.CO_MESSAGE_TYPE">
+			<h6 ng-switch-when="WARN|INFO|ERROR" ng-switch-when-separator="|">* {{$ctrl.men.MENSAJE.DS_MESSAGE}}</h6>
+		</ng-switch>
+	</div>

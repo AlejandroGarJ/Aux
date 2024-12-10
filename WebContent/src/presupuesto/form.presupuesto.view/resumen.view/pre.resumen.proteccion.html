@@ -1,0 +1,19 @@
+<div flex>
+    <uib-tabset class="tabsPasos" type="pills" justified="true" flex="none">
+    
+            <!--CONTENIDO DE RESUMEN-->
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaResumen}})">
+                <div flex>
+                    <!---------------- DATOS DEL PAGO ------------------------>
+                    <legend>Datos del pago</legend>
+		            	<div class="margenPresupuestos" layout="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'DATE_START' | translate }}</label>
+
+		          					<md-datepicker ng-if="($ctrl.datos.DATOS_PAGO.FD_INICIO == null || $ctrl.datos.DATOS_PAGO.FD_INICIO == undefined) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null : $ctrl.datos.DATOS_PAGO.FD_INICIO" ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" disabled></md-datepicker>
+							</md-input-container>
+						</div>
+	            </div>
+        	</md-content>
+	</uib-tabset>     
+</div>   

@@ -1,0 +1,27 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.parent.url == 'alarmas' && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+            <md-icon>file_copy</md-icon>Exportar a excel
+        </md-button>
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+<!--                 <h2>Busque una alarma</h2> -->
+            </div>
+            <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+            <div id="mensajeNingunResultado" class="mensajesBusqueda" ng-if="$ctrl.vista == 3">
+                <h2>No se ha encontrado ninguna alarma</h2>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize
+                resize ng-style="resizeHeight(209)"></div>
+        </md-tab>
+    </md-tabs>
+</div>

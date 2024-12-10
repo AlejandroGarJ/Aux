@@ -1,0 +1,64 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content>
+
+	<h3 style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="100" ><span style="color:#2b3447!important"><i class="fas fa-search"></i> {{ 'SEARCH' | translate }}</span><span style="color:#0066ff!important"> Proveedores </span></h3>
+		
+	<div layout-gt-sm="row" style="border-bottom: 2px solid #2b3447;border-image: linear-gradient(-90deg, #2b3447 , #414b61 25%, #ffffff 90%, #ffffff 40%) 10;">
+		<a ng-click="$ctrl.showBasicSearch()" ng-if="$ctrl.basicSearch == true">{{ 'SHOW_SEARCH_FIELDS' | translate }}</a>
+	</div>
+	
+    <form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('tipo-proveedores')">
+        <div class="form-scroll" resize>
+            <div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+            	<md-input-container class="md-block">
+                     <label>Programa</label>
+                     <md-select ng-model="$ctrl.form.NO_PROGRAMA.value">
+                        <md-option ng-repeat="programa in $ctrl.listProductos" ng-value="programa.NO_PROGRAMA">
+                            {{programa.NO_PROGRAMA}} 
+                         </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-autocomplete name="proveedores" md-no-cache="$ctrl.noCache" flex-gt-sm="25" class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchProveedor"
+				   md-items="item in $ctrl.querySearch($ctrl.searchProveedor, $ctrl.listProveedores, 'NO_EMPRESA')"
+				   md-item-text="item.NO_EMPRESA" md-min-length="0"
+				   md-floating-label="Nombre proveedor"
+				   md-selected-item="$ctrl.autocomplete.PROVEEDOR"
+				   md-selected-item-change="$ctrl.form.NO_EMPRESA.value = $ctrl.autocomplete.PROVEEDOR.NO_EMPRESA;"
+				   ng-blur="$ctrl.autocomplete.PROVEEDOR == undefined ? $ctrl.searchProveedor = '' : ''"
+			    >
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchComisionista"
+					  	 	md-highlight-flags="^i">{{item.NO_EMPRESA}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el campo "{{$ctrl.searchProveedor}}".
+				   </md-not-found>
+			    </md-autocomplete>
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>CIF</label>
+		         	<input ng-model="$ctrl.form.NU_DOCUMENTO.value">
+		       	</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>Vence antes del</label>
+
+					<md-datepicker ng-model="$ctrl.form.FD_VENCIMIENTO.value" ng-init="$ctrl.form.FD_VENCIMIENTO.value = null"
+					    ng-click="($ctrl.form.FD_VENCIMIENTO.value == null || $ctrl.form.FD_VENCIMIENTO.value == undefined) ? $ctrl.form.FD_VENCIMIENTO.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				{{ 'SEARCH_BTN' | translate }}
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-trash"></i>
+				{{ 'CLEAN' | translate }}
+			</md-button>
+        </div>
+    </form>
+</md-content>

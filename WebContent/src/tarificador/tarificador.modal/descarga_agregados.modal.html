@@ -1,0 +1,113 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2 ng-if="$ctrl.btnOpt == false" style="font-family: 'TelefonicaWebRegular';font-weight: 600;">DESCARGAR PRESUPUESTO {{$ctrl.budgetId}} EN FORMATO PDF</h2>
+			<h2 ng-if="$ctrl.btnOpt == true" style="font-family: 'TelefonicaWebRegular';font-weight: 600;">ENVIAR PRESUPUESTO {{$ctrl.budgetId}} POR EMAIL</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="container_modal_pdf formClass div-sublimite-c3" flex>
+			<form name="$ctrl.formDownloadBudget">
+				<div ng-if="$ctrl.type == 'CBR'" style="margin: 10px">
+					<div layout="row" layout-align="center start">
+						<md-input-container class="md-block" flex-gt-sm="25">
+							<label>CIF</label>
+							<input ng-model="$ctrl.objHolder.NU_DOCUMENTO" cvalidation="document_a" required>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm="25">
+							<md-button ng-click="$ctrl.buscarCliente()" ng-hide="$ctrl.loadCliente == true" class="md-raised md-primary medium-blue button-action-main" style="margin-top: 23px!important;">
+								<i class="fa-light fa-magnifying-glass"></i> Buscar CIF
+							</md-button>
+						</md-input-container>
+
+						<md-input-container class="md-block" flex-gt-sm="50" ng-if="$ctrl.btnOpt == true" ng-show="$ctrl.showCliente == true">
+						</md-input-container>
+
+						<md-input-container class="md-block" flex-gt-sm="50" ng-if="$ctrl.btnOpt == false" ng-show="$ctrl.showCliente == true">
+							<label><i class="fa-duotone fa-building"></i> {{ 'CORPORATE_NAME' | translate }}</label>
+							<input ng-model="$ctrl.objHolder.NO_NOMBRE" required>
+						</md-input-container>
+					</div>
+					<p style="color: rgb(182 109 0);font-size: 11px;margin: 5px 0;" class="text-importe-siniestro-error" ng-if="$ctrl.clienteEncontrado == false">Cliente inexistente, por favor, introduzca los datos.</p>
+					<div layout="row" layout-align="center center" ng-if="$ctrl.btnOpt == true" ng-show="$ctrl.showCliente == true">
+						<md-input-container class="md-block" flex-gt-sm="50">
+							<label><i class="fa-duotone fa-building"></i> Denominación Social de la Empresa</label>
+							<input ng-model="$ctrl.objHolder.NO_NOMBRE" required>
+						</md-input-container>
+						<md-input-container flex-gt-sm="40">
+							<label><i class="fa-duotone fa-envelope"></i> Email de destino</label>
+							<input ng-model="$ctrl.objHolder.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" ng-required="$ctrl.btnOpt == true">
+						</md-input-container>
+					</div>
+
+					<div ng-if="$ctrl.tarifaAdhoc === 'adhoc'" style="margin: 20px 15px" ng-show="$ctrl.showCliente == true">
+						<div layout="row" layout-align="center center">
+							<md-input-container class="md-block" flex-gt-sm="50">
+								<label>TIPO DE RIESGO</label>
+								<md-select ng-model="$ctrl.riesgo" required>
+									<md-option ng-repeat="riesgo in $ctrl.tpRiesgos" ng-value="riesgo.CO_TIPO">
+										{{riesgo.DS_TIPOS}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm="50">
+								<label>¿POLIZA DE CIBERSEGURO CON OTRA ASEGURADORA?</label>
+								<md-select ng-model="$ctrl.polizaOtraCia" required>
+									<md-option ng-value="false">NO</md-option>
+						 			<md-option ng-value="true">SI</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+					</div>
+						<!-- <div style="position: relative;height: auto;width: 100%;border-top: 1px solid #d5d5d5;padding: 30px 20px 0 20px">
+							<div style="position: absolute;top: -10px;left: 20px;height: auto;width: auto;background-color: white;text-align: center;padding: 0px 40px">
+								<p style="font-family: TelefonicaWebRegular;color: #0066FF;font-size: 13px;letter-spacing: 1px;"><span style="color: #031a34;font-family: TelefonicaWebRegular"><i class="fa-duotone fa-repeat"></i> REQUISITOS DE RENOVACIÓN Y OBSERVACIONES</span></p>
+							</div>
+							<div layout="row" layout-align="center start" style="margin-top: 20px">
+								<md-input-container class="md-block" flex="75" disabled="true">
+									<textarea rows="3" ng-model="$ctrl.objAgregados.DS_OBSERVACIONES" uppercase placeholder="Enumera los requisitos de renovación si procede"></textarea>
+								</md-input-container>
+							</div>
+						</div> -->
+				</div>
+				<div class="container_TarMovil_btn" layout-gt-sm="row" layout-align="center" layout-margin="">
+					<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.sendPdf(false)" ng-if="$ctrl.btnOpt == 0 && $ctrl.loading != true">
+						<i class="fas fa-download" style="margin-right: 5px"></i>
+						<span style="text-transform: uppercase"> {{ 'DOWNLOAD_BUDGET' | translate }}</span>
+					</md-button>
+					<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.sendPdf(true)" ng-if="$ctrl.btnOpt == 1 && $ctrl.loading != true">
+						<i class="fa-light fa-paper-plane-top" style="margin-right: 5px"></i>
+						<span style="text-transform: uppercase"> {{ 'SEND_BUDGET' | translate }}</span>
+					</md-button>
+				</div>
+				<div ng-if="$ctrl.loadCliente == true || $ctrl.loading == true">
+					<div layout="row" layout-align="center center" >
+						<div class="cs-loader" style="height: 40px; width: 97%; position: relative">
+							<div class="cs-loader-inner">
+								<label>●</label>
+								<label>●</label>
+								<label>●</label>
+								<label>●</label>
+								<label>●</label>
+								<label>●</label>
+							</div>
+						</div>
+					</div>
+					<div layout-gt-sm="row" layout-align="center">
+						<p style="text-align:center;font-size: 11px">¡Recibido! Estamos procesando tu solicitud...</p>
+					</div>
+				</div>
+				<div layout-align="center" ng-if="$ctrl.mensaje != null" layout-gt-sm="row">
+					<p>{{$ctrl.mensaje}}</p>
+				</div>
+
+			</form>
+		</div>
+	</md-dialog-content>
+</md-dialog>

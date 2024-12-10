@@ -1,0 +1,526 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div>
+	<div style="position: relative;height: auto;width: 100%;border-top: 1px solid #d5d5d5;padding: 40px 0 15px 0;margin-top: 15px" layout-align="center center">
+		<div layout="row" style="position: absolute;top: -10px;left: 20px;height: auto;width: auto;background-color: white;text-align: center;padding: 0 20px">
+			<div style="margin-right: 20px;">
+				<div layout="row" layout-align="center center" ng-click="$ctrl.openTarEmpresa()">
+					<md-icon>keyboard_backspace</md-icon>
+					{{ 'RETURN' | translate }}
+				</div>
+				<h4 style="color: #0066FF; text-transform: uppercase; margin-left: 10px;font-family: TelefonicaWebBold!important;font-size: 20px !important;">{{$ctrl.dsPrograma}}</h4>
+			</div>
+			<p style="font-family: TelefonicaWebBold;color: #0066FF;font-size: 16px;letter-spacing: 1px;"><span style="color: #031a34;font-family: TelefonicaWebRegular"><i class="fa-duotone fa-objects-column"></i>CIBERSEGURO EMPRESAS - </span>ACCESOS DIRECTOS</p>
+		</div>
+		<div layout="row">
+			<div class="col">
+				<div style="display:flex; margin-top:2%">
+					<div class="col">
+						<md-button class="md-raised md-primary medium-blue button-action-02-hogar" style="width: 80%;text-align: center" ng-click="$ctrl.redirect('#!/polizas_list?idPrograma=2')">
+							<span><i class="fa-duotone fa-share-all" style="margin-right: 3px;color: #00b0bd"></i> BUSCADOR DE PÓLIZAS</span>
+						</md-button>
+						<md-button class="md-raised md-primary medium-blue button-action-02-hogar" style="width: 80%; margin-top:1%;" ng-click="$ctrl.redirect('#!/presupuestos_list?idPrograma=2')">
+							<span><i class="fa-duotone fa-share-all" style="margin-right: 3px;color: #00b0bd"></i> BUSCADOR DE PRESUPUESTOS</span>
+						</md-button>
+					</div>
+					<div class="col">
+						<md-button class="md-raised md-primary medium-blue button-action-02-hogar" style="width: 80%;" ng-click="$ctrl.redirect($ctrl.urlRecibos)">
+							<span><i class="fa-duotone fa-share-all" style="margin-right: 3px;color: #00b0bd"></i> BUSCADOR DE RECIBOS</span>
+						</md-button>
+						<md-button class="md-raised md-primary medium-blue button-action-02-hogar" style="width: 80%; margin-top:1%;" ng-click="$ctrl.redirect('#!/siniestros_list?idPrograma=2')">
+							<span><i class="fa-duotone fa-share-all" style="margin-right: 3px;color: #00b0bd"></i> BUSCADOR DE SINIESTROS</span>
+						</md-button>
+					</div>
+				</div>
+				<md-button class="md-raised md-primary medium-blue button-action-02-hogar" ng-click="$ctrl.confirmExit(1)" id="btn_change" style= "width: 69%; text-align: center; margin-left: 1.2%; margin-top:2% !important">
+					<p>
+						<span style="color: #031a34; font-family: TelefonicaWebRegular;">Cambiar a CIBERSEGURO EMPRESAS | </span>
+						<span ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6"> LÍMITES AGREGADOS</span>
+						<span ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5"> LÍMITES INDEPENDIENTES</span>
+					</p>
+				</md-button>
+			</div>
+			<div class="col" flex-gt-sm="50">
+				<div>
+                   	<div class="broker_btn_small" layout="row">	
+						<img src="src/img/espacio_broker.jpg" />
+						<div layout="column" layout-align="center start" flex>
+                        	<span>Accede a toda la documentaci&#243;n <br>en nuestro nuevo <b>Espacio Broker</b></span>
+							<button ng-click="$ctrl.confirmExit(2)">
+								Acceder <i class="fa-thin fa-chevron-right"></i>
+							</button>
+						</div>
+                    </div>
+           		</div>
+           		<div style="text-align: center;padding: 10px;margin: 0px 5% 0px 5%;" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+					<p style="color:#474a59!important">
+						<i class="fa-light fa-location-exclamation" style="margin-right: 3px;color: #00b0bd"></i>
+						Estás en la vista de <span style="color: #5eba7d;font-family: TelefonicaWebBold">'GESTORES'</span>
+					</p>
+					<md-button ng-click="$ctrl.changeTemplate()" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" class="md-raised md-primary medium-blue button-action-02-hogar" style="width: 80%;text-align: center">
+						<span style="text-transform: uppercase"><i class="fa-light fa-arrows-repeat" style="margin-right: 3px;color: #00b0bd"></i> {{ $ctrl.loadChangeTemplate == true ? "Cargando..." : "Cambiar a Vista Gestor (Tarificador disponible para administradores)"}}</span>
+					</md-button>
+				</div>
+           	</div>
+		</div>
+	</div>
+	<form class="animationIf" name="$ctrl.formTarEmpresa" id="formSubmitTarEmpresa" style="margin-top: 20px" flex>
+		<div id="box-price"></div>
+		<div style="position: relative;height: auto;width: 100%;border-top: 1px solid #d5d5d5;padding: 0;margin-bottom: 25px" layout-align="center center">
+			<div style="position: absolute;top: -10px;left: 20px;height: auto;width: auto;background-color: white;text-align: center;padding: 0 20px">
+				<p style="font-family: TelefonicaWebBold;color: #0066FF;font-size: 16px;letter-spacing: 1px;"><span style="color: #031a34;font-family: TelefonicaWebRegular"><i class="fa-duotone fa-objects-column"></i> CIBERSEGURO EMPRESAS | </span><span ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6"> LÍMITES INDEPENDIENTES</span><span ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5"> LÍMITES AGREGADOS</span></span></p>
+			</div>
+			<div layout="row" layout-align="center center" style="margin-top: 20px">
+				<div layout="row" layout-sm="column" layout-xs="column">
+					<div class="container_TarMovil_div" layout="column" layout-sm="column" layout-xs="column" flex="66">
+						<div layout="column" layout-gt-sm="row" layout-margin="" style="text-align: center">
+							<div class="container_TarMovil_input" flex="" style="text-align: center">
+								<span style="text-align: center;font-size: 60px"><i class="fa-thin fa-industry-windows"></i></span>
+								<div class="txt_cmt">
+									<p style="font-family: TelefonicaWebBold;color: #0066ff;font-size: 0.9em;"><span style="color: #6E7894;font-family: TelefonicaWebBold">SECTOR Y ACTIVIDAD DE LA </span> EMPRESA ASEGURADA</p>
+								</div>
+								<md-input-container class="md-block" class="selectAdmin" style="width: 100%;">
+									<label>SECTOR</label>
+									<md-select ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.sector" required>
+										<md-option ng-repeat="sector in $ctrl.tpGroups" ng-value="sector">
+											{{$ctrl.parent.getDescriptivo(sector, 'DS_TIPOS')}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container class="md-block" ng-if="$ctrl.sector != undefined && $ctrl.sector != ''" class="selectAdmin" style="width: 100%;">
+									<label>ACTIVIDAD</label>
+									<md-select ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.activity" ng-change="$ctrl.check_risk('activity', $ctrl.activity)" required>
+										<md-option ng-repeat="activity in $ctrl.sector.LST_ACTIVIDADES" ng-value="activity">
+											{{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+							</div>
+							<div class="container_TarMovil_input" flex="" style="text-align: center">
+								<span style="text-align: center;font-size: 60px"><i class="fa-thin fa-scale-balanced"></i></span>
+								<div class="txt_cmt">
+									<p style="font-family: TelefonicaWebBold;color: #0066ff;font-size: 0.9em;"><span style="color: #6E7894;font-family: TelefonicaWebBold">VOLÚMEN DE</span> FACTURACIÓN</p>
+								</div>
+								<md-input-container class="md-block" style="margin: 27px 0 0 0">
+									<div ng-if="$ctrl.mostrarTarificacionManual != true">
+										<label>{{ 'BILLING_EUR' | translate | uppercase }}</label>
+										<md-select ng-model="$ctrl.objPri.turnover" ng-change="$ctrl.check_risk('billing', $ctrl.objPri.turnover)" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.activity == undefined" required>
+											<md-option ng-repeat="fact in $ctrl.tpFacturacion" ng-value="fact.CO_TIPO" ng-if="fact.CO_TIPO < $ctrl.maxFacturacion">{{$ctrl.parent.getDescriptivo(fact, 'DS_TIPOS')}}</md-option>
+										</md-select>
+									</div>
+									<div ng-if="$ctrl.mostrarTarificacionManual == true">
+										<div layout="row">
+											<div flex="100">
+												<label class="">{{ 'BILLING_EUR' | translate }}</label>
+												<input type="number" ng-model="$ctrl.objPri.turnover" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.activity == undefined" required/>
+											</div>
+										</div>
+									</div>
+								</md-input-container>
+								<div layout="row" layout-align="center center" flex="100" style="margin-top: 10px;padding: 5px 10px;">
+									<p style="font-size: 0.8em;color: #6E7894"><i class="fa-solid fa-info"></i> Facturación total de la matriz, filiales (Europa y Reino Unido) y empresas hermanas.<p>
+								</div>
+							</div>
+							<div class="container_TarMovil_input" flex="" style="text-align: center">
+								<span style="text-align: center;font-size: 60px"><i class="fa-thin fa-hand-holding-dollar"></i></span>
+								<div class="txt_cmt">
+									<p style="font-family: TelefonicaWebBold;color: #0066ff;font-size: 0.9em;"><span style="color: #6E7894;font-family: TelefonicaWebBold">VALOR DE LA </span> SUMA ASEGURADA</p>
+								</div>
+								<md-input-container class="md-block" style="margin: 27px 0 0 0">
+									<label>{{ 'INSURED_AMOUNT' | translate | uppercase }}</label>
+									<!-- <md-select ng-model="$ctrl.amount" ng-change="$ctrl.checkAmounts()"> -->
+									<md-select ng-model="$ctrl.amount" ng-change="$ctrl.check_risk('amount', $ctrl.amount)" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.objPri.turnover == undefined" required>
+                                        <md-option ng-repeat="amount in $ctrl.tpAmount" ng-if="$ctrl.mostrarOpcionSumaAsegurada(amount.DS_TIPOS, $ctrl.objPri.turnover)" ng-value="amount">
+											{{$ctrl.parent.getDescriptivo(amount, 'DS_TIPOS')}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+								<div ng-if="$ctrl.formatAmount($ctrl.objPri.turnover) < 250000" layout="row" layout-align="center center" flex="100" style="margin-top: 10px;padding: 5px 10px;">
+									<p style="font-size: 0.8em;color: #6E7894"><i class="fa-solid fa-info"></i>Para este tramo de facturación la Suma Asegurada máxima es de <strong>250.000€</strong><p>
+								</div>
+							</div>
+						</div>
+						<div layout="column" layout-gt-sm="row" layout-margin="" style="text-align: center">
+							<div class="container_TarMovil_input" flex="">
+								<span style="text-align: center;font-size: 60px"><i class="fa-thin fa-buildings"></i></span>
+								<div layout="row" layout-align="center center" flex="100">
+									<span style="font-size: 0.9em;color: #6E7894;font-family: TelefonicaWebBold;padding: 0 8px 0 0;">EXISTEN <span style="margin-left: 5px; margin-right: 5px; color: #0066ff;font-family: TelefonicaWebBold">FILIALES Y EMPRESAS HERMANAS<br>(EN EUROPA Y EN REINO UNIDO)*</span></span>
+									<md-switch ng-model="$ctrl.existenFilialesEspanolas" ng-change="$ctrl.changeCheckFilialesEspanolas()"></md-switch>
+								</div>
+								<md-input-container ng-if="$ctrl.existenFilialesEspanolas == true" class="md-block" style="margin: 27px 0 0 0">
+									<label>SECTOR DE LAS FILIALES</label>
+									<md-select ng-disabled="$ctrl.llave == 'resumen' || $ctrl.existenFilialesEspanolas != true" ng-model="$ctrl.affiSector" multiple>
+										<md-option ng-repeat="afSector in $ctrl.tpGroups" ng-value="afSector">{{afSector.DS_TIPOS}}</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container ng-if="$ctrl.existenFilialesEspanolas == true" class="md-block" style="margin: 27px 0 0 0">
+									<label>ACTIVIDAD DE LAS FILIALES</label>
+									<md-select ng-disabled="$ctrl.llave == 'resumen' || $ctrl.existenFilialesEspanolas != true" ng-model="$ctrl.selActivities" ng-change="$ctrl.check_risk('selActivities', $ctrl.selActivities)" multiple>
+										<md-optgroup label="{{afSector.DS_TIPOS}}" ng-repeat="afSector in $ctrl.affiSector">
+											<md-option ng-repeat="activity in afSector.LST_ACTIVIDADES" ng-value="activity.DS_ACTIVIDAD">
+												{{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+											</md-option>
+										</md-optgroup>
+									</md-select>
+								</md-input-container>
+								<div layout="row" layout-align="center center" flex="100" margin-top: 10px;>
+									<p style="font-family:TelefonicaWebBold;font-size: 0.8em;color: #6E7894">*CON DISTINTA ACTIVIDAD A LA DE LA EMPRESA PRINCIPAL<p>
+								</div>
+								<div layout="row" layout-align="center center" flex="100" style="margin-top: 10px;padding: 5px 10px;">
+									<p style="font-size: 0.8em;color: #6E7894"><i class="fa-solid fa-info"></i>	Se considera empresa filial aquella en la que la empresa principal es propietaria de más del 50% del capital social
+									<p>
+								</div>
+							</div>
+							<div class="container_TarMovil_input" flex="" style="text-align: center">
+								<span style="text-align: center;font-size: 60px"><i class="fa-thin fa-light-emergency-on"></i></span>
+								<div class="txt_cmt">
+									<p style="font-family: TelefonicaWebBold;color: #0066ff;font-size: 0.9em;"><span style="color: #6E7894;font-family: TelefonicaWebBold">INFORMACIÓN SOBRE </span> CIBERATAQUES PREVIOS</p>
+								</div>
+								<div class="txt_cmt">
+									<p style="font-size: 0.9em;font-family: TelefonicaWebBold;"><i class="fa-light fa-viruses"></i> EN LOS ÚLTIMOS 3 AÑOS:<p>
+								</div>
+								<md-input-container class="md-block" style="margin: 27px 0 0 0">
+									<label>¿HA SUFRIDO ALGÚN CIBERATAQUE?</label>
+									<md-select ng-model="$ctrl.objPri.lossAttackAmountOption" ng-change="$ctrl.check_risk('atksOpt', $ctrl.objPri.lossAttackAmountOption)" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.amount.DS_TIPOS == 0" required>
+										<md-option ng-repeat="lost in $ctrl.tpLosses" ng-value="lost.CO_TIPO">
+											{{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container style="margin: 27px 0 0 0" class="md-block" ng-if="($ctrl.objPri.lossAttackAmountOption != undefined && $ctrl.objPri.lossAttackAmountOption == 1) || ($ctrl.optionAdminSelected == 2 && $ctrl.objPri.lossAttackAmountOption != undefined && $ctrl.objPri.lossAttackAmountOption > 0)">
+									<label>¿De qué tipo?</label>
+									<md-select ng-change="$ctrl.check_risk('selAtks', $ctrl.selAtks)" ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.selAtks" required multiple>
+										<md-option ng-repeat="lost in $ctrl.tpCbatk" ng-value="lost.CO_TIPO">
+											{{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+							</div>
+							<div class="container_TarMovil_input" flex="" style="text-align: center;border: 1px dotted #8a1a93;">
+								<span style="text-align: center;font-size: 60px;color: #8A1A93FF"><i class="fa-thin fa-shield-check"></i></span>
+								<div class="txt_cmt">
+									<p style="font-family: TelefonicaWebBold;color: #8A1A93FF;font-size: 0.9em;"><span style="color: #6E7894;font-family: TelefonicaWebBold">¿INCLUIR </span> EXTENSIÓN DE CIBERDELINCUENCIA?</p>
+								</div>
+								<md-input-container class="md-block" style="margin: 27px 0 0 0">
+									<md-checkbox class="ciberempresaCheck" ng-disabled="($ctrl.llave == 'resumen' || $ctrl.price == null || $ctrl.price == 0) && $ctrl.optionAdminSelected != 2" ng-model="$ctrl.addCCE" ng-change="$ctrl.checkAmounts(true)">
+										<span style="color:#000000;font-family: TelefonicaWebBold;font-size: 0.8em;">SÍ, INCLUIR LA EXTENSIÓN</span>
+									</md-checkbox>
+									<div>
+										<p style="font-family: TelefonicaWebBold;color: #6E7894;font-size: 0.9em;text-align: left;padding: 0px 10px">SE EXTIENDE LA COBERTURA 4 CON:</p>
+									</div>
+									<div style="font-size: 0.9em;text-align: left;padding: 0px 10px;color: #6E7894">
+										<p><i class="fa-light fa-check" style="margin-right: 3px;color: #8A1A93FF"></i> Robo de Fondos de la Cuenta Fiduciaria</p>
+										<p><i class="fa-light fa-check" style="margin-right: 3px;color: #8A1A93FF"></i> Robo de Fondos Personales</p>
+										<p><i class="fa-light fa-check" style="margin-right: 3px;color: #8A1A93FF"></i> Hacking Telefónico</p>
+										<p><i class="fa-light fa-check" style="margin-right: 3px;color: #8A1A93FF"></i> Phising</p>
+									</div>
+								</md-input-container>
+								<div ng-if="$ctrl.activity.CO_ACTIVIDAD == 'I1' && $ctrl.isBancaMarch() == true" class="delimitador-check">
+									<md-input-container class="md-block">
+										Forma de pago
+									</md-input-container>
+									<md-input-container layout="row" layout-align="start start" flex="100">
+										<md-select ng-disabled="($ctrl.llave == 'resumen' || $ctrl.price == null || $ctrl.price == 0) && $ctrl.optionAdminSelected != 2" ng-model="$ctrl.formaPago" flex="100" ng-change="$ctrl.rateCompany()">
+											<md-option ng-value="7">Mensual</md-option>
+											<md-option ng-value="2">Anual</md-option>
+										</md-select>
+									</md-input-container>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="container_TarMovil_div" layout="column" layout-sm="column" layout-xs="column" flex="33" style="margin: 16px 0px">
+						<div layout-align="center center" layout="column" ng-if="$ctrl.mostrarAdmin == false && $ctrl.colectivo.IN_CAMPAIGN == true" class="delimitador-check" style="border: 1px dotted #8a1a93;">
+							<!--						<div layout-align="center center" layout="column" style="border: 1px dotted #8a1a93;">-->
+							<div class="row">
+								<div class="col">
+									<md-list style="margin-top: 0px" layout="row" layout-align="center center">
+										<md-list-item flex="100">
+											<div>
+												<span layout-align="center center" style="text-align: center;font-size: 60px;color: #8A1A93FF"><i class="fa-thin fa-file-certificate"></i></span>
+											</div>
+											<md-input-container flex="100" style="text-align: center">
+												<md-checkbox class="ciberempresaCheck" style="margin-bottom: 0px" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.price == null || $ctrl.price == 0" ng-change="$ctrl.changeDescuento()" ng-model="$ctrl.addCodigoDescuento">
+													<span style="color: #6E7894;font-family: TelefonicaWebBold;font-size: 0.8em;">SÍ, APLICAR <span style="color: #8A1A93FF">BUNDLE TU EMPRESA SEGURA</span></span>
+												</md-checkbox>
+											</md-input-container>
+										</md-list-item>
+									</md-list>
+									<md-list style="margin-top: 0px" layout="row" layout-align="center center">
+										<md-list-item flex="80">
+											<md-input-container flex="100">
+												<label>Selecciona bundle</label>
+												<md-select ng-disabled="$ctrl.addCodigoDescuento != true || $ctrl.cuponAplicado == true" ng-model="$ctrl.codigoDescuento">
+													<md-option ng-value="7.50">Básico</md-option>
+													<md-option ng-value="10">Avanzado</md-option>
+													<md-option ng-value="15">Premium</md-option>
+												</md-select>
+											</md-input-container>
+										</md-list-item>
+									</md-list>
+									<div ng-if="$ctrl.addCodigoDescuento == true && $ctrl.codigoDescuento != null">
+										<md-list  style="margin-top: 0px" layout="row" layout-align="center center">
+											<md-list-item flex="100" style="text-align: center">
+												<p ng-if="$ctrl.codigoDescuento == 7.50">Vas a aplicar <span style="color:#74b957;font-family: 'TelefonicaWebBold';text-transform: uppercase;">Tu Empresa Segura Básico</span></p>
+												<p ng-if="$ctrl.codigoDescuento == 10">Vas a aplicar <span style="color:#74b957;font-family: 'TelefonicaWebBold';text-transform: uppercase;">Tu Empresa Segura Avanzado</span></p>
+												<p ng-if="$ctrl.codigoDescuento == 15">Vas a aplicar <span style="color:#74b957;font-family: 'TelefonicaWebBold';text-transform: uppercase;">Tu Empresa Segura Premium</span></p>
+											</md-list-item>
+										</md-list>
+										<div layout="row" layout-align="center start">
+											<md-input-container flex="60" style="text-align: center">
+												<input type="text" ng-disabled="$ctrl.cuponAplicado == true" ng-model="$ctrl.idDescuento" class="input-descuento" placeholder="Id. requerido" required />
+											</md-input-container>
+											<md-button flex="40" class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.cuponAplicado != true" ng-click="$ctrl.aplicarDecuento()" ng-disabled="$ctrl.idDescuento == null || $ctrl.idDescuento == '' || $ctrl.cuponAplicado == true">
+												<i class="fa-light fa-check-double" style="margin-right: 3px;"></i> Aplicar código
+											</md-button>
+										</div>
+										<div ng-if="$ctrl.cuponAplicado == true" layout="row" layout-align="center center">
+											<p>Código aplicado <span style="color:#74b957">correctamente</span></p>
+										</div>
+										<div layout="row" layout-align="center center">
+											<md-progress-circular md-mode="indeterminate" ng-show="$ctrl.calcDescuento == true" style="margin: 15px 0px;"></md-progress-circular>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div style="height: 100%;margin: 5px 10px 0px 10px;" ng-if="$ctrl.mostrarTarificacionManual != true && $ctrl.priceable == true" layout="column" layout-sm="column">
+							<div ng-hide="$ctrl.codigoDescuento != null && $ctrl.cuponAplicado != true" class="container_TarMovil_price" layout="row" layout-align="end center">
+								<div ng-if="$ctrl.addCodigoDescuento == false || $ctrl.codigoDescuento == null" layout="column" layout-align="start center" flex="30" class="animationIf"></div>
+								<div layout="row" layout-align="center center">
+									<div layout="row">
+										<div>
+											<div ng-show="$ctrl.calc == true" style="text-align: center">
+												<md-progress-circular md-mode="indeterminate" style="margin: 15px 0px;"></md-progress-circular>
+												<span style="color: #0066ff;font-family: TelefonicaWebBold;">Calculando el precio del seguro... </span>
+											</div>
+											<span ng-class="{txtDesenfocado: ($ctrl.hidePrice == true)}" ng-hide="$ctrl.calc == true" class="spPrice">{{$ctrl.price == 0 ? '--' : $ctrl.formatPrice($ctrl.price) }}</span>
+											<span ng-hide="$ctrl.calc == true || $ctrl.price == 0 || $ctrl.hidePrice == true" class="txtRegular">{{ 'TAXES_INCLUDED' | translate }}</span>
+											<p ng-if="$ctrl.formaPago == 2" class="text-right color-blue" style="margin-bottom: 0px;text-transform: uppercase">Precio del seguro: <b>Anual</b></p>
+											<p ng-if="$ctrl.formaPago == 7" class="text-right color-blue" style="margin-bottom: 0px;text-transform: uppercase">Precio del seguro: <b>Mensual</b></p>
+											<p ng-if="$ctrl.cuponAplicado == true && $ctrl.codigoDescuento != null" class="text-right color-blue" style="margin-bottom: 0px">Descuento aplicado del <b>{{$ctrl.codigoDescuento}}%</b></p>
+											<!--<p ng-if="$ctrl.formaPago == 7 && $ctrl.anualPrice != null" class="text-right">Importe anual: <b>{{$ctrl.formatPrice($ctrl.anualPrice)}} €</b></p> -->
+											<div class="franquiciaGestor" ng-if="$ctrl.franquiciaGestor != null && $ctrl.productoCiberSelected.ID_PRODUCTO == 5">
+												FRANQUICIA: {{ $ctrl.franquiciaGestor }} €
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div ng-hide="$ctrl.codigoDescuento != null && $ctrl.cuponAplicado != true" ng-if="($ctrl.budgetId == null || $ctrl.budgetId == '' || $ctrl.price == null || $ctrl.price == 0) && $ctrl.calc != true" id="boxWelcomeInfo" style="padding: 100px 20px;text-align: center">
+								<h4>Rellena las secciones del<span style="color:#0066ff"> Tarificador</span> para obtener una tarifa</h4>
+							</div>
+							<div ng-if="$ctrl.codigoDescuento != null && $ctrl.cuponAplicado != true" style="padding: 100px 20px;text-align: center">
+								<h4>Rellena el<span style="color:#0066ff"> Id del descuento</span> y aplica el cupón</h4>
+							</div>
+							<div class="accionesPresupuestoContainer" layout="column" ng-hide="$ctrl.codigoDescuento != null && $ctrl.cuponAplicado != true" ng-if="$ctrl.colectivo.IN_EMITE != false && $ctrl.llave != 'resumen' && $ctrl.budgetId != undefined && $ctrl.budgetId != ''">
+								<div layout="row" layout-align="center center">
+									<h4>Se ha generado el presupuesto <b>{{$ctrl.budgetId}}</b></h4>
+								</div>
+								<div ng-if="$ctrl.rol != 1 && $ctrl.rol != 4" layout="row" layout-align="center center">
+									<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.modalPdf($ctrl.budgetId, 1)">
+										<i class="fas fa-paper-plane" style="margin-right: 3px;"></i>&nbsp;Enviar presupuesto
+									</md-button>
+									<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.modalPdf($ctrl.budgetId, 0)">
+										<i class="fas fa-download" style="margin-right: 3px;"></i>&nbsp;Descargar presupuesto
+									</md-button>
+								</div>
+							</div>
+							<div ng-hide="$ctrl.codigoDescuento != null && $ctrl.cuponAplicado != true" ng-if="$ctrl.budgetId != undefined && $ctrl.budgetId != '' && $ctrl.calc != true && $ctrl.price != null && $ctrl.price != 0 && $ctrl.rol != 1 && $ctrl.rol != 4" layout-align="center center" style="margin: 15px 56px 0 41px">
+								<md-menu>
+									<md-button ng-click="$ctrl.openMenu($mdMenu, $event)" class="md-raised md-primary medium-blue button-action-main" style="width: 100%">
+										<span><i class="fa-light fa-eye" style="margin-right: 3px;"></i> Mostrar más opciones de presupuesto</span>
+									</md-button>
+									<md-menu-content width="4">
+										<md-menu-item>
+											<md-button ng-disabled="$ctrl.llave == 'resumen' || $ctrl.budgetId == undefined ||$ctrl.budgetId == ''" ng-click="$ctrl.reset()">
+												<i class="fa-duotone fa-rotate-right"></i> Empezar nuevo presupuesto
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button ng-click="$ctrl.rateCompany(false, true)" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+												<i class="fa-duotone fa-copy"></i> Nuevo presupuesto a partir de este
+											</md-button>
+										</md-menu-item>
+									</md-menu-content>
+								</md-menu>
+							</div>
+                            <p class="text-center md-padding" ng-if="$ctrl.budgetId != undefined && $ctrl.budgetId != '' && $ctrl.calc != true && $ctrl.price != null && $ctrl.price != 0 && ($ctrl.rol == 1 || $ctrl.rol == 4)" style="color:#474a59!important">
+                                <i class="fa-light fa-arrows-repeat" style="margin-right: 3px;color: #00b0bd"></i>
+                                Utiliza la vista de <span style="color: #6E7894;font-family: TelefonicaWebBold">'ADMINISTRADOR'</span> si deseas descargar o enviar por email presupuestos.
+                            </p>
+							<div ng-hide="$ctrl.codigoDescuento != null && $ctrl.cuponAplicado != true" ng-if="$ctrl.price != null && $ctrl.price != 0 && $ctrl.rol != 1 && $ctrl.rol != 4" layout-gt-sm="row" layout-align="center center">
+								PROCEDER A CONTRATAR LA PÓLIZA
+								<md-switch ng-model="$ctrl.switchContratarPoliza" class="switch-mov"></md-switch>
+							</div>
+							<div ng-hide="$ctrl.codigoDescuento != null && $ctrl.cuponAplicado != true" layout-gt-sm="row" ng-if="$ctrl.switchContratarPoliza == true" style="margin: 0px 10px">
+								<p class="advertencia">
+									Atención: Esta acción te redirigirá a la pantalla de toma de datos del cliente en la que podrás finalizar la contratación y
+									emisión de una nueva póliza en los sistemas de Telefónica Seguros.
+								</p>
+							</div>
+							<div ng-hide="$ctrl.codigoDescuento != null && $ctrl.cuponAplicado != true" layout-gt-sm="row" ng-if="$ctrl.switchContratarPoliza == true" layout-align="center center" class="margin-bottom-20">
+								<div class="container_TarMovil_btn" layout="row" layout-align="center none">
+									<md-button ng-click="$ctrl.rateCompany(true)" ng-disabled="$ctrl.colectivo.IN_EMITE == false || $ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == '' || $ctrl.calc == true" class="md-raised md-primary medium-blue button-action-main">
+										<span><i class="fa-light fa-eye" style="margin-right: 3px;"></i> Proceder a la toma de datos</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+						<div ng-if="$ctrl.priceable == false" style="margin-top: 5px;border: 1px dotted #01b1be;height: 100%;" layout="column" layout-sm="column">
+							<form name="$ctrl.formFormulario">
+								<div layout="column" layout-sm="column" layout-margin="">
+									<div layout="row" style="text-align: center">
+										<h5>ENVÍO DE FORMULARIO.<span style="color: #0066ff"> TARIFA PERSONALIZADA</span></h5>
+									</div>
+									<div layout="row" style="text-align: center">
+										Con los parámetros de tarificación seleccionados es necesario que el cliente rellene un formulario, te lo remita y nos lo hagas llegar a
+										<a href="mailto:ciberseguro@telefonica.com" style="display: contents;">ciberseguro@telefonica.com</a> para que podamos ofrecerle una tarifa personalizada
+									</div>
+									<div layout="row">
+										<md-input-container class="md-block callbackForm_inputCont" >
+											<label>Empresa</label>
+											<input ng-model="$ctrl.objSendF.NO_NOMBRE" uppercase required/>
+										</md-input-container>
+									</div>
+									<div layout="row">
+										<md-input-container class="md-block callbackForm_inputCont" flex="30" >
+											<label>CIF</label>
+											<input cvalidation="NU_DOCUMENTO" ng-model="$ctrl.objSendF.NU_DOCUMENTO" uppercase required/>
+										</md-input-container>
+										<md-input-container class="md-block callbackForm_inputCont" flex="70">
+											<label>{{ 'EMAIL' | translate }}</label>
+											<input ng-model="$ctrl.objSendF.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" required/>
+										</md-input-container>
+									</div>
+									<div layout="row">
+										<p style="font-size: 0.8em;text-align: center">* Se enviará el formulario al email de empresa/cliente indicado. Además, se te enviará una notificación a tu correo</p>
+									</div>
+									<div layout="row" layout-align="center none">
+										<md-progress-circular md-mode="indeterminate" ng-if="$ctrl.loadingForm == true" style="margin: 0 auto;"></md-progress-circular>
+										<md-button ng-if="$ctrl.loadingForm != true" ng-click="$ctrl.sendForm()" class="md-raised md-primary medium-blue button-action-main">
+											<i class="fa-light fa-paper-plane" style="margin-right: 3px;"></i> Enviar formulario
+										</md-button>
+									</div>
+									<div ng-if="$ctrl.msgForm != null && $ctrl.msgForm != ''" layout="row" layout-align="center none">
+										<p style="font-size: 0.9em;font-family: TelefonicaWebBold">{{ $ctrl.msgForm }}</p>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="position: relative;height: auto;width: 100%;border-top: 1px solid #d5d5d5;padding: 0;margin-bottom: 25px" layout-align="center center">
+			<div style="position: absolute;top: -10px;left: 20px;height: auto;width: auto;background-color: white;text-align: center;padding: 0 20px">
+				<p style="font-family: TelefonicaWebBold;color: #0066FF;font-size: 16px;letter-spacing: 1px;"><span style="color: #031a34;font-family: TelefonicaWebRegular"><i class="fa-duotone fa-objects-column"></i>  POR COBERTURA | </span><span ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6"> LÍMITES INDEPENDIENTES</span><span ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5"> LÍMITES AGREGADOS</span></span></p>
+			</div>
+			<div layout="row" layout-align="center center" ng-style="{'margin-top' : ($ctrl.productoCiberSelected.ID_PRODUCTO == 5) ? '40px' : '40px', 'margin-bottom':'15px'}">
+				<div class="container_TarMovil_div" layout="column" flex="66">
+					<div layout="column" layout-gt-sm="row" layout-margin="" style="text-align: center">
+						<div class="" flex="">
+							<div class="box-covers-tarCiber">
+								<div class="coversBoxTitle">
+									<p><span style="text-align: center"><i class="fa-regular fa-shield-check" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 1</span></p>
+								</div>
+								<p class="textCobertura">Respuesta ante Incidentes Cibernéticos</p>
+								<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite DE cobertura: {{$ctrl.amount.DS_TIPOS}}</p>
+								<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> 100% DEL LÍMITE AGREGADO</p>
+							</div>
+						</div>
+						<div class="" flex="">
+							<div class="box-covers-tarCiber">
+								<div class="coversBoxTitle">
+									<p><span style="text-align: center"><i class="fa-regular fa-shield-check" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 2</span></p>
+								</div>
+								<p class="textCobertura">Responsabilidad por Seguridad en las Redes, Privacidad y Multimedia</p>
+								<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite DE cobertura: {{$ctrl.amount.DS_TIPOS}}</p>
+								<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> 100% DEL LÍMITE AGREGADO</p>
+							</div>
+						</div>
+						<div class="" flex="">
+							<div class="box-covers-tarCiber">
+								<div class="coversBoxTitle">
+									<p><span style="text-align: center"><i class="fa-regular fa-shield-check" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 3</span></p>
+								</div>
+								<p class="textCobertura">Daños a los Sistemas e Interrupción de Negocio</p>
+								<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite DE cobertura: {{$ctrl.amount.DS_TIPOS}}</p>
+								<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> 100% DEL LÍMITE AGREGADO</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="" layout="column" flex="33" >
+					<div layout="column" layout-gt-sm="row" layout-margin="" style="text-align: center">
+						<div class="" flex="">
+							<div class="box-covers-tarCiber" style="border-bottom: 1px solid #ebeaea;">
+								<div class="coversBoxTitle">
+									<p><span style="text-align: center"><i class="fa-regular fa-shield-check" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 4 CIBERDELINCUENCIA</span></p>
+								</div>
+								<div ng-if="$ctrl.addCCE == false || $ctrl.addCCE == undefined" flex="" style="margin-top: 31px">
+									<div layout="row" layout-align="center center" style="padding: 0px 15px;">
+										<div layout="column" flex="60">
+											<p class="c4_box">EXTORSIÓN CIBERNÉTICA</p>
+										</div>
+										<div layout="column" flex="40">
+											<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6" class="c4LimiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite {{$ctrl.amount.DS_TIPOS}}</p>
+											<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5" class="c4LimiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> 100% DEL LÍMITE AGREGADO</p>
+										</div>
+									</div>
+									<div layout="row" layout-align="center center" style="padding: 0px 15px;">
+										<div layout="column" flex="60">
+											<p class="c4_box">ROBO DE IDENTIDAD<br>FRAUDE POR TRANSFERENCIA DE FONDOS </p>
+										</div>
+										<div layout="column" flex="40">
+											<p class="c4LimiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite {{$ctrl.amountCC}}</p>
+										</div>
+									</div>
+								</div>
+								<div ng-if="$ctrl.addCCE == true" flex="" style="margin-top: 20px">
+									<div layout="row" layout-align="center center" style="padding: 0px 15px;">
+										<div layout="column" flex="60">
+											<p class="c4_box">EXTORSIÓN CIBERNÉTICA: </p>
+										</div>
+										<div layout="column" flex="40">
+											<p class="c4LimiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite {{$ctrl.amount.DS_TIPOS}}</p>
+										</div>
+									</div>
+									<div layout="row" layout-align="center center" style="padding: 0px 15px;">
+										<div layout="column" flex="60">
+											<p style="font-size: 0.7em!important;" class="c4_box">ROBO DE IDENTIDAD | FRAUDE POR TRANSFERENCIA DE FONDOS | ROBO DE FONDOS DE LA CUENTA FIDUCIARIA | ROBO DE FONDOS PERSONALES | HACKING TELEFÓNICO | PHISING</p>
+										</div>
+										<div layout="column" flex="40">
+											<p class="c4LimiteTag c4LimiteTagExt"><i class="fa-regular fa-arrow-up-to-line"></i> Límite {{$ctrl.amountCC}}</p>
+										</div>
+									</div>
+									<!--									<div layout="row" layout-align="center center" style="padding: 0px 15px;">-->
+									<!--										<p style="text-align:center; text-transform:uppercase; font-size: 0.9em;color: #8A1A93FF"><i class="fa-regular fa-octagon-plus"></i> Has incluido la Extensión de Ciberdelincuencia en la cotización</p>-->
+									<!--									</div>-->
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--							<div layout="column" layout-gt-sm="row" layout-margin="" style="text-align: center">-->
+					<!--								<div ng-if="$ctrl.addCCE == false || $ctrl.addCCE == undefined" class="container_TarMovil_input boxSACoberturas" flex="" style="min-height: 120px">-->
+					<!--									<p><span style="text-align: center"><i class="fa-regular fa-globe" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 4 </span><span class="textCobertura">Ciberdelincuencia</span></p>-->
+					<!--									<p style="color: #6E7894;font-size: 0.9em; text-transform: uppercase;text-align: center">EXTORSIÓN CIBERNÉTICA: {{$ctrl.amount.DS_TIPOS}}</p>-->
+					<!--									<p style="color: #6E7894;font-size: 0.9em; text-transform: uppercase;text-align: center">ROBO DE IDENTIDAD, FRAUDE POR TRANSFERENCIA DE FONDOS: {{$ctrl.amountCC}}</p>-->
+					<!--								</div>-->
+					<!--								<div ng-if="$ctrl.addCCE == true" class="container_TarMovil_input boxSACoberturas" flex="" style="min-height: 120px">-->
+					<!--									<p><span style="text-align: center"><i class="fa-regular fa-globe" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 4 </span><span class="textCobertura">Ciberdelincuencia</span></p>-->
+					<!--									<p style="color: #6E7894;font-size: 0.9em; text-transform: uppercase;text-align: center">EXTORSIÓN CIBERNÉTICA: {{$ctrl.amount.DS_TIPOS}}</p>-->
+					<!--									<p style="color: #6E7894;font-size: 0.8em; text-transform: uppercase;text-align: center">ROBO DE IDENTIDAD, FRAUDE POR TRANSFERENCIA DE FONDOS, ROBO DE FONDOS DE LA CUENTA FIDUCIARIA, ROBO DE FONDOS PERSONALES, HACKING TELEFÓNICO, PHISING: {{$ctrl.amountCC}}</p>-->
+					<!--								</div>-->
+					<!--							</div>-->
+				</div>
+			</div>
+
+			<div layout="row" layout-align="center center">
+				<p style="color: #6E7894;font-size: 0.9em">* Los límites son por siniestro y año. Puedes descargar la tabla orientativa para eligir la suma asegurada <i class="fa-light fa-download" style="margin-right: 3px;color: #0066FF"></i><a href="src/documentos/Tabla_Orientativa_2024.pdf" class="" target="_blank">aquí</a></p>
+			</div>
+		</div>
+	</form>
+</div>

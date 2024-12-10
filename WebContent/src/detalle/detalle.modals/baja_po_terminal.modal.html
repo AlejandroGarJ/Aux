@@ -1,0 +1,42 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%;">
+	<md-toolbar style="background-color: white; min-height:25px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2><i class="fa-regular fa-hexagon-minus" style="color: #ffffff; margin-right: 3px"></i> Baja de bloque de product offering</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	            <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form name="$ctrl.formModalBajaPo" id="formModalBajaPo" flex class="formClass md-padding">
+			<div layout="row" layout-align="center center" class="margin-top-20">
+                <h4>{{ $ctrl.datos.brandName + " " + $ctrl.datos.modelName }}</h4>
+                <md-input-container class="md-block hide-validation-error" flex-gt-sm="25">
+                    <label>Fecha de Finalización</label>
+
+                    <md-datepicker ng-model="$ctrl.form.endDate" md-min-date="$ctrl.minDate" required md-no-asterisk></md-datepicker>
+                </md-input-container>
+			</div>
+			
+			<div layout="row" layout-align="center center">
+                <h5>Se dará de baja el bloque completo</h5>
+			</div>
+			
+			<div layout="row" class="margin-top-20" layout-align="center center" ng-if="$ctrl.cargar != true">
+				<md-button class="md-raised md-primary medium-blue button-action-main btnNextCiber" ng-click="$ctrl.save()"><md-icon>check_circle</md-icon> DAR DE BAJA BLOQUE PO</md-button>
+			</div>
+			<div class="cs-loader" ng-if="$ctrl.cargar == true" style="height: auto; width: 97%; position: relative; height: 40px;">
+				<div class="cs-loader-inner">
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+				</div>
+			</div>
+	</md-dialog-content>
+</md-dialog>

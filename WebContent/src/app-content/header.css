@@ -1,0 +1,125 @@
+.cabecera{
+  text-align: center;
+  background: #003245;
+  color:white;
+}
+
+h1.logo-login{
+	font-size:5rem;
+	font-family: "TelefonicaTextRegular", Helvetica, Arial, sans-serif;
+    display: inline-block;
+    
+}
+
+h1.logo-login a{
+	color: white;
+    text-decoration: none;
+}
+
+h1.logo-login .dots {
+    margin: -0.2rem 0 0 0;
+    height: 0.5rem;
+    display: block;
+}
+
+h1.logo-login .dots .dot {
+    height: .75rem;
+    width: .75rem;
+    background-color: #00b7f0;
+    display: inline;
+    float: right;
+    margin-left: 0.9rem;
+}
+
+h1.logo-login .dots .dot.last {
+    background-color: white;
+}
+
+h1.logo {
+    font-family: "TelefonicaTextRegular", Helvetica, Arial, sans-serif;
+    display: inline-block;
+    margin: 0 .375em;
+    font-size: 4.1rem;
+}
+
+h1.logo a {
+    color: white;
+    text-decoration: none;
+}
+
+h1.logo .dots {
+    margin: -0.2rem 0 0 0;
+    height: 0.5rem;
+    display: block;
+}
+
+h1.logo .dots .dot {
+    height: 0.5rem;
+    width: 0.5rem;
+    background-color: #00b7f0;
+    display: inline;
+    float: right;
+    margin-left: 0.9rem;
+}
+
+h1.logo .dots .dot.last {
+    background-color: white;
+}
+
+.paddingCabecera{
+  padding-top: 15px;
+}
+
+#nombreUsuarioHeader{
+	color:white;
+}
+
+#cerrarSesion a:hover{
+  text-decoration: none;
+  color: black;
+}
+
+#cerrarSesion{
+	padding-left: 20px;
+	padding-top: 4px;
+}
+
+
+#divLogo{
+  margin-left: 25px;
+}
+
+.navBarDark{
+	background-color:#003245 !important;
+	color:white;
+}
+.navBarDark button{
+    height: 45px;
+}
+md-menu-item>a.md-button{
+	padding-top:0px !important;
+}
+.md-scroll-mask, md-backdrop{
+	/* top:87px !important; */
+}
+.navBarDark button:focus{
+	background-color: #2593B5;
+}
+/* .mdMenuHeader:hover{ */
+/* 	background-color: #2593B5; */
+/* } */
+.navBarDark md-menu.md-open>button{
+	background-color: #2593B5;
+}
+md-menu-content.md-menu-bar-menu.md-dense {
+	padding: 0px !important;
+}
+
+md-menu-content.md-menu-bar-menu.md-dense {
+    min-height: fit-content;
+}
+
+.logo_subcompania {
+    max-height: 40px;
+    margin-right: 6px;
+}

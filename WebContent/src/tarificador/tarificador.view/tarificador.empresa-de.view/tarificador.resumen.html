@@ -1,0 +1,167 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div>
+
+		    <div layout="row" layout-align="center center">
+				<md-list ng-if="$ctrl.detalles.IN_EMITIDO != 1" flex="20" style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.rateCompany(true)">
+					<md-list-item>
+						<span flex="100"><i class="fa-light fa-file-signature" style="color: #73b957; margin-right: 10px"></i> {{ 'CONTRACT' | translate }}</span>
+					</md-list-item>
+				</md-list>
+				<md-list flex="20" style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.modalPdf($ctrl.budgetId)">
+					<md-list-item>
+						<div layout="row" layout-align="center center">
+							<i class="fa-light fa-arrow-down-to-bracket" style="color: #73b957; margin-right: 10px"></i> 
+							<span flex="100">{{ 'DOWNLOAD_SEND_BUDGET' | translate }}</span>
+						</div>
+					</md-list-item>
+				</md-list>
+				<md-list flex="20" style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.rateCompany(false, true)">
+					<md-list-item>
+						<div layout="row" layout-align="center center">
+							<i class="fa-light fa-send-backward" style="color: #73b957; margin-right: 10px"></i>
+							<span flex="100">{{ 'NEW_BUDGET_COPY' | translate }}</span>
+						</div>
+					</md-list-item>
+				</md-list>
+			</div>
+
+			<form class="animationIf" name="$ctrl.formTarEmpresa" id="formSubmitTarEmpresa" style="margin-top: 20px" flex>
+				<div id="box-price"></div>
+				<div class="accentBox" style="border: 0px">
+					<div ng-show="true" class="container_TarMovil_price" layout="row" layout-align="center center">
+						<div layout="row" layout-align="center center" flex="100" style="padding: 0px">
+							<div layout="row" flex="100" style="padding: 0px">
+								<div style="padding: 0px">
+									<md-progress-circular md-mode="indeterminate" ng-show="$ctrl.calc == true" style="margin: 0 auto;"></md-progress-circular>
+									<div style="padding: 0px" layout="row" layout-align="space-between center">
+										<div style="padding: 0px" layout="column" layout-align="start start">
+											<span>Presupuesto</span>
+											<span style="font-size: 30px"><b>{{$ctrl.budgetId}}</b></span>
+										</div>
+										<span ng-class="{txtDesenfocado: ($ctrl.hidePrice == true)}" ng-hide="$ctrl.calc == true"><b style="font-size: 30px">{{$ctrl.price == 0 ? '--' : $ctrl.formatPrice($ctrl.price) }}</b>€</span>
+									</div>
+									<span ng-hide="$ctrl.calc == true || $ctrl.price == 0 || $ctrl.hidePrice == true" class="txtRegular">{{ 'TAXES_INCLUDED' | translate }}</span>
+									<p ng-if="$ctrl.formaPago == 2" class="text-right color-blue">Precio del seguro: <b>Anual</b></p>
+									<p ng-if="$ctrl.formaPago == 7" class="text-right color-blue" style="margin-bottom: 0px">Precio del seguro: <b>Mensual</b></p>
+									<p ng-if="$ctrl.formaPago == 7 && $ctrl.anualPrice != null" class="text-right">Importe anual: <b>{{$ctrl.formatPrice($ctrl.anualPrice)}} €</b></p>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+					<div class="accionesPresupuestoContainer" layout="row" layout-align="center center" flex="100" ng-if="$ctrl.colectivo.IN_EMITE != false && $ctrl.llave != 'resumen' && $ctrl.budgetId != undefined && $ctrl.budgetId != ''">
+						<div layout="row" layout-align="center center">
+							<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.modalPdf($ctrl.budgetId, 1)">
+								<i class="fas fa-paper-plane"></i>&nbsp;Enviar presupuesto
+							</md-button>
+							<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.modalPdf($ctrl.budgetId, 0)">
+								<i class="fas fa-download"></i>&nbsp;Descargar presupuesto
+							</md-button>
+						</div>
+						<div ng-if="$ctrl.rol != 1 && $ctrl.rol != 4" layout-gt-sm="row" layout-align="start center">
+							Realizar contratación de la póliza
+							<md-switch ng-model="$ctrl.switchContratarPoliza" class="switch-mov"></md-switch>
+						</div>
+						<div layout-gt-sm="row" ng-if="$ctrl.switchContratarPoliza == true">
+							<p class="advertencia">
+								Atención: Esta acción te redirigirá a la pantalla de toma de datos del cliente en la que podrás finalizar la contratación y
+								emisión de una nueva póliza en los sistemas de Telefónica Seguros.
+							</p>
+						</div>
+						<div layout-gt-sm="row" ng-if="$ctrl.switchContratarPoliza == true" layout-align="center center">
+							<div class="container_TarMovil_btn" layout="row" layout-align="center none">
+								<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.rateCompany(true)" ng-disabled="$ctrl.colectivo.IN_EMITE == false || $ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == '' || $ctrl.calc == true">
+									<i class="fas fa-edit"></i>&nbsp;
+									Toma de datos
+								</md-button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				
+				<div layout="column">
+				      <div layout-gt-sm="row" class="margenPresupuestos">
+	                    <md-input-container class="md-block" flex>
+                            <label>{{ 'SECTOR' | translate }}</label>
+                            <md-select ng-disabled="$ctrl.detalles.IN_EMITIDO == 1" ng-model="$ctrl.sector" required>
+                                <md-option ng-repeat="sector in $ctrl.tpGroups" ng-value="sector">
+                              {{$ctrl.parent.getDescriptivo(sector, 'DS_TIPOS')}}
+                             </md-option>
+                            </md-select>
+	                    </md-input-container>
+	                    <md-input-container class="md-block" flex>
+                            <label>{{ 'ACTIVITY' | translate }}</label>
+                            <md-select ng-disabled="$ctrl.sector == null || $ctrl.sector.LST_ACTIVIDADES.length <= 0 || $ctrl.detalles.IN_EMITIDO == 1" ng-model="$ctrl.activity" ng-change="$ctrl.check_risk('activity', $ctrl.activity)" required>
+                                <md-option ng-repeat="activity in $ctrl.sector.LST_ACTIVIDADES" ng-value="activity">
+                                  {{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+                                </md-option>
+                            </md-select>
+	                    </md-input-container>
+<!-- 	                    <md-input-container ng-init="" class="md-block" flex> -->
+<!-- 		                    <label>{{ 'TYPE_BUSSINES' | translate }}</label> -->
+<!-- 	                        <md-select ng-model="$ctrl.tipoEmpresa" ng-change="$ctrl.changeTipoEmpresa()" ng-disabled="$ctrl.activity == undefined || $ctrl.detalles.IN_EMITIDO == 1" required> -->
+<!-- 	                            <md-option ng-repeat="empresa in $ctrl.tiposEmpresa" ng-value="empresa.CO_TIPO">{{$ctrl.parent.getDescriptivo(empresa, 'DS_TIPOS')}}</md-option> -->
+<!-- 	                        </md-select> -->
+<!--                         </md-input-container> -->
+	                    <md-input-container class="md-block" flex>
+		                    <label>{{ 'BILLING_EUR' | translate }}</label>
+	                        <md-select ng-model="$ctrl.objPri.turnover" ng-change="$ctrl.check_risk('billing', $ctrl.objPri.turnover)" ng-disabled="$ctrl.activity == undefined || $ctrl.detalles.IN_EMITIDO == 1" required>
+	                            <md-option ng-repeat="fact in $ctrl.tpFacturacion" ng-value="fact.CO_TIPO">{{$ctrl.parent.getDescriptivo(fact, 'DS_TIPOS')}}</md-option>
+	                        </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>{{ 'INSURED_AMOUNT' | translate }}</label>
+                            <!-- <md-select ng-model="$ctrl.amount" ng-change="$ctrl.checkAmounts()"> -->
+                            <md-select ng-model="$ctrl.amount" ng-change="$ctrl.check_risk('amount', $ctrl.amount)" ng-disabled="$ctrl.objPri.turnover == undefined || $ctrl.detalles.IN_EMITIDO == 1" required>
+                                <md-option ng-repeat="amount in $ctrl.tpAmount track by amount.CO_TIPO" ng-value="amount">
+                              {{$ctrl.parent.getDescriptivo(amount, 'DS_TIPOS')}}
+                          </md-option>
+                            </md-select>
+                        </md-input-container>
+	                </div>
+				    <div layout-gt-sm="row" class="margenPresupuestos">
+                        <md-input-container class="md-block" flex>
+                            <label>{{ 'SECTOR' | translate }}</label>
+                            <md-select ng-model="$ctrl.affiSector" ng-disabled="$ctrl.detalles.IN_EMITIDO == 1" multiple>
+                                <md-option ng-repeat="afSector in $ctrl.tpGroups" ng-value="afSector">{{afSector.DS_TIPOS}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>{{ 'SUBSIDIARY_ACTIVITY' | translate }}</label>
+                            <md-select ng-disabled="$ctrl.affiSector == null || $ctrl.affiSector.length <= 0 || $ctrl.detalles.IN_EMITIDO == 1" ng-model="$ctrl.selActivities" ng-change="$ctrl.check_risk('selActivities', $ctrl.selActivities)" multiple>
+                                <md-optgroup label="{{afSector.DS_TIPOS}}" ng-repeat="afSector in $ctrl.affiSector">
+                                    <md-option ng-repeat="activity in afSector.LST_ACTIVIDADES" ng-value="activity.DS_ACTIVIDAD">
+                              {{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+                          </md-option>
+                               </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>{{ 'QUESTION_CYBER_ATTACK' | translate }}</label>
+                            <md-select ng-model="$ctrl.objPri.lossAttackAmountOption" ng-change="$ctrl.check_risk('atksOpt', $ctrl.objPri.lossAttackAmountOption)" ng-disabled="$ctrl.amount.DS_TIPOS == 0 || $ctrl.detalles.IN_EMITIDO == 1" required>
+                                <md-option ng-repeat="lost in $ctrl.tpLosses" ng-value="lost.CO_TIPO">
+                                    {{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+                          		</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" ng-if="($ctrl.objPri.lossAttackAmountOption != undefined && $ctrl.objPri.lossAttackAmountOption == 1) || ($ctrl.optionAdminSelected == 2 && $ctrl.objPri.lossAttackAmountOption != undefined && $ctrl.objPri.lossAttackAmountOption > 0)" flex>
+                            <label>{{ 'QUESTION_CYBER_ATTACK_TYPE' | translate }}</label>
+                            <md-select ng-change="$ctrl.check_risk('selAtks', $ctrl.selAtks)" ng-model="$ctrl.selAtks" ng-disabled="$ctrl.detalles.IN_EMITIDO == 1" required multiple>
+                                <md-option ng-repeat="lost in $ctrl.tpCbatk" ng-value="lost.CO_TIPO">
+                              		{{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+                          		</md-option>
+                            </md-select>
+                        </md-input-container>
+						<md-input-container class="md-block" flex>
+							<md-checkbox ng-disabled="$ctrl.detalles.IN_EMITIDO == 1" class="ciberempresaCheck" ng-disabled="($ctrl.price == null || $ctrl.price == 0) && $ctrl.optionAdminSelected != 2" ng-model="$ctrl.addCCE" ng-change="$ctrl.checkAmounts(true)">
+								<span style="color:#000000;font-family: TelefonicaWebBold;font-size: 0.8em;">{{ 'ADD_EXTENSION' | translate }}</span>
+							</md-checkbox>
+						</md-input-container>
+	                </div>
+				</div>
+            </form>
+        </div>

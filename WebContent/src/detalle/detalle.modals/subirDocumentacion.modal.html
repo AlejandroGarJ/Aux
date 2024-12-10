@@ -1,0 +1,44 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:50%" ng-click="$ctrl.refreshList()">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Subir documentaci&#243;n</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="padding:30px">
+	   <div layout="column">
+                <div layout="row" >
+                    <div style="display: inline-block; width: fit-content; margin-bottom: 3%;">
+                        <input type="file" id="file_pol" name="file_pol" class="inputfile" />
+                        <label class="dark-blue md-button btnNuevo" for="file_pol">
+                            <i class="material-icons btnIconoNube">attachment</i> {{ 'SELECT_FILE' | translate }}
+                        </label>
+                    </div>
+                </div>
+                <div ng-repeat="archivo in $ctrl.listaArchivos" layout-gt-sm="row" layout-margin>
+					<md-input-container class="md-block" flex-gt-sm flex="33" >
+                        <label>{{ 'FILE' | translate }}</label>
+                        <input ng-model="archivo.NO_ARCHIVO" disabled>
+                    </md-input-container>
+					<md-input-container class="md-block" flex-gt-sm flex="33">
+                        <label>{{ 'STATUS' | translate }}</label>
+                        <input type="text" ng-model="archivo.ESTADO" disabled>
+                    </md-input-container>
+					<i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(archivo)">
+                        cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip>
+                    </i>
+                    <i class="material-icons btnIcono" ng-click="$ctrl.deleteFile(archivo)">
+                        delete_outline <md-tooltip md-direction="top">{{ 'DELETE' | translate | uppercase }}</md-tooltip>
+					</i>
+				</div>
+			<md-button ng-if="$ctrl.listaArchivos.length > 0" class="md-raised md-primary medium-blue button-action-main" style="width: fit-content; margin-left: 75%;" ng-click="$ctrl.uploadFiles()">
+                 <md-icon>backup</md-icon>&nbsp;{{ 'UPLOAD_FILES' | translate }}
+            </md-button>				 
+        </div>
+	</md-dialog-content>
+</md-dialog>

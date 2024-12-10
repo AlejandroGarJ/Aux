@@ -1,0 +1,76 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:65%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Generar documentación</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<form name="$ctrl.formEbroker" class="formClass" id="formEbroker">
+				<div layout-gt-sm="row" layout-align="center center">
+					<p class="text-center">Rellena la siguiente información sobre la <span style="color: #0066ff;">CORREDURÍA DE EBROKER ASOCIADA </span> para que podamos generar la documentación CiberWay asociada.</p>
+				</div>
+				<div class="margin-top-20" layout-gt-sm="row" layout-align="center center" flex="100">
+					<md-input-container class="md-block" flex="50">
+						<label>NOMBRE DE LA CORREDURÍA</label>
+						<input ng-model="$ctrl.objEbroker.nombreCorreduria" uppercase required>
+					</md-input-container>
+					<md-input-container class="md-block" flex="30">
+						<label>DGS CORREDURÍA</label>
+						<input ng-model="$ctrl.objEbroker.dgsCorreduria" uppercase required>
+					</md-input-container>
+					<md-input-container class="md-block" flex="20">
+						<label>TELÉFONO DE LA CORREDURÍA</label>
+						<input ng-model="$ctrl.objEbroker.telefonoCorreduria" uppercase required>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row" layout-align="center center" flex="100">
+					<md-input-container class="md-block" flex="60">
+						<label>DIRECCIÓN DE LA CORREDURÍA</label>
+						<input ng-model="$ctrl.objEbroker.direccionCorreduria" ng-model="$ctrl.address.NO_DIRECCION" uppercase required>
+					</md-input-container>
+					<md-input-container class="md-block" flex="40">
+						<label>EMAIL DE LA CORREDURÍA</label>
+						<input ng-model="$ctrl.objEbroker.emailCorreduria" uppercase required>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row" layout-align="center center" flex="100">
+					<md-input-container class="md-block" flex="30">
+						<label>CÓDIGO POSTAL</label>
+						<input ng-model="$ctrl.objEbroker.cpCorreduria" maxlength="5" ng-change="$ctrl.changeCoPostalCorreduria()" uppercase required>
+					</md-input-container>
+
+					<md-input-container class="md-block" flex="35">
+						<label>LOCALIDAD DE LA CORREDURÍA</label>
+						<input ng-model="$ctrl.objEbroker.poblacionCorreduria" required uppercase disabled>
+					</md-input-container>
+
+					<md-input-container class="md-block" flex="35">
+						<label>PROVINCIA DE LA CORREDURÍA</label>
+						<input ng-model="$ctrl.objEbroker.provinciaCorreduria" required uppercase disabled>
+					</md-input-container>
+				</div>
+				<div ng-if="$ctrl.cargarEbroker == true" id="buscandoGif" style="margin-top: 0px;margin-bottom:20px; padding:0px; display:table; z-index: 999999999;width: 90%; height: 2%;">
+		            <div class="centered" style="display:table-cell; vertical-align: middle;">
+						<div class="blob-3"></div>
+						<div class="blob-4"></div>
+					</div>
+		        </div>
+				<div ng-if="$ctrl.cargarEbroker != true" id="box-button-ebroker-admin" layout="row" layout-align="center center">
+					<div flex="100" style="text-align: center">
+						<md-button style="margin-bottom: 20px !important;" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.descargar()">
+			                <i class="fa-duotone fa-check-double"></i>
+			                GENERAR DOCUMENTACIÓN
+			            </md-button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</md-dialog-content>
+</md-dialog>

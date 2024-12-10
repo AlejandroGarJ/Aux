@@ -1,0 +1,1384 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<!--     <div layout="row" style="padding-left:10px"> -->
+<!--         <div flex="5" class="tabsVertical"> -->
+<div layout="row">
+    <section class="formClass" style="margin-top: 25px">
+        <div class="col-md-1 tabsVertical">
+            <div class="cinta">
+                <div tooltip-placement="right" uib-tooltip="{{ 'BASIC_INFO' | translate }}">
+                    <div class="tabs" ng-click="$ctrl.changeTabs(0)" ng-class="{active:$ctrl.showTable == 0}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAB40lEQVRIiaWWPWhUQRRGz6yLP40IgQhREARRsAjYLEjAIghBkGAK0xm0ERJQI0giCCZdbKytgoVYW/oLilY2IoigNoLKKhaixa5i5FhkFl/e5s1O1g9eM3Pv+Wbe3HfnQUHqiNo2Xy31sbqXXorwL6o9g//lbFPn1Ec58M/qaMpAXSg8bXVJ3aL+TMFH1aZ6WB1IBq/NG+zEJnetflOPxFX9VpdyDGLuXI5B9jvvh1H7X3gvdRmo0xnlOd23ATAILIYKAYsxJkv13EB1E7AjN35DBhF+E2gBzYz4g8BQCOFB5SGrO9Wrah1YBoaA2Qz4MPAQuKVOpnbwAxgB3gDvgeMhhFaPkh8G7gLngH3AtcodhBDawDhwowNPLGZebQD3gTPAADADjHV9JOpF9a16Uq0VxmvqZJybLeU0YqM8pp5VP6kHOpNlg6COq8/VV+qUelp9rb5QJ9RQAZ9SP6r7i8BU9zyq3lHvRdNQmm+oX9UTEf5hDbyXQUoF+EQlPMcgdtmFdca/q5fjWTVjBXUp50N7B1xSt3YGQgjzwHbgCqvlPBZCeNmvwW3gD7CnND4DHAKuA6eAdQ1Qf6mbM4yq8pNXZg14BpyPLWGj8DpwAXiaCtqtPlFXMu6BslZc/W3ZVcX/C59CRlBdQrVZAAAAAElFTkSuQmCC" />
+                        <br><span style="position: relative;top: 8px;color: white;font-size: 9px;letter-spacing: 0.3px;">INFO.</span>
+                    </div>
+                </div>
+                <div tooltip-placement="right" uib-tooltip="{{ 'INSURED_RISK_DATA' | translate }}">
+                    <div class="tabs" ng-click="$ctrl.formPoliza.$invalid == true ? $ctrl.validarPoliza() : $ctrl.changeTabs(1)" ng-class="{active:$ctrl.showTable == 1}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAB80lEQVRIia2VPWgVQRSFv5uYWMSAwRQGrFSIRYig2EhsAop1ECN2YmEXH2hjp4iFlaawsbER1IAB7RSCPhGJpgioYLCQ+FQMmEr8QQl8FjsPnssm7st6YWA4595zZmZ37kAboUY7+QAdbYgPAI/Vepr/PwP1ADALTKcxm7DqodbU9+pICzaSsJq6XZ1K42w7wpvUW+qToiNRBxL3XH2pnlPv5vMKj0gdJDuSJWA0Ij7ncxI2CjwDtgA/yq58TP2kjpcqyGrG1a/q/bWSOtXz6oI6VFa8pX5QfaVOql15sl99qN5TN7cr3qLTmz52Xd3aBHerDfXjei5SgUkkrYY61AFsBE4DKxFhVYOksZI0u5qu/epiVfFmqItqP8CGEsndQM8q9PeI+F1U1pz80wA4ClwDlnN4J3AKeKBuA44DfcAMcBD4BuWb3e2I2NE6gL1An3oHmEviS8BFsn41oQ6X2cFqcQEYBq4DJyKieZMn1X1kO39RxWAZmI6Im3kiIubUBeBY6fegID4AO9fgdwGNKgaPyJrdanEImFm3QUS8A36q+/Nc6kUngakqOwC4BFxW8zo1YD4iXlcyiIhp4AtwpYmph4EzwARAJLCX7B/+VaDTTXYhix6Ut8AY2X8/D9SBq8CRiHhaZfF/hdqj3lDfqHtauT/tyTt1TMjiJgAAAABJRU5ErkJggg==" />
+                        <br><span style="position: relative;top: 8px;color: white;font-size: 9px;letter-spacing: 0.3px;">{{ 'RISK' | translate | uppercase }}</span>
+                    </div>
+                </div>
+                <div tooltip-placement="right" uib-tooltip="{{ 'GUARANTEES_POLICY' | translate }}" ng-click="$ctrl.cargarGarantias('garantias')">
+                    <div class="tabs" ng-click="$ctrl.formPoliza.$invalid == true ? $ctrl.validarPoliza() : $ctrl.changeTabs(2)" ng-class="{active:$ctrl.showTable == 2}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACaUlEQVRIiZ2WX2iPURjHP+9arVCGG9E2+Xcx+T8hsuXCn7lwMSkxxsIy5ZKyUsqF8ifl3sTN7iYSIRSltHHjQqKNNrJMu3Xh42Lnbce737vfy6lT7/k+3+d7ntM5z/O8UGCoc9Qr6rA6pF5W5xTxrcwTBOqBBcBqoA3oBXYCCXAK+KDeAN4Ag8C7JElGi0R7QR1T+9S76kV1SQne0mC7F7hj6tly4s3qgFpTNpLJvjXBd8dUpOfq0QxWrXaoveqrMHvV4+rMDPeY+ixPfI86qFZFWLs6oj5WT6g7w+xQ76vf1baIX6V+Vluy4m1BqDHCLoUjb5jixBvVT+rFCGsKWodSoDNEvjwiHQyRzMsTj7gtjo/9EbYi+HegflM3R8YZAdtUQHxWEEpzZHpk26IOE55XTWQ4rD4oJx64Peqt8P1QPRjZ6tSfFUAfsD7y28Z4UpUTPwSsA04G6A6wPaKsAforgH5gbWSoBT5GQo1qfUZ8IXAVaE2SZCzA74G6iLYy3eA38CsyVABG67nAU3VVEK8EbgPXkyR5mfFLovU04HcF0AC8jQyDwOJ0kSRJD3AGeKSuAbqC0Hn+HkuBgWj9GmgofMkB/6GOqotK2B+VumTUr0WfqbpX3VUCb8p5pkNp/cgm2oF/SLT56hd1X4SlidaeAqVKxbkCpWJTEOrKnGaiVESGUsUu3Thb7DrVJ6HYtUb8tNjtyYvouXo8g1WrR9Sb6oswu8OlZ8t1h3nlOhCaHe+5tbmkfN/a4Lu1HLHL/2+Zp7O8JAsE59nAMiY3/WtMNP3dQDfjTX+Aok0/Z8P0t2UkzMK/LX8Atjz6ygudU8AAAAAASUVORK5CYII=" />
+                        <br><span style="position: relative;top: 8px;color: white;font-size: 9px;letter-spacing: 0.3px;">{{ 'GUARANTEES' | translate | uppercase }}</span>
+                    </div>
+                </div>
+                <div tooltip-placement="right" uib-tooltip="{{ 'INSURED_POLICY' | translate }}">
+                    <div class="tabs" ng-click="$ctrl.formPoliza.$invalid == true ? $ctrl.validarPoliza() : $ctrl.changeTabs(3)" ng-class="{active:$ctrl.showTable == 3}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAAAAmJLR0QA/4ePzL8AAAHzSURBVBgZvcFPaJYFAAfg36ebpi2HkRgUmU1opmDxKUhgByGiwJJ5CEGlQqkOgUgqFOQfFBURLNIiPWQHQfBQYCKCIORB3ItMLSSy9KOV4cxcBTvUenp9/T69jDrp8+RuMcrrDhk25EPj8//s8pWFJnvAR46r5b/p1tBlbEpqTng5FbMcckXDfutMzm2W26PPMVtt9Z69PknJM371mvt0WeZTP3syLZbo1+cNa6210aCPE+2+tyC3eNU3RucmT/hHd5r0WpxY4GSaPGy0msL8tPjBrFR0+M2ExAY7UjHJgHOm2G51Wqx3IBXvOJiS7daY4m379VvvXWfttC4t7nXGAS/Zot9jKVnhtGs+sMRTiXH+8ruFuU2PhiPO2JSKR1w36P5UPIeGsWkxw3mLEtP9Yr5RKWmzyx61xHinrPJ4btBhtwEDLmpPyReu+sPnHkp06nPERl/bp5ab7PWZSWq+tCHxogs6TLDavpTsdtBmJ72SFtd1puRBlz3vJ0+nos1Ma1wyMTHHj5bqUktCmvQYtjkVz7riW0PmpuItVzWcNy3kFi9oT8kYl81LbHPYxESX7/QkVjoafysUCoVCoVDYaaZzKWnzvj81XPNmSsYZiunq6urq6urq6h41W2+adJrqnjSRkZitNyMiI9Ft2MgGc8f9C9o9psmoLwdKAAAAAElFTkSuQmCC" />
+                        <br><span style="position: relative;top: 8px;color: white;font-size: 9px;letter-spacing: 0.3px;">{{ 'FIGURES' | translate | uppercase }}</span>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.readOnly != true && ($ctrl.appParent.getPermissions('recibos_movimientos_list').EXISTE == true || $ctrl.appParent.getPermissions('recibos_list').EXISTE == true)" tooltip-placement="right" uib-tooltip="{{ 'RECEIPTS' | translate }}" ng-click="$ctrl.cargarTabla('recibosByPoliza')">
+                    <div class="tabs" ng-click="$ctrl.formPoliza.$invalid == true ? $ctrl.validarPoliza() : $ctrl.changeTabs(5)" ng-class="{active:$ctrl.showTable == 5}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACOElEQVRIia2VS4iOYRTHf4eZxmJMQ5pJLoMFSrk0TdQUG+xkZuESWzQbYmEll9goG02USTMs7GiMEotZUbJQNmQ3DEWS5BZTM+Zn8T5f3j7zfd/LzNk8p3P7n//znvc8wT+IuhyYDYxEhP+SW6vwOvWZf2RE7Zyp4nPVUfWpulXdoj5QP6qtMwHQnbpekbPNV8fUnlr5swpgtALjwJuSISI+AZ+Tb3qibkgMDuRsO5Nt+7QBUsEr6qQ6rN5TJ9TBIrlRECCA/cAOsjEdBq5GxKS6FJiIiHf/S6ASaJN6Pze6N9U5MwlwMY1ql7pb/a6eKo+rU7uBlWRTcicifhTE6ASGImIoAe5Jtr86Gc/RfKQWGV3UG+pLdZm6Wn2v9k4VqNqj7vNveav2q4umyFuWAEryQm0pj6vL6S/SeR54lfQ24BDQrR6JiBul4IgYVdcC24AJYDgixqoxWJ/0TWX+ljQhqoPqRrU9/YDNNW6yNkAubpf6oewKx9S9ZXGr1AvqObWpMEBKbk7dt6sd6l11NPna1AGzv/yd2dgO1VUqlis6D+gC6qdwLwCa1UvAQbIFeAzoA04Ax4p8g11me6iafFFPqo1qvXo8MbiVB2hPer+6sBazCmw3q8/VX+pltbEE8FB9rP5Uv6WzV11csHCLej0xfaJ2lHyh3gaWAGPAWeApcBQ4DDQAA8BN4GuF+p3AGbLNfALoi4hfRbpqVk+bLbRqMq5es8L7XPM9UBuANVViX0fEx0r5vwHpmcBie5lDvwAAAABJRU5ErkJggg==" />
+                        <br><span style="position: relative;top: 8px;color: white;font-size: 9px;letter-spacing: 0.3px;">{{ 'RECEIPTS' | translate | uppercase }}</span>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.readOnly != true" tooltip-placement="right" uib-tooltip="{{ 'ANNEXED_FILES' | translate }}">
+                    <div class="tabs" ng-click="$ctrl.formPoliza.$invalid == true ? $ctrl.validarPoliza() : $ctrl.changeTabs(4)" ng-class="{active:$ctrl.showTable == 4}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACPElEQVRIia3WS4iOYRQH8OcbZoyxMGgal4VCGqwIiURNcitCVhaywIKSspCFWyNqmtnYUGSS2Ck7iihJysolUm6hkHHJ/VI/izny+Pq832fy7P7n/Z//e55ze99S+g8Ho1NKc1NK9Smlq6VS6f7/0E0oYT++4yHu4ge6MKg/gm1luAsvMDezzcB9dP+r+Hx8wYzAG/ER0ytwZ8ZNxtUqPgmvsSvwAnzFqgKfe1hTi3grHqAncj4Jb7C9it9TLKsm3oRruIAGtER+j2WcOnRgZGZrxye0FonX4TRuoxmDcBmX0JDx9kWhxwYeFdF3VIu+Gy8xIVJzPKJvyTiroxbzAjfiKs5hYJH4hrjirMA70YuJGWdadNH6wCWciFloLhJfElGtKIuyPeOMwhN0ZrYd0WkTK+nmUb3HlsDTI8qNGWdwFP4sBoRtOb5hcZH4mIjqUOCxeI4DGaeEk7jzKw2YjHfYXCQ+FDdxBgOiPW9GF9VlvJ14hfGBW/TtoEN/FQ/iYVzHkMCbYxKbMs6qqMX8wA3RthdRXyTegs/+XFidOJXhqfhQVouj0bYjqkW/AL0VbJ+wDivxDAez51sj71MKxYO8Frcq2DfhcYjv+VULLIpULa0qHg4L9S2vv0/eb24b3mJbTeLh1BT5XV6FNzwK31OzeOa8F49kG7HseSPO44p+fgrrYzIfYUWeLsyOyb2raP3W8JKB2B2r4g1u6FvD33EEw/qjW6rwoqaU0pyU0piU0qvU9xvSW86r9fwEcp0m6YQtq+gAAAAASUVORK5CYII="
+                        ng-click="$ctrl.refreshList()"/>
+                        <br><span style="position: relative;top: 8px;color: white;font-size: 9px;letter-spacing: 0.3px;">{{ 'FILES' | translate | uppercase }}</span>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.readOnly != true" ng-if="$ctrl.dato.ID_POLIZA != undefined" tooltip-placement="right" ng-class="{active:$ctrl.showTable == 8}" uib-tooltip="Histórico" ng-click="$ctrl.changeTabs(8)">
+                    <div class="tabs" ng-class="{active:$ctrl.showTable == 8}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABrUlEQVRIidWVv0tWYRTHP0eUEMWGBocQqYigxvAPaIoaXIQGwZaaHXIIojVJsCHcgloFcwkcHBRsaAgXoWxQMkTQhvelX0RQ6KfhPtrt5iv3fV8l/MLlcu45z/me5/y6QYLaApzkcPAlInYAWnMfe4D3wNcmnXcB54D1IgHASkRcbMa7+i4vtzTjrAyOnKCYoj2ofcBoST/3ImKxLgJgDRgrSbBWS1GTICKqwFxJgpo4/kX+r110BrgBLEfEjDoMtNcwn4qID/spjvwGe1B7i2PeoJ/bateufFCKLgHDwOuIeKY+AjpzJlNk2/fqPsf7VIBPBw3a7hysJ/klcCKn3wC2gLvJbqlw/ikwlI+4oRSp0+o19bx6OT2takVtL7OL5iPioTrNvz+kyRR5P/AWmABeASNANSJ+lNlFH5M8AbQVbCqJZBbYBs4CF4DnZC3+V8QNd5F6S91UT6nj6oLacSgE6nX1jXo6yaGOqpMAkScAVsm6oyzuAAPAC7I0PQEeA4tkXdidr8EG0F3nBb4DN9P7ATAIXAF6yWpSrFl9UO+rP9Vv6i//4LO6oy79Bp1/5FiNsH3tAAAAAElFTkSuQmCC" />
+                        <br><span style="position: relative;top: 8px;color: white;font-size: 9px;letter-spacing: 0.3px;">{{ 'HISTORIC' | translate | uppercase }}</span>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.readOnly != true && $ctrl.dato.ID_POLIZA != undefined && $ctrl.appParent.getPermissions('siniestros_list').EXISTE == true" tooltip-placement="right" uib-tooltip="{{ 'CLAIMS' | translate }}" ng-click="$ctrl.cargarTabla('siniestros')">
+                    <div class="tabs" ng-click="$ctrl.formPoliza.$invalid == true ? $ctrl.validarPoliza() : $ctrl.changeTabs(6)" ng-class="{active:$ctrl.showTable == 6}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAB8klEQVRIia3Vu2sUURQG8LMxJBqJVipC8P3uxMoiMSQutrHSFFaKhdgoCjZGqxgE/wAxChZWaqGVROMTrQRRFBNRlMRHoYIEi8UHPwuvMAy7s0vcqe455/vOd2fud89EzOLBAF6hdTb8es334z2+YXmzm/fhAzbgGgab2bwzNd+R4t2400yBU7iQiVvxAjub0bwDX7Esl9+CaSz5X4FduF6jNoQbKFWrtzSo0R0RYzVqwxGxMCIONdQJ83ATxzK5cZQLOGvxBV2NCFzCQzzO5Kaxog5vCBfrNd+crDgfbzOWnMGCOtzOZITaB44zGE7rMt6hBz/RXri7v5zzOFIEeITeTLwNT/C5lkty/EFcLgJ8zHs9V2/D1awBcvVNmCwS+IG2gvoIXuNujXo7KkUC3zG3Rm1xmqBLMYGBKpgOzBQJTGJ9lV3tTbf5Ssr1YQqdOexGvMzm8jf5QUT053LHI2I0IvZExERERKlUup2wh3PY/oi4X/QGZTxFSyY3gRPJqkcz+a14lonn4Dn6agok4D0cyMSV5J6u7GVL37uSiQ9ivLB5Aq5Ldu1O8TRWVsGtxlRa9ybOmroCidCTDnEfzmGkCuY0zvr7j576t6GGH6zCLXzCrzTMFiW7nsTvVBurNwjrCZXTjHmTzqOS1qPYXo//B59kW8k0dDKwAAAAAElFTkSuQmCC" />
+                        <br><span style="position: relative;top: 8px;color: #fff;font-size: 9px;">{{ 'CLAIMS' | translate | uppercase }}</span>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.readOnly != true && $ctrl.appParent.getPermissions('solicitudes_list').EXISTE == true" ng-if="$ctrl.dato.ID_POLIZA != undefined" tooltip-placement="right" uib-tooltip="{{ 'REQUESTS' | translate }}" ng-click="$ctrl.cargarTabla('solicitud')">
+                    <div ng-if="$ctrl.listaSolicitudes > 0" class="ng-scope" style="height: 8px; width: 8px; background-color: red; border-radius: 100%; position: relative; top: 19px; left: 28px"></div>
+                    <div class="tabs" ng-click="$ctrl.formPoliza.$invalid == true ? $ctrl.validarPoliza() : $ctrl.changeTabs(7)" ng-class="{active:$ctrl.showTable == 7}">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACH0lEQVRIia3VP4hVVxDH8c/srq5hwcLGP6vEPyBY2CkWotglgYQkTcTKZkFLiRCws4lYCIYgCGKTiAtCUEiRIuoK20QLbRRxMRFERVIoNkbBzf4s7nv63Dzdty87cOHeOXPme35nzplbkGQYp/AZhvRvL3Csqo63He1kBzCIVVU13W/2JMswmeRqVf0BA62xLRjvljzJkiSDvQCq6il+xda2rw0YxL9dku/GMzxKsqlHIdM6tnngA4GwF8NYjq96BLxjcwF+71jV5QUFJBnCR7iOP7FmQQH4CUdwBrfxS5J9CwJIsgSftj6vtx74er6Arpeqql4mWY11rZgr2Ii/FgSQZDG+09Rg9lj7dQYTmKiqmXkBNKfmpuZ+vM/u4AkOJlmnUXcB57FhLsAQNndTgOf4HmOamvyISazXHIzxqjr5fxQ8xE7NIfi8qtod4FqSc/g5yVRVTfSr4DecxbcdyUFVzSQ5iNOa+vSl4B+sqKp73SZW1d9JlnautFvQjKZYbyzJAA615rx8z8L+k3euXjQbeguLMZVkW7e4JNtxd7bzfJJPeoUl+TjJ1SSjs/wrk0y2ji36/D1W1f0k+zGe5J6mGY5qbvtlPO4bkGQX9uABvtR02eV4iqM4jFeaRvmmBtNY1CPjIS5hCjvwoKouVdUNXGvFHHpn+5IcSHIhych8FXVakpEkt5P8kOQb3m7RCazF3Var7tfG8AUuahR6DX1m3lUYtsLHAAAAAElFTkSuQmCC" />
+                        <br><span style="position: relative;top: 8px;color: #fff;font-size: 9px;letter-spacing: 0.3px;">{{ 'REQUESTS' | translate | uppercase }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	<div class="col-md-12" style="padding-left: 0">
+        <div ng-show="$ctrl.showTable == 0" class="formClass form-scroll" flex>
+            <form name="formPoliza" id="formNuevaPoliza" ng-value="$ctrl.formPoliza=!formPoliza.$valid" ng-submit="$ctrl.formPoliza == true ? $ctrl.validarPoliza() : $ctrl.guardar($ctrl.nuevo)" class="formClass margin-1-1_5" novalidate>
+                <fieldset class="datos_poliza">
+                    <legend><span class="headerDetailSearch"><span class="headerDetailSection"><i ng-if="$ctrl.dato.ID_SITUAPOLIZA == '1'"  style="color:#5eba7d;font-size: 0.7em" class="fa-solid fa-circle"></i> {{ 'POLICY_INFORMATION' | translate| uppercase }}</span> {{$ctrl.dato.NU_POLIZA}} - {{$ctrl.dato.NO_PRODUCTO}} </span>
+                        <div ng-if="($ctrl.dato.ID_COMP_RAMO_PROD == 10 || $ctrl.dato.ID_COMP_RAMO_PROD == 11 || $ctrl.dato.ID_COMP_RAMO_PROD == 12 || $ctrl.dato.ID_COMP_RAMO_PROD == 33 || $ctrl.dato.ID_COMP_RAMO_PROD == 34) && $ctrl.dato.ID_SITUAPOLIZA == 3"  layout-gt-sm="row" layout-align="center center" class="margenPresupuestos">
+                            <div style="display:table;" ng-if="$ctrl.loadConfirm == true">
+                                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                                    <div class="blob-3"></div>
+                                    <div class="blob-4"></div>
+                                </div>
+                            </div>
+                            <md-button ng-if="$ctrl.loadConfirm != true && ($ctrl.dato.CO_CANAL == 'PUB' || $ctrl.dato.CO_CANAL == 'SIM' || $ctrl.dato.CO_CANAL == 'ONE' || $ctrl.dato.CO_CANAL == 'SRT' || $ctrl.dato.CO_CANAL == 'WMO' || $ctrl.dato.CO_CANAL == 'O+' || $ctrl.dato.CO_CANAL == 'S+' || $ctrl.dato.CO_CANAL == 'OT' || $ctrl.dato.CO_CANAL == 'OT+' || $ctrl.dato.CO_CANAL == 'ST' || $ctrl.dato.CO_CANAL == 'ST+')" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.confirmarSuspenderPoliza('ok')">
+                                <i class="fa-light fa-check-double"></i> {{ 'CONFIRM' | translate }}
+                            </md-button>
+                            <md-button ng-if="$ctrl.loadConfirm != true && ($ctrl.dato.CO_CANAL == 'PUB' || $ctrl.dato.CO_CANAL == 'SIM' || $ctrl.dato.CO_CANAL == 'ONE' || $ctrl.dato.CO_CANAL == 'SRT' || $ctrl.dato.CO_CANAL == 'WMO' || $ctrl.dato.CO_CANAL == 'O+' || $ctrl.dato.CO_CANAL == 'S+' || $ctrl.dato.CO_CANAL == 'OT' || $ctrl.dato.CO_CANAL == 'OT+' || $ctrl.dato.CO_CANAL == 'ST' || $ctrl.dato.CO_CANAL == 'ST+')" class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.confirmarSuspenderPoliza('ko')">
+                                <i class="fa-light fa-xmark"></i> {{ 'SUSPEND' | translate }}
+                            </md-button>
+                        </div>
+                    </legend>
+                    <div id="divPoliza" uib-collapse="isCollapsed" style="margin-top: 20px">
+                        <div layout-gt-sm="row" class="margenPresupuestos" layout-align="center center">
+                            <md-input-container class="md-block margin-input-detail"  flex="20" >
+                                <label class="">{{ 'MEDIATOR' | translate | uppercase }}</label>
+                                <input class="ellipsis" ng-model="$ctrl.dato.NO_MEDIADOR" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-select-detail" flex="20">
+                                <label class="">{{ 'PARTNER' | translate | uppercase}}</label>
+                                <md-select ng-disabled="true" ng-model="$ctrl.dato.ID_TIPO_POLIZA" >
+                                    <md-option ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">{{colectivo.DS_TIPO_POLIZA}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block marginTopDatePicker " flex="15">
+                                <label class="">{{ 'DATE_ISSUANCE' | translate }}</label>
+                                <input ng-disabled="true" ng-model="$ctrl.dato.FD_EMISION" ng-model-options="{timezone: 'UTC'}" ng-value="$ctrl.formatDateIssue($ctrl.dato.FD_EMISION)">
+                            </md-input-container>
+                            <md-input-container class="md-block marginTopDatePicker" flex="15">
+                                <label class="">{{ 'DATE_FIRST_EFFECT' | translate }}</label>
+                                <md-datepicker ng-disabled="true" ng-model="$ctrl.dato.FD_PRIMER_INICIO"
+                                               ng-click="($ctrl.dato.FD_PRIMER_INICIO == null || $ctrl.dato.FD_PRIMER_INICIO == undefined) ? $ctrl.dato.FD_PRIMER_INICIO = null : ' '">
+                                </md-datepicker>
+                            </md-input-container>
+                            <md-input-container class="md-block marginTopDatePicker" flex="15">
+                                <label class="">{{ 'DATE_INCEPTION' | translate }}</label>
+                                <md-datepicker ng-disabled="true" ng-model="$ctrl.dato.FD_INICIO"
+                                               ng-init="($ctrl.dato.FD_INICIO == null || $ctrl.dato.FD_INICIO == undefined) ? $ctrl.dato.FD_INICIO = null : ' '">
+                                </md-datepicker>
+                            </md-input-container>
+                            <md-input-container class="md-block marginTopDatePicker" flex="15">
+                                <label class="">{{ 'DATE_EXPIRATION' | translate }}</label>
+                                <md-datepicker ng-disabled="true" ng-model="$ctrl.dato.FD_VENCIMIENTO">
+                                </md-datepicker>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row" class="margenPresupuestos" layout-align="center center">
+                            <md-input-container class="md-block margin-select-detail" flex="20">
+                                <label class="">{{ 'STATUS' | translate }}</label>
+                                <md-select ng-disabled="true" ng-model="$ctrl.dato.ID_SITUAPOLIZA">
+                                    <md-option ng-repeat="estado in $ctrl.tipos.estados" ng-value="estado.ID_SITUAPOLIZA">
+                                        {{$ctrl.appParent.getDescriptivo(estado, 'DS_SITUAPOLIZA')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="margin-select-detail md-block" flex="20">
+                                <label class="">{{ 'ISSUANCE_TYPE' | translate }}</label>
+                                <md-select ng-disabled="true" ng-model="$ctrl.dato.ID_TIPO_AGENTE" >
+                                    <md-option ng-repeat="emision in $ctrl.tipos.emision" ng-value="emision.ID_TIPOS">
+                                        {{$ctrl.appParent.getDescriptivo(emision, 'DS_TIPOS')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex="15">
+                                <label class="">{{ 'CHANNEL' | translate }}</label>
+                                <input ng-model="$ctrl.dato.DS_CANAL" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex="15">
+                                <label class="">{{ 'PERIODICITY' | translate }}</label>
+                                <input ng-model="$ctrl.dato.DS_FORMAPAGO" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex="15">
+                                <label class="">Identificador SAP</label>
+                                <input ng-model="$ctrl.dato.NU_SAP" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="15">
+                                <label class="">Envío a SAP</label>
+                                <md-datepicker ng-model="$ctrl.dato.FD_SAP" disabled></md-datepicker>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row" class="margenPresupuestos" layout-align="center center">
+
+                            <md-input-container ng-if="$ctrl.dato.ID_SITUAPOLIZA == 4" class="md-block marginTopDatePicker" flex-gt-sm>
+                                <label class="">{{ 'DATE_SUSPENSION' | translate }}</label>
+                                <md-datepicker ng-disabled="true" ng-model="$ctrl.dato.FD_CAMBIO_SITUACION">
+                                </md-datepicker>
+                            </md-input-container>
+                            <md-input-container ng-if="$ctrl.dato.ID_SITUAPOLIZA != 4" class="md-block marginTopDatePicker" flex-gt-sm>
+                                <label class="">{{ 'DATE_CANCELATION' | translate }}</label>
+                                <md-datepicker ng-disabled="true" ng-model="$ctrl.dato.FD_CANCELACION">
+                                </md-datepicker>
+                            </md-input-container>
+                            <md-input-container ng-if="$ctrl.dato.ID_SITUAPOLIZA != 4" class="margin-select-detail md-block" flex-gt-sm>
+                                <label class="">{{ 'CANCELATION_CAUSE' | translate }}</label>
+                                <md-select ng-disabled="true" ng-model="$ctrl.dato.ID_CAUSAANULACION">
+                                    <md-option ng-if="$ctrl.noExisteCausa != true" ng-repeat="causa in $ctrl.tipos.causas" ng-value="causa.ID_CAUSAANULACION">
+                                        {{$ctrl.appParent.getDescriptivo(causa, 'DS_CAUSAANULACION')}}
+                                        <!-- 	                                    {{causa.DS_CAUSAANULACION}} -->
+                                    </md-option>
+                                    <md-option ng-if="$ctrl.noExisteCausa == true" ng-value="$ctrl.dato.ID_CAUSAANULACION">{{$ctrl.dato.DS_CAUSAANULACION}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <!-- <md-input-container class="margin-select-detail md-block" flex-gt-sm>
+                                <label class="">{{ 'INTERNAL_STATUS' | translate }}</label>
+                                <md-select ng-disabled="true" ng-model="$ctrl.dato.ID_ESTADO_INTERNO">
+                                    <md-option ng-repeat="estado in $ctrl.tipos.estadosInternos" ng-value="estado.ID_ESTADO_INTERNO">{{estado.DS_ESTADO_INTERNO}}</md-option>
+                                </md-select>
+                            </md-input-container> -->
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm>
+                                <label class="">{{ 'POLICY_REPLACEMENT' | translate }}</label>
+                                <input ng-disabled="true" ng-model="$ctrl.dato.NU_POLIZA_REEMPLAZO">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.dato.FD_SUPLEMENTO != null">
+                                <label class="">Fecha último suplemento</label>
+                                <md-datepicker ng-model="$ctrl.dato.FD_SUPLEMENTO" disabled></md-datepicker>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row" class="margenPresupuestos" layout-align="center center" style="margin-top: 30px !important">
+                            <!-- <md-menu ng-if="$ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 8 || $ctrl.rol == 11 || $ctrl.rol == 14 && $ctrl.dato.ID_SITUAPOLIZA != 2"> -->
+                            <md-menu ng-if="$ctrl.showNewReqBtn() == true">
+                                <md-button class="md-raised md-primary medium-blue button-action-main-accent" ng-click="$mdMenu.open()" ng-disabled="$ctrl.listSolicitudesPadre.length <= 0">
+                                    <i class="fa-duotone fa-code-pull-request" style="margin-right: 5px;font-size: 14px"></i> {{ 'NEW_REQUEST' | translate }}
+                                </md-button>
+                                <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
+                                    <md-menu-item ng-repeat="listSolicitudesPadre in $ctrl.listSolicitudesPadre">
+                                        <md-button ng-click="$ctrl.openNewSolicitud(listSolicitudesPadre.ID_TIPO_SOLICITUD)">
+                                            {{ listSolicitudesPadre.DS_TIPO_SOLICITUD }}
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                            <md-button ng-if="$ctrl.mostrarBtnNuevoSiniestro() == true" class="md-raised md-primary medium-blue button-action-main-accent" ng-click="$ctrl.openNewSiniestro()">
+                                <i class="fa-duotone fa-fire" style="margin-right: 5px;font-size: 14px"></i> {{ 'NEW_CLAIM' | translate }}
+                            </md-button>
+                            <md-button ng-if="$ctrl.dato.ID_SITUAPOLIZA == 3 && $ctrl.dato.CO_CANAL == 'PIN' && 
+                                 ($ctrl.dato.ID_COMP_RAMO_PROD == 14 || $ctrl.dato.ID_COMP_RAMO_PROD == 16 || $ctrl.dato.ID_COMP_RAMO_PROD == 17 || $ctrl.dato.ID_COMP_RAMO_PROD == 18 ||$ctrl.dato.ID_COMP_RAMO_PROD == 26) 
+                                 && $ctrl.fechaLimite" 
+                                 class="md-raised md-primary medium-blue button-action-main-confirm" ng-click="$ctrl.confirmarPoliza()">
+                                 <i class="fa fa-check" style="margin-right: 5px;font-size: 14px" aria-hidden="true"></i>
+                             CONFIRMAR PÓLIZA
+                         	</md-button>
+                            <md-button ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5" class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.openComisionista()">
+                                <i class="fa-light fa-eye" style="margin-right: 5px;font-size: 14px"></i> {{ 'SEE_COMMISSION_AGENTS' | translate }}
+                            </md-button>
+                            <md-button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.descargarPoliza()">
+                                <i class="fa-light fa-cloud-arrow-down" style="margin-right: 5px;font-size: 14px"></i> {{ 'DOWNLOAD_PDF' | translate }}
+                            </md-button>
+                            <!-- <md-button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-if="$ctrl.extCiber == true" ng-click="$ctrl.dlExtension()">
+                                <i class="fa-light fa-cloud-arrow-down" style="margin-right: 5px;font-size: 14px"></i> Descargar PDF Extensión C4
+                            </md-button> -->
+                            <md-button ng-if="$ctrl.readOnly != true" class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.sendDocumentacionSM()">
+                                <i class="fa-light fa-envelope" style="margin-right: 5px;font-size: 14px"></i> {{ 'SEND_DOCUMENTATION' | translate }}
+                            </md-button>
+                            <div layout="row" ng-if="$ctrl.showDocumentacionSM == true" flex="25" style="border-left: 2px solid #5eba7d;padding-left: 15px;">
+                                <md-input-container class="md-block margin-input-detail hide-validation-error">
+                                    <label class="">Email de destino</label>
+                                    <input ng-model="$ctrl.emailDocumentacionSM">
+                                </md-input-container>
+                                <md-button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.enviarPolizaPdf()" style="margin: 0!important">
+                                    <i class="fa-light fa-paper-plane"></i> {{ 'SEND' | translate }}
+                                </md-button>
+<!--                                <md-button style="min-width: 0px;" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.enviarPolizaPdf()" flex="15">-->
+<!--                                    <i class="fa-light fa-paper-plane"></i>-->
+<!--                                </md-button>-->
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <!-- Acreedor hipotecario -->
+
+                <fieldset ng-if="$ctrl.dato.ID_RAMO == 20 && $ctrl.bloques.DATOS_PRESTAMO != null && $ctrl.bloques.DATOS_PRESTAMO.IN_PRESTAMO == true" id="documentacion" class="datos_poliza">
+                    <legend><span class="headerDetailSearch">ACREEDOR HIPOTECARIO</span></legend>
+                    <div id="divDocumentacion" uib-collapse="isCollapsed10">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" class="margenPresupuestos" flex="50">
+                            <md-input-container class="md-block" flex-gt-sm flex="">
+                                <label class="">Entidad</label>
+                                <md-select name="Financiera" ng-model="$ctrl.bloques.DATOS_PRESTAMO.CO_BANCO" disabled>
+                                    <md-option ng-repeat="banco in $ctrl.bancos" ng-value="banco.CO_FIELD">
+                                        {{banco.DS_FIELD}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm flex="">
+                                <label class="">Número de préstamo</label>
+                                <input ng-model="$ctrl.bloques.DATOS_PRESTAMO.NU_PRESTAMO" disabled>
+                            </md-input-container>
+                        </div>
+                    </div>            
+                </fieldset>
+                <!-- Datos del Pago-->
+                <fieldset id="datos_pago" class="datos_poliza" >
+                    <legend><span class="headerDetailSearch"><i class="fa-duotone fa-briefcase"></i> {{ 'PAYMENT_DATA' | translate }}</span></legend>
+                    <div id="divPago" uib-collapse="isCollapsed2" style="margin: 10px 0">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" class="margenPresupuestos" layout-align="center center">
+                            <md-input-container class="margin-select-detail md-block" flex-gt-sm="20">
+                                <label class="">{{ 'PAYMENT_METHOD' | translate }}</label>
+                                <md-select ng-disabled="true" ng-model="$ctrl.dato.ID_TIPO_MEDIO_PAGO" >
+                                    <md-option ng-repeat="pago in $ctrl.tipos.pago" ng-value="pago.ID_TIPO_MEDIO_PAGO">{{pago.DS_TIPO_MEDIO_PAGO}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">{{ 'NET_PREMIUM' | translate }}</label>
+                                <input ng-disabled="true" ng-model="$ctrl.dato.IM_PRIMA_NETA" amount >
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">{{ 'TOTAL' | translate }}</label>
+                                <input ng-disabled="true" ng-model="$ctrl.dato.IM_PRIMA_TOTAL" amount >
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">{{ 'ORDER' | translate }}</label>
+                                <input ng-disabled="true" ng-model="$ctrl.dato.CO_MANDATO">
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="30">
+                                <label class="">{{ 'IBAN' | translate }}</label>
+                                <input ng-if="$ctrl.rol != 1 && $ctrl.rol != 4" ng-model="$ctrl.getEncodedIBAN($ctrl.dato.CO_IBAN)" ng-model-options="{ getterSetter: true }" disabled>
+                                <input ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" ng-model="$ctrl.dato.CO_IBAN" disabled>
+                            </md-input-container>
+                        </div>
+                        <div ng-if="$ctrl.dato.ID_RAMO == 103 && ($ctrl.dato.ID_COMP_RAMO_PROD == 5 || $ctrl.dato.ID_COMP_RAMO_PROD == 6 || $ctrl.dato.ID_COMP_RAMO_PROD == 25) && $ctrl.bloques.FRANQUICIAS != null && $ctrl.bloques.FRANQUICIAS.length > 0" layout-gt-sm="row" class="margenPresupuestos" layout-align="center center">
+                            <md-input-container class="md-block margin-input-detail" flex="20">
+								<label>DESCRIPCIÓN DE FRANQUICIA</label>
+								<input ng-model="$ctrl.bloques.FRANQUICIAS[0].NO_FRANQUICIA" disabled />
+							</md-input-container>
+							<md-input-container class="md-block margin-input-detail" flex="20">
+								<label>IMPORTE DE FRANQUICIA</label>
+								<input ng-model="$ctrl.bloques.FRANQUICIAS[0].IMP_FRANQUICIA" disabled />
+							</md-input-container>
+							<md-input-container class="md-block margin-input-detail" flex="20">
+								<label>DESCRIPCIÓN DE FRANQUICIA</label>
+								<input ng-model="$ctrl.bloques.FRANQUICIAS[1].NO_FRANQUICIA" disabled />
+							</md-input-container>
+							<md-input-container class="md-block margin-input-detail" flex="20">
+								<label>IMPORTE DE FRANQUICIA</label>
+								<input ng-model="$ctrl.bloques.FRANQUICIAS[1].IMP_FRANQUICIA" disabled />
+							</md-input-container>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!--INFORMACION SOBRE RENOVACIÓN CIBEREEMPRESAS-->
+                <fieldset class="datos_poliza" ng-if="$ctrl.dato.FD_CANCELACION == null && $ctrl.bloques.IM_PRIMA_RENOVACION">
+                    <legend><span class="headerDetailSearch"><i class="fa-duotone fa-arrows-rotate"></i> INFORMACIÓN PRÓXIMA RENOVACIÓN ({{$ctrl.dato.FD_VENCIMIENTO | date:"dd/MM/yyyy"}})</span></legend>
+                    <div uib-collapse="isCollapsed2 ">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" layout-align="center center">
+                            <div layout-gt-sm="column" flex-gt-sm="15" style="margin-right: 50px">
+                                <md-input-container class="md-block" ng-if="$ctrl.bloques.IM_PRIMA_RENOVACION">
+                                    <label>PRIMA NETA DE RENOVACIÓN</label>
+                                    <input ng-model="$ctrl.bloques.IM_PRIMA_RENOVACION" amount disabled>
+                                </md-input-container>
+                                <md-input-container class="md-block" ng-if="$ctrl.bloques.CIBERRIESGO.IM_PRIMA_NETA_RENOVACION">
+                                    <label>PRIMA NETA DE RENOVACIÓN (Ciberriesgo)</label>
+                                    <input ng-model="$ctrl.bloques.CIBERRIESGO.IM_PRIMA_NETA_RENOVACION" amount disabled>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="column" flex-gt-sm="45">
+                                <md-input-container class="md-block" ng-if="$ctrl.dato.TX_OBSERVACIONES != null" flex-gt-sm="80">
+                                    <label class="">REQUISITOS DE RENOVACIÓN Y OBSERVACIONES</label>
+                                    <input ng-disabled="true" ng-model="$ctrl.dato.TX_OBSERVACIONES">
+                                </md-input-container>
+                                <md-input-container class="md-block" ng-if="$ctrl.bloques.CIBERRIESGO.REQUISITOS_RENOVACION != null" flex-gt-sm="80">
+                                    <label class="">REQUISITOS DE RENOVACIÓN Y OBSERVACIONES</label>
+                                    <textarea disabled rows="3" ng-model="$ctrl.bloques.CIBERRIESGO.REQUISITOS_RENOVACION"></textarea>
+                                </md-input-container>
+                                <md-input-container   flex-gt-sm="80" ng-if="$ctrl.dato.ID_RAMO == 103 && ($ctrl.dato.ID_COMP_RAMO_PROD == 5 || $ctrl.dato.ID_COMP_RAMO_PROD == 6 || $ctrl.dato.ID_COMP_RAMO_PROD == 25) && $ctrl.bloques.OBSERVACIONES != null">
+                                    <label>REQUISITOS DE RENOVACIÓN Y OBSERVACIONES</label>
+                                    <textarea rows="3" ng-model="$ctrl.bloques.OBSERVACIONES" uppercase disabled></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- Datos de renovación hogar-->
+                <div ng-if="$ctrl.dato && $ctrl.dato.ID_RAMO == 20 && $ctrl.bloques && $ctrl.bloques.RENOVACION_HOGAR">
+                    <fieldset id="datos_renovacion" class="datos_poliza">
+                        <legend><span class="headerDetailSearch"><i class="fa-duotone fa-arrows-rotate"></i> INFORMACIÓN PRÓXIMA RENOVACIÓN ({{$ctrl.dato.FD_VENCIMIENTO | date:"dd/MM/yyyy"}})</span></legend>
+                        <div id="divrenovacion" style="margin: 10px 0">
+                            <div class="separadorDesplegables"></div>
+                            <div layout-gt-sm="row" class="margenPresupuestos" layout-align="center center">
+                                <md-input-container class="md-block" flex-gt-sm="20">
+                                    <label>PRIMA TOTAL DE RENOVACIÓN</label>
+                                    <input ng-model="$ctrl.bloques.RENOVACION_HOGAR.IM_PRIMA_TOTAL" amount disabled>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="20">
+                                    <label>PRIMA NETA DE RENOVACIÓN</label>
+                                    <input ng-model="$ctrl.bloques.RENOVACION_HOGAR.IM_PRIMA_NETA" amount disabled>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row" ng-if="$ctrl.bloques.RENOVACION_HOGAR.BLOCK_CAPITALES" class="margenPresupuestos" layout-align="center center">
+                                <md-input-container class="md-block" flex-gt-sm="20">
+                                    <label>{{ 'CONTINENT' | translate | uppercase }}</label>
+                                    <input ng-model="$ctrl.bloques.RENOVACION_HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTINENTE" amount disabled>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="20">
+                                    <label>{{ 'ANNEX' | translate | uppercase }}</label>
+                                    <input ng-model="$ctrl.bloques.RENOVACION_HOGAR.BLOCK_CAPITALES.IM_VALOR_ANEXOS" amount disabled>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="20">
+                                    <label>{{ 'CONTENT' | translate | uppercase }}</label>
+                                    <input ng-model="$ctrl.bloques.RENOVACION_HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTENIDO" amount disabled>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="20">
+                                    <label>{{ 'SPECIAL_GOODS' | translate }}</label>
+                                    <input ng-model="$ctrl.bloques.RENOVACION_HOGAR.BLOCK_CAPITALES.IM_OBJETOS_VALOR_EN_VIVIENDA" amount disabled>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="20">
+                                    <label>{{ 'ADDITIONAL_FACILITIES' | translate }}</label>
+                                    <input ng-model="$ctrl.bloques.RENOVACION_HOGAR.BLOCK_CAPITALES.IM_VALOR_COMUNES" amount disabled>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Informacion -->
+                <fieldset id="info" class="datos_poliza" ng-if="!$ctrl.nuevo">
+                    <legend><span class="headerDetailSearch"><i class="fa-duotone fa-grid-2"></i> {{ 'INFORMATION' | translate }}</span></legend>
+                    <div id="divInfo" class="margenPresupuestos" ng-class="{ 'has-error' : (polizaForm.poliza.$invalid && !polizaForm.poliza.$pristine) }">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" layout-align="center center">
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">{{ 'CREATED_BY' | translate }}</label>
+                                <input ng-model="$ctrl.dato.NO_USU_ALTA" style="text-transform: lowercase!important" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">{{ 'CREATED_ON' | translate }}</label>
+                                <md-datepicker ng-model="$ctrl.form.FT_USU_ALTA.value" disabled></md-datepicker>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">{{ 'EDITED_BY' | translate }}</label>
+                                <input ng-model="$ctrl.dato.NO_USU_MOD" style="text-transform: lowercase!important" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">{{ 'EDITED_ON' | translate }}</label>
+                                <md-datepicker ng-model="$ctrl.dato.FT_USU_MOD" disabled></md-datepicker>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div ng-show="$ctrl.showTable == 1" class="formClass form-scroll" flex>
+            <!-- Datos de Riesgo-->
+            <div class="formClass margin-1-1_5">
+                <fieldset id="datos_riesgo" ng-if="$ctrl.dato.ID_COMP_RAMO_PROD != 29">
+                    <legend><span class="headerDetailSearch"><span class="headerDetailSection">{{ 'RISK_DATA' | translate }} </span> - {{$ctrl.dato.NO_PRODUCTO}} {{$ctrl.dato.NU_POLIZA}} ({{$ctrl.dato.NO_RAMO}})</span>
+                    </legend>
+                    <div id="divRiesgo" uib-collapse="isCollapsed5">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" layout-align="center center" class="margenPresupuestos margin-top-20" ng-if="$ctrl.dato.ID_COMP_RAMO_PROD != 14 && $ctrl.dato.ID_COMP_RAMO_PROD != 16 && $ctrl.dato.ID_COMP_RAMO_PROD != 17 && $ctrl.dato.ID_COMP_RAMO_PROD != 18 && $ctrl.dato.ID_COMP_RAMO_PROD != 10 && $ctrl.dato.ID_COMP_RAMO_PROD != 11 && $ctrl.dato.ID_COMP_RAMO_PROD != 12">
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="50">
+                                <label class="">{{ 'INSURED_RISK_DESCRIPTIVE' | translate}}</label>
+                                <input disabled ng-model="$ctrl.dato.DS_SITUA_RIESGO">
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">{{ 'INSURED_RISK_CODE' | translate}}</label>
+                                <input disabled ng-model="$ctrl.dato.CO_SITUA_RIESGO">
+                            </md-input-container>
+                            <!-- <md-input-container class="md-block margin-input-detail" ng-if="$ctrl.bloques.IM_PRIMA_RENOVACION != undefined" flex-gt-sm="10">
+                                <label>Prima Neta de Renovación</label>
+                                <input disabled ng-model="$ctrl.bloques.IM_PRIMA_RENOVACION" amount>
+                            </md-input-container> -->
+                            <md-input-container class="md-block margin-input-detail" ng-if="$ctrl.dato.NO_MODALIDAD != undefined" flex-gt-sm="20">
+                                <label>{{ 'MODALITY' | translate }}</label>
+                                <input disabled ng-model="$ctrl.dato.NO_MODALIDAD">
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" ng-if="$ctrl.dato.IM_FRANQUICIA != undefined && $ctrl.dato.ID_COMP_RAMO_PROD != 28" flex-gt-sm="10">
+                                <label>Franquicia</label>
+                                <input disabled ng-model="$ctrl.dato.IM_FRANQUICIA">
+                            </md-input-container>
+                            <!-- Particulares -->
+                            <md-input-container ng-if="$ctrl.bloques.CIBERPARTICULARES.AMMOUNT_OPTION != null && $ctrl.bloques.CIBERPARTICULARES.AMMOUNT_OPTION != ''" class="marginTopSelect md-block" flex-gt-sm="20">
+                                <label class="labelInputSearch">{{ 'COMPENSATION_LIMIT' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.CIBERPARTICULARES.AMMOUNT_OPTION" ng-disabled="true">
+                                    <md-option ng-repeat="amount in $ctrl.amountCP" ng-value="amount">
+                                        {{$ctrl.appParent.getDescriptivo(amount, 'DS_TIPOS')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <!-- Seguro móvil -->
+                        <div layout-gt-sm="row" class="margenPresupuestos" ng-if="$ctrl.dato.ID_COMP_RAMO_PROD == 10 || $ctrl.dato.ID_COMP_RAMO_PROD == 11 || $ctrl.dato.ID_COMP_RAMO_PROD == 12 || $ctrl.dato.ID_COMP_RAMO_PROD == 33 || $ctrl.dato.ID_COMP_RAMO_PROD == 34">
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">{{ 'CHANNEL' | translate }}</label>
+                                <input disabled ng-model="$ctrl.dato.DS_CANAL">
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm>
+                                <label class=" margin-input-detail">{{ 'MODALITY' | translate }}</label>
+                                <input disabled ng-model="$ctrl.dato.DS_PRODUCTO">
+                            </md-input-container>
+                            <md-input-container ng-if="$ctrl.dato.NO_MODALIDAD" class="md-block margin-input-detail" flex-gt-sm>
+                                <label class=" margin-input-detail">Banda</label>
+                                <input disabled ng-model="$ctrl.dato.NO_MODALIDAD">
+                            </md-input-container>
+                            <md-input-container ng-if="!$ctrl.dato.NO_MODALIDAD" class="md-block margin-input-detail" flex-gt-sm>
+                                <label class=" margin-input-detail">Banda</label>
+                                <input disabled ng-model="$ctrl.band">
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm>
+                                <label class="">Terminal asegurado</label>
+                                <input disabled ng-model="$ctrl.terminalAsegurado">
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row" class="margenPresupuestos" ng-if="$ctrl.dato.ID_COMP_RAMO_PROD == 10 || $ctrl.dato.ID_COMP_RAMO_PROD == 11 || $ctrl.dato.ID_COMP_RAMO_PROD == 12 || $ctrl.dato.ID_COMP_RAMO_PROD == 33 || $ctrl.dato.ID_COMP_RAMO_PROD == 34">
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">IMEI</label>
+                                <input disabled ng-model="$ctrl.dato.CO_SITUA_RIESGO">
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">MSISDN</label>
+                                <input disabled ng-model="$ctrl.dato.DS_SITUA_RIESGO">
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">Franquicia por siniestro</label>
+                                <input disabled ng-model="$ctrl.bloques.franquicia">
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row" class="margenPresupuestos" ng-if="($ctrl.dato.ID_COMP_RAMO_PROD == 10 || $ctrl.dato.ID_COMP_RAMO_PROD == 11 || $ctrl.dato.ID_COMP_RAMO_PROD == 12 || $ctrl.dato.ID_COMP_RAMO_PROD == 33 || $ctrl.dato.ID_COMP_RAMO_PROD == 34)">
+                            <md-input-container ng-if="$ctrl.bloques.portRetInfo != null" class="md-block margin-input-detail" flex-gt-sm="25">
+                                <label class="">Estado de datos de pago</label>
+                                <input disabled ng-model="$ctrl.bloques.portRetInfo.statusDesc">
+                            </md-input-container>
+                            <md-input-container ng-if="$ctrl.bloques.portRetInfo != null" class="md-block margin-input-detail" flex-gt-sm="25">
+                                <label class="">Tipo de línea</label>
+                                <input disabled ng-model="$ctrl.bloques.portRetInfo.system">
+                            </md-input-container>
+                            <md-input-container ng-if="$ctrl.campaign != null && $ctrl.campaign.description != null" class="md-block margin-input-detail" flex-gt-sm="25">
+                                <label class="">Promoción Asociada</label>
+                                <input disabled ng-model="$ctrl.campaign.description">
+                            </md-input-container>
+                        </div>
+                        
+                        <div class="margenPresupuestos" layout-align="center center" layout="row" ng-if="$ctrl.dato.ID_COMP_RAMO_PROD == 14 || $ctrl.dato.ID_COMP_RAMO_PROD == 16 || $ctrl.dato.ID_COMP_RAMO_PROD == 17 || $ctrl.dato.ID_COMP_RAMO_PROD == 18">
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="30">
+                                <label class="">{{ 'MODALITY' | translate }}</label>
+                                <input disabled ng-model="$ctrl.dato.NO_PRODUCTO" uppercase>
+                            </md-input-container>
+                            <div>
+                                <div ng-repeat="dispositivo in $ctrl.listaDispositivos track by $index">
+                                    <md-input-container lass="md-block margin-input-detail" flex-gt-sm>
+                                        <label class="">Tipo de dispositivo</label>
+                                        <input disabled value="{{dispositivo.DS_RIESGO}}">
+                                    </md-input-container>
+                                    <md-input-container lass="md-block margin-input-detail" flex-gt-sm>
+                                        <label class="">Detalle dispositivo</label>
+                                        <input disabled value="{{dispositivo.DS_SITUA_RIESGO}}">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <!-- <md-input-container class="md-block margin-input-detail" flex-gt-sm>
+                                <label class="">{{ 'DEVICE' | translate }}</label>
+                                <input disabled ng-repeat="dispositivo in $ctrl.listaDispositivos" value="{{dispositivo.DS_RIESGO}}">
+                            </md-input-container>
+                            
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm>
+                                <label class="">{{ 'DEVICE' | translate }}</label>
+                                <input disabled ng-repeat="dispositivo in $ctrl.listaDispositivos" value="{{dispositivo.DS_SITUA_RIESGO}}">
+                            </md-input-container> -->
+                               
+                           	<!-- <h4>{{ 'DEVICES_LIST' | translate }}</h4> -->
+                           	<!-- <p ng-repeat="dispositivo in $ctrl.listaDispositivos">{{dispositivo.DS_SITUA_RIESGO}}:&nbsp;&nbsp;&nbsp;{{dispositivo.CO_SITUA_RIESGO}}</p> -->
+                        </div>
+                    </div>
+                </fieldset>
+
+            <div ng-include="$ctrl.templateForm" ng-hide="$ctrl"></div>
+                <!-- SECCIÓN DATOS DEL RIESGO -->
+                <fieldset class="datos_poliza" ng-if="$ctrl.dato.ID_RAMO == 103 && ($ctrl.dato.ID_COMP_RAMO_PROD == 5 || $ctrl.dato.ID_COMP_RAMO_PROD == 6 || $ctrl.dato.ID_COMP_RAMO_PROD == 25 || $ctrl.dato.ID_COMP_RAMO_PROD == 29)">
+                    <!-- CIBEREMPRESAS-->
+                    <div id="div-riesgo" uib-collapse="isCollapsed2">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" class="margenPresupuestos" layout-align="center center">
+                            <!-- FACTURACIÓN -->
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="15">
+                                <label class="">{{ 'BILLING_EUR' | translate }}</label>
+                                <input ng-model="$ctrl.bloques.CIBERRIESGO.TURNOVER" ng-disabled="true">
+                            </md-input-container>
+                            <!-- SUMA ASEGURADA. TARIFA AUTOMÁTICA -->
+                            <md-input-container ng-if="$ctrl.bloques.CIBERRIESGO.AMMOUNT == null || $ctrl.bloques.CIBERRIESGO.AMMOUNT == ''" class="margin-select-detail md-block" flex-gt-sm="15">
+                                <label class="">{{ 'INSURED_AMOUNT' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.CIBERRIESGO.AMMOUNT_OPTION"ng-disabled="true">
+                                    <md-option ng-repeat="amount in $ctrl.tpAmount" ng-value="amount">
+                                        {{$ctrl.appParent.getDescriptivo(amount, 'DS_TIPOS')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <!-- SUMA ASEGURADA. TARIFA ADHOC -->
+                            <md-input-container ng-if="$ctrl.bloques.CIBERRIESGO.AMMOUNT != null && $ctrl.bloques.CIBERRIESGO.AMMOUNT != ''"  class="md-block margin-input-detail" flex-gt-sm="15">
+                                <label class="">{{ 'INSURED_AMOUNT' | translate }} en €</label>
+                                <input ng-model="$ctrl.bloques.CIBERRIESGO.AMMOUNT" ng-disabled="true">
+                            </md-input-container>
+                            <!-- EXTENSIÓN DE C4 -->
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">{{ 'CIBERCRIME' | translate }}</label>
+                                <input ng-model="$ctrl.addCCE" ng-disabled="true">
+                            </md-input-container>
+                            <!-- CIBERATAQUES? -->
+                            <md-input-container class="margin-select-detail md-block" flex-gt-sm="20">
+                                <label class="">{{ 'QUESTION_CYBER_ATTACK' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.CIBERRIESGO.LOSS_ATTACK_AMOUNT_OPTION" ng-disabled="true">
+                                    <md-option ng-repeat="lost in $ctrl.tpLosses" ng-value="lost.CO_TIPO">
+                                        {{$ctrl.appParent.getDescriptivo(lost, 'DS_TIPOS')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <!-- TIPOS DE CIBERATAQUES SUFRIDOS -->
+                            <md-input-container ng-if="$ctrl.bloques.CIBERRIESGO.LOSS_ATTACK_AMOUNT_OPTION != 0" class="md-block margin-select-detail" flex-gt-sm="30">
+                                <label class="">{{ 'QUESTION_CYBER_ATTACK_TYPE' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.CIBERRIESGO.CIBER_ATTACK_TYPES" ng-disabled="true" multiple>
+                                    <md-option ng-repeat="lost in $ctrl.tpCbatk" ng-value="lost.CO_TIPO">
+                                        {{$ctrl.appParent.getDescriptivo(lost, 'DS_TIPOS')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row" class="margenPresupuestos" layout-align="center center">
+                            <md-input-container class="md-block" flex-gt-sm="30">
+                                <label class="">{{ 'ACTIVITY' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.CIBERRIESGO.ACTIVITY_CODE.CO_ACTIVIDAD" ng-disabled="true">
+                                    <md-option ng-repeat="activity in $ctrl.bloques.CIBERRIESGO.SECTOR.LST_ACTIVIDADES" ng-value="activity.CO_ACTIVIDAD">
+                                        {{$ctrl.appParent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container ng-if="$ctrl.bloques.CIBERRIESGO.FILIAL_ACTIVITY_CODE != ''" class="md-block margin-input-detail" flex-gt-sm="30">
+                                <label class="">{{ 'SUBSIDIARY_ACTIVITY' | translate }}</label>
+                                <input ng-model="$ctrl.bloques.CIBERRIESGO.FILIAL_ACTIVITY_CODE" ng-disabled="true">
+                            </md-input-container>
+
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="datos_poliza" ng-if="$ctrl.dato.ID_RAMO == 103 && ($ctrl.dato.ID_COMP_RAMO_PROD == 5 || $ctrl.dato.ID_COMP_RAMO_PROD == 6 || $ctrl.dato.ID_COMP_RAMO_PROD == 25 || $ctrl.dato.ID_COMP_RAMO_PROD == 29)">
+                    <legend>
+                        <span class="headerDetailSearch">Dominios Web Corporativos
+                         <md-button ng-if="$ctrl.mostrarBtnNuevoDominio() == true" class="md-raised md-primary medium-blue button-action-main-accent" ng-click="$ctrl.newDomain = !$ctrl.newDomain" >
+                                <i class="fa-duotone fa-globe" style="margin-left: 5px;font-size: 14px;" ></i> {{ 'NEW_DOMAIN' | translate }}
+                            </md-button>
+                        </span>
+                    </legend>
+
+                    <div uib-collapse="isCollapsed2">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="column" class="margenPresupuestos" layout-align="center center" style="margin-top: 20px">
+                            <md-input-container ng-repeat="domain in $ctrl.bloques.CIBERRIESGO.DOMINIOS track by $index" class="md-block" flex-gt-sm="33">
+                                <label class="labelInputSearch">Dominio Web {{$index + 1}}</label>
+                                <input ng-model="domain" ng-disabled="true">
+                            </md-input-container>
+                        </div>
+
+
+                        <div class="col-md-12 padding-0" ng-if="$ctrl.newDomain">
+                            <div flex class="formClass form-scroll margin-1-1_5" class="formNuevoDominio" id="formNDominio">
+                                <form ng-if="$ctrl.isNew != true" class="formClass form-scroll" id="formNuevoDominio" name="formDominio"
+                                      ng-value="$ctrl.formDominio=!formDominio.$valid" ng-submit="$ctrl.guardarDominio($ctrl.formDominio)"
+                                      novalidate>
+                                    <div class="margenPresupuestos layout-gt-sm-row layout-align-center-center">
+                                        <md-input-container class="md-block" flex-gt-sm="33" >
+                                            <label  class="md-block">Añade un nuevo dominio Web</label>
+                                            <textarea disabled rows="3" ng-model="$ctrl.inputDomain" ng-disabled="false" ></textarea>
+                                        </md-input-container>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <div layout="row" layout-align="center" layout-margin>
+                                <md-button ng-disabled="$ctrl.inputDomain == null"
+                                           ng-if="$ctrl.navegador != 'internet explorer'"
+                                           class="md-raised md-primary medium-blue button-action-main" type="submit" form="formNuevoDominio">
+                                    <md-icon>save</md-icon>
+                                    {{ 'SAVE' | translate }}
+                                </md-button>
+                                <md-button ng-disabled="$ctrl.inputDomain == null"
+                                           ng-if="$ctrl.navegador == 'internet explorer'"
+                                           class="md-raised md-primary medium-blue button-action-main"
+                                           ng-click="$ctrl.guardarDominio($ctrl.formDominio)" form="formNuevoDominio">
+                                    <md-icon>save</md-icon>
+                                    {{ 'SAVE' | translate }}
+                                </md-button>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+                           
+                <fieldset id="datos_hijos" ng-if="$ctrl.dato.ID_RAMO == 103 && ($ctrl.dato.ID_COMP_RAMO_PROD == 3 || $ctrl.dato.ID_COMP_RAMO_PROD == 4)">
+                    <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'CYBER_INSURANCE_INFORMATION' | translate }}
+                        <button id="btnDesplegarPoliza7" type="submit" class="btn btn-link" ng-click="isCollapsed11 = !isCollapsed11">
+                            <span ng-if="isCollapsed6" class="glyphicon glyphicon-chevron-right btnMostrar" title="Mostrar Datos de Ciberriesgo"></span>
+                            <span ng-if="!isCollapsed6" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos Ciberriesgo"></span>
+                        </button>
+                    </legend>
+                    
+                    
+                    <div id="divPresupuesto" uib-collapse="isCollapsed11">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" class="margenPresupuestos">
+                            <md-input-container class="md-block" flex>
+                                <label>{{ 'ACTIVITY' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.CIBERRIESGO.ACTIVITY_CODE.CO_ACTIVIDAD" disabled>
+                                    <md-option ng-repeat="activity in $ctrl.bloques.CIBERRIESGO.SECTOR.LST_ACTIVIDADES" ng-value="activity.CO_ACTIVIDAD">
+                                        {{$ctrl.appParent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+                                        <!-- {{activity.DS_ACTIVIDAD}} -->
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container ng-if="$ctrl.bloques.CIBERRIESGO.AMMOUNT == null || $ctrl.bloques.CIBERRIESGO.AMMOUNT == ''" class="md-block" flex>
+                                <label>{{ 'INSURED_AMOUNT' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.CIBERRIESGO.AMMOUNT_OPTION"disabled>
+                                    <md-option ng-repeat="amount in $ctrl.tpAmount" ng-value="amount">
+                                    <!-- {{amount.DS_TIPOS}} -->
+                                        {{$ctrl.appParent.getDescriptivo(amount, 'DS_TIPOS')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex>
+                                <label>Número de empleados</label>
+                                <input ng-model="$ctrl.bloques.CIBERRIESGO.EMPLOYEES_NUMBER" disabled>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <!-- DATOS DEL PRESUPUESTO CIBERIDENTIDAD -->
+                <fieldset id="datos_hijos" ng-if="$ctrl.dato.ID_RAMO == 103 && $ctrl.dato.ID_COMP_RAMO_PROD == 8">
+                    <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'CYBER_IDENTITY_INFORMATION' | translate }}
+                        <button id="btnDesplegarPoliza7" type="submit" class="btn btn-link" ng-click="isCollapsed6 = !isCollapsed6">
+                            <span ng-if="isCollapsed6" class="glyphicon glyphicon-chevron-right btnMostrar" title="Mostrar Datos de Ciberidentidad"></span>
+                            <span ng-if="!isCollapsed6" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos Ciberidentidad"></span>
+                        </button>
+                    </legend>
+                    <div id="divPresupuesto" uib-collapse="isCollapsed7">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" class="margenPresupuestos">
+                            <md-input-container class="md-block" flex-gt-sm="50">
+                                <label class="">{{ 'ADULT_NUMBER' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.HIJOSEIDENTIDAD.ASSURED_NUMBER" disabled>
+                                    <md-option ng-repeat="type in $ctrl.typesIdent" ng-value="type.CO_TIPO">
+                                        {{$ctrl.appParent.getDescriptivo(type, 'DS_TIPOS')}}
+    	                                    <!-- {{ type.DS_TIPOS }} -->
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm="50">
+                                <label class="">{{ 'CHILDREN_NUMBER' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.HIJOSEIDENTIDAD.ASSURED_CHILDREN_NUMBER" ng-init="$ctrl.bloques.HIJOSEIDENTIDAD.ASSURED_CHILDREN_NUMBER == null ? $ctrl.bloques.HIJOSEIDENTIDAD.ASSURED_CHILDREN_NUMBER = 0 : $ctrl.bloques.HIJOSEIDENTIDAD.ASSURED_CHILDREN_NUMBER" disabled>
+                                    <md-option ng-value="0">0</md-option>
+                                    <md-option ng-repeat="type in $ctrl.typesHijos" ng-value="type.CO_TIPO">
+                                        {{$ctrl.appParent.getDescriptivo(type, 'DS_TIPOS')}}
+    	                                    <!-- {{ type.DS_TIPOS }} -->
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- DATOS DEL PRESUPUESTO CIBERHIJOS -->
+                <fieldset id="datos_hijos" ng-if="$ctrl.dato.ID_RAMO == 103 && $ctrl.dato.ID_COMP_RAMO_PROD == 7">
+                    <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'CYBER_CHILDREN_INFORMATION' | translate }}
+                        <button id="btnDesplegarPoliza7" type="submit" class="btn btn-link" ng-click="isCollapsed6 = !isCollapsed6">
+                            <span ng-if="isCollapsed6" class="glyphicon glyphicon-chevron-right btnMostrar" title="Mostrar Datos de Ciberhijos"></span>
+                            <span ng-if="!isCollapsed6" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos Ciberhijos"></span>
+                        </button>
+                    </legend>
+                    <div id="divPresupuesto" uib-collapse="isCollapsed7">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" class="margenPresupuestos">
+                            <md-input-container class="md-block" flex-gt-sm="50">
+                                <label class="">{{ 'CHILDREN_NUMBER' | translate }}</label>
+                                <md-select ng-model="$ctrl.bloques.HIJOSEIDENTIDAD.ASSURED_CHILDREN_NUMBER" disabled>
+                                    <md-option ng-repeat="type in $ctrl.typesHijos" ng-value="type.CO_TIPO">
+                                        {{$ctrl.appParent.getDescriptivo(type, 'DS_TIPOS')}}
+    	                                    <!-- {{ type.DS_TIPOS }} -->
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!--DATOS DEL PRESUPUESTO HOGAR-->
+                <fieldset id="seguro_hogar_info_vivienda" ng-if="$ctrl.dato.ID_RAMO == 20">
+                    <legend><span class="headerDetailSearch">INFORMACIÓN DE LA VIVIENDA</span></legend>
+                    <div id="divRiesgoHogar" uib-collapse="isCollapsed7">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row" class="margin-top-20" layout-align="center center">
+                            <md-input-container class="md-block margin-select-detail" flex-gt-sm="30">
+                                <label>Tipo de vivienda</label>
+                                <md-select ng-model="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.ID_TIPO_VIVIENDA" disabled>
+                                    <md-option ng-repeat="type in $ctrl.tiposVivienda_bbva" ng-value="type.CO_FIELD"
+                                        ng-if="$ctrl.dato.ID_COMP_RAMO_PROD != 2">
+                                        {{type.DS_FIELD}}
+                                    </md-option>
+                                    <md-option ng-repeat="type in $ctrl.tiposVivienda_sl" ng-value="type.CO_FIELD"
+                                        ng-if="$ctrl.dato.ID_COMP_RAMO_PROD == 2">
+                                        {{type.DS_FIELD}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">M2 construidos</label>
+                                <input ng-init="$ctrl.calcularContinente()" ng-change="$ctrl.calcularContinente()"
+                                    ng-model="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.CA_METROS_CUADRADOS" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">Número de habitaciones </label>
+                                <input ng-model="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.NU_HABITACIONES" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">Número de aseos </label>
+                                <input ng-model="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.NU_ASEOS" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                <label class="">Superficie anexa</label>
+                                <input ng-if="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.IM_SUPERFICIE_ANEXA==undefined ? $ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.IM_SUPERFICIE_ANEXA=0 : ' '"
+                                    ng-model="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.IM_SUPERFICIE_ANEXA" disabled>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row" class="margin-top-20" layout-align="center center">
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label>Año de construcción o rehabilitación total del edificio</label>
+                                <input ng-model="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.NU_ANIO_CONSTRUCCION" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="20">
+                                <label class="">Año de renovación de la instalación y agua</label>
+                                <input ng-model="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.NU_ANIO_RENOVACION" disabled>
+                            </md-input-container>
+                        </div>
+                        <div ng-if="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.ID_SITUACION_VIVIENDA != null && $ctrl.situacionesVivienda != null && $ctrl.situacionesVivienda.length > 0" layout-gt-sm="row" class="margenPresupuestos" style="margin-left: 30px">
+                            Situación de la vivienda
+                            <md-radio-group md-autofocus name="vivienda" layout-gt-sm="row" ng-model="$ctrl.bloques.BLOCK_INFORMACION_VIVIENDA.ID_SITUACION_VIVIENDA" style="margin-bottom:10px;margin-left:20px;" disabled>
+                                <md-radio-button ng-repeat="tipoRegimen in $ctrl.situacionesVivienda" ng-value="tipoRegimen.CO_FIELD">
+                                    {{tipoRegimen.DS_FIELD}}
+                                </md-radio-button>
+                            </md-radio-group>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="seguro_hogar_uso_regimen" ng-if="$ctrl.dato.ID_RAMO == 20" >
+                    <legend><span class="headerDetailSearch">USO Y RÉGIMEN DE LA VIVIENDA</span></legend>
+                    <div layout-gt-sm="row" class="margenPresupuestos margin-top-20">
+                        <md-input-container style="margin-bottom:20px" class="md-block" flex="20">
+                            <label>¿Qué uso das a la vivienda?</label>
+                            <md-select ng-init="$ctrl.calcularContinente()" ng-change="$ctrl.calcularContinente()"
+                                       ng-if="$ctrl.dato.ID_COMP_RAMO_PROD != 2" ng-model="$ctrl.bloques.BLOCK_USO_REGIMEN.ID_USO_VIVIENDA"
+                                       disabled>
+                                <md-option ng-repeat="tipoUso in $ctrl.usosVivienda_bbva" ng-value="tipoUso.CO_FIELD">
+                                    {{tipoUso.DS_FIELD}}
+                                </md-option>
+                            </md-select>
+                            <md-select ng-init="$ctrl.calcularContinente()" ng-change="$ctrl.calcularContinente()"
+                                       ng-if="$ctrl.dato.ID_COMP_RAMO_PROD == 2" ng-model="$ctrl.bloques.BLOCK_USO_REGIMEN.ID_USO_VIVIENDA"
+                                       disabled>
+                                <md-option ng-repeat="tipoUso in $ctrl.usosVivienda_sl" ng-value="tipoUso.CO_FIELD">
+                                    {{tipoUso.DS_FIELD}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div id="div-hogar-regimen" uib-collapse="isCollapsed7">
+                        <div class="separadorDesplegables"></div>
+                        <div ng-if="$ctrl.bloques.BLOCK_USO_REGIMEN.ID_REGIMEN_VIVIENDA != null && $ctrl.regimenesVivienda != null && $ctrl.regimenesVivienda.length > 0" layout-gt-sm="row" class="margenPresupuestos" style="margin-left: 30px">
+                            ¿Eres el propietario de la vivienda o el inquilino?
+                            <md-radio-group md-autofocus name="vivienda" layout-gt-sm="row" ng-model="$ctrl.bloques.BLOCK_USO_REGIMEN.ID_REGIMEN_VIVIENDA" style="margin-bottom:10px;margin-left:20px;" disabled>
+                                <md-radio-button ng-repeat="tipoRegimen in $ctrl.regimenesVivienda" ng-value="tipoRegimen.CO_FIELD">
+                                    {{tipoRegimen.DS_FIELD}}
+                                </md-radio-button>
+                            </md-radio-group>
+                        </div>
+
+                    </div>    
+                </fieldset>   
+                <fieldset id="seguro_hogar_capitales"ng-if="$ctrl.dato.ID_RAMO == 20" >
+                    <legend><span class="headerDetailSearch">{{ CAPITALS | translate | uppercase }}</span></legend>
+                    <div id="div-hogar-capitales" uib-collapse="isCollapsed8">
+                        <div layout="row">
+                            <div layout="column" flex-gt-sm="20" style="padding-left: 55px;margin-top: 8px;">
+                                <md-checkbox ng-if="$ctrl.bloques.BLOCK_CAPITALES.IN_CONTINENTE_PRIMER_RIESGO==undefined ? $ctrl.bloques.BLOCK_CAPITALES.IN_CONTINENTE_PRIMER_RIESGO=false : ' '"
+                                             ng-model="$ctrl.bloques.BLOCK_CAPITALES.IN_CONTINENTE_PRIMER_RIESGO" disabled>
+                                    CONTINENTE PRIMER RIESGO
+                                </md-checkbox>
+                            </div>
+                        </div>
+                        <div layout="row" class="margin-top-20" ng-if="$ctrl.dato.ID_COMP_RAMO_PROD == 1">
+							<md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                <label>{{ 'ADDITIONAL_FACILITIES' | translate }}</label>
+                                <input ng-model="$ctrl.bloques.BLOCK_CAPITALES.IM_VALOR_COMUNES" amount disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                <label>{{ 'SPECIAL_GOODS' | translate }}</label>
+                                <input ng-model="$ctrl.bloques.BLOCK_CAPITALES.IM_OBJETOS_VALOR_EN_VIVIENDA" amount disabled>
+                            </md-input-container>
+						 </div>	
+                        <div layout="row" class="margin-top-20">
+							<md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                <label>Valor del continente a asegurar(edificio)</label>
+                                <input ng-change="$ctrl.cambiarContinente()" ng-model="$ctrl.bloques.BLOCK_CAPITALES.IM_VALOR_CONTINENTE"
+                                amount disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                <label class="">Valor del contenido a asegurar(mobiliario y ajuar)</label>
+                                <input ng-change="$ctrl.cambiarContenido()" ng-model="$ctrl.bloques.BLOCK_CAPITALES.IM_VALOR_CONTENIDO" amount disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm="15">
+                                <label class="">JOYAS EN LA VIVIENDA</label>
+                                 <md-select ng-model="$ctrl.bloques.BLOCK_CAPITALES.IN_JOYAS_EN_VIVIENDA" disabled>
+                                    <md-option value="02">NO</md-option>
+                                    <md-option value="01">SI</md-option>
+                                    <md-option value="03">SÍ (CAJA FUERTE)</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label class="">OBJETOS DE VALOR EN LA VIVIENDA</label>
+                                <md-select ng-model="$ctrl.bloques.BLOCK_CAPITALES.IN_OBJETOS_VALOR_EN_VIVIENDA" disabled>
+                                    <md-option value="false">NO</md-option>
+                                    <md-option value="true">SI</md-option>
+                                </md-select>
+                            </md-input-container>
+                         </div>
+                       <div layout="row" class="margin-top-20" layout-align="center center">
+                           <div layout="column" class="accentBox" flex-gt-sm="100" style="text-align: center">
+                               <md-input-container ng-if="$ctrl.bloques.BLOCK_CAPITALES.IN_JOYAS_EN_VIVIENDA!=02 || $ctrl.joyas" flex-gt-sm="25">
+                                   <p style="font-family: TelefonicaWebLight;letter-spacing: 1px;color: #031A34;font-size: 1.2em;">DETALLE DE LAS JOYAS:</p>
+                                   <div class="margin-top-20">
+                                       <p ng-repeat="item in $ctrl.listJoyas" style="text-transform: uppercase;color: #6e7894!important;">{{item.name}}: {{item.value}} &euro;</p>
+                                   </div>
+                               </md-input-container>
+                               <md-input-container ng-if="$ctrl.bloques.BLOCK_CAPITALES.IN_OBJETOS_VALOR_EN_VIVIENDA || $ctrl.valorEspecial" flex-gt-sm="25">
+                                   <p style="font-family: TelefonicaWebLight;letter-spacing: 1px;color: #031A34;font-size: 1.2em;">DETALLE DE LOS OBJETOS DE VALOR:</p>
+                                   <div class="margin-top-20">
+                                       <p ng-repeat="item in $ctrl.listValorEspecial" style="text-transform: uppercase;color: #6e7894!important;">{{item.name}}: {{item.value}} &euro;</p>
+                                   </div>
+                               </md-input-container>
+                           </div>
+                      </div>
+                 </div>
+                </fieldset>
+            </div>
+        </div>
+        
+        <div ng-show="$ctrl.showTable == 2" class="formClass form-scroll" flex>
+            <div class="formClass margin-1-1_5">
+                <legend><span class="headerDetailSearch"><span class="headerDetailSection">{{ 'GUARANTEES' | translate }} </span> - {{$ctrl.dato.NO_PRODUCTO}} {{$ctrl.dato.NU_POLIZA}} ({{$ctrl.dato.NO_RAMO}})</span></legend>
+            </div>
+            <div ng-if="$ctrl.garantias!=null || $ctrl.garantias!=undefined || $ctrl.garantias>0">
+                <div>
+                    <div class="demo-select-all-checkboxes" layout="column" flex="100" ng-repeat="garantia in $ctrl.garantias" style="margin-top: 20px; padding-left:20px">
+                    	<div layout="row" layout-align="center center">
+	                        <md-input-container class="md-block hide-validation-error" flex-gt-sm="40">
+	                            <label class="">{{ 'WARRANTY' | translate }}</label>
+	                            <input ng-disabled="true" ng-model="garantia.NO_GARANTIA" class="borderAccent">
+	                        </md-input-container>
+	                        <md-input-container class="md-block hide-validation-error" flex-gt-sm="15">
+	                            <label class="">{{ 'CAPITAL' | translate }}</label>
+	                            <input ng-disabled="true" ng-model="garantia.NU_CAPITAL" amount no-decimal>
+	                        </md-input-container>
+	                        <md-input-container class="md-block hide-validation-error" flex-gt-sm="15" ng-show="!($ctrl.dato.ID_RAMO == 103 && ($ctrl.dato.ID_COMP_RAMO_PROD == 5 || $ctrl.dato.ID_COMP_RAMO_PROD == 6 || $ctrl.dato.ID_COMP_RAMO_PROD == 25))">
+	                            <label class="">{{ 'NET_PREMIUM' | translate }}</label>
+	                            <input ng-disabled="true" ng-model="garantia.NU_PRIMA_NETA" amount>
+	                        </md-input-container>
+                    	</div>
+                    	<div layout="row" layout-align="center center" ng-repeat="sublimite in $ctrl.sublimiteCobertura" ng-if="sublimite.ID_GARANTIA == garantia.ID_GARANTIA">
+                    		<p style="margin-left: 50px; margin-top: 15px; font-size: 11px;text-transform: uppercase">
+	                    		<i style="font-size: 20px; color: #0066ff" class="fa-solid fa-arrow-turn-down-right"></i>
+	                    		<span style="font-weight: 800">{{ sublimite.NO_SECCION }}:</span> {{ sublimite.NU_CAPITAL }}€
+                    		</p>
+                    	</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div ng-show="$ctrl.showTable == 3" class="formClass form-scroll" flex>
+            <div class="form-detalle">
+                <div layout="row">
+<!--                    <div flex="5" style="margin-top: 7%;">-->
+<!--                        <md-button aria-label="Tomador" class="md-fab md-raised md-mini" ng-click="tipoAsegurado = 'tomador'">-->
+<!--                            <md-tooltip md-direction="right">-->
+<!--                                {{ 'POLICY_HOLDER' | translate }}-->
+<!--                            </md-tooltip>-->
+<!--                            <i class="fa-light fa-user-check" style="margin: 0!important;padding-left: 2px;font-size: 20px;"></i>-->
+<!--                        </md-button>-->
+<!--                        <div ng-hide="$ctrl.dato.pagador == null">-->
+<!--	                        <md-button aria-label="Pagador" class="md-fab md-raised md-mini" ng-click="tipoAsegurado = 'pagador'">-->
+<!--	                            <md-tooltip md-direction="right">-->
+<!--	                                Pagador-->
+<!--	                            </md-tooltip>-->
+<!--                                <i class="fa-light fa-money-simple-from-bracket" style="margin: 0!important;padding-left: 1px;font-size: 20px;"></i>-->
+<!--	                        </md-button>-->
+<!--                        </div>-->
+<!--                        <md-button aria-label="Asegurado" class="md-fab md-raised md-mini" ng-click="tipoAsegurado = 'asegurado'">-->
+<!--                            <md-tooltip md-direction="right">-->
+<!--                                {{ 'INSURED' | translate }}-->
+<!--                            </md-tooltip>-->
+<!--                            <i class="fa-light fa-user-shield" style="margin: 0!important;padding-left: 2px;font-size: 20px;"></i>-->
+<!--                        </md-button>-->
+<!--                        <div ng-hide="$ctrl.dato.ID_RAMO != 103 || ($ctrl.dato.ID_COMP_RAMO_PROD != 5 && $ctrl.dato.ID_COMP_RAMO_PROD != 6)">-->
+<!--	                        <md-button aria-label="Autorizado" class="md-fab md-raised md-mini" ng-click="tipoAsegurado = 'autorizado'">-->
+<!--	                            <md-tooltip md-direction="right">-->
+<!--	                                Autorizado-->
+<!--	                            </md-tooltip>-->
+<!--                                <i class="fa-light fa-user-tie-hair-long" style="margin: 0!important;padding-left: 2px;padding-bottom:2px;font-size: 24px;"></i>-->
+<!--	                        </md-button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <div flex>
+                        <md-card>
+                            <md-card-content>
+                                <div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100">
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="15" >
+                                        <label style="font-weight: 600"><i class="fa-light fa-user-check" style="color: #0066ff"></i> TOMADOR</label>
+                                        <input disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10" >
+                                        <label class="">{{ 'DOCUMENT_NUMBER' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.tomador.NU_DOCUMENTO" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="25" >
+                                        <md-autocomplete ng-init="vm.clientes = []" md-no-cache="true" md-selected-item="$ctrl.dato.tomador"
+                                                         md-selected-item-change="$ctrl.buscarCliente($ctrl.tomador)" md-search-text="$ctrl.searchCliente"
+                                                         md-search-text-change="$ctrl.querySearch($ctrl.searchCliente)" md-items="cliente in $ctrl.clientes"
+                                                         md-item-text="cliente.NO_NOMBRE_COMPLETO" md-min-length="3" md-delay="300" md-floating-label="{{ 'FULL_NAME' | translate }}" disabled>
+                                            <md-item-template>
+                                                <span md-highlight-text="$ctrl.searchCliente" md-highlight-flags="^i">{{cliente.NO_NOMBRE_COMPLETO}}</span>
+                                            </md-item-template>
+                                        </md-autocomplete>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                        <label class="">{{ 'EMAIL' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.tomador.NO_EMAIL" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                        <label class="">{{ 'TELEPHONE_1' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.tomador.NU_TELEFONO1" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                        <label class="">{{ 'TELEPHONE_2' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.tomador.NU_TELEFONO2" disabled>
+                                    </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100" ng-repeat="asegurado in $ctrl.dato.conductor track by $index">
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="15" >
+                                        <label style="font-weight: 600"><i class="fa-light fa-user-shield" style="color: #0066ff"></i> ASEGURADO {{$index + 1}}</label>
+                                        <input disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10" >
+                                        <label class="">{{ 'DOCUMENT_NUMBER' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.conductor[$index].NU_DOCUMENTO" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                        <label class="">{{ 'FULL_NAME' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.conductor[$index].NO_NOMBRE_COMPLETO" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                        <label class="">{{ 'EMAIL' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.conductor[$index].NO_EMAIL" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                        <label class="">{{ 'TELEPHONE_1' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.conductor[$index].NU_TELEFONO1" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                        <label class="">{{ 'TELEPHONE_2' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.conductor[$index].NU_TELEFONO2" disabled>
+                                    </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100">
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="15" >
+                                        <label style="font-weight: 600"><i class="fa-light fa-money-simple-from-bracket" style="color: #0066ff"></i> PAGADOR</label>
+                                        <input disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10" >
+                                        <label class="">{{ 'DOCUMENT_NUMBER' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.pagador.NU_DOCUMENTO" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                        <label class="">{{ 'FULL_NAME' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.pagador.NO_NOMBRE_COMPLETO" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                        <label class="">{{ 'EMAIL' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.pagador.NO_EMAIL" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                        <label class="">{{ 'TELEPHONE_1' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.pagador.NU_TELEFONO1" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                        <label class="">{{ 'TELEPHONE_2' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.pagador.NU_TELEFONO2" disabled>
+                                    </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100">
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="15" >
+                                        <label style="font-weight: 600"><i class="fa-light fa-user-tie-hair-long" style="color: #0066ff"></i> PERSONA AUTORIZADA</label>
+                                        <input disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10" >
+                                        <label class="">{{ 'DOCUMENT_NUMBER' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.autorizado.NU_DOCUMENTO" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                        <label class="">{{ 'FULL_NAME' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.autorizado.NO_NOMBRE_COMPLETO" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="25">
+                                        <label class="">{{ 'EMAIL' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.autorizado.NO_EMAIL" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                        <label class="">{{ 'TELEPHONE_1' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.autorizado.NU_TELEFONO1" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm="10">
+                                        <label class="">{{ 'TELEPHONE_2' | translate }}</label>
+                                        <input ng-model="$ctrl.dato.autorizado.NU_TELEFONO2" disabled>
+                                    </md-input-container>
+                                </div>
+                            </md-card-content>
+                        </md-card>
+<!--                        <md-card ng-if="tipoAsegurado == 'pagador' && $ctrl.dato.pagador != null" class="formClass">-->
+<!--                            <md-card-header>-->
+<!--                                <h4>Pagador</h4>-->
+<!--                            </md-card-header>-->
+<!--                            <md-card-content>-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'DOCUMENT_NUMBER' | translate }}</label>-->
+<!--                                        <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.readOnly == true" ng-model="$ctrl.dato.pagador.NU_DOCUMENTO">-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'FULL_NAME' | translate }}</label>-->
+<!--                                        <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.readOnly == true" ng-model="$ctrl.dato.pagador.NO_NOMBRE_COMPLETO">-->
+<!--                                    </md-input-container>-->
+<!--                                </div>-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <md-input-container ng-if="$ctrl.dato.pagador.FD_NACIMIENTO != null" class="md-block" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'BIRTH_DATE' | translate }}</label>-->
+<!--                                        <md-datepicker ng-model="$ctrl.dato.pagador.FD_NACIMIENTO" disabled-->
+<!--                                            ng-if="($ctrl.dato.pagador.FD_NACIMIENTO == null || $ctrl.dato.pagador.FD_NACIMIENTO == undefined) ? $ctrl.dato.pagador.FD_NACIMIENTO = null : $ctrl.dato.pagador.FD_NACIMIENTO">-->
+<!--                                        </md-datepicker>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'EMAIL' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.pagador.NO_EMAIL" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container>-->
+<!--                                        <label class="">{{ 'EMPLOYMENT_STATUS' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.pagador.DS_SITUACION_LABORAL" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container ng-if="$ctrl.dato.pagador.ID_SITUACION_LABORAL == 1 || $ctrl.dato.pagador.ID_SITUACION_LABORAL == 4 || $ctrl.dato.pagador.ID_SITUACION_LABORAL == 5">-->
+<!--                                        <label class="">{{ 'ENROLLMENT' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.pagador.NU_MATRICULA" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                </div>-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'TELEPHONE_1' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.pagador.NU_TELEFONO1" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'TELEPHONE_2' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.pagador.NU_TELEFONO2" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container>-->
+<!--                                        <label class="">{{ 'MOBILE_TELEPHONE' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.pagador.NU_FAX" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                </div>-->
+<!--                            </md-card-content>-->
+<!--                        </md-card>-->
+<!--                        <md-card ng-if="tipoAsegurado == 'asegurado'" class="formClass">-->
+<!--                            <md-card-header ng-if="$ctrl.dato.conductor==undefined || $ctrl.dato.conductor==''">-->
+<!--&lt;!&ndash;                                 <h4>{{ 'INSURED_POLICY' | translate }}</h4> &ndash;&gt;-->
+<!--                                <div style="margin-left:50px">-->
+<!--                                    <md-button ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.readOnly == true" class="dark-blue btnNuevo" ng-click="$ctrl.addAsegurado('Asegurado')">-->
+<!--                                        <md-icon>add</md-icon>-->
+<!--                                        {{ 'ADD_INSURED' | translate }}-->
+<!--                                    </md-button>-->
+<!--                                </div>-->
+<!--                            </md-card-header>-->
+<!--                            <md-card-content ng-repeat="asegurado in $ctrl.dato.conductor">-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <h4>{{asegurado.NO_ASEGURADO}}</h4>-->
+<!--                                </div>-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'DOCUMENT_NUMBER' | translate }}</label>-->
+<!--                                        <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.readOnly == true" ng-model="$ctrl.dato.conductor[$index].NU_DOCUMENTO">-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'FULL_NAME' | translate }}</label>-->
+<!--                                        <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.readOnly == true" ng-model="$ctrl.dato.conductor[$index].NO_NOMBRE_COMPLETO">-->
+<!--                                    </md-input-container>-->
+<!--                                </div>-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <md-input-container ng-if="$ctrl.dato.conductor[$index].FD_NACIMIENTO != null" class="md-block" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'BIRTH_DATE' | translate }}</label>-->
+<!--                                        <md-datepicker ng-model="$ctrl.dato.conductor[$index].FD_NACIMIENTO" disabled-->
+<!--                                            ng-if="($ctrl.dato.conductor[$index].FD_NACIMIENTO == null || $ctrl.dato.conductor[$index].FD_NACIMIENTO == undefined) ? $ctrl.dato.conductor[$index].FD_NACIMIENTO = null : $ctrl.dato.conductor[$index].FD_NACIMIENTO">-->
+<!--                                        </md-datepicker>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'EMAIL' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.conductor[$index].NO_EMAIL" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container>-->
+<!--                                        <label class="">{{ 'EMPLOYMENT_STATUS' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.conductor[$index].DS_SITUACION_LABORAL" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container ng-if="$ctrl.dato.conductor[$index].ID_SITUACION_LABORAL == 1 || $ctrl.dato.asegurados[$index].ID_SITUACION_LABORAL == 4 || $ctrl.dato.asegurados[$index].ID_SITUACION_LABORAL == 5">-->
+<!--                                        <label class="">{{ 'ENROLLMENT' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.conductor[$index].NU_MATRICULA" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                </div>-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'TELEPHONE_1' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.conductor[$index].NU_TELEFONO1" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'TELEPHONE_2' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.conductor[$index].NU_TELEFONO2" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container>-->
+<!--                                        <label class="">{{ 'MOBILE_TELEPHONE' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.conductor[$index].NU_FAX" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                </div>-->
+<!--                                <md-divider ng-if="$ctrl.dato.conductor[$index].length != $index+1"></md-divider>-->
+<!--                            </md-card-content>-->
+<!--                        </md-card>-->
+<!--                        <md-card ng-if="tipoAsegurado == 'autorizado'" class="formClass">-->
+<!--                            <md-card-header>-->
+<!--                                <h4>Autorizado</h4>-->
+<!--                            </md-card-header>-->
+<!--                            <md-card-content>-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'DOCUMENT_NUMBER' | translate }}</label>-->
+<!--                                        <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.readOnly == true" ng-model="$ctrl.dato.autorizado.NU_DOCUMENTO">-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'FULL_NAME' | translate }}</label>-->
+<!--                                        <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.readOnly == true" ng-model="$ctrl.dato.autorizado.NO_NOMBRE_COMPLETO">-->
+<!--                                    </md-input-container>-->
+<!--                                </div>-->
+<!--                                <div layout-gt-sm="row">-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'EMAIL' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.autorizado.NO_EMAIL" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                    <md-input-container class="md-block margin-input-detail" flex-gt-sm>-->
+<!--                                        <label class="">{{ 'TELEPHONE_1' | translate }}</label>-->
+<!--                                        <input ng-model="$ctrl.dato.autorizado.NU_TELEFONO1" disabled>-->
+<!--                                    </md-input-container>-->
+<!--                                </div>-->
+<!--                            </md-card-content>-->
+<!--                        </md-card>-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- <div md-whiteframe="1" ng-show="$ctrl.showTable == 4">
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 1" style="height: 70vh;">
+            </div>
+            <div style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3" style="height: 70vh;">
+                <h2>No se ha encontrado ningún comisionista</h2>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-pagination ui-grid-resize-columns
+                ui-grid-auto-resize resize ng-style="resizeHeight(135)"></div>
+        </div> -->
+      <div ng-show="$ctrl.showTable == 4" flex>
+
+            <div class="formClass" layout="column" style="padding: 25px;">
+                <div class="formClass" layout="row" style="margin-bottom: 20px;">
+                    <div flex-gt-sm="100" layout="row" layout-align="center center" style="margin-top: 20px">
+                     	<md-input-container class="md-block" flex-gt-sm="30">
+                              <label style="text-transform: capitalize;" class="">Selecciona el tipo de fichero a subir</label>
+                              <md-select ng-model="$ctrl.tipoArchivo" ng-change="$ctrl.setArchivoPoliza($ctrl.tipoArchivo)">
+                                  <md-option  ng-repeat="tipo in $ctrl.tipos.archivoPoliza" ng-value="tipo">
+                                      <i class="fa-light fa-folder-open"></i> {{$ctrl.appParent.getDescriptivo(tipo, 'DS_TIPOS')}}
+                                  </md-option>
+                              </md-select>
+                        </md-input-container>
+                        <div flex-gt-sm="30">
+                            <input type="file" data-datos-poliza={{$ctrl.dato}} data-id-poliza={{$ctrl.dato.ID_POLIZA}} data-tipo-archivo={{$ctrl.tipoArchivo}} id="file_pol_firmada" name="file_pol_firmada" class="inputfile" ng-disabled="$ctrl.tipoArchivo == null"/>
+	                        <label class="md-raised md-primary medium-blue button-action-main" for="file_pol_firmada" style="line-height: 26px !important;font-weight: 100">
+                                <i class="fa-regular fa-plus"></i> {{ 'SELECT_FILE' | translate }}
+	                        </label>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.cargarArchivos == true">
+                	<div style="display:table;">
+	                	<div class="centered" style="display:table-cell; vertical-align: middle;">
+		                	<div class="blob-3"></div>
+		                    <div class="blob-4"></div>
+		                </div>
+		            </div>
+                </div>
+                <div ng-repeat="archivo in $ctrl.listaArchivos" layout-gt-sm="row" layout-margin>
+					<md-input-container class="md-block margin-input-detail" flex-gt-sm flex="25">
+                        <label class="">{{ 'FILE' | translate }}</label>
+                        <input ng-model="archivo.NO_ARCHIVO" disabled>
+                    </md-input-container>
+					<md-input-container class="md-block margin-input-detail" flex-gt-sm flex="20">
+                        <label class="">{{ 'STATUS' | translate }}</label>
+                        <input type="text" ng-model="archivo.ESTADO" disabled>
+                    </md-input-container>
+					<md-input-container class="md-block margin-input-detail" flex-gt-sm flex="30">
+                        <label class="">{{ 'FILE_TYPE' | translate }}</label>
+                        <input type="text" ng-model="archivo.NO_TIPO_ARCHIVO" disabled>
+                    </md-input-container>
+					<i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(archivo)">
+                        cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip>
+                    </i>
+                    <i class="material-icons btnIcono" ng-click="$ctrl.deleteFile(archivo)">
+                        delete_outline <md-tooltip md-direction="top">{{ 'DELETE' | translate | uppercase }}</md-tooltip>
+					</i>
+				</div>				 
+            </div>
+            
+        </div>
+        <div ng-show="$ctrl.showTable == 5">
+            <input type="hidden" id="idPoliza" ng-value="$ctrl.dato.ID_POLIZA">
+            <busqueda-recibo datos-poliza="$ctrl.dato" cargar-tabla-recibo="$ctrl.cargarTabla" id-poliza="$ctrl.parent.datos.ID_POLIZA" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista"
+                ds-active="$ctrl.parent.active"></busqueda-recibo>
+        </div>
+        <div ng-show="$ctrl.showTable == 6">
+            <input type="hidden" id="idPoliza" ng-value="$ctrl.dato.ID_POLIZA">
+            <busqueda-siniestro poliza="$ctrl.parent.datos" id-poliza="$ctrl.parent.datos.ID_POLIZA" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista"
+                ds-active="$ctrl.parent.active"></busqueda-siniestro>
+        </div>
+        <div ng-show="$ctrl.showTable == 7">
+            <input type="hidden" id="idPoliza" ng-value="$ctrl.dato.ID_POLIZA">
+            <busqueda-solicitudes datos-cliente="$ctrl.datosCliente" id-poliza="$ctrl.parent.datos.ID_POLIZA" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista"
+                ds-active="$ctrl.parent.active"></busqueda-solicitudes>
+        </div>
+        <div ng-show="$ctrl.showTable == 8">
+            <fieldset class="datos_poliza">
+                <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'POLICY_HISTORY' | translate }}
+                    <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+                        <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar histórico de la póliza"></span>
+                        <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar histórico de la póliza"></span>
+                    </button>
+                </legend>
+                <div id="divPoliza" uib-collapse="isCollapsed">
+                	<div class="ui-grid" style="height: 300px;" ui-grid="$ctrl.gridOptionsHistorico" ui-grid-exporter ui-grid-pagination ui-grid-grouping ui-grid-resize-columns ui-grid-auto-resize resize></div>
+                </div>
+                
+            </fieldset>
+            <fieldset class="datos_poliza" ng-if="$ctrl.dato.ID_COMP_RAMO_PROD == 1 || $ctrl.dato.ID_COMP_RAMO_PROD == 2" ng-show="$ctrl.mostrarHistoCumu ? ($ctrl.rol == 1 || $ctrl.rol == 4) : true"> 
+                <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Histórico de las comunicaciones
+                    <button id="btnDesplegarComunicacionesPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+                        <span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar histórico de la póliza"></span>
+                        <span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar histórico de la póliza"></span>
+                    </button>
+                </legend>
+                <div id="datos_comunicaciones_poliza" uib-collapse="isCollapsed2">
+                	<div class="ui-grid" style="height: 150px;" ui-grid="$ctrl.gridOptionsHistoricoComunicaciones" ui-grid-exporter ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize></div>
+                </div>
+            </fieldset>
+        </div>
+<!--         <div ng-show="$ctrl.showTable == 9"> -->
+<!--             <fieldset class="datos_poliza"> -->
+<!--                 <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Comisionsitas de la póliza -->
+<!--                     <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed"> -->
+<!--                         <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Comisionsitas de la póliza"></span> -->
+<!--                         <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Comisionsitas de la póliza"></span> -->
+<!--                     </button> -->
+<!--                 </legend> -->
+<!--                 <div id="divPoliza" uib-collapse="isCollapsed"> -->
+<!--                 	<div ng-if="$ctrl.listComisionistas.length > 0" class="ui-grid" ui-grid="$ctrl.gridComisionistas" ui-grid-exporter ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize></div> -->
+<!-- 		            <div layout="row" layout-align="center center" ng-if="$ctrl.listComisionistas == null || $ctrl.listComisionistas.length == 0"> -->
+<!-- 		                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado comisionistas</h4> -->
+<!-- 		            </div> -->
+<!--                 </div> -->
+<!--             </fieldset> -->
+<!--         </div> -->
+        
+        
+<!--        <div ng-if="$ctrl.readOnly != true" layout="row" layout-align="center" layout-margin>-->
+<!--            <md-button ng-if="$ctrl.navegador != 'internet explorer' && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" type="submit" form="formNuevaPoliza">-->
+<!--                <md-icon>save</md-icon> {{ 'SAVE' | translate }}-->
+<!--            </md-button>-->
+<!--            <md-button ng-if="$ctrl.navegador == 'internet explorer' && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.formPoliza == true ? $ctrl.validarPoliza() : $ctrl.guardar($ctrl.nuevo)" form="formNuevaPoliza">-->
+<!--                <md-icon>save</md-icon> {{ 'SAVE' | translate }}-->
+<!--            </md-button>-->
+<!--        </div>-->
+
+    </div>
+</div>

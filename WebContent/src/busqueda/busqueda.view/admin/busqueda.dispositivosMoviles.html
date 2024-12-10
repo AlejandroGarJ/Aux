@@ -1,0 +1,277 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results">
+	<div class="cs-loader" ng-if="$ctrl.vista == 2">
+		<div class="cs-loader-inner">
+			<label>●</label>
+			<label>●</label>
+			<label>●</label>
+			<label>●</label>
+			<label>●</label>
+			<label>●</label>
+		</div>
+	</div>
+<!--	<div class="md-toolbar-tools toolbar-filtro">-->
+<!--		<div layout="row" layout-align="start center" flex="90">-->
+<!--			<h2 style="text-transform: uppercase; color:#0066FF"><span style="color:#2b3447!important"><span style="color:#4b4b4b" ng-click="$ctrl.navTo('#!/area_privada?smovil=true')"><span><i class="fa-solid fa-caret-left"></i></span> MENÚ <span style="color:#0066FF">SEGURO MÓVIL</span> </span> <i class="fa-thin fa-chevron-right"></i> GESTIÓN DE <span style="font-family: TelefonicaWebBold!important">TERMINALES Y DISPOSITIVOS</span></span></h2>-->
+<!--		</div>-->
+<!--	</div>-->
+	<div layout="row" layout-align="left left" style="border-left: 3px solid #0066ff;margin-bottom: 10px;">
+<!--		<md-list flex="20">-->
+<!--&lt;!&ndash;			<md-list-item>&ndash;&gt;-->
+<!--&lt;!&ndash;				<span flex="70"><i class="fa-light fa-cart-shopping" style="color: #0066ff; margin-right: 3px"></i> TERMINALES WCA FUSIÓN</span>&ndash;&gt;-->
+<!--&lt;!&ndash;				<md-switch ng-change="$ctrl.changeFiltro()" ng-true-value="'wcaFusion'" ng-model="$ctrl.filtro.switchFiltro" aria-label="switch.wca.fusion"></md-switch>&ndash;&gt;-->
+<!--&lt;!&ndash;			</md-list-item>&ndash;&gt;-->
+<!--		</md-list>-->
+<!--		<md-list flex="20">-->
+<!--&lt;!&ndash;			<md-list-item>&ndash;&gt;-->
+<!--&lt;!&ndash;				<span flex="70"><i class="fa-light fa-lock-open" style="color: #0066ff; margin-right: 3px"></i> TERMINALES WCA LIBRES</span>&ndash;&gt;-->
+<!--&lt;!&ndash;				<md-switch ng-change="$ctrl.changeFiltro()" ng-true-value="'wcaCalibre'" ng-model="$ctrl.filtro.switchFiltro" aria-label="switch.wca.libre"></md-switch>&ndash;&gt;-->
+<!--&lt;!&ndash;			</md-list-item>&ndash;&gt;-->
+<!--		</md-list>-->
+<!--		<md-list flex="20">-->
+<!--			<md-list-item>-->
+<!--				<span flex="70"><i class="fa-light fa-laptop-mobile" style="color: #0066ff; margin-right: 3px"></i> SEGURO DISPOSITIVOS</span>-->
+<!--				<md-switch ng-change="$ctrl.changeFiltro()" ng-true-value="'wcaDisp'" ng-model="$ctrl.filtro.switchFiltro" aria-label="switch.wca.dispositivos"></md-switch>-->
+<!--			</md-list-item>-->
+<!--		</md-list>-->
+		<md-list flex="40">
+			<md-list-item>
+				<div class="md-toolbar-tools toolbar-filtro">
+				<h2 style="text-transform: uppercase; color:#0066FF"><span style="color:#2b3447!important"><span style="color:#4b4b4b" ng-click="$ctrl.navTo('#!/area_privada?smovil=true')"><span><i class="fa-solid fa-caret-left"></i></span> MENÚ <span style="color:#0066FF">SEGURO MÓVIL</span> </span> <i class="fa-thin fa-chevron-right"></i> GESTIÓN DE <span style="font-family: TelefonicaWebBold!important">DISPOSITIVOS</span></span></h2>
+				</div>
+			</md-list-item>
+
+		</md-list>
+
+		<md-list flex="20">
+			<md-list-item>
+				<span style="font-size: 1.2em;"><i class="fa-duotone fa-filters"></i></span>
+				<md-input-container class="md-block"  style="margin-top: 7px" flex-gt-sm="100">
+					<label>TIPO DE DISPOSITIVO</label>
+					<md-select ng-change="$ctrl.changeFiltro()" ng-model="$ctrl.filtroTipo" multiple>
+						<md-option ng-repeat="(key, value) in $ctrl.listTipos" ng-value="key" ng-if="key != 'null'">
+							{{key}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+			</md-list-item>
+		</md-list>
+		<md-list flex="20">
+			<md-list-item>
+				<md-input-container class="md-block" flex-gt-sm="100" class="inputSpace" style="margin: 12px 0px 0px 0px;">
+					<input ng-model="$ctrl.filtro.terminal" maxlength="100">
+				</md-input-container>
+			</md-list-item>
+		</md-list>
+		<md-list flex="20">
+			<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.changeFiltro()" style="margin: 12px 0px 0px 0px!important;">
+				<i class="fa-light fa-print-magnifying-glass"></i>
+				{{ 'SEARCH_BTN' | translate }}
+			</md-button>
+		</md-list>
+	</div>
+	<div layout="row" layout-align="center center">
+		<md-list flex="20">
+			<md-list-item>
+				<span flex="70"><i class="fa-light fa-cart-shopping" style="color: #0066ff; margin-right: 3px"></i> DISPOSITIVOS WCA FUSIÓN</span>
+				<md-switch ng-change="$ctrl.changeFiltro()" ng-true-value="'wcaFusion'" ng-model="$ctrl.filtro.switchFiltro" aria-label="switch.wca.fusion"></md-switch>
+			</md-list-item>
+		</md-list>
+		<md-list flex="20">
+			<md-list-item>
+				<span flex="70"><i class="fa-light fa-lock-open" style="color: #0066ff; margin-right: 3px"></i> DISPOSITIVOS WCA LIBRES</span>
+				<md-switch ng-change="$ctrl.changeFiltro()" ng-true-value="'wcaCalibre'" ng-model="$ctrl.filtro.switchFiltro" aria-label="switch.wca.libre"></md-switch>
+			</md-list-item>
+		</md-list>
+		<md-list flex="20">
+			<md-list-item>
+				<span flex="70"><i class="fa-light fa-laptop-mobile" style="color: #0066ff; margin-right: 3px"></i> SEGURO DISPOSITIVOS</span>
+				<md-switch ng-change="$ctrl.changeFiltro()" ng-true-value="'wcaDisp'" ng-model="$ctrl.filtro.switchFiltro" aria-label="switch.wca.dispositivos"></md-switch>
+			</md-list-item>
+		</md-list>
+	</div>
+
+	<md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+		<md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+			<div ng-if="$ctrl.rol == 4 || $ctrl.rol == 1" layout="row" layout-align="start center" class="md-padding formClass" style="padding-left: 0px!important;">
+				<md-button style="margin-bottom: 10px!important;" class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.addBrand()">
+					<i class="fa-light fa-rectangles-mixed" style="margin-right: 5px"></i> NUEVA MARCA
+				</md-button>
+				<md-button style="margin-bottom: 10px!important;" class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.addDevice()">
+					<i class="fa-light fa-laptop-mobile" style="margin-right: 5px"></i> NUEVO DISPOSITIVO
+				</md-button>
+
+			</div>
+			<div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+	        </div>
+	        <!--<div id="buscandoGif" style="display:table; height: 70vh;" >
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>-->
+
+	        <div id="mensajeNingunResultado" class="mensajesBusqueda" ng-if="$ctrl.vista == 3">
+	       		<h2>No se ha encontrado ningún dispositivo móvil</h2>
+	        </div>
+	 
+	 <!-- Marca -->       
+<!--	        <form class="formClass" ng-if="$ctrl.vista == 4 && $ctrl.permisos.IN_ESCRITURA == true" style="margin-top: 1%;" layout-gt-sm="row" layout-align="space-between center">	       -->
+<!--	            <div><i ng-click="$ctrl.navTo('#!/area_privada?smovil=true')" class="fas fa-chevron-left" style="font-size: 1.7em; margin-right: 10px"></i></div>-->
+<!--	            <div layout="row" layout-align="center center">-->
+<!--		            <form name="$ctrl.formMarca" layout="row" layout-align="center center">-->
+<!--		            	<div ng-if="$ctrl.marca">-->
+<!--							<md-input-container class="md-block hide-validation-error" flex-gt-sm >-->
+<!--			                    <label>{{ 'NAME' | translate }}</label>-->
+<!--		                        <input ng-model="$ctrl.modelName2" required>-->
+<!--							</md-input-container>-->
+<!--						</div>-->
+<!--		                <md-input-container class="md-block" flex-gt-sm>-->
+<!--		                    <md-button  class="dark-blue btnNuevo" ng-click="$ctrl.addBrand()">-->
+<!--								<md-icon>add</md-icon>-->
+<!--								Añadir marca-->
+<!--							</md-button>-->
+<!--		                </md-input-container>-->
+<!--		             </form>-->
+<!--	            </div>-->
+<!--            </form>-->
+     
+      <!-- Modelo -->         
+<!--              <div ng-if="$ctrl.vista != 2" class="formClass" flex  layout-align="center end">-->
+<!--				<form name="$ctrl.formProducto">-->
+<!--					<div style="margin-top: 10px; margin-bottom: 10px" layout-gt-sm="row" layout-align="center center">-->
+<!--						<md-input-container class="hide-validation-error md-block" flex-gt-sm="10">-->
+<!--		                    <label>Código Precom</label>-->
+<!--	                        <input ng-model="$ctrl.codPrecom" ng-required="$ctrl.required" ng-disabled = "$ctrl.disabled" >-->
+<!--						</md-input-container>-->
+<!--						<md-autocomplete name="Brand" flex-gt-sm="15" md-no-cache="$ctrl.noCache"-->
+<!--							ng-required="$ctrl.required" -->
+<!--							ng-disabled = "$ctrl.disabled" -->
+<!--							md-selected-item="$ctrl.selBrand" md-search-text="$ctrl.searchBrand"-->
+<!--							md-selected-item-change="$ctrl.getModels()"-->
+<!--							md-items="brand in $ctrl.querySearch($ctrl.searchBrand, $ctrl.lstBrands, 'brandName')"-->
+<!--							md-item-text="brand.brandName" md-min-length="0" md-require-match class="hide-validation-error"-->
+<!--							md-floating-label="Marca">-->
+<!--							<md-item-template>-->
+<!--								<span md-highlight-text="$ctrl.searchBrand"-->
+<!--									md-highlight-flags="^i">{{brand.brandName}}</span>-->
+<!--							</md-item-template>-->
+<!--							<md-not-found>-->
+<!--								No existe la marca "{{$ctrl.searchBrand}}".-->
+<!--							</md-not-found>-->
+<!--						</md-autocomplete>-->
+<!--						<md-input-container class="md-block hide-validation-error" flex-gt-sm="15">-->
+<!--		                    <label>Modelo completo</label>-->
+<!--	                        <input ng-model="$ctrl.modelName" required>-->
+<!--						</md-input-container>-->
+<!--&lt;!&ndash; 						<md-input-container class="md-block" flex-gt-sm="20"> &ndash;&gt;-->
+<!--&lt;!&ndash; 		                    <label>Modelo t&#233;cnico</label> &ndash;&gt;-->
+<!--&lt;!&ndash; 	                        <input ng-model="$ctrl.coModeloTecnico" required> &ndash;&gt;-->
+<!--&lt;!&ndash; 						</md-input-container> &ndash;&gt;-->
+<!--						<md-input-container class="md-block hide-validation-error" flex-gt-sm="15">-->
+<!--		                    <label>Banda</label>-->
+<!--		                    <md-select ng-model="$ctrl.band" required>-->
+<!--								 <md-option ng-value="1">Banda 1</md-option>-->
+<!--								 <md-option ng-value="2">Banda 2</md-option>-->
+<!--								 <md-option ng-value="3">Banda 3</md-option>-->
+<!--								 <md-option ng-value="4">Banda 4</md-option>-->
+<!--								 <md-option ng-value="5">Banda 5</md-option>-->
+<!--								 <md-option ng-value="6">Banda 6</md-option>-->
+<!--				         	</md-select>-->
+<!--		                </md-input-container>-->
+<!--		                <div flex-gt-sm="15">-->
+<!--		                    <md-checkbox style="margin-bottom: 0px" ng-model="$ctrl.isRent">-->
+<!--		                        Es un terminal RENT-->
+<!--		                    </md-checkbox>-->
+<!--		                </div>-->
+<!--					</div>-->
+<!--					<div style="margin-top: 20px; margin-bottom: 10px" layout-gt-sm="row" layout-align="center center" class="animationIf" ng-if="$ctrl.showOpcionesAvanzadas == true">-->
+<!--						<md-input-container class="md-block hide-validation-error" flex-gt-sm="15">-->
+<!--		                    <label>Product Offering (1)</label>-->
+<!--	                        <input ng-model="$ctrl.pOffering1">-->
+<!--						</md-input-container>-->
+<!--						<md-input-container class="md-block hide-validation-error" flex-gt-sm="15">-->
+<!--		                    <label>ID Capacidad (1)</label>-->
+<!--	                        <input ng-model="$ctrl.idCapacidad1">-->
+<!--						</md-input-container>-->
+<!--						<md-input-container class="md-block hide-validation-error" flex-gt-sm="15">-->
+<!--		                    <label>Product Offering (2)</label>-->
+<!--	                        <input ng-model="$ctrl.pOffering2">-->
+<!--						</md-input-container>-->
+<!--						<md-input-container class="md-block hide-validation-error" flex-gt-sm="15">-->
+<!--		                    <label>ID Capacidad (2)</label>-->
+<!--	                        <input ng-model="$ctrl.idCapacidad2">-->
+<!--						</md-input-container>-->
+<!--					</div>-->
+<!--					<div layout-gt-sm="row" layout-align="center center" style="margin-bottom: 10px;">-->
+<!--&lt;!&ndash; 						<md-input-container class="md-block" flex-gt-sm="20"> &ndash;&gt;-->
+<!--&lt;!&ndash; 		                    <label>Modelo Movistar</label> &ndash;&gt;-->
+<!--&lt;!&ndash; 	                        <input ng-model="$ctrl.coModeloMovistar" required> &ndash;&gt;-->
+<!--&lt;!&ndash; 						</md-input-container>						 &ndash;&gt;-->
+<!--&lt;!&ndash; 		                <md-input-container class="md-block" flex-gt-sm="10"> &ndash;&gt;-->
+<!--&lt;!&ndash; 		                    <label>COD_SAPTE</label> &ndash;&gt;-->
+<!--&lt;!&ndash; 	                        <input ng-model="$ctrl.CO_TAC" required> &ndash;&gt;-->
+<!--&lt;!&ndash; 						</md-input-container> &ndash;&gt;-->
+<!--&lt;!&ndash; 						<md-input-container class="md-block" flex-gt-sm="15"> &ndash;&gt;-->
+<!--&lt;!&ndash; 		                    <label>Código producto</label> &ndash;&gt;-->
+<!--&lt;!&ndash; 	                        <input ng-model="$ctrl.CO_FAC" required> &ndash;&gt;-->
+<!--&lt;!&ndash; 						</md-input-container> &ndash;&gt;-->
+<!--			-->
+<!--		                <md-input-container class="md-block">-->
+<!--		                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.clickOpcionesAvanzadas()">-->
+<!--&lt;!&ndash; 								<md-icon>tune</md-icon> &ndash;&gt;-->
+<!--								<i class="fas fa-sliders-h" style="margin-right: 5px"></i>-->
+<!--								<span ng-if="$ctrl.showOpcionesAvanzadas != true">Mostrar&nbsp;</span><span ng-if="$ctrl.showOpcionesAvanzadas == true">Ocultar&nbsp;</span> opciones avanzadas-->
+<!--							</md-button>-->
+<!--		                    <md-button ng-if="$ctrl.isEdited != true" class="dark-blue btnNuevo" ng-click="$ctrl.addDevice()">-->
+<!--								<md-icon>add</md-icon>-->
+<!--								Añadir modelo-->
+<!--							</md-button>-->
+<!--		                    <md-button ng-if="$ctrl.isEdited == true" class="dark-blue btnNuevo" ng-click="$ctrl.editDevice()">-->
+<!--		                    	<i class="far fa-save" style="margin-right: 5px"></i>-->
+<!--&lt;!&ndash; 								<md-icon>add</md-icon> &ndash;&gt;-->
+<!--								Guardar modelo-->
+<!--							</md-button>-->
+<!--		                    <md-button ng-if="$ctrl.isEdited == true" class="dark-blue btnNuevo"  ng-click="$ctrl.closeEdit()">-->
+<!--		                    	<i class="fas fa-times" style="margin-right: 5px"></i>-->
+<!--&lt;!&ndash; 								<i class="fa fa-trash"></i> &ndash;&gt;-->
+<!--								Cerrar-->
+<!--							</md-button>-->
+<!--		                </md-input-container>-->
+<!--	                  </div>	-->
+<!--	                </form>	 -->
+<!--		         </div>-->
+        
+			<div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(250)"></div>
+			
+<!--			<div layout="row" layout-align="center center" layout-margin>-->
+<!--				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.save('saveListProductos')" ng-if="$ctrl.vista == 4 && $ctrl.permisos.IN_ESCRITURA == true">-->
+<!--					<md-icon>save</md-icon>-->
+<!--					Guardar-->
+<!--				</md-button>-->
+<!--				<span></span>-->
+<!--				<span></span>-->
+<!--&lt;!&ndash; 				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.borrar('ID_PRODUCTO','saveListProductos')" ng-if="$ctrl.vista == 4 && $ctrl.permisos.IN_BORRADO == true"> &ndash;&gt;-->
+<!--&lt;!&ndash; 					<i class="fa fa-trash"></i> &ndash;&gt;-->
+<!--&lt;!&ndash; 					Borrar &ndash;&gt;-->
+<!--&lt;!&ndash; 				</md-button> &ndash;&gt;-->
+<!--			</div>-->
+			
+		</md-tab>
+
+		<md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index"  label="{{detalles.modelName}}">
+
+			<md-tab-label ng-if="detalles != null">
+				<span ng-if="detalles.modelName != undefined && detalles.codPrecom != null">{{detalles.modelName}}<span  class="close"ng-click="$ctrl.cerrarTab(detalles)" aria-hidden="true">×</span></span>
+			</md-tab-label>
+
+			<md-tab-body>
+				<detalle-dispositivo-movil detalles="detalles" tipo="'mobile'"></detalle-dispositivo-movil>
+			</md-tab-body>
+
+		</md-tab>
+
+	</md-tabs>
+</div>

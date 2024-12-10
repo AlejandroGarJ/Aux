@@ -1,0 +1,167 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="column" style="height:1000px;">
+	<section layout="row" flex class="formClass formCliente">
+		<md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4">
+	    	<md-toolbar>
+				<div class="md-toolbar-tools" style="height:44px">
+					<h2>Parámetros de simulación</h2>
+	        	</div>
+			</md-toolbar>
+	      	<md-content class="form-scroll" resize ng-style="resizeHeight(180)">
+	      		<br>
+				<md-input-container class="md-block" flex>
+					<label>Tipo de simulación</label>
+					<md-select ng-model="$ctrl.form.ID_TIPO_POLIZA" ng-change="$ctrl.datosTipoSimulacion()">
+						<md-option ng-value="30">Directivos</md-option>
+						<md-option ng-value="32">Industriales</md-option>
+					</md-select>
+				</md-input-container><br>
+				<md-input-container class="md-block" flex>
+					<label>Fecha efecto Tarifas Vigentes</label>
+					<md-datepicker md-mode="month" md-date-filter="$ctrl.onlyOneDaySelectable" ng-model="$ctrl.form.FD_INICIO" ng-change="$ctrl.getImpuestos()"></md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex>
+					<label>Nombre simulación</label>
+					<input ng-model="$ctrl.form.NO_SIMULACION">
+				</md-input-container>
+				<md-input-container class="md-block" flex>
+					<label>Observación</label>
+					<input ng-model="$ctrl.form.TX_OBSERVACIONES">
+				</md-input-container>
+				<h5 style="margin-left:10px">Multiplicadores generales</h5>
+				<div layout="row">
+					<md-input-container class="md-block" flex>
+						<label>Multiplicador global</label>
+						<input type="number" ng-model="$ctrl.sim.GLOBAL" ng-change="$ctrl.calcularParam('GLOBAL')" title="Multiplicador global">
+					</md-input-container>
+					<md-input-container class="md-block" flex ng-if="$ctrl.form.ID_TIPO_POLIZA == 32">
+						<label>Accidentes conductor</label>
+						<input type="number" ng-model="$ctrl.sim.g127" ng-change="$ctrl.calcularParam('g127')" title="Accidentes conductor">
+					</md-input-container>
+				</div>
+				<div ng-if="$ctrl.form.ID_TIPO_POLIZA == 32">
+					<div layout="row">
+						<md-input-container class="md-block" flex>
+							<label>Asistencia en Viaje/Protección jurídica</label>
+							<input type="number" ng-model="$ctrl.sim.g158" ng-change="$ctrl.calcularParam('g158')" title="Asistencia en Viaje/Protección jurídica">
+						</md-input-container>
+						<md-input-container class="md-block" flex >
+							<label>Daños propios sin franquicia</label>
+							<input type="number" ng-model="$ctrl.sim.g622" ng-change="$ctrl.calcularParam('g622')" title="Daños propios sin franquicia">
+						</md-input-container>
+					</div>
+					<div layout="row">
+						<md-input-container class="md-block" flex >
+							<label>Defensa penal, finanzas y reclamaciones daños</label>
+							<input type="number" ng-model="$ctrl.sim.g29" ng-change="$ctrl.calcularParam('g29')" title="Defensa penal, finanzas y reclamaciones daños">
+						</md-input-container>
+						<md-input-container class="md-block" flex >
+							<label>Incendio</label>
+							<input type="number" ng-model="$ctrl.sim.g128" ng-change="$ctrl.calcularParam('g128')" title="Incendio">
+						</md-input-container>
+					</div>
+					<div layout="row">
+						<md-input-container class="md-block" flex >
+							<label>Lunas</label>
+							<input type="number" ng-model="$ctrl.sim.g126" ng-change="$ctrl.calcularParam('g126')" title="Lunas">
+						</md-input-container>
+						<md-input-container class="md-block" flex >
+							<label>Robo</label>
+							<input type="number" ng-model="$ctrl.sim.g129" ng-change="$ctrl.calcularParam('g129')" title="Robo">
+						</md-input-container>
+					</div>
+					<div layout="row">
+						<md-input-container class="md-block" flex >
+							<label>Subcripción obligatoria</label>
+							<input type="number" ng-model="$ctrl.sim.g978" ng-change="$ctrl.calcularParam('g978')" title="Subcripción obligatoria">
+						</md-input-container>
+						<md-input-container class="md-block" flex >
+							<label>Suplementaria Ilimitada</label>
+							<input type="number" ng-model="$ctrl.sim.g802" ng-change="$ctrl.calcularParam('g802')" title="Suplementaria Ilimitada">
+						</md-input-container>
+					</div>
+				</div>
+				
+<!-- 				<div ng-if="$ctrl.datos.NUMERO_IMPUESTOS != 0"> -->
+<!-- 				<div ng-if="$ctrl.datos.LISTA_IMPUESTOS != null"> -->
+				<div ng-if="$ctrl.mostrar == true">
+				
+				<div class="md-toolbar-tools">
+					<h4 style="margin-left:10px">Impuestos para la simulación</h4>
+				</div>
+				
+				<h5 style="margin-left:10px">Impuestos generales</h5>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>% CCS SO</label>
+						<input ng-model="$ctrl.impuestos.PO_CCS_SO" ng-change="$ctrl.calcularParam('PO_CCS_SO')" title="% CCS SO">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>% IPS</label>
+						<input ng-model="$ctrl.impuestos.PO_IPS" ng-change="$ctrl.calcularParam('PO_IPS')" title="% IPS">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>% CLEA</label>
+						<input ng-model="$ctrl.impuestos.PO_CLEA" ng-change="$ctrl.calcularParam('PO_CLEA')" title="% CLEA">
+					</md-input-container>
+				</div>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>OFESAUTO (€)</label>
+						<input ng-model="$ctrl.impuestos.IM_OFESAUTO" ng-change="$ctrl.calcularParam('IM_OFESAUTO')" title="OFESAUTO (€)">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Capital máximo fallecimiento</label>
+						<input ng-model="$ctrl.impuestos.IM_CAPITAL_FALLEC" ng-change="$ctrl.calcularParam('IM_CAPITAL_FALLEC')" title="Capital máximo fallecimiento">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>‰ CCS ACC</label>
+						<input ng-model="$ctrl.impuestos.PO_CCS_ACC" ng-change="$ctrl.calcularParam('PO_CCS_ACC')" title="‰ CCS ACC">
+					</md-input-container>
+				</div>
+				<h5 style="margin-left:10px">Impuestos por tipo de vehículo</h5>
+				<div ng-repeat="element in $ctrl.impuestos.LST_IMPUESTO_TIPO_VEH">
+					<div layout="row" ng-if="$even">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label> {{$ctrl.impuestos.LST_IMPUESTO_TIPO_VEH[$index].DS_TIPO_B7}} </label>
+							<input ng-model="$ctrl.impuestos.LST_IMPUESTO_TIPO_VEH[$index].IM_TIPO" ng-change="$ctrl.calcularParam('$ctrl.impuestos.LST_IMPUESTO_TIPO_VEH[$index].DS_TIPO_B7')" title="{{$ctrl.impuestos.LST_IMPUESTO_TIPO_VEH[$index].DS_TIPO_B7}}">
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label> {{$ctrl.impuestos.LST_IMPUESTO_TIPO_VEH[$index+1].DS_TIPO_B7}} </label>
+							<input ng-model="$ctrl.impuestos.LST_IMPUESTO_TIPO_VEH[$index+1].IM_TIPO" ng-change="$ctrl.calcularParam('$ctrl.impuestos.LST_IMPUESTO_TIPO_VEH[$index+1].DS_TIPO_B7')" title="{{$ctrl.impuestos.LST_IMPUESTO_TIPO_VEH[$index+1].DS_TIPO_B7}}">
+						</md-input-container>
+					</div>
+				</div>
+				</div>
+	      	</md-content>
+	    </md-sidenav>
+	    <md-content flex layout-padding>
+	    	<div layout="column">
+				<div ui-grid="$ctrl.gridNegocios" ui-grid-tree-view ui-grid-edit class="grid" resize ng-style="resizeMitadBoton()" style="border:none!important"></div><br>
+				<div ng-if="$ctrl.cargar==false" ui-grid="$ctrl.gridResult" ui-grid-tree-view ui-grid-edit class="grid secondTable" resize ng-style="resizeMitadBoton()" style="border:none!important"></div>
+				<div ng-if="$ctrl.cargar==true" id="buscandoGif" style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 75%; height: 50%;" resize ng-style="resizeHeight(1)">
+			        <div class = "centered" style="display:table-cell; vertical-align: middle;">
+						<div class = "blob-3"></div>
+						<div class = "blob-4"></div>
+					</div>
+			    </div>
+				<div ng-if="$ctrl.cargar==false" style="text-align:center">
+					<md-button id="calcular" type="button" class="btn btn-info input-sm medium-blue btnNuevo" ng-click="$ctrl.calculaSimulacion()">
+						<span class="glyphicon glyphicon-cog"></span> Calcular
+					</md-button> 
+					<md-button id="LIMPIAR" type="button" class="btn btn-info input-sm medium-orange btnNuevo" ng-click="$ctrl.limpiar()">
+						<span class="glyphicon glyphicon-erase"></span> LIMPIAR
+					</md-button>
+					<md-button id="guardar" type="button" class="btn btn-info input-sm medium-green btnNuevo" ng-click="$ctrl.guardar(false)" ng-if="$ctrl.form.IN_TERMINADO==false">
+						<span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+					</md-button>
+					<md-button id="finalizar" type="button" class="btn btn-info input-sm dark-green btnNuevo" ng-click="$ctrl.guardar(true)" ng-if="$ctrl.form.IN_TERMINADO==false">
+						<span class="glyphicon glyphicon-lock"></span> Finalizar
+					</md-button>
+				</div>
+	    	</div>
+		</md-content>
+    </section>
+</div>

@@ -1,0 +1,133 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toolbar>
+	<div class="md-toolbar-tools" style="height:44px">
+        <h2>Búsqueda de Tarifas <i class="fa fa-magnifying-glass"></i></h2>
+        <md-button class="md-icon-button" ng-click="$ctrl.filtro.lateral()" style="right:20px; position:absolute">
+            <md-icon aria-label="Close dialog">arrow_back_ios</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+	<form class="formClass" id="form" ng-submit="$ctrl.buscar('tarifas')">
+		<div class="form-scroll" resize ng-style="resizeHeight(261)">
+			<div layout-gt-sm="row" class="margin-top-20">
+		       	<md-input-container class="md-block" flex-gt-sm="100">
+		         	<label>Nº Tarifa</label>
+		         	<input ng-model="$ctrl.form.NU_TARIFA.value">
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm>
+			       	<label>Negocio</label>
+		           	<md-select ng-model="$ctrl.form.ID_NEGOCIO.value">
+		           		<md-option >
+			            </md-option>
+		           	</md-select>
+	           	</md-input-container>
+	           	<md-input-container class="md-block" flex-gt-sm>
+			       	<label>Empresa</label>
+		           	<md-select ng-model="$ctrl.form.ID_COMPANIA.value">
+		           		<md-option>
+			            </md-option>
+		           	</md-select>
+	           	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+				<md-input-container class="md-block" flex-gt-sm>
+			       	<label>Modalidad</label>
+		           	<md-select ng-model="$ctrl.form.ID_COMPANIA.value">
+		           		<md-option>
+			            </md-option>
+		           	</md-select>
+	           	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+	           	<md-autocomplete flex-gt-sm="100"
+			          md-no-cache="$ctrl.noCache"
+			          md-selected-item="$ctrl.form.MARCA.value"
+			          md-search-text="$ctrl.searchMarca"
+			          md-selected-item-change="$ctrl.getModelos()"
+			          md-items="marca in $ctrl.querySearch($ctrl.searchMarca, $ctrl.marcas, 'DS_MARCA')"
+			          md-item-text="marca.DS_MARCA"
+			          md-min-length="0"
+			          md-require-match
+		              md-floating-label="Marca">
+			          <md-item-template>
+			            <span md-highlight-text="$ctrl.searchMarca" md-highlight-flags="^i">{{marca.DS_MARCA}}</span>
+			          </md-item-template>
+			          <md-not-found>
+				          No existe la marca "{{$ctrl.searchMarca}}".
+				      </md-not-found>
+		        </md-autocomplete>
+			</div>
+			<div layout-gt-sm="row">
+				<md-autocomplete flex-gt-sm="100"
+			          md-no-cache="$ctrl.noCache"
+			          md-selected-item="$ctrl.form.MODELO.value"
+			          md-search-text="$ctrl.searchModelo"
+			          md-selected-item-change="$ctrl.getVersiones()"
+			          md-items="modelo in $ctrl.querySearch($ctrl.searchModelo, $ctrl.modelos, 'DS_MODELO')"
+			          md-item-text="modelo.DS_MODELO"
+			          md-min-length="0"
+			          md-require-match
+		              md-floating-label="Modelo">
+			          <md-item-template>
+			            <span md-highlight-text="$ctrl.searchModelo" md-highlight-flags="^i">{{modelo.DS_MODELO}}</span>
+			          </md-item-template>
+			          <md-not-found>
+				          No existe el modelo "{{ctrl.searchModelo}}".
+				      </md-not-found>
+	       		</md-autocomplete>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-autocomplete flex-gt-sm
+			          md-no-cache="$ctrl.noCache"
+			          md-selected-item="$ctrl.form.VERSION.value"
+			          md-search-text="$ctrl.searchVersion"
+			          md-items="version in $ctrl.querySearch($ctrl.searchVersion, $ctrl.versiones, 'DS_VERSION')"
+			          md-item-text="version.DS_VERSION"
+			          md-min-length="0"
+			          md-require-match
+		              md-floating-label="Versión">
+			          <md-item-template>
+			            <span md-highlight-text="$ctrl.searchVersion" md-highlight-flags="i">
+			            	{{version.DS_VERSION}} - F.LANZ:{{version.FD_LANZAMIENTO}} - PUERTAS:{{version.NU_PUERTAS}} - POT:{{version.NU_POTENCIA}} - TARA:{{version.NU_CILINDRADA}} - PLAZAS:{{version.NU_PLAZAS}}
+			            </span>
+			          </md-item-template>
+			          <md-not-found>
+				          No existe la versión "{{ctrl.searchVersion}}".
+<!-- 					          <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
+				      </md-not-found>
+		        </md-autocomplete>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label>{{ 'DATE_START' | translate }}</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FD_INICIO_REC.value" ng-init="$ctrl.form.FD_INICIO_REC.value = null"
+          						ng-click="($ctrl.form.FD_INICIO_REC.value == null || $ctrl.form.FD_INICIO_REC.value == undefined) ? $ctrl.form.FD_INICIO_REC.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label>Fecha Fin</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FD_INICIO_REC_HASTA.value" ng-init="$ctrl.form.FD_INICIO_REC_HASTA.value = null"
+	          					ng-click="($ctrl.form.FD_INICIO_REC_HASTA.value == null || $ctrl.form.FD_INICIO_REC_HASTA.value == undefined) ? $ctrl.form.FD_INICIO_REC_HASTA.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+			</div>
+		</div>
+		<div style="text-align:center;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				Buscar
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-trash"></i>
+				LIMPIAR
+			</md-button>
+		</div>
+	</form>
+</md-content>

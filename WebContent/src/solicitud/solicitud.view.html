@@ -1,0 +1,273 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<!DOCTYPE html>
+<div flex>
+	<md-content layout-align="center none"
+		layout-padding class="form-scroll" style="background-color: white">
+		<div layout="row" class="margin-top-10 formClass formCliente">
+			<div flex>
+				<div ng-form="$ctrl.formNuevaSolicitud" id="formNuevaSolicitud">
+					<div id="divPoliza" uib-collapse="$ctrl.isCollapsed">
+						<div class="separadorDesplegables"></div>
+						<div layout="row">
+							<div ng-if="$ctrl.client == true" flex-gt-sm="50">
+								<md-autocomplete required 
+									md-no-cache="$ctrl.noCache"
+									md-selected-item="$ctrl.form.OPOLIZA"
+									md-selected-item-change="$ctrl.getTiposSolicitud(poliza)"
+									md-items="poliza in $ctrl.polDisp"
+									md-item-text="poliza.NU_POLIZA"
+									md-min-length="0"
+									md-require-match
+									md-floating-label="{{ 'POLICY_NU' | translate }}"
+									md-menu-class="autocomplete-custom-template"
+									md-menu-container-class="custom-container">
+									<md-item-template>
+											<span class="item-title" md-highlight-flags="^i">
+												{{poliza.NU_POLIZA}} - {{poliza.DS_SITUAPOLIZA}}
+											</span>
+											<span class="item-metadata" style="font-size:10px;color:gray;">
+												{{poliza.NO_COMPANIA}} - {{poliza.NO_RAMO}}
+											</span>
+									</md-item-template>
+												<md-not-found>
+										<!-- <span ng-if="$ctrl.cargandoPolizas === true">Cargando pólizas...</span> -->
+										<md-progress-circular style="margin-top: 12px;" ng-if="$ctrl.cargandoPolizas === true" class="md-hue-2" md-diameter="20px"></md-progress-circular>
+										<span ng-if="$ctrl.polizas.length == 0 && $ctrl.cargandoPolizas === false">No se encuentran pólizas, debe elegir un cliente.</span>
+										<span ng-if="$ctrl.polizas.length == 0">No existe la póliza '{{$ctrl.searchPoliza}}'.</span>
+									</md-not-found>
+								</md-autocomplete>
+							</div>
+						</div>
+						<div>
+							<div layout-gt-sm="row" layout-align="center center" ng-if="$ctrl.client != true">
+								<md-input-container class="md-block" ng-repeat="poliza in $ctrl.querySearch($ctrl.searchPoliza, $ctrl.polizas, 'NU_POLIZA')" ng-init="$ctrl.getTiposSolicitud(poliza)" flex="20">
+									<label style="text-transform: uppercase">{{ 'POLICY_NU' | translate }}</label>
+									<input ng-value="poliza.NU_POLIZA" disabled>
+								</md-input-container>
+								<md-input-container class="md-block margin-select-detail" flex="30" ng-if="$ctrl.tipoHead != 5">
+									<label for="id-poliza">{{ 'REQUEST_TYPE' | translate }}</label>
+									<!-- <input type="text" ng-model="$ctrl.form.TIPO_SOLICITUD" ng-focus="$ctrl.pintarFormulario()" class="form-control input-sm inputBuscador" uib-typeahead="tipo as tipo.DS_TIPO_SOLICITUD for tipo in $ctrl.tiposSolicitud | filter:{DS_TIPO_SOLICITUD:$viewValue}" typeahead-min-length="0" ng-disabled="$ctrl.tiposSolicitud.length == 0">						 -->
+									<md-select ng-model="$ctrl.form.OTIPO_SOLICITUD" ng-change="$ctrl.pintarFormulario()" required>
+										<md-option ng-repeat="tipo in $ctrl.solTotal" ng-value="tipo">
+											{{$ctrl.parent.getDescriptivo(tipo, 'DS_TIPO_SOLICITUD')}}
+											<!-- 		                            	{{tipo.DS_TIPO_SOLICITUD}} -->
+										</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container flex="20" style="text-align: center">
+									<md-checkbox style="margin: 12px 10px 0 0;" ng-model="$ctrl.form.IN_ENVIO_MAIL_CLIENTE" disabled>
+										<span style="color: #031a34;text-transform: uppercase;font-size: 12px;">{{ 'SEND_RECEIPT_NOTIFICATION' | translate }}</span>
+									</md-checkbox>
+								</md-input-container>
+							</div>
+							<div style="text-align: center;padding: 10px;margin: 30px 15% 0px 15%;">
+								<p style="color:#474a59!important">
+								<i class="fa-light fa-inboxes" style="margin-right: 3px;color: #00b0bd"></i>
+								Selecciona el tipo de solicitud que deseas gestionar dentro del grupo de <span style="color: #6E7894;font-family: TelefonicaWebBold;text-transform: uppercase">{{$ctrl.titleSolicitud}}</span>
+								</p>
+							</div>
+						</div>
+						<div layout-gt-sm="row" layout-align="center center" style="margin-top:30px !important;margin-left: 130px;">
+							<div flex-gt-sm="25" ng-hide="$ctrl">
+								<md-checkbox ng-model="$ctrl.form.IN_ENVIO_DOCUMENTACION" ng-if="$ctrl.form.IN_ENVIO_DOCUMENTACION == undefined ? $ctrl.form.IN_ENVIO_DOCUMENTACION = false : ' '" disabled>
+									{{ 'INSURER_MANAGE' | translate }}
+								</md-checkbox>
+							</div>
+						</div>
+					</div>
+					<!-- <h4>Solicitud de modificación de póliza</h4> -->
+					<div ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 56" ng-include="$ctrl.templateForm"></div>
+					
+					<div class="margin-top-20" ng-if="$ctrl.isModificacionCoberturas != true && $ctrl.tipoHead != 40 && $ctrl.tipoHead != 50" id="divPoliza" uib-collapse="!$ctrl.isCollapsed1">
+						
+						<div id="buscandoGif" style="display:table; margin: 40px;" ng-if="$ctrl.loadCheckDesistimiento == true">
+							<div class="centered" style="display:table-cell; vertical-align: middle;">
+								<div class="blob-3"></div>
+								<div class="blob-4"></div>
+							</div>
+						</div>
+						
+						<div layout="row" layout-align="center center" ng-if="$ctrl.fechaDesistimientoOk == false && $ctrl.loadCheckDesistimiento == false">
+							<h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> {{ $ctrl.msgDesistimientoKo }}</h4>
+						</div>
+
+						<div class="margin-top-20" ng-if="$ctrl.isModificacionCoberturas != true && $ctrl.fechaDesistimientoOk != false && $ctrl.loadCheckDesistimiento != true && $ctrl.msgCesion != true" id="divPoliza" uib-collapse="!$ctrl.isCollapsed1">
+
+						<div ng-if= "($ctrl.form.ID_CAUSAANULACION == undefined || $ctrl.form.ID_CAUSAANULACION != 203) 
+							&& !($ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 2 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 58)" >
+							<legend><i class="fa-solid fa-circle" style="width: 7px; margin-right: 13px;" ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 56"></i> {{ 'DATE_REQUEST_INCEPTION' | translate }}  <span style="margin-left:483px;"><i class="fa-solid fa-circle" style="width: 7px; margin-right: 13px;" ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 56"  --></i>{{ 'ATTACHED_FILES' | translate }} </span></legend>
+							<div layout-gt-sm="row">
+								<div id="divPoliza" class="flex-gt-sm-50">
+									<md-radio-group  ng-model="$ctrl.tipoFecha" ng-change="$ctrl.getFechaEfecto()" style="margin-bottom:20px; margin-left:20px; text-transform:uppercase;display: inline-flex;" required>
+										<md-radio-button value=3 ng-if="$ctrl.solicitudSL() == true">
+											Fecha alta solicitud
+										</md-radio-button>
+										<!-- <md-radio-button value=2 ng-if="$ctrl.solicitudSL() != true && ($ctrl.form.ID_CAUSAANULACION == 203 || $ctrl.form.ID_CAUSAANULACION == 213 || $ctrl.form.ID_CAUSAANULACION == 10) && $ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD != 16 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 35" ng-disabled="$ctrl.form.ID_CAUSAANULACION == 203 || $ctrl.form.ID_CAUSAANULACION == 213"> -->
+										<md-radio-button value=2 ng-if="$ctrl.solicitudSL() != true && ($ctrl.getIdsDesistimiento() || $ctrl.form.ID_CAUSAANULACION == 203) && $ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD != 16 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 35" 
+											ng-disabled="$ctrl.getIdsDesistimiento() || $ctrl.form.ID_CAUSAANULACION == 203">
+											{{ 'DATE_POLICY_INCEPTION' | translate }}
+										</md-radio-button>
+										<md-radio-button value=0 ng-if="$ctrl.solicitudSL() != true && $ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD != 16 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 35 && $ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD != 55" 
+											ng-disabled="$ctrl.tipoFecha == 2 && ($ctrl.getIdsDesistimiento() || $ctrl.form.ID_CAUSAANULACION == 213 || $ctrl.form.ID_CAUSAANULACION == 216 || $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 58)">
+											{{ 'DATE_POLICY_EXPIRATION' | translate }}
+										</md-radio-button>
+										<md-radio-button value=1 ng-disabled="($ctrl.tipoFecha == 2 && ($ctrl.getIdsDesistimiento() || $ctrl.form.ID_CAUSAANULACION == 213 || $ctrl.form.ID_CAUSAANULACION == 216)) || ($ctrl.tipoFecha == 0 && ($ctrl.getIdsVencimiento() || $ctrl.isIdsVencimientoBBVA()))  || $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 58"									
+											style="margin-left: 20px;">
+											{{ 'DATE_DIFFERENT' | translate }}
+										</md-radio-button>
+									</md-radio-group>
+<!-- 									 layout="row" -->
+									<div>
+										<md-input-container class="md-block" flex="20">
+											<md-datepicker ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_OBSERVACIONES.FD_EFECTO" class="fdEfectoVen" ng-change="$ctrl.changeFdEfecto()" 
+											required ng-disabled="$ctrl.tipoFecha == 0 || $ctrl.tipoFecha == 2 || $ctrl.tipoFecha == 3" md-min-date="$ctrl.minDateBajaDiferente" 
+											ng-class="{'fdEfectoDif': $ctrl.tipoFecha == 1}"  ></md-datepicker>
+										</md-input-container>
+										
+										<!-- <md-input-container class="md-block" flex="20" ng-if="$ctrl.tipoHead != 5 && $ctrl.form.OPOLIZA.ID_PRODUCTO == 6 && $ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD != 16"
+											style="margin-top: 3px !important; margin-left: 20px !important;">
+											<md-datepicker md-min-date="$ctrl.minDate" ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_OBSERVACIONES.FD_VENCIMIENTO"></md-datepicker>
+										</md-input-container> -->
+									</div>
+									<div layout="row" ng-if="$ctrl.isSolicitudHogar != true">
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>{{ 'REASON_SUPPLEMENT' | translate }}</label>
+											<textarea ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_OBSERVACIONES.TX_OBSERVACIONES" rows="5"></textarea>
+										</md-input-container>
+									</div>
+								</div>
+								
+								<div id="divPoliza" class="flex-gt-sm-50">
+									<p>&#201;stos archivos se guardar&#225;n en el sistema al generar la solicitud.</p>
+									<div style="display: flex">
+										<div flex class="flex-gt-sm-50" layout="column">
+											<div  ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover">
+												<span><md-icon class="icon-blue" >upload_file</md-icon></span>
+												<span >Arrastre y suelte los archivos aqu&#237;.</span>
+											</div>
+										</div>
+				
+										<div flex class="flex-gt-sm-50" style="margin-left: 35px">
+											<div class="files-container" layout="column">
+												<div ng-repeat="file in $ctrl.listaArchivos track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+													<div flex="60">
+														<span>
+															{{file.NO_ARCHIVO}}
+														</span>
+													</div>
+													<div flex="" class="txt-center">
+														<md-icon class="trash-blue" ng-click="$ctrl.deleteFile(file)">delete_forever</md-icon>
+														<md-tooltip md-direction="bottom">{{ 'DELETE' | translate }}</md-tooltip>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>								
+						</div>
+						
+						<div ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 56" ng-include="$ctrl.templateForm"></div>
+						
+						<div ng-if="$ctrl.generaMovEcon == true && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 56">
+	<!-- 					<div ng-if="$ctrl.isModificacionCoberturas != true && ($ctrl.tipoSolicitud == 'ALTA_ASEGURADO' || $ctrl.tipoSolicitud == 'GESTION_ASEGURADOS' || $ctrl.tipoSolicitud == 'MODIFICACION_GARANTIAS')"> -->
+							<legend><span class="mov-ico ic-ciber-ico-calendario"></span> Recibo suplemento
+							<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed6 = !isCollapsed6">
+								<span ng-if="isCollapsed6" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+								<span ng-if="!isCollapsed6" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+							</button>
+							</legend>
+							<div id="divPoliza" uib-collapse="isCollapsed6">
+								<div class="md-padding" layout="row" layout-align="start-center">
+									<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>Prima neta*</h6>
+		                        		<div layout="row" layout-align="center center">
+											<input ng-model="$ctrl.primas.IM_PRIMANETA" flex-gt-sm="80" amount required>
+										    <button ng-click="$ctrl.changePrimas()" class="button-editar-facturacion" flex-gt-sm="20">
+										        <i class="material-icons btnIcono">done</i> 
+										    </button>
+										</div>
+		                        	</div>
+		                        	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>IPS. 8% sobre P.Neta.*</h6>
+	                        			<div flex="70">
+											<input ng-disabled="true" ng-model="$ctrl.primas.IM_IMPUESTOS" amount required>
+										</div>
+		                        	</div>
+		                        	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>LEA. 0,15% sobre P.Neta.*</h6>
+	                        			<div flex="70">
+											<input ng-disabled="true" ng-model="$ctrl.primas.IM_CLEA" amount required>
+										</div>
+		                        	</div>
+		                        	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>Franquicia*</h6>
+	                        			<div flex="70">
+											<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.IM_FRANQUICIA" amount required>
+										</div>
+		                        	</div>
+		                        	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>Prima total anual*</h6>
+		                        		<div flex="70">
+											<input ng-disabled="true" ng-model="$ctrl.primas.IM_RECIBO_TOTAL" required>
+										</div>
+		                        	</div>
+								</div>
+								<div ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41" class="md-padding" layout="row" layout-align="start-center">
+									<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>Prima neta periodo*</h6>
+		                        		<div layout="row" layout-align="center center">
+											<input type="number" string-to-number ng-model="$ctrl.primas.IM_PRIMANETA_PERIODO" flex-gt-sm="80" required>
+										    <button ng-click="$ctrl.changePrimasPeriodo()" class="button-editar-facturacion" flex-gt-sm="20">
+										        <i class="material-icons btnIcono">done</i> 
+										    </button>
+										</div>
+		                        	</div>
+		                        	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>IPS. 8% sobre P.Neta.*</h6>
+	                        			<div flex="70">
+											<input ng-disabled="true" ng-model="$ctrl.primas.IM_IMPUESTOS_PERIODO" amount required>
+										</div>
+		                        	</div>
+		                        	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>LEA. 0,15% sobre P.Neta.*</h6>
+	                        			<div flex="70">
+											<input ng-disabled="true" ng-model="$ctrl.primas.IM_CLEA_PERIODO" amount required>
+										</div>
+		                        	</div>
+		                        	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>Franquicia*</h6>
+	                        			<div flex="70">
+											<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.IM_FRANQUICIA_PERIODO" amount required>
+										</div>
+		                        	</div>
+		                        	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		                        		<h6>Prima total periodo*</h6>
+		                        		<div flex="70">
+											<input ng-disabled="true" ng-model="$ctrl.primas.IM_RECIBO_TOTAL_PERIODO" amount required>
+										</div>
+		                        	</div>
+								</div>
+								<div style="margin-left: 20px;" ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 41" layout="row" layout-align="start center">
+									<md-checkbox class="checkPrimasOK" ng-model="$ctrl.checkAceptaPrimas" ng-true-value="true" required><span><i class="fa-solid fa-check-double" style="color: #0066ff;margin-right: 3px"></i> La prima de renovación incluyendo cambios y modificaciones seleccionadas (si aplica) corresponde a los importes aquí indicados</span></md-checkbox>
+								</div>
+							</div>
+						</div>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-if="$ctrl.isModificacionCoberturas != true" layout="row" layout-align="center" layout-margin>
+			<md-button ng-if="$ctrl.showSave != false && $ctrl.fechaDesistimientoOk != false && $ctrl.loadCheckDesistimiento != true && $ctrl.msgCesion != true" class="md-raised md-primary medium-blue button-action-main" form="formNuevaSolicitud" ng-click="$ctrl.validar($ctrl.formNuevaSolicitud.$invalid)" ng-disabled="!$ctrl.confirmaRiesgo">
+				<i class="fa-regular fa-check-double" style="margin-right: 5px;color: #00b0bd"></i> GENERAR SOLICITUD
+			</md-button>
+		</div>
+		
+	</md-content>
+
+
+</div>

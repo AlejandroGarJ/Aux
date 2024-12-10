@@ -1,0 +1,41 @@
+<div class="wrapper">
+  <mat-dialog-content style="padding: 24px">
+    <h2 class="title">{{ data.message }}</h2></mat-dialog-content
+  >
+  <mat-dialog-actions
+    class="actions"
+    style="
+      display: flex;
+      justify-content: space-between;
+      max-width: 300px;
+      margin: 0 auto;
+    "
+  >
+    @switch(data.type){ @case(buttonType.confirm){
+    <button
+      mat-dialog-close="no"
+      class="button-action-04-hogar"
+      style="min-height: 35px !important"
+    >
+      No
+    </button>
+    <button
+      style="display: flex; align-items: center"
+      class="button-action-main"
+      mat-dialog-close="yes"
+      cdkFocusInitial
+    >
+      Aceptar
+    </button>
+
+    } @case (buttonType.ok) {
+    <button
+      mat-dialog-close="no"
+      class="button-action-main"
+      style="min-height: 35px !important; margin: 0 auto"
+    >
+      Ok
+    </button>
+    } }
+  </mat-dialog-actions>
+</div>

@@ -1,0 +1,30 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="min-width: 35%;">
+	<md-dialog-content style="padding: 3%">
+		<div class="md-dialog-content modalContenedorMsg" layout="row" layout-align="center center">
+			<p style="font-size: 16px;">El archivo que has incluido ya est&#225; guardado para el presupuesto.</p>
+		</div>
+		<div class="md-dialog-content modalContenedorMsg" layout="row" layout-align="center center">
+			<p style="font-size: 16px;">Si deseas incluirlo puedes sustituir el existente o cambiarle el nombre.</p>
+		</div>
+		<div layout="row" class="modalContenedorBtn" style="margin-top: 12px;" layout-align="center center" ng-if="!$ctrl.cambio">
+			<md-button class="md-raised md-primary medium-blue button-action-main" style="display: block;" ng-click="$ctrl.sustituir()">Sustituir</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-main" style="display: block;" ng-click="$ctrl.mod()">Modificar nombre</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-main" style="display: block;" ng-click="$ctrl.cancel()">Cancelar</md-button>
+		</div>
+		<div ng-if="$ctrl.cambio">
+			<div layout-align="center center" style="margin-left: 25%;">
+	           <md-input-container class="md-block callbackForm_inputCont" flex-gt-sm="70" >
+	             <label>Nombre</label>
+	             <input ng-model="$ctrl.nombreFichero" required/>
+	          </md-input-container>
+			</div>
+			<div layout="row" class="modalContenedorBtn" style="margin-top: 12px;" layout-align="center center">
+				<md-button class="md-raised md-primary medium-blue button-action-main" style="display: block;" ng-click="$ctrl.cambNombre()">Modificar</md-button>
+				<md-button class="md-raised md-primary medium-blue button-action-main" style="display: block;" ng-click="$ctrl.cancel()">Cancelar</md-button>
+			</div>
+		</div>
+	</md-dialog-content>
+</md-dialog>

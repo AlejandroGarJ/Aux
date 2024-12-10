@@ -1,0 +1,63 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results">
+	<md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+		<md-tab label="Resultado de la búsqueda">
+			<div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+	        	<!-- <h2>Busque un ramo</h2> -->
+	        </div>
+	        <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+<!-- 			            <h2>Buscando</h2> -->
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se ha encontrado ningún motivo de anulación</h4>
+            </div>
+		
+			<div class="formClass md-padding" ng-if="$ctrl.vista == 4 && $ctrl.permisos.IN_ESCRITURA == true" style="margin-top: 12px;" layout-gt-sm="row" layout-align="end center">
+				
+                <md-button class="dark-blue btnNuevo" ng-click="$ctrl.add('anulacion')">
+					<md-icon>add</md-icon>
+					Añadir
+				</md-button>
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.save('saveMotivosAnulacion')" ng-if="$ctrl.vista == 4 && $ctrl.permisos.IN_ESCRITURA == true">
+					<md-icon>save</md-icon>
+					Guardar
+				</md-button>
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.borrar('ID_CAUSAANULACION','saveMotivosAnulacion','ID_CAUSAANULACION')" ng-if="$ctrl.vista == 4 && $ctrl.permisos.IN_BORRADO == true">
+					<i class="fa fa-trash"></i>
+					Borrar
+				</md-button>
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4" ng-click="$ctrl.parent.exportarExcelGrid($ctrl.gridOptions, $ctrl.gridApi.grid, 'motivos-anulacion.xlsx')" class="md-raised md-primary medium-blue button-action-main">
+					<span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+				</md-button>
+            </div>
+		
+<!-- 			<div layout="row" layout-align="left center" layout-margin> -->
+<!-- 	        	<label ng-if="$ctrl.vista == 4"> -->
+<!-- 					Descripción -->
+<!-- 				</label> -->
+<!-- 				<input ng-model="$ctrl.form.DS_CAUSAANULACION" ng-if="$ctrl.vista == 4"> -->
+<!-- 				<span></span> -->
+<!-- 				<label ng-if="$ctrl.vista == 4"> -->
+<!-- 					Uso -->
+<!-- 				</label> -->
+<!-- 				<md-select ng-if="$ctrl.vista == 4" flex="20" layout-gt-sm="row" ng-model="$ctrl.form.TIPOS"> -->
+<!--                     <md-option ng-repeat="anul in $ctrl.usos" ng-value="anul"> -->
+<!--                     	{{anul.DS_TIPOS}} -->
+<!--                     </md-option> -->
+<!--                 </md-select> -->
+<!-- 				<md-button class="dark-blue" ng-click="$ctrl.addAnulacion()" ng-if="$ctrl.vista == 4"> -->
+<!-- 					Añadir  -->
+<!-- 				</md-button> -->
+<!-- 			</div> -->
+		
+			<div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-exporter ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(361)"></div>
+		
+		</md-tab>
+	</md-tabs>
+</div>

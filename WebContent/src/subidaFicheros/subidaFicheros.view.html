@@ -1,0 +1,144 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="column">
+	<md-content flex style="padding:20px">
+		<div class="formClass" style="margin-top: 12px;" layout-gt-sm="row">
+			<!-- <form ng-if="$ctrl.permisos.IN_ESCRITURA == true" name="$ctrl.formRamos" style="margin-top: 12px;" layout-gt-sm="row">
+				<md-input-container class="md-block" flex-gt-sm>
+                    <label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+                    <md-select ng-model="$ctrl.form.COMPANIA" ng-change="$ctrl.changeAseguradora()" required>
+		         		<md-option ng-repeat="com in $ctrl.listCompanias" ng-value="com">
+		         			{{com.NO_COMPANIA}}
+		         		</md-option>
+		         	</md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Tipo de archivo</label>
+                    <md-select ng-model="$ctrl.form.TIPOFICHERO" required>
+		         		<md-option ng-repeat="tipo in $ctrl.listTiposFichero" ng-value="tipo">
+		         			{{tipo.NO_TIPO_ARCHIVO}}
+		         		</md-option>
+		         	</md-select>
+                </md-input-container>
+
+				<div layout="column" class="divFiles">
+					<input type="file" id="file_sf" name="file" class="inputfile" data-multiple-caption="{count} files selected" multiple />
+					<label for="file_sf">
+						<i class="material-icons" style="color: #003245 !important; cursor: pointer">cloud_upload</i>
+						{{$ctrl.archivo.NO_ARCHIVO}}
+					</label>
+				</div>
+				
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-button class="dark-blue btnNuevo" style="margin-top: 0;" ng-click="$ctrl.addFile()">
+						<md-icon>add</md-icon>
+						Añadir
+					</md-button>
+                </md-input-container>
+            </form> -->
+
+			<form ng-if="$ctrl.permisos.IN_ESCRITURA == true" name="$ctrl.formFiles" style="margin-top: 12px; width: 100%;">
+				<div layout="row">
+
+					<div flex="30" layout="column">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+							<md-select ng-model="$ctrl.form.COMPANIA" ng-change="$ctrl.changeAseguradora()" required>
+								 <md-option ng-repeat="com in $ctrl.listCompanias" ng-value="com">
+									 {{com.NO_COMPANIA}}
+								 </md-option>
+							 </md-select>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Tipo de archivo</label>
+							<md-select ng-model="$ctrl.form.TIPOFICHERO" required ng-disabled="!$ctrl.form.COMPANIA">
+								 <md-option ng-repeat="tipo in $ctrl.listTiposFichero" ng-value="tipo">
+									 {{tipo.NO_TIPO_ARCHIVO}}
+								 </md-option>
+							 </md-select>
+						</md-input-container>
+					</div>
+
+					<div flex="60" layout="column">
+						<div flex="">
+							<div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover">
+								<span><md-icon class="icon-blue" >upload_file</md-icon></span>
+								<span >Arrastre y suelte los archivos o haga click para seleccionarlos</span>
+							</div>
+						</div>
+
+						<!-- <div flex="">
+							<div class="files-container">
+								<div ng-repeat="file in $ctrl.listaArchivos track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+									<div flex="60">
+										<span>
+											{{file.NO_ARCHIVO}}
+										</span>
+									</div>
+									<div flex="20">
+										<span ng-if="file.ESTADO">
+											{{file.ESTADO}}
+										</span>
+										<span ng-if="!file.ESTADO">
+											{{ 'NOT_SAVED' | translate }}
+										</span>
+									</div>
+									<div flex="" class="txt-center">
+										<span ng-if="file.DESCARGAR != false">
+											<md-icon class="icon-blue" ng-click="$ctrl.descargarArchivo(file)">download_for_offline</md-icon>
+											<md-tooltip md-direction="bottom">Descargar</md-tooltip>
+										</span>
+									</div>
+									<div flex="" class="txt-center">
+										<span>
+											<div ng-if="!file.ESTADO || !file.IS_DELETED">
+												<md-icon class="icon-blue" ng-click="$ctrl.deleteFile(file, $index)">delete_forever</md-icon>
+												<md-tooltip md-direction="bottom">{{ 'DELETE' | translate }}</md-tooltip>
+											</div>
+											<div ng-if="file.IS_DELETED">
+												<md-icon class="icon-blue" ng-click="$ctrl.deleteFile(file, $index)">undo</md-icon>
+												<md-tooltip md-direction="bottom">Volver a incluir</md-tooltip>
+											</div>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+
+					<div flex="" layout="column" style="align-items: center; align-self: end;">
+						<md-input-container class="md-block" flex-gt-sm style="margin-bottom: 14px !important;">
+							<md-button class="dark-blue btnNuevo" ng-click="$ctrl.showFiles()" ng-disabled="!$ctrl.listFiles || $ctrl.listFiles.length < 1">
+								<md-icon>playlist_add_check</md-icon>
+								<md-tooltip md-direction="bottom">Ver archivos pendientes</md-tooltip>
+							</md-button>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm style="margin-bottom: 14px !important;">
+							<md-button class="dark-blue btnNuevo" ng-click="$ctrl.addFiles()" ng-disabled="!$ctrl.listFiles || $ctrl.listFiles.length < 1 || !$ctrl.form.COMPANIA || !$ctrl.form.TIPOFICHERO">
+								<md-icon>backup</md-icon>
+								<md-tooltip md-direction="bottom">Subir archivos</md-tooltip>
+							</md-button>
+						</md-input-container>
+					</div>
+
+				</div>
+				
+                
+            </form>
+
+        </div>
+        
+		<md-list class="margin-top-10">
+			<div class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection resize ng-style="resizeHeight(317)"></div>
+		</md-list>
+		
+		<!-- <md-input-container ng-if="$ctrl.permisos.IN_ESCRITURA == true" align="center" class="md-block" flex-gt-sm>
+        	<md-button class="dark-blue btnNuevo" style="margin-top: 0;" ng-click="$ctrl.guardarFicheros()">
+				<md-icon>save</md-icon>
+				Guardar
+			</md-button>
+        </md-input-container> -->
+        
+	</md-content>
+</div>

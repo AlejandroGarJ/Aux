@@ -1,0 +1,67 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="formClass" id="form" ng-form="$ctrl.informeUsuarios">
+	<div class="filtroInformesContainer">
+		<div class="tituloFiltroInformes">
+			<h3>INFORME DE Usuarios</h3>
+		</div>
+		<div layout-gt-sm="row" class="margin-top-20">
+			<md-input-container class="md-block ic-margin" flex-gt-sm="25">
+	         	<label>{{ 'PRODUCT' | translate }}</label>
+	         	<md-select ng-model="$ctrl.form.ID_PROGRAMA">
+					<md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+						{{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+				 	</md-option>
+				</md-select>
+	        </md-input-container>
+			<md-input-container class="md-block" flex-gt-sm="25">
+	           	<label>Nombre mediador</label>
+	           	<md-select ng-model="$ctrl.form.ID_COMPANIA">
+	           		<md-option ng-repeat="tipo in $ctrl.tipos.comisionistas" ng-value="tipo.ID_COMPANIA">
+		              	{{tipo.NO_COMPANIA}}
+		            </md-option>
+	           	</md-select>
+	        </md-input-container>
+			<md-input-container class="md-block" flex-gt-sm="25">
+	           	<label>Rol</label>
+	           	<md-select ng-model="$ctrl.form.ID_ROL">
+	           		<md-option ng-repeat="rol in $ctrl.roles" ng-value="rol.ID_ROL">
+		              	{{rol.DS_ROL}}
+		            </md-option>
+	           	</md-select>
+	        </md-input-container>
+		</div>
+	
+		<div layout="row" layout-align="start center" ng-if="$ctrl.cargando == false" style="margin-top: 20px">
+			<div>
+				<md-button class="fade-out md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.validarFormulario($ctrl.informeUsuarios.$valid, 'informe', 'getInformeUserProduct')">
+					<i class="fa-duotone fa-download" style="margin-right: 5px"></i>
+					{{ 'GENERATE_REPORT' | translate | uppercase}}
+				</md-button>
+				<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar($ctrl.form)">
+					<i class="fa fa-trash" style="margin-right: 5px"></i>
+					{{ 'CLEAN' | translate | uppercase }}
+				</md-button>
+			</div>
+		</div>
+	</div>
+
+	<div ng-if="$ctrl.cargando == true">
+		<div layout="row" layout-align="center center" >
+			<div class="cs-loader" style="height: 40px; width: 97%; position: relative">
+				<div class="cs-loader-inner">
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+				</div>
+			</div>
+		</div>
+		<div layout-gt-sm="row" layout-align="center">
+			<p style="text-align:center;font-size: 11px">¡Recibido! Estamos procesando tu solicitud...</p>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,12 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toast role="alert" class="toastDialog" aria-relevant="all">
+	  <span class="md-toast-text">{{$ctrl.toastMessage}}</span>
+	  <md-button class="md-highlight" ng-click="$ctrl.actualizarVersion()">
+	      <span class="aceptar">Actualizar</span>
+	  </md-button>
+	  <md-button ng-click="$ctrl.closeToast()">
+	      <md-icon class="cancelar">clear</md-icon>
+	  </md-button>
+</md-toast>

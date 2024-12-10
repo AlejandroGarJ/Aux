@@ -1,0 +1,22 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Faltan datos obligatorios</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<h4>Faltan los datos del tomador, el pagador y los asegurados</h4>
+			<div class="margin-top-20" style="text-align: center">
+				<md-button ng-click="$ctrl.irAlTomador()" class="dark-blue btnNuevo">Ir a rellenar</md-button>
+				<md-button ng-click="$ctrl.cancel()" class="md-raised md-primary medium-blue button-action-main">Cancelar</md-button>
+			</div>
+		</div>
+	</md-dialog-content>
+</md-dialog>

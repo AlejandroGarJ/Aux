@@ -1,0 +1,117 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+	<legend style="margin: 20px 0; padding-bottom: 5px;" layout-align="center center"><i class="fa-solid fa-circle" style="width: 7px; margin-right: 13px;"></i>{{ 'CAPITALS' | translate }}</legend>
+		<div layout="row" >	
+			<md-input-container class="md-block" flex="15" style="margin-top: 22px;">
+				<label>{{ 'CONTINENT' | translate }} (&euro;)</label>
+				<input ng-model="$ctrl.presupuesto.HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTINENTE" amount>
+			</md-input-container>
+			
+			<md-input-container class="md-block" flex="15" style="margin-top: 22px;">
+				<label>{{ 'CONTENT' | translate }} (&euro;)</label>
+				<input ng-model="$ctrl.presupuesto.HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTENIDO" amount>
+			</md-input-container>
+	
+	        <md-input-container class="md-block" flex="15" style="margin-top: 22px;">
+				<label>{{ 'ANNEX' | translate }} (&euro;)</label>
+				<input ng-model="$ctrl.presupuesto.HOGAR.BLOCK_CAPITALES.IM_VALOR_ANEXOS" amount>
+			</md-input-container>
+			
+			<md-input-container class="md-block" flex="15" style="margin-top: 22px;">
+				<label>{{ 'ADDITIONAL_FACILITIES' | translate }} (&euro;)</label>
+				<input ng-model="$ctrl.presupuesto.HOGAR.BLOCK_CAPITALES.IM_VALOR_COMUNES" amount>
+			</md-input-container>
+			
+			<md-input-container class="md-block" flex="15" style="margin-top: 22px;">
+				<label>{{ 'GOODS' | translate }} (&euro;)</label>
+				<input ng-model="$ctrl.presupuesto.HOGAR.BLOCK_CAPITALES.IM_OBJETOS_VALOR_EN_VIVIENDA" amount>
+			</md-input-container>
+		</div>
+ 	            			 
+		<div>
+			<p style="margin-top: 20px">Estos son los capitales actuales de la p&#243;liza {{$ctrl.datosPoliza.NU_POLIZA}}. Por favor, actualiza SOLO aquellos valores que vayan a ser modificados</p>
+			<p style="font-size: 12px;margin-top:20px"><span style="font-weight:bold;font-size: 10px;color:#0066ff">ANEXOS (M2):</span>se pueden adicionar los m2 de garajes, piscinas, trasteros, jard&#237;n exterior, etc. anexos a la vivienda.</p>
+			<p style="font-size: 12px"><span style="font-weight:bold;color:#0066ff;font-size: 10px;">INSTALACIONES ADICIONALES:</span>se puede adicionar el importe de la compra e instalaci&#243;n de placas solares, depuradora o ca&#241;izo.</p>
+		</div>
+
+	<legend style="margin: 20px 0; padding-bottom: 5px; margin-top: 55px"><i class="fa-solid fa-circle" style="width: 7px; margin-right: 13px;"></i><span>{{ 'OPTIONAL_WARRANTIES' | translate }}</span><span style="margin-left:555px;" ng-if="$ctrl.tipoFecha == 0"><i class="fa-solid fa-circle" style="width: 7px; margin-right: 13px;"></i>{{ 'CHANGE_OF_MODALITY' | translate }}</span></legend>	
+	<div layout="row">
+		<div class="flex-gt-sm-50" style="margin-top: 23px;"> 
+<!-- 	         <span ng-repeat="garantia in $ctrl.lstGarantias"> -->
+<!-- 	             <md-checkbox style="margin-left: 30px; text-transform: uppercase;" -->
+<!-- 	             	ng-checked="garantia.IN_SELECTED" -->
+<!-- 	             	ng-click="$ctrl.changeGarantias(garantia)" -->
+<!-- 	             	ng-if="garantia.ID_GARANTIA == 1079 || garantia.ID_GARANTIA == 1081"> -->
+<!-- 	                 {{ garantia.NO_GARANTIA || garantia.DS_GARANTIA_PRODUCTO}}: {{ garantia.IM_PRIMA_NETA | currency }} -->
+<!-- 	             </md-checkbox> -->
+<!-- 	         </span>            ng-checked="$ctrl.garantiaElectrodomesticos"   -->
+
+				<md-checkbox				
+	                ng-model = "$ctrl.garantiaElectrodomesticos" 
+	                ng-value-true = "1079" 	           
+	                ng-click="$ctrl.changeGarantias(1079)">
+	                 REPARACI&#211;N DE ELECTRODOMESTICOS: 70,16 &#8364;
+	            </md-checkbox>
+	            
+	            <md-checkbox 
+	                ng-model = "$ctrl.garantiaExpress" 
+	                ng-value-true = "1081" 
+	                ng-click="$ctrl.changeGarantias(1081)">
+	                SERVICIO EXPRESS: 23,78 &#8364; 
+	            </md-checkbox>
+
+	 	</div>
+		<div ng-if="$ctrl.tipoFecha == 0" layout="row" class="flex-gt-sm-50">
+			<div flex="60" layout="row">
+				<span style="margin-right: 10px; margin-top: 21px; color: #0066ff"><i class="fa-light fa-pen"></i> Modificar la Modalidad Contratada</span>
+				<md-switch ng-model="$ctrl.modificacionModalidad" ng-change="$ctrl.compRiesgos()"></md-switch>
+			</div>
+			
+	   	   	<md-input-container class="md-block autocomplete-container" flex-gt-sm ="50" style="margin-top:16px">  
+	             <label>Modalidades del presupuesto</label>
+	             <md-select id="inputBloque"
+	                  ng-model="$ctrl.modalidad"                 
+	                  ng-disabled="!$ctrl.modificacionModalidad"> 
+	                 <md-option ng-repeat="modal in $ctrl.modalidades" ng-value="modal" >{{ modal.NO_MODALIDAD }}</md-option>
+	             </md-select>
+	         </md-input-container>
+		 </div>
+	</div>
+	
+	<legend style="margin: 20px 0; padding-bottom: 5px;"><i class="fa-solid fa-circle" style="width: 7px; margin-right: 13px;"></i>{{ 'PAYMENT_PROCEDURES' | translate }}</legend>
+		<div layout="row">   
+	         <div >
+	            <md-checkbox  
+	            	style="margin-left: 30px;"
+	                ng-true-value="'2'" 
+	                ng-model="$ctrl.presupuesto.HOGAR.DATOS_PAGO.ID_FORMAPAGO">
+	                ANUAL
+	            </md-checkbox>
+	            
+	            <md-checkbox 
+	            	style="margin-left: 30px;"
+	                ng-true-value="'3'" 
+	                ng-model="$ctrl.presupuesto.HOGAR.DATOS_PAGO.ID_FORMAPAGO">
+	                SEMESTRAL
+	            </md-checkbox>
+	            
+	            <md-checkbox 
+	            	style="margin-left: 30px;"
+	                ng-true-value="'5'" 
+	                ng-model="$ctrl.presupuesto.HOGAR.DATOS_PAGO.ID_FORMAPAGO">
+	                TRIMESTRAL
+	            </md-checkbox>
+	        </div>
+		</div>
+	
+
+	<legend style="margin: 20px 0; padding-bottom: 5px;" ng-if="$ctrl.presuEncontrado"><i class="fa-solid fa-circle" style="width: 7px; margin-right: 13px;"></i>{{ 'REQUEST_DETAIL' | translate }}</legend>
+	<div layout="row" ng-if="$ctrl.presuEncontrado">
+		<md-input-container class="md-block margin-top-20" flex="50">
+			<label>{{ 'REQUEST_DETAIL' | translate }}</label>
+			<textarea placeholder="Indica detalladamente la modificaci&#243;n solicitada por el cliente. Esta modificaci&#243;n ser&#225; revisada por BBVA." 
+				ng-model="$ctrl.form.BBVA_MODCOBERTURAS.XML_OBSERVACIONES.TX_OBSERVACIONES" rows="5" required></textarea>
+		</md-input-container>
+	</div>
+</div>

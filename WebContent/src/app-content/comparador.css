@@ -1,0 +1,439 @@
+.comparison {
+  margin:0 auto;
+  text-align:center;
+  padding:10px;
+}
+
+.comparison .btn-info { padding: 10px 20%}
+
+.comparison tbody td.title{font-size: 12px;}
+.comparison tfoot {
+    border-top: 1px solid #ccc;
+}
+
+.comparison tfoot .btn-footer{padding: 15px;}
+
+.comparison .btn-info{font-size: 16px;}
+.comparison td.title-mobile {font-family: 'TelefonicaWeb-Bold', sans-serif;}
+
+.comparison .ico-wrapper-lista:before {
+    color: #00a9e0;
+}
+body.comparador .ico-wrapper-lista {
+    width: auto;
+    padding-left: 55px;
+    font-size: 18px;
+}
+
+body.comparador .ico-wrapper{ display: flex;
+    margin: 0 15px;    
+    padding-bottom: 20px;
+    padding-top: 20px;
+    min-width: 150px;
+}
+
+body.comparador .comparison  .ico-wrapper{border-bottom: 1px solid #ccc;}
+
+body.comparador .ico-wrapper-lista-bottom{padding: 0;}
+body.comparador .ico-wrapper-lista-bottom span.text{display: block;line-height: 1;}
+.comparison .ico-wrapper-lista-bottom:before{position: relative;top: 0;}
+.visible-xs-block.hide{display: none!important;}
+.comparison .link-modal{color:#4b4b4b;    font-size: 12px; text-decoration: underline;line-height: 1.4; display: block;}
+.col-tipo-seguro.col-tipo-seguro-header-mobile{display: none;}
+.col-tipo-seguro.col-tipo-seguro-header-mobile .close-modal-box{color:#fff; display: grid; align-items: center;}
+.comparison .comparador-completo{background-color: #cac8c9;}
+.comparison .comparador-completo a{color:#fff;margin: 0; font-size: 25px; display: block;}
+.comparison table {
+  width:100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.comparison td, .comparison th {
+  border-right:1px solid #CCC;
+  empty-cells: show;
+  padding:10px;
+}
+
+.compare-heading {
+  font-size:18px;
+  border-bottom:0 !important;
+  padding-top:10px !important;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+
+.comparison tbody tr:nth-child(odd) {
+  display:none;
+}
+
+.cross-table tbody tr:nth-child(odd) {
+    display: table-row;
+}
+
+.comparison .compare-row {
+  background:#F5F5F5;
+}
+
+.comparison .tickblue {
+  color:#0066ff;
+}
+
+.comparison .tickgreen {
+  color:#009E2C;
+}
+
+.comparison .tickred {
+    color: #E9426D;
+    font-family: 'TelefonicaWeb-Bold';
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.comparison th {
+  font-weight:normal;
+  padding:0;
+  border-bottom:1px solid #CCC;
+}
+
+.comparison tr td:first-child {
+  text-align:left;
+}
+  
+.comparison .qbse, .comparison .qbo, .comparison .tl {
+  color:#FFF;
+  padding:10px;
+  font-size:13px;
+  border-right:1px solid #CCC;
+  border-bottom:0;
+}
+
+.comparison .tl2 {
+  border-right:0;
+}
+
+.comparison .qbse {
+  background:#0078C1;
+  border-top-left-radius: 3px;
+  border-left:0px;
+}
+
+.comparison .qbo {
+  background:#009E2C;
+  border-top-right-radius: 3px;
+  border-right:0px;
+}
+
+.comparison .price-info {
+  padding:5px 15px 15px 15px;
+}
+
+.comparison .price-was {
+  color:#999;
+  text-decoration: line-through;
+}
+
+.comparison .price-now, .comparison .price-now span {
+  color:#5bc500;
+}
+
+.comparison .price-now span {
+  font-size:32px;
+}
+
+.comparison .price-small {
+    font-size: 18px !important;
+    position: relative;
+    left: 2px;
+}
+
+.comparison .price-buy {
+  background:#5bc500;
+  padding:10px 20px;
+  font-size:12px;
+  display:inline-block;
+  color:#FFF;
+  text-decoration:none;
+  border-radius:3px;
+  text-transform:uppercase;
+  margin:5px 0 10px 0;
+}
+
+.comparison .price-try {
+  font-size:12px;
+}
+
+.comparison .price-try a {
+  color:#202020;
+}
+
+
+.modal-box {
+    /*position: absolute;*/
+    background: #ffffff94;
+    height: 100%;width: 100%;
+    display: none;
+    z-index: 1049;
+}
+.container.container-modal-box {
+    width: 85%;
+    background: #fff;
+    box-shadow: 0 0 6px 0px #00000069;
+    border-radius: 3px;
+    padding-bottom: 25px;
+    position: relative;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin:0;
+}
+/*.container.container-modal-box.container-modal-box-bbva{ 
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.container.container-modal-box.container-modal-box-bbva .titular {
+    padding-top:0;margin-top: 0;
+}*/
+
+.container.container-modal-box .ico-wrapper-lista:before {
+    top: 50%; transform: translateY(-50%);
+}
+
+body.comparador #configuraSeguro{background: transparent;    border-right: 1px solid #00a9e0;    padding: 0 10px;}
+.titular{padding: 20px 10px;}
+.box-precio{border-top:none;padding-top: 0;padding-bottom: 0;margin-bottom: 0}
+#configuraSeguro.configuraSeguro-step2 .row-configura-2{padding: 0 10px;}
+h3.titular-cob {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color:#7b7b7b;
+    font-family: 'TelefonicaWeb-Regular';
+}
+.col-tipo-seguro{background-color: #00a9e0;color: #fff;padding: 10px;margin-bottom: 15px;}
+#enviar-presupuesto-modal {color: #b3b3b3;}
+.add-coberturas span.price {
+    font-size: 15px;
+    margin-top: 5px;
+    display: block;
+    font-family: "TelefonicaRegular","Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.row-plano.row-configura-2-fila {
+  margin-bottom: 0px;     flex: 1 1 50%;
+}
+.col-sel-pagos{justify-content: space-evenly;}
+.box-precio:after{display: none;}
+.icheckbox_square-orange, .iradio_square-orange {
+    position: absolute;
+    left: -22px;
+    top: 0;
+    line-height: 1;
+}
+
+.close-modal-box {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+        font-family: 'TelefonicaWeb-Bold';
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+    color:#00a9e0; cursor: pointer;z-index: 1;
+}
+
+.cross-table tbody tr.sel-seguro{display: none;}
+.js-cross-table__label{display: none;}
+.tsm .tsg:last-child { border-right-width: 1px;}
+.tsw .tsm{margin-right: 20px;    border: 1px solid #ccc;}
+.tsw .tsg{padding: 15px 15px;    border-color: transparent;}
+
+.tsw .tsg:first-child {
+    border-left-width: 2px;
+    border-top-width: 2px;
+    background-color: #F7F7F7;
+    line-height: 1.3;
+   font-family: 'TelefonicaWeb-Bold', sans-serif;
+}
+
+@media (max-width: 990px) {
+    .comparison-bbva .btn-info {
+      font-size: 12px;
+      padding: 10px 10%;
+    }
+}
+
+@media (max-width: 767px) {
+  .comparison td:first-child, .comparison th:first-child {
+    display: none;
+  }
+  .cross-table td:first-child, .cross-table th:first-child {
+    display: flex;
+}
+  .comparison tbody tr:nth-child(odd) {
+    display:table-row;
+    background:#F7F7F7;
+  }
+  .cross-table tbody tr:nth-child(odd) {
+    display: table-row;
+    background: #FFF;
+}
+
+  .comparison .row {
+    background:#FFF;
+  }
+  .comparison td, .comparison th {
+    border:1px solid #CCC;
+  }
+  .price-info {
+  border-top:0 !important;}
+  .sel-seguro{display: table-row;}
+  .sel-seguro .cross-table__label{display: none;}
+  .sel-seguro-cta .cross-table__label{display: block;}
+  .sel-seguro .tsg{display: block;  }
+  /*.sel-seguro-cta .tsg{display: flex;}*/
+  .sel-seguro-cta .title{font-size: 20px!important;}
+  .sel-seguro .btn-info { padding: 10px 10%;width: 100%;}
+  .sel-seguro .price-now{ line-height: 1;}
+  .comparison .compare-row{background-color: #fff;}
+  span.cross-table__label{color:#fff;}
+  .tsw .cross-table__label { display: block; word-break: keep-all;}
+  .price-btn{display: block;font-size: 18px;font-family: 'TelefonicaWeb-Light', sans-serif;}
+  
+  .cross-table tfoot{display: none;}
+
+  .tsw .tsg:first-child {
+      border-left-width: 2px;
+      border-top-width: 2px;
+      background-color: #F7F7F7;
+      min-height: 75px;
+      font-size: 14px;
+      text-align: center;
+      justify-content: center;
+  }
+}
+
+@media (max-width: 639px) {
+  .comparison {overflow-x: scroll;}
+  .comparison .price-buy {
+    padding:5px 10px;
+  }
+  .comparison td, .comparison th {
+    padding:10px 5px;
+  }
+  .comparison thead th {
+    padding: 0px 5px;
+}
+  .comparison .hide-mobile {
+    display:none;
+  }
+  .comparison .price-now span {
+  /*font-size:16px;*/
+}
+
+.comparison .price-small {
+    font-size: 16px !important;
+    top: 0;
+    left: 0;
+}
+  .comparison .qbse, .comparison .qbo {
+    font-size:12px;
+    padding:10px 5px;
+  }
+  .comparison .price-buy {
+    margin-top:10px;
+  }
+  .compare-heading {
+  font-size:13px;
+  }
+  .comparison table {
+    table-layout: auto;
+  }
+  .comparison span.text{font-size: 18px;}
+  .comparison-bbva .btn-info {
+    font-size: 16px;
+    padding: 10px 20%;
+  }
+
+  body.comparador .comparison .ico-wrapper-lista{padding: 0;}
+  body.comparador .comparison .ico-wrapper-lista span.text{display: block;line-height: 1;}
+  .comparison .ico-wrapper-lista:before{position: relative;top: 0;}
+  .mover-horizontal{background: url('data:image/png;base64,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'); width: 72px; height: 72px;margin:auto;
+    position: absolute;
+    right: 10px;
+    z-index: 3;
+    top: 90px;
+    opacity: .8;
+     animation-name: moveleft;
+     animation-duration: 2s;
+     animation-iteration-count: 10;
+  }
+
+  .container.container-modal-box {     padding-left: 0;
+    padding-right: 0;}
+  .dudas{display: none;}
+  .container.container-modal-box {width: 95%;}
+  #configuraSeguro.configuraSeguro-step2 .radio-inline { padding-left: 5px;}
+  body.comparador #configuraSeguro{border-right: none;}
+  .container.container-modal-box{top: auto;
+    left: auto;
+    transform: none;
+    margin: auto;
+    width: 100%;height: 100vh;}
+  /*.modal-box {position: fixed;top: 55px;z-index: 999; background: #fff;}*/
+  .titular {
+    padding: 20px 10px;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .close-modal-box {
+    position: relative;
+    right: 0;
+    width: 100%;
+    padding: 15px;
+    text-align: right;
+    top:0;
+  }
+  .comparison .tickblue {font-size: 30px;}
+  .comparison .tickred {font-size: 30px;}
+  .col-tipo-seguro.col-tipo-seguro-header-mobile { display: flex; color: #fff;}
+  body.contratar .col-box-contratacion{background-color: #fff;}
+
+  body.contratar .col-box-contratacion {
+      padding-left: 15px!important;
+      padding-right: 0;
+      margin-top: 30px;
+      position: relative;
+      bottom: auto;
+      width: 100%;
+      left: 0;
+      z-index: 9999;
+      padding: 0!important;
+  }
+  body.contratar #btnContratar {
+      position: relative;
+      bottom: auto;
+      left:auto;
+  }
+
+  body.contratar .col-desc .col-desc-titular, body.datos .col-desc .col-desc-titular {  display: block;}
+  #enviar-presupuesto-modal { display: block; margin: auto;}
+  #btnsolicitar, #btnContratar {
+    font-size: 25px;
+  }
+  .wraper-btn-contratar{margin-top: 0!important;}
+  .wraper-btn-contratar #btnContratar {padding: 10px 10%;width: 100%;}
+  .wraper-btn-contratar #enviar-presupuesto-modal{margin: 0 auto; padding: 10px 0;}
+  body.comparador .col-tipo-seguro-header-mobile .ico-wrapper{min-width: 55%; margin-left: 0;}
+  body.comparador .col-tipo-seguro-header-mobile .ico-wrapper{margin-left: 15px;    margin-right: 0;}
+  body.comparador .col-tipo-seguro-header-mobile .ico-wrapper .ico-wrapper-lista{margin-left: 0;}
+
+}
+
+@keyframes moveleft {
+  0% {right: 10px;}
+  50% {right:200px;}
+  100% {right:10px;}
+}

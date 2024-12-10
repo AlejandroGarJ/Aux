@@ -1,0 +1,82 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="md-dialog-container">
+    <md-dialog flex style="max-width: 1000px">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="height:44px">
+                <h2>Personaliza tu seguro</h2>
+                <md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+                    <md-icon aria-label="Close dialog">clear</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+<!-- 		<ng-dialog-content> -->
+        <md-dialog-content style="padding: 20px" layout="row">
+            
+            <div layout="column" flex-gt-sm="60">
+            	<h4>Añade coberturas</h4>
+            	<div layout="row">
+            		<md-checkbox
+            			ng-repeat="garantia in $ctrl.modalidad.GARANTIAS.GARANTIA"
+            			ng-if="$ctrl.listGarantias[$index].IN_OPCIONAL == true && $ctrl.listGarantias[$index].IN_SELECTED == false"
+		            	ng-disabled="$ctrl.cargaRecalcular == true"
+						ng-checked="garantia.IN_SELECTED == true || garantia.IN_SELECTED == 'true'"
+						ng-model="garantia.IN_SELECTED" 
+						ng-click="garantia.IN_SELECTED = !garantia.IN_SELECTED">
+		                {{ garantia.NO_GARANTIA }} &nbsp;&nbsp;+{{ garantia.IM_PRIMA_NETA }} €
+		            </md-checkbox>
+            	</div>
+            	
+            	<h4>Selecciona tu periocidad de pago</h4>
+            	<div layout-gt-sm="row">
+            	
+	            	<div layout-gt-sm="column" style="margin-right: 20px">
+			            <md-checkbox
+			            	ng-disabled="$ctrl.cargaRecalcular == true"
+			                ng-true-value="'2'" 
+			                ng-model="$ctrl.datos.PRESUPUESTO.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" 
+			                ng-click="$ctrl.recalcular(2)">
+			                Anual
+			            </md-checkbox>
+			        </div>
+		        
+		        	<div layout-gt-sm="column" style="margin-right: 20px">
+			            <md-checkbox
+			            	ng-disabled="$ctrl.cargaRecalcular == true"
+			                ng-true-value="'3'" 
+			                ng-model="$ctrl.datos.PRESUPUESTO.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" 
+			                ng-click="$ctrl.recalcular(3)">
+			                Semestral
+			            </md-checkbox>
+			        </div>
+			        
+			        <div layout-gt-sm="column" style="margin-right: 20px">
+			            <md-checkbox
+			            	ng-disabled="$ctrl.cargaRecalcular == true"
+			                ng-true-value="'5'" 
+			                ng-model="$ctrl.datos.PRESUPUESTO.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" 
+			                ng-click="$ctrl.recalcular(5)">
+			                Trimestral
+			            </md-checkbox>
+			        </div>
+		        </div>
+            </div>
+            
+            <div ng-if="$ctrl.cargaRecalcular != true" layout="column" flex-gt-sm="40">
+            	<h3>{{ $ctrl.modalidad.NO_MODALIDAD }}</h3>
+            	<h2>{{ $ctrl.showPrima($ctrl.modalidad.IM_PRIMA_ANUAL_TOT) }} €</h2>
+            	<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.reemplazarPoliza()">Continuar</md-button>
+            </div>
+            
+            <div layout="column" flex-gt-sm="40" ng-if="$ctrl.cargaRecalcular == true" id="buscandoGif" style="padding: 0px 16px;display: flex;align-items: center;justify-content: center;z-index: 999999999;">
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+            
+        </md-dialog-content>
+    </md-dialog>
+</div>

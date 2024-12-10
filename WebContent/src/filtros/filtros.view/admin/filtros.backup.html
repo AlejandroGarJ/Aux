@@ -1,0 +1,56 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color:white">
+
+	<div layout-gt-sm="row" class="inputs-without-label-value" style="background-color:white; margin-top: 15px;margin-left: 13px;margin-right: 10px;border-left: 3px solid #0066ff">
+		<h3 style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="50" >
+			<span style="color:#5e5e5e!important">
+				{{ 'SEARCH' | translate }} DE</span><span style="color:#0066ff!important"> BACKUP
+			</span>
+			<div layout-gt-sm="row">
+				<h6 style="text-align: center;text-transform: uppercase">BÚSQUEDA Y GESTIÓN DE BACKUPS</h6>
+			</div>
+		</h3>
+	</div>
+	<div layout-gt-sm="row" >
+		<a ng-click="$ctrl.showBasicSearch()" ng-if="$ctrl.basicSearch == true">{{ 'SHOW_SEARCH_FIELDS' | translate }}</a>
+	</div>
+	
+    <form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('backup')">
+        <div class="form-scroll" resize>
+            <div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+                <md-input-container class="md-block"  flex-gt-sm="33">
+		         	<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+		         	<md-select ng-model="$ctrl.form.ID_COMPANIA.value">
+		           		<md-option ng-repeat="compania in $ctrl.companias" ng-value="compania.ID_COMPANIA">
+			              	{{compania.NO_COMPANIA}}
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container>
+	        	<md-input-container class="md-block" flex-gt-sm="15">
+	        		<label>Creado desde...</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FT_USU_ALTA_FROM.value" ng-init="$ctrl.form.FT_USU_ALTA_FROM.value = null"
+	          					ng-click="($ctrl.form.FT_USU_ALTA_FROM.value == null || $ctrl.form.FT_USU_ALTA_FROM.value == undefined) ? $ctrl.form.FT_USU_ALTA_FROM.value = null : ' '" required>
+	          		</md-datepicker>
+	          	</md-input-container>
+	          	<md-input-container class="md-block" flex-gt-sm="15">
+	          		<label>Creado hasta...</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FT_USU_ALTA_TO.value" ng-init="$ctrl.form.FT_USU_ALTA_TO.value = null"
+	          					ng-click="($ctrl.form.FT_USU_ALTA_TO.value == null || $ctrl.form.FT_USU_ALTA_TO.value == undefined) ? $ctrl.form.FT_USU_ALTA_TO.value = null : ' '" required>
+	          		</md-datepicker>
+	          	</md-input-container>
+				<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+					<i class="fa fa-magnifying-glass"></i>
+					Buscar
+				</md-button>
+				<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+					<i class="fa fa-trash"></i>
+					LIMPIAR
+				</md-button>
+            </div>
+        </div>
+    </form>
+</md-content>

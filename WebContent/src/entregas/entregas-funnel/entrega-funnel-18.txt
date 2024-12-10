@@ -1,0 +1,12 @@
+En esta entrega del funnel 18, se han realizado los siguientes cambios:
+- Fix:
+	- Ciberempresas Alemania:
+		+ Mostrar el formulario en > 31M
+		+ Añadir bloqueo de selects, borrando el formulario
+		+ Mostrar bien telefonenumber en el formulario
+		+ Eliminar carpetas html que ya no sirven
+	- Hogar:
+		+ Desactivar switch del catastro en BBVA al volver a calcular
+		+ Fix GTM en página de Datos y normalización de gtm onetrust en login 
+		+ Cambios eventos datetimepicker
+		+ Excluir contrataciones SL superiores 365 días

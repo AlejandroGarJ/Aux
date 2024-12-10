@@ -1,0 +1,517 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+    <md-content ng-show="$ctrl.loading == true" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+        <div id="buscandoGif" 
+                style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+                resize ng-style="resizeHeight(330)">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+        </div>
+    </md-content>
+
+    <!-- TARIFICACIÓN -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 1" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+        <div class="container_TarMovil" flex>
+
+            <div layout="row" layout-sm="column" layout-xs="column">
+                <div layout="column" layout-sm="column" layout-xs="column" flex="75" style="text-align: center">
+                    <h4></h4>
+                </div>
+            </div>
+
+            <form name="$ctrl.formTarMobile" id="formSubmitTarMovil" flex novalidate>
+                <div layout="row" layout-sm="column" layout-xs="column">
+                    <div class="container_TarMovil_div" layout="column" layout-sm="column" layout-xs="column" flex="75">
+                        <div layout="row" layout-sm="column" layout-xs="column" layout-margin="">
+                            
+                            <div ng-repeat="dispositivo in $ctrl.objDispositivos" class="container_TarMovil_input" flex="" style="height: 100%">
+                               	
+                               	<div layout="row" layout-align="end center">
+	                               	<button class="btn-info-dispositivos">
+							            <md-tooltip md-direction="top">
+							                <div>
+							              		En el campo <span class="bold">Dispositivos</span>, seleccione la cantidad de dispositivos que quiere asegurar.
+							              		</br>
+							              		En el campo <span class="bold">{{dispositivo.DS_BANDA_DISPOSITIVO}}</span>, seleccione la cantidad de dispositivos que cumplan esa condición.
+							              		<span ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 3">
+								              		</br>
+								              		Si has elegido algún portátil <span class="bold">Apple</span>, seleccione qué tipo de modelos son.
+							              		</span>
+							                </div>
+							            </md-tooltip>
+							            <md-icon>
+							            error_outline
+							            </md-icon>
+							        </button>
+                               	</div>
+                               	
+	                            <div style="text-align: center">
+	                                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 1" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIiBjbGFzcz0iIj48Zz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnPgoJCTxwYXRoIGQ9Ik00ODMuMjY1LDUxLjJIMjguNzM1QzEyLjg5LDUxLjIsMCw2NC4wOTEsMCw3OS45MzVWMzMwLjcxYzAsMTUuODQ0LDEyLjg5LDI4LjczNSwyOC43MzUsMjguNzM1SDIyOC4zMXYxMC4wMTUgICAgYy0zNy45NTQsNC42ODgtNzQuMDgzLDE5Ljg3NS03NC4wODMsNDQuODQyYzAsMjYuNTA4LDQzLjc1Myw0Ni40OTgsMTAxLjc3Myw0Ni40OThzMTAxLjc3My0xOS45OSwxMDEuNzczLTQ2LjQ5OCAgICBjMC0yNC45NjctMzYuMTI5LTQwLjE1Mi03NC4wODMtNDQuODQydi0xMC4wMTVoMTk5LjU3NmMxNS44NDUsMCwyOC43MzUtMTIuODkxLDI4LjczNS0yOC43MzVWNzkuOTM1ICAgIEM1MTIsNjQuMDkxLDQ5OS4xMSw1MS4yLDQ4My4yNjUsNTEuMnogTTMyNS4yNTEsMzk2Ljg1NmMxMC43MDcsNS4zOTIsMTYuODQ5LDExLjc1MSwxNi44NDksMTcuNDQ2ICAgIGMwLDEyLjg3MS0zMi43NTUsMzAuODI0LTg2LjEsMzAuODI0cy04Ni4xLTE3Ljk1My04Ni4xLTMwLjgyNGMwLTUuNjk1LDYuMTQxLTEyLjA1NCwxNi44NDgtMTcuNDQ2ICAgIGMxMC43NDctNS40MTMsMjUuMjgzLTkuNDQzLDQxLjU2MS0xMS41OTV2MTguNTkyYzAsMTAuMDgyLDguMjAzLDE4LjI4NiwxOC4yODYsMTguMjg2aDE4LjgwOCAgICBjMTAuMDgyLDAsMTguMjg2LTguMjA0LDE4LjI4Ni0xOC4yODZ2LTE4LjU5MkMyOTkuOTY3LDM4Ny40MTQsMzE0LjUwNCwzOTEuNDQ0LDMyNS4yNTEsMzk2Ljg1NnogTTI0My45ODQsNDAzLjg1M3YtNDQuNDA4aDI0LjAzMyAgICB2NDQuNDA4YzAsMS40NDEtMS4xNzIsMi42MTItMi42MTIsMi42MTJoLTE4LjgwOEMyNDUuMTU2LDQwNi40NjUsMjQzLjk4NCw0MDUuMjk0LDI0My45ODQsNDAzLjg1M3ogTTQ5Ni4zMjcsMzMwLjcxICAgIGMwLDcuMjAzLTUuODU5LDEzLjA2MS0xMy4wNjEsMTMuMDYxSDI4LjczNWMtNy4yMDIsMC0xMy4wNjEtNS44NTktMTMuMDYxLTEzLjA2MVY3OS45MzVjMC03LjIwMiw1Ljg1OS0xMy4wNjEsMTMuMDYxLTEzLjA2MSAgICBoNDU0LjUzMWM3LjIwMiwwLDEzLjA2MSw1Ljg1OSwxMy4wNjEsMTMuMDYxVjMzMC43MXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTMxLjM0Nyw4Mi41NDd2MjM1LjEwMmg0NDkuMzA2VjgyLjU0N0gzMS4zNDd6IE00NjQuOTgsMzAxLjk3Nkg0Ny4wMlY5OC4yMkg0NjQuOThWMzAxLjk3NnoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+Cg==">
+	                                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 2" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA0NDMuOTc5IDQ0My45NzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgogIDxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cGF0aCBkPSJNMzcyLjcyLDBINzEuMjU5Yy0xNC40OCwwLTI2LjI2MSwxMS43ODEtMjYuMjYxLDI2LjI2MXYzOTEuNDU3YzAsMTQuNDgsMTEuNzgsMjYuMjYxLDI2LjI2MSwyNi4yNjFIMzcyLjcyICAgYzE0LjQ4LDAsMjYuMjYxLTExLjc4MSwyNi4yNjEtMjYuMjYxVjI2LjI2MUMzOTguOTgxLDExLjc4MSwzODcuMiwwLDM3Mi43MiwweiBNMzgzLjk4MSw0MTcuNzE4ICAgYzAsNi4yMDktNS4wNTIsMTEuMjYxLTExLjI2MSwxMS4yNjFINzEuMjU5Yy02LjIwOSwwLTExLjI2MS01LjA1Mi0xMS4yNjEtMTEuMjYxVjI2LjI2MUM1OS45OTgsMjAuMDUyLDY1LjA1LDE1LDcxLjI1OSwxNUgzNzIuNzIgICBjNi4yMDksMCwxMS4yNjEsNS4wNTIsMTEuMjYxLDExLjI2MVY0MTcuNzE4eiIgZmlsbD0iIzAwYTllMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiIvPgogICAgPHBhdGggZD0ibTM2OC45ODIsNDcuOTA4aC0yOTMuOTg1Yy0yLjc2MSwwLTUsMi4yMzktNSw1djMzOC4xNjNjMCwyLjc2MSAyLjIzOSw1IDUsNWgyOTMuOTg1YzIuNzYxLDAgNS0yLjIzOSA1LTV2LTMzOC4xNjNjMC0yLjc2Mi0yLjIzOS01LTUtNXptLTUsMzM4LjE2M2gtMjgzLjk4NXYtMzI4LjE2M2gyODMuOTg1djMyOC4xNjN6IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+CiAgICA8cGF0aCBkPSJtMjIxLjk5Miw0MDYuNDc4Yy0xLjk4LDAtMy45MSwwLjgtNS4zMSwyLjItMS4zOSwxLjM5LTIuMTksMy4zMy0yLjE5LDUuMyAwLDEuOTcgMC44LDMuOTEgMi4xOSw1LjMgMS40LDEuNCAzLjMzLDIuMiA1LjMxLDIuMiAxLjk3LDAgMy45MS0wLjggNS4zLTIuMiAxLjQtMS4zOSAyLjItMy4zMyAyLjItNS4zIDAtMS45Ny0wLjgtMy45MS0yLjItNS4zLTEuNC0xLjQtMy4zMy0yLjItNS4zLTIuMnoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KICAgIDxwYXRoIGQ9Im0yMjEuOTkyLDM3LjI0OGMxLjMxLDAgMi42LTAuNTMgMy41My0xLjQ2IDAuOTMtMC45MyAxLjQ3LTIuMjIgMS40Ny0zLjU0IDAtMS4zMi0wLjU0LTIuNi0xLjQ3LTMuNTQtMC45My0wLjkzLTIuMjItMS40Ni0zLjUzLTEuNDYtMS4zMiwwLTIuNjEsMC41My0zLjU0LDEuNDYtMC45MywwLjkzLTEuNDYsMi4yMi0xLjQ2LDMuNTQgMCwxLjMyIDAuNTMsMi42MSAxLjQ2LDMuNTQgMC45MywwLjkzIDIuMjIsMS40NiAzLjU0LDEuNDZ6IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+CiAgPC9nPgo8L2c+PC9zdmc+Cg==">
+	                                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 3" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA0NjcuMjExIDQ2Ny4yMTEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxnPgogIDxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cGF0aCBkPSJtNDEzLjkxNyw5Ni43NzVoLTM2MC42MjJjLTYuMzY5LDAtMTEuNTUxLDUuMTgxLTExLjU1MSwxMS41NXYyMTMuMTgyYzAsNi4zNjkgNS4xODIsMTEuNTUgMTEuNTUxLDExLjU1aDM2MC42MjJjNi4zNjgsMCAxMS41NS01LjE4MSAxMS41NS0xMS41NXYtMjEzLjE4MWMtNS42ODQzNGUtMTQtNi4zNjktNS4xODItMTEuNTUxLTExLjU1LTExLjU1MXptMS41NSwyMjQuNzMyYzAsMC44NTUtMC42OTUsMS41NS0xLjU1LDEuNTVoLTM2MC42MjJjLTAuODU1LDAtMS41NTEtMC42OTYtMS41NTEtMS41NXYtMjEzLjE4MWMwLTAuODU1IDAuNjk1LTEuNTUgMS41NTEtMS41NWgzNjAuNjIyYzAuODU0LDAgMS41NSwwLjY5NiAxLjU1LDEuNTV2MjEzLjE4MXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiLz4KICAgIDxwYXRoIGQ9Im00NTkuNzExLDM0MC41NThoLTExLjc0NHYtMjM3LjcxNWMwLTE1Ljc1Mi0xMi44MTUtMjguNTY4LTI4LjU2OC0yOC41NjhoLTM3MS41ODZjLTE1Ljc1MywwLTI4LjU2OCwxMi44MTUtMjguNTY4LDI4LjU2OHYyMzcuNzE0aC0xMS43NDVjLTQuMTQzLDAtNy41LDMuMzU4LTcuNSw3LjV2MjAuNjA1YzAsMTMuMzg0IDEwLjg4OSwyNC4yNzIgMjQuMjcyLDI0LjI3Mmg0MTguNjY2YzEzLjM4NCwwIDI0LjI3Mi0xMC44ODkgMjQuMjcyLTI0LjI3MnYtMjAuNjA1YzAuMDAxLTQuMTQxLTMuMzU2LTcuNDk5LTcuNDk5LTcuNDk5em0tNDI1LjQ2Ny0yMzcuNzE1Yy0yLjg0MjE3ZS0xNC03LjQ4MSA2LjA4Ny0xMy41NjggMTMuNTY4LTEzLjU2OGgzNzEuNTg2YzcuNDgxLDAgMTMuNTY4LDYuMDg2IDEzLjU2OCwxMy41Njh2MjM3LjcxNGgtMzk4LjcyMnYtMjM3LjcxNHptMTc3LjM2MSwyNTIuNzE1aDQ0djMuOTIyYzAsMS43NTUtMS40MjgsMy4xODQtMy4xODQsMy4xODRoLTM3LjYzM2MtMS43NTYsMC0zLjE4NC0xLjQyOC0zLjE4NC0zLjE4NHYtMy45MjJ6bTI0MC42MDcsMTMuMTA1YzAsNS4xMTMtNC4xNTksOS4yNzItOS4yNzIsOS4yNzJoLTQxOC42NjdjLTUuMTEzLDAtOS4yNzItNC4xNi05LjI3Mi05LjI3MnYtMTMuMTA1aDExLjc0NCAxNzQuODYxdjMuOTIyYzAsNy4yNyA1LjkxNCwxMy4xODQgMTMuMTg0LDEzLjE4NGgzNy42MzNjNy4yNywwIDEzLjE4NC01LjkxNCAxMy4xODQtMTMuMTg0di0zLjkyMmgxNzQuODYxIDExLjc0NHYxMy4xMDV6IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIi8+CiAgPC9nPgo8L2c+PC9zdmc+Cg==">
+	                                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 4" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA0OTAuNjQ1IDQ5MC42NDUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTM4My45ODksMjEzLjMxMmM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3di0yMS4zMzNjMC01Ljg4OC00Ljc3OS0xMC42NjctMTAuNjY3LTEwLjY2NyAgICBzLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3di0yMS4zMzNjMC0yNi4wNDgtMTguODE2LTQ3LjcyMy00My41NDEtNTIuMzUyTDMxOS45NjgsOS42Yy0wLjU1NS01LjQ0LTUuMTQxLTkuNi0xMC42MjQtOS42ICAgIEgxNjAuMDExYy01LjQ4MywwLTEwLjA5MSw0LjE2LTEwLjYyNCw5LjZsLTkuODEzLDk4LjAyN2MtMjQuNzQ3LDQuNTg3LTQzLjU4NCwyNi4yODMtNDMuNTg0LDUyLjM1MnYxNzAuNjY3ICAgIGMwLDI2LjA0OCwxOC44MzcsNDcuNzIzLDQzLjU2Myw1Mi4zNTJsOS44MTMsOTguMDQ4YzAuNTU1LDUuNDQsNS4xNDEsOS42LDEwLjYyNCw5LjZoMTQ5LjMzM2M1LjQ4MywwLDEwLjA2OS00LjE2LDEwLjYwMy05LjYgICAgbDkuODEzLTk4LjA0OGMyNC43NDctNC42MjksNDMuNTg0LTI2LjMwNCw0My41ODQtNTIuMzUydi0yMS4zMzNjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N3MxMC42NjctNC43NzksMTAuNjY3LTEwLjY2NyAgICB2LTIxLjMzM2MwLTUuODg4LTQuNzc5LTEwLjY2Ny0xMC42NjctMTAuNjY3cy0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YtODUuMzMzICAgIEMzNzMuMzIzLDIwOC41MzMsMzc4LjEwMSwyMTMuMzEyLDM4My45ODksMjEzLjMxMnogTTE2OS42NTMsMjEuMzEySDI5OS42OGw4LjUzMyw4NS4zMzNIMTYxLjEyTDE2OS42NTMsMjEuMzEyeiBNMjk5LjY1OSw0NjkuMzEyICAgIEgxNjkuNjMybC04LjUzMy04NS4zNTVoMTQ3LjA5M0wyOTkuNjU5LDQ2OS4zMTJ6IE0zNTEuOTg5LDMzMC42NDVjMCwxNy42NDMtMTQuMzU3LDMyLTMyLDMySDE0OS4zMjNjLTE3LjY0MywwLTMyLTE0LjM3OS0zMi0zMiAgICBWMTU5Ljk3OWMwLTE3LjY0MywxNC4zNTctMzIsMzItMzJoMTcwLjY2N2MxNy42NDMsMCwzMiwxNC4zMzYsMzIsMzJWMzMwLjY0NXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+Cg==">
+	                                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 5" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA1MTEuOTk5IDUxMS45OTkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGNpcmNsZSBjeD0iMzA1Ljg0IiBjeT0iMzU4LjEyIiByPSI3LjczOSIgZmlsbD0iIzAwYTllMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiIvPgoJPC9nPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+Cgk8Zz4KCQk8cGF0aCBkPSJNNDM4LjIyLDMzMy44N2MtMTMuMzcyLDAtMjQuMjUsMTAuODc4LTI0LjI1LDI0LjI1czEwLjg3OCwyNC4yNSwyNC4yNSwyNC4yNXMyNC4yNS0xMC44NzgsMjQuMjUtMjQuMjUgICAgUzQ1MS41OTIsMzMzLjg3LDQzOC4yMiwzMzMuODd6IE00MzguMjIsMzY2Ljg5MWMtNC44MzcsMC04Ljc3MS0zLjkzNS04Ljc3MS04Ljc3MXMzLjkzNS04Ljc3MSw4Ljc3MS04Ljc3MSAgICBjNC44MzcsMCw4Ljc3MSwzLjkzNSw4Ljc3MSw4Ljc3MVM0NDMuMDU3LDM2Ni44OTEsNDM4LjIyLDM2Ni44OTF6IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+Cgk8L2c+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnPgoJCTxwYXRoIGQ9Ik00OTQuMDY5LDI3Ny4wNzdoLTg3LjA0OGMxNS4xMzktMTYuODg4LDIxLjQ1Mi00MC42NDksMTUuNjAzLTYzLjQ3NmwtMTkuOTE3LTc3LjcyM2MtMS4wNjEtNC4xNC01LjI3NS02LjYzNS05LjQxOC01LjU3NiAgICBjLTQuMTQsMS4wNjEtNi42MzcsNS4yNzctNS41NzYsOS40MThsMTkuOTE3LDc3LjcyM2M1Ljc0OSwyMi40MzQtMy42MjMsNDYuMDM4LTIyLjg4NCw1OC41bC00MS4yNS01MS42NjIgICAgYy04LjA5Ny0xMC4xNDItMjAuMTg1LTE1Ljk1OC0zMy4xNjMtMTUuOTU4SDI1NmgtNTQuMzMyYy0xMi45NzgsMC0yNS4wNjYsNS44MTctMzMuMTY0LDE1Ljk1OGwtNDEuMjQ5LDUxLjY2MiAgICBjLTE5LjI2MS0xMi40NjItMjguNjMyLTM2LjA2Ni0yMi44ODQtNTguNWwyNS4yODMtOTguNjY2YzQuMDczLTE1Ljg5NiwxNS42ODEtMjguODE3LDMxLjA1MS0zNC41NjRsMjEuMjU1LTcuOTQ3ICAgIGM0LjkyNC0xLjg0MywxMC41MDktMC42MjksMTQuMjI3LDMuMDg4YzAuMDAxLDAuMDAxLDAuMDAxLDAuMDAxLDAuMDAyLDAuMDAybDIxLjE5LDIxLjE5YzUuMzU2LDUuMzU2LDEyLjQ3Niw4LjMwNSwyMC4wNSw4LjMwNSAgICBIMjU2aDE4LjU3MWM3LjU3NCwwLDE0LjY5NC0yLjk1LDIwLjA1MS04LjMwNWwyMS4xOTEtMjEuMTkxYzMuNzE4LTMuNzE4LDkuMy00LjkzLDE0LjIyOS0zLjA4OWwyMS4yNTQsNy45NDcgICAgYzEyLjQ5Nyw0LjY3MywyMi40NTEsMTMuOTIxLDI4LjAyNywyNi4wNGMxLjMwNSwyLjgzNSw0LjEwNyw0LjUwNyw3LjAzNiw0LjUwN2MxLjA4MiwwLDIuMTgyLTAuMjI4LDMuMjMtMC43MSAgICBjMy44ODMtMS43ODcsNS41ODMtNi4zODMsMy43OTYtMTAuMjY2Yy03LjI5NS0xNS44NTUtMjAuMzE3LTI3Ljk1NC0zNi42NjctMzQuMDY4bC0yMS4yNTQtNy45NDcgICAgYy05LjUwNi0zLjU1NS0yMC4xNDgtMS44MDItMjguMDEzLDQuMzc1aC0xMDIuOWMtNy44NjQtNi4xNzgtMTguNTA2LTcuOTMxLTI4LjAxMi00LjM3NWwtMjEuMjU1LDcuOTQ3ICAgIGMtMjAuMTA5LDcuNTE5LTM1LjI5NSwyNC40MjMtNDAuNjI0LDQ1LjIxOWwtMjUuMjgzLDk4LjY2NmMtNS44NDksMjIuODI3LDAuNDYzLDQ2LjU4OSwxNS42MDIsNjMuNDc2SDE3LjkzMiAgICBDOC4wNDQsMjc3LjA3NywwLDI4NS4xMjEsMCwyOTUuMDA4djQ5LjE4MXYyNy44NjJ2NDkuMThjMCw5Ljg4Nyw4LjA0NCwxNy45MzEsMTcuOTMyLDE3LjkzMWgzMS40Mjd2NS4xNTEgICAgYzAsNC4yNzQsMy40NjUsNy43MzksNy43MzksNy43MzljNC4yNzQsMCw3LjczOS0zLjQ2NSw3LjczOS03LjczOXYtNS4xNTFoMzgyLjMyNXY1LjE1MWMwLDQuMjc0LDMuNDY1LDcuNzM5LDcuNzM5LDcuNzM5ICAgIGM0LjI3NCwwLDcuNzM5LTMuNDY1LDcuNzM5LTcuNzM5di01LjE1MWgzMS40MjhjOS44ODcsMCwxNy45MzEtOC4wNDQsMTcuOTMxLTE3LjkzMVYyOTUuMDA4ICAgIEM1MTIsMjg1LjEyMSw1MDMuOTU2LDI3Ny4wNzcsNDk0LjA2OSwyNzcuMDc3eiBNMjkxLjY1Niw4MS42MjJsLTcuOTc5LDcuOTc5Yy0yLjQzMiwyLjQzMy01LjY2NywzLjc3Mi05LjEwNiwzLjc3MkgyNTZoLTE4LjU3MSAgICBjLTMuNDM5LDAtNi42NzMtMS4zMzktOS4xMDUtMy43NzFsLTcuOTgtNy45OEgyOTEuNjU2eiBNNDk0LjA2OSw0MjMuNjgzSDE3LjkzMmMtMS4zNTIsMC0yLjQ1My0xLjEtMi40NTMtMi40NTJ2LTQ5LjE4di0yMC4xMjIgICAgaDI0Ni4xMTJ2MTIuMzgzSDQwLjkzM2MtNC4yNzQsMC03LjczOSwzLjQ2NS03LjczOSw3LjczOWMwLDQuMjc0LDMuNDY1LDcuNzM5LDcuNzM5LDcuNzM5aDIyMS43OTEgICAgYzcuOTExLDAsMTQuMzQ2LTYuNDM1LDE0LjM0Ni0xNC4zNDZ2LTE0LjY0OGMwLTcuOTExLTYuNDM1LTE0LjM0Ni0xNC4zNDYtMTQuMzQ2SDE1LjQ3OXYtNDEuNDQxYzAtMS4zNTIsMS4xLTIuNDUyLDIuNDUzLTIuNDUyICAgIGgxMDkuOTU2YzAuMDc5LDAuMDAyLDAuMTU4LDAuMDE1LDAuMjM2LDAuMDE1YzAuMDkxLDAsMC4xODEtMC4wMTMsMC4yNzItMC4wMTVoMzUuNjc5YzQuMjc0LDAsNy43MzktMy40NjUsNy43MzktNy43MzkgICAgYzAtNC4yNzQtMy40NjUtNy43MzktNy43MzktNy43MzloLTE3LjkxOWwzNC40NDMtNDMuMTM4YzUuMTQ0LTYuNDQyLDEyLjgyMy0xMC4xMzgsMjEuMDY4LTEwLjEzOEgyNTZoNTQuMzMzICAgIGM4LjI0NSwwLDE1LjkyNCwzLjY5NSwyMS4wNjgsMTAuMTM4bDM0LjQ0NCw0My4xMzhIMTk3Ljg1OGMtNC4yNzQsMC03LjczOSwzLjQ2NS03LjczOSw3LjczOWMwLDQuMjc0LDMuNDY1LDcuNzM5LDcuNzM5LDcuNzM5ICAgIGgxODUuNzQ1YzAuMDkxLDAuMDAyLDAuMTgxLDAuMDE1LDAuMjcyLDAuMDE1YzAuMDc5LDAsMC4xNTctMC4wMTQsMC4yMzYtMC4wMTVoMTA5Ljk1N2MxLjM1MiwwLDIuNDUyLDEuMSwyLjQ1MiwyLjQ1MnYxMjYuMjIyICAgIGgwLjAwMUM0OTYuNTIxLDQyMi41ODMsNDk1LjQyMSw0MjMuNjgzLDQ5NC4wNjksNDIzLjY4M3oiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTE3NS40NzIsODkuNDMxYy0xNC40MzIsMC0yNi4xNzUsMTEuNzQyLTI2LjE3NSwyNi4xNzVjMCwxNC40MzMsMTEuNzQyLDI2LjE3NCwyNi4xNzUsMjYuMTc0ICAgIGMxNC40MzMsMCwyNi4xNzQtMTEuNzQyLDI2LjE3NC0yNi4xNzRDMjAxLjY0NiwxMDEuMTczLDE4OS45MDQsODkuNDMxLDE3NS40NzIsODkuNDMxeiBNMTc1LjQ3MiwxMjYuMzAxICAgIGMtNS44OTgsMC0xMC42OTYtNC43OTgtMTAuNjk2LTEwLjY5NnM0Ljc5OC0xMC42OTYsMTAuNjk2LTEwLjY5NmM1Ljg5OCwwLDEwLjY5Niw0Ljc5OCwxMC42OTYsMTAuNjk2ICAgIEMxODYuMTY3LDEyMS41MDMsMTgxLjM2OSwxMjYuMzAxLDE3NS40NzIsMTI2LjMwMXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTMwMi43NjcsMTQwLjM3OWMtMTQuNDMyLDAtMjYuMTc1LDExLjc0Mi0yNi4xNzUsMjYuMTc1YzAsMTQuNDMzLDExLjc0MiwyNi4xNzQsMjYuMTc1LDI2LjE3NCAgICBzMjYuMTc0LTExLjc0MiwyNi4xNzQtMjYuMTc0QzMyOC45NDEsMTUyLjEyMiwzMTcuMTk5LDE0MC4zNzksMzAyLjc2NywxNDAuMzc5eiBNMzAyLjc2NywxNzcuMjUgICAgYy01Ljg5OCwwLTEwLjY5Ni00Ljc5OC0xMC42OTYtMTAuNjk2YzAtNS44OTgsNC43OTgtMTAuNjk2LDEwLjY5Ni0xMC42OTZzMTAuNjk2LDQuNzk4LDEwLjY5NiwxMC42OTYgICAgQzMxMy40NjMsMTcyLjQ1MiwzMDguNjY1LDE3Ny4yNSwzMDIuNzY3LDE3Ny4yNXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGNpcmNsZSBjeD0iMzQwLjAzIiBjeT0iOTkuMjgiIHI9IjcuNzM5IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+Cgk8L2c+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnPgoJCTxjaXJjbGUgY3g9IjM0MC4wMyIgY3k9IjE0MC4zOCIgcj0iNy43MzkiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGNpcmNsZSBjeD0iMzE3LjkzIiBjeT0iMTIwLjE1IiByPSI3LjczOSIgZmlsbD0iIzAwYTllMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiIvPgoJPC9nPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+Cgk8Zz4KCQk8Y2lyY2xlIGN4PSIzNjIuMTMiIGN5PSIxMjAuMTUiIHI9IjcuNzM5IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+Cgk8L2c+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnPgoJCTxwYXRoIGQ9Ik0yMzQuNzI5LDE1OC44MTVoLTEwLjY5NnYtMTAuNjk2YzAtNC4yNzQtMy40NjUtNy43MzktNy43MzktNy43MzlzLTcuNzM5LDMuNDY1LTcuNzM5LDcuNzM5djEwLjY5NmgtMTAuNjk2ICAgIGMtNC4yNzQsMC03LjczOSwzLjQ2NS03LjczOSw3LjczOWMwLDQuMjc0LDMuNDY1LDcuNzM5LDcuNzM5LDcuNzM5aDEwLjY5NnYxMC42OTZjMCw0LjI3NCwzLjQ2NSw3LjczOSw3LjczOSw3LjczOSAgICBzNy43MzktMy40NjUsNy43MzktNy43Mzl2LTEwLjY5NmgxMC42OTZjNC4yNzQsMCw3LjczOS0zLjQ2NSw3LjczOS03LjczOUMyNDIuNDY4LDE2Mi4yOCwyMzkuMDAzLDE1OC44MTUsMjM0LjcyOSwxNTguODE1eiIgZmlsbD0iIzAwYTllMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiIvPgoJPC9nPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjwvZz48L3N2Zz4K">
+	                            </div>
+
+	                            <p class="titleDispositivo">{{dispositivo.DS_TIPO_DISPOSITIVO}}</p>
+
+                                <div layout="column" layout-align="center center" flex-gt-sm="100">
+                                    <md-input-container class="md-block"
+                                                        style="margin-right: 0;min-width: 70%">
+                                        <label>Dispositivos</label>
+                                        <md-select  ng-disabled="$ctrl.llave == 'resumen'"
+                                                   ng-change="$ctrl.tarificar(false, null, dispositivo.ID_TIPO_DISPOSITIVO, $ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_DISPOSITIVOS)"
+                                                   ng-model="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_DISPOSITIVOS"
+                                                   ng-value="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_DISPOSITIVOS">
+                                            <md-option ng-repeat="num in $ctrl.getNuMaxDispositivos(dispositivo.ID_TIPO_DISPOSITIVO)" ng-value="num">{{num}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-top-30"
+                                                        ng-if="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_DISPOSITIVOS > 0"
+                                                        style="margin-right: 0;min-width: 70%">
+                                        <label>{{dispositivo.DS_BANDA_DISPOSITIVO}}</label>
+                                        <md-select ng-disabled="$ctrl.llave == 'resumen'" ng-change="$ctrl.tarificar(false, null, dispositivo.ID_TIPO_DISPOSITIVO, $ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_BANDA, true)" ng-model="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_BANDA" ng-value="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_BANDA">
+                                            <md-option ng-value="0">0</md-option>
+                                            <md-option ng-repeat="x in [].constructor($ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_DISPOSITIVOS) track by $index" ng-value="$index+1">{{$index+1}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" layout-align="center center" flex-gt-sm="100"
+                                     ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 3 && $ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_BANDA > 0">
+                                    <md-input-container class="md-block margin-top-20" style="margin-right: 0;min-width: 70%">
+                                        <label>{{$ctrl.macbookAir}}</label>
+                                        <md-select ng-disabled="$ctrl.llave == 'resumen'" id="select-air" ng-change="$ctrl.tarificar(false)" ng-model="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].AIR" ng-value="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].AIR">
+                                            <md-option ng-value="0">0</md-option>
+                                            <md-option ng-repeat="x in [].constructor($ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_BANDA - $ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].PRO) track by $index" ng-value="$index+1">{{$index+1}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container class="md-block margin-top-30" style="margin-right: 0;min-width: 70%">
+                                        <label>{{$ctrl.macbookPro}}</label>
+                                        <md-select ng-disabled="$ctrl.llave == 'resumen'" id="select-pro" ng-change="$ctrl.tarificar(false)" ng-model="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].PRO" ng-value="$ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].PRO">
+                                            <md-option ng-value="0">0</md-option>
+                                            <md-option ng-repeat="x in [].constructor($ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].NU_BANDA - $ctrl.dispositivos[dispositivo.ID_TIPO_DISPOSITIVO].AIR) track by $index" ng-value="$index+1">{{$index+1}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div layout="row" layout-sm="column" layout-xs="column" layout-margin="" class="container_TarMovil_input">
+                            <div layout="column" layout-sm="column" layout-xs="column" flex="50"  layout-align="center center">
+                                <div layout="row">
+                                	<md-checkbox ng-disabled="$ctrl.llave == 'resumen'" ng-change="$ctrl.tarificar(true)" ng-model="$ctrl.ampRobo" ng-checked="$ctrl.ampRobo == true" ng-true-value="true" ng-false-value="false"></md-checkbox>
+                                	<p class="titleAmpliacion">Añadir ampliación para robo y hurto</p>
+                                </div>
+                                <p style="font-size: 12px;text-align: center">Incluye la sustitución del dipositivo en caso de Robo o Hurto.<br>&nbsp;</p>
+                            </div>
+                            <div layout="column" layout-sm="column" layout-xs="column" flex="50"  layout-align="center center">
+                            	<div layout="row">
+                                	<md-checkbox ng-disabled="$ctrl.llave == 'resumen' || $ctrl.hideAmplDispo == true" ng-change="$ctrl.tarificar(true)" ng-model="$ctrl.ampCamb" ng-checked="$ctrl.ampCamb == true" ng-true-value="true" ng-false-value="false"></md-checkbox>
+                                	<p class="titleAmpliacion">Añadir ampliación para cambio de dispositivo</p>
+                                </div>
+                                <p style="font-size: 12px;text-align: center">Incluye la sustitución in situ del dispositivo averiado por otro nuevo o de similares características.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container_TarMovil_div" layout="column" layout-sm="column" layout-xs="column" flex="20">
+                        <div layout="column" layout-sm="column" layout-margin="">
+                            <div class="container_TarMovil_price" layout="row"  layout-align="end center">
+                                <div layout="row">
+                                    <div>
+                                        <md-progress-circular md-mode="indeterminate" ng-show="$ctrl.calc == true" style="margin: 0 auto;"></md-progress-circular>
+                                        <span style="color: #031A34" ng-hide="$ctrl.calc == true" class="spPrice">{{$ctrl.price == 0 ? '--' : $ctrl.formatPrice($ctrl.price) }}</span>
+                                        <span ng-hide="$ctrl.calc == true || $ctrl.price == 0" class="txtRegular">{{ 'TAXES_INCLUDED' | translate }}</span>
+                                        <p class="text-right color-blue" style="font-size: 12px">Precio del seguro: <b>{{$ctrl.periodicidad.DS_FORMAPAGO}}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="buttonsRow3" layout="row" layout-align="end center">
+                                <md-button type="submit"
+                                           ng-disabled="$ctrl.colectivo.IN_EMITE == false || $ctrl.price <= 0 || $ctrl.llave == 'resumen'"
+                                           ng-click="$ctrl.tarificar(true, true)"
+                                           class="md-raised md-primary medium-blue button-action-main">
+                                           REALIZAR CONTRATACIÓN
+                                </md-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </md-content>
+    <!-- CONTRATACIÓN -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 2" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+
+        <div class="container_TarMovil" flex>
+            <form name="$ctrl.formDispositivos">
+                <!-- <div>
+                    <i class="fas fa-file-signature"></i> Formulario de contratación - CiberSeguro Hijos
+                </div> -->
+                <!-- <div>FORM.$VALID -> {{$ctrl.formConChild.$valid}}</div>
+                <div>DOC_NUM.$VALID -> {{$ctrl.formConChild.holderDocumentNumber.$valid}}</div>
+                <div>DOC_NUM.$ERRORS -> {{$ctrl.formConChild.holderDocumentNumber.$error}}</div>
+                <div>IBAN_NUM.$VALID -> {{$ctrl.formConChild.input_ibanCode.$valid}}</div>
+                <div>DOC_NUM.$ERRORS -> {{$ctrl.formConChild.input_ibanCode.$error}}</div> -->
+                <h4 class="header-data-defense-ins" style="font-weight: bold">
+                    1. TOMADOR DEL SEGURO
+                </h4>
+                <md-divider></md-divider>
+                <div class="separadorDesplegables he-24"></div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm="15">
+                        <label>NIF/NIE/CIF</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_DOCUMENTO" cvalidation="document_a" maxlength="20"
+                            uppercase required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="100" style="margin-top:20px !important;">
+                        <md-button class="md-raised md-primary medium-blue button-action-main"
+                                   ng-if="$ctrl.loadClienteContratacion != true"
+                                   ng-disabled="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_DOCUMENTO == null || $ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_DOCUMENTO == ''"
+                                   ng-click="$ctrl.buscarClienteContratacion()"
+                                   style="margin: 0!important">
+                            <i class="fa-duotone fa-check-double"></i> {{ 'CONFIRM' | translate | uppercase }}
+                        </md-button>
+                        <md-button ng-if="$ctrl.coToken == 'TokenM' && $ctrl.loadClienteContratacion != true && $ctrl.clienteEncontradoContratacion == false" style="height: 36px !important; justify-content: center;" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.abrirAccesoMovistar()" flex="20">
+                            Acceso a datos Movistar
+                        </md-button>
+                    </md-input-container>
+                    <div ng-if="$ctrl.loadClienteContratacion == true" layout="row" layout-align="center center" style="margin-bottom: 20px">
+						<md-progress-circular md-diameter="25" md-mode="indeterminate" style="margin: 0 auto;"></md-progress-circular>
+                    </div>
+                </div>
+                <p style="color: rgb(182 109 0);font-size: 11px;margin: 5px 0;" class="text-importe-siniestro-error" ng-if="$ctrl.clienteEncontradoContratacion == false">El cliente no pertenece a Telefónica Seguros</p>
+                <div layout-gt-sm="row" layout-align="center center">
+                    <md-input-container class="md-block" flex-gt-sm="25" ng-if="$ctrl.isEmpresa == true">
+                        <label>{{ 'COMPANY' | translate }}</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_NOMBRE" ng-disabled="$ctrl.camposEditablesContratacion.NO_NOMBRE == false" uppercase required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="20" ng-if="$ctrl.isEmpresa == false">
+                        <label>{{ 'NAME' | translate }}</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_NOMBRE" ng-disabled="$ctrl.camposEditablesContratacion.NO_NOMBRE == false" uppercase required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="20" ng-if="$ctrl.isEmpresa == false">
+                        <label>{{ 'SURNAME_1' | translate }}</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_APELLIDO1" ng-disabled="$ctrl.camposEditablesContratacion.NO_APELLIDO1 == false" uppercase required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="20" ng-if="$ctrl.isEmpresa == false">
+                        <label>{{ 'SURNAME_2' | translate }}</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_APELLIDO2" ng-disabled="$ctrl.camposEditablesContratacion.NO_APELLIDO2 == false" uppercase>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="20">
+                        <label>{{ 'EMAIL' | translate }}</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_EMAIL" ng-disabled="$ctrl.camposEditablesContratacion.NO_EMAIL == false" ng-pattern="/^.+@.+\..+$/" required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="20">
+                        <label>Tfno. de Contacto</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_TELEFONO2" ng-disabled="$ctrl.camposEditablesContratacion.NU_TELEFONO == false" ng-pattern="/^[0-9]{9}$/" maxlength="9" required>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row" layout-align="center center">
+                    <md-input-container ng-if="$ctrl.isDomicilioTomador != true" class="md-block" flex-gt-sm="30">
+                        <label>Dirección</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_DIRECCION" ng-disabled="$ctrl.camposEditablesContratacion.NO_DIRECCION == false" uppercase required>
+                    </md-input-container>
+                    <md-input-container ng-if="$ctrl.isDomicilioTomador == true" class="md-block" flex-gt-sm="30">
+                        <label>Dirección</label>
+                        <input ng-model="$ctrl.noDireccion" ng-disabled="$ctrl.camposEditablesContratacion.NO_DIRECCION == false" uppercase required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="15">
+                        <label>Cod.Postal</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.CO_POSTAL" ng-disabled="$ctrl.camposEditablesContratacion.CO_POSTAL == false" ng-change="$ctrl.checkPostal($ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.CO_POSTAL)" ng-pattern="/^[0-9]{5}$/" maxlength="5" required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="20">
+                        <label>Localidad</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_LOCALIDAD" disabled required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="20">
+                        <label>Provincia</label>
+                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_PROVINCIA" disabled required>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row" ng-if="$ctrl.clienteEncontradoContratacion == true">
+                    <p style="font-size: 11px;color: #3b3b3b;padding: 20px;margin-bottom: -25px;text-align: center;">Si hay que modificar alguno de estos datos se informará al tomador que se debe gestionar por otra vía (Pendiente Telefónica Seguros indique cómo) ya que los mismos tienen impacto o repercusión en otros seguros que tiene contratado con Telefónica Seguros (por ejemplo seguro móvil, seguro dispositivo…).</p>
+                </div>
+                <legend></legend>
+                <div ng-if="$ctrl.firmaDigital">
+                    <div style="display: flex">
+                        <div flex class="flex-gt-sm-50" layout="column">
+                            <md-input-container class="md-block" flex-gt-sm="100">
+                                <p style="text-transform:none!important;display: flex;color: #3b3b3b;font-size: 14px!important;padding-top:28px">
+                                    <img class="img-responsive center-block" src="src/img/logo-reduced-movistar.png" style="width: 19px;height: 14px;margin-right: 5px;margin-top: 2px">
+                                    <span><strong>FIRMA DIGITAL DE LA PÓLIZA DE SEGURO</strong></span>
+                                </p>
+                            </md-input-container>
+                        </div>
+                        <div flex class="flex-gt-sm-50" style="margin-left: 35px">
+                            <md-input-container class="md-block" flex-gt-sm="30">
+                                <label>Teléfono Móvil</label>
+                                <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_TELEFONO" ng-disabled="$ctrl.camposEditablesContratacion.NU_TELEFONO == false" ng-change="$ctrl.checkMobilePhoneNumber()" maxlength="9" required>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <p style="margin-top: 5px;font-size: 12px;padding-top: 8px;color: #3b3b3b!important;margin: 0!important;text-align: center;text-transform: none!important;">
+                        Enviaremos al <strong>telefóno móvil del cliente</strong> que indiques un PIN de 6 dígitos con el que formalizar la contratación en la siguiente pantalla.
+                    </p>
+                    <legend></legend>
+                </div>
+
+                <h4 class="header-data-defense-ins" style="font-weight: bold">
+                    2. DISPOSITIVOS ASEGURADOS
+                </h4>
+                <md-divider></md-divider>
+                <div class="separadorDesplegables he-24"></div>
+				<div class="dispositivos-row" layout="row" layout-align="start center" ng-repeat="dispositivo in $ctrl.datos.PRESUPUESTO.PECUNIARIAS.DISPOSITIVOS.LST_DISPOSITIVOS track by $index">
+					<div flex="25" layout="row" layout-align="end center">
+						<div layout="row" layout-align="center center">
+							<img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 1" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIiBjbGFzcz0iIj48Zz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnPgoJCTxwYXRoIGQ9Ik00ODMuMjY1LDUxLjJIMjguNzM1QzEyLjg5LDUxLjIsMCw2NC4wOTEsMCw3OS45MzVWMzMwLjcxYzAsMTUuODQ0LDEyLjg5LDI4LjczNSwyOC43MzUsMjguNzM1SDIyOC4zMXYxMC4wMTUgICAgYy0zNy45NTQsNC42ODgtNzQuMDgzLDE5Ljg3NS03NC4wODMsNDQuODQyYzAsMjYuNTA4LDQzLjc1Myw0Ni40OTgsMTAxLjc3Myw0Ni40OThzMTAxLjc3My0xOS45OSwxMDEuNzczLTQ2LjQ5OCAgICBjMC0yNC45NjctMzYuMTI5LTQwLjE1Mi03NC4wODMtNDQuODQydi0xMC4wMTVoMTk5LjU3NmMxNS44NDUsMCwyOC43MzUtMTIuODkxLDI4LjczNS0yOC43MzVWNzkuOTM1ICAgIEM1MTIsNjQuMDkxLDQ5OS4xMSw1MS4yLDQ4My4yNjUsNTEuMnogTTMyNS4yNTEsMzk2Ljg1NmMxMC43MDcsNS4zOTIsMTYuODQ5LDExLjc1MSwxNi44NDksMTcuNDQ2ICAgIGMwLDEyLjg3MS0zMi43NTUsMzAuODI0LTg2LjEsMzAuODI0cy04Ni4xLTE3Ljk1My04Ni4xLTMwLjgyNGMwLTUuNjk1LDYuMTQxLTEyLjA1NCwxNi44NDgtMTcuNDQ2ICAgIGMxMC43NDctNS40MTMsMjUuMjgzLTkuNDQzLDQxLjU2MS0xMS41OTV2MTguNTkyYzAsMTAuMDgyLDguMjAzLDE4LjI4NiwxOC4yODYsMTguMjg2aDE4LjgwOCAgICBjMTAuMDgyLDAsMTguMjg2LTguMjA0LDE4LjI4Ni0xOC4yODZ2LTE4LjU5MkMyOTkuOTY3LDM4Ny40MTQsMzE0LjUwNCwzOTEuNDQ0LDMyNS4yNTEsMzk2Ljg1NnogTTI0My45ODQsNDAzLjg1M3YtNDQuNDA4aDI0LjAzMyAgICB2NDQuNDA4YzAsMS40NDEtMS4xNzIsMi42MTItMi42MTIsMi42MTJoLTE4LjgwOEMyNDUuMTU2LDQwNi40NjUsMjQzLjk4NCw0MDUuMjk0LDI0My45ODQsNDAzLjg1M3ogTTQ5Ni4zMjcsMzMwLjcxICAgIGMwLDcuMjAzLTUuODU5LDEzLjA2MS0xMy4wNjEsMTMuMDYxSDI4LjczNWMtNy4yMDIsMC0xMy4wNjEtNS44NTktMTMuMDYxLTEzLjA2MVY3OS45MzVjMC03LjIwMiw1Ljg1OS0xMy4wNjEsMTMuMDYxLTEzLjA2MSAgICBoNDU0LjUzMWM3LjIwMiwwLDEzLjA2MSw1Ljg1OSwxMy4wNjEsMTMuMDYxVjMzMC43MXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTMxLjM0Nyw4Mi41NDd2MjM1LjEwMmg0NDkuMzA2VjgyLjU0N0gzMS4zNDd6IE00NjQuOTgsMzAxLjk3Nkg0Ny4wMlY5OC4yMkg0NjQuOThWMzAxLjk3NnoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+Cg==">
+			                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 2" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA0NDMuOTc5IDQ0My45NzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgogIDxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cGF0aCBkPSJNMzcyLjcyLDBINzEuMjU5Yy0xNC40OCwwLTI2LjI2MSwxMS43ODEtMjYuMjYxLDI2LjI2MXYzOTEuNDU3YzAsMTQuNDgsMTEuNzgsMjYuMjYxLDI2LjI2MSwyNi4yNjFIMzcyLjcyICAgYzE0LjQ4LDAsMjYuMjYxLTExLjc4MSwyNi4yNjEtMjYuMjYxVjI2LjI2MUMzOTguOTgxLDExLjc4MSwzODcuMiwwLDM3Mi43MiwweiBNMzgzLjk4MSw0MTcuNzE4ICAgYzAsNi4yMDktNS4wNTIsMTEuMjYxLTExLjI2MSwxMS4yNjFINzEuMjU5Yy02LjIwOSwwLTExLjI2MS01LjA1Mi0xMS4yNjEtMTEuMjYxVjI2LjI2MUM1OS45OTgsMjAuMDUyLDY1LjA1LDE1LDcxLjI1OSwxNUgzNzIuNzIgICBjNi4yMDksMCwxMS4yNjEsNS4wNTIsMTEuMjYxLDExLjI2MVY0MTcuNzE4eiIgZmlsbD0iIzAwYTllMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiIvPgogICAgPHBhdGggZD0ibTM2OC45ODIsNDcuOTA4aC0yOTMuOTg1Yy0yLjc2MSwwLTUsMi4yMzktNSw1djMzOC4xNjNjMCwyLjc2MSAyLjIzOSw1IDUsNWgyOTMuOTg1YzIuNzYxLDAgNS0yLjIzOSA1LTV2LTMzOC4xNjNjMC0yLjc2Mi0yLjIzOS01LTUtNXptLTUsMzM4LjE2M2gtMjgzLjk4NXYtMzI4LjE2M2gyODMuOTg1djMyOC4xNjN6IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+CiAgICA8cGF0aCBkPSJtMjIxLjk5Miw0MDYuNDc4Yy0xLjk4LDAtMy45MSwwLjgtNS4zMSwyLjItMS4zOSwxLjM5LTIuMTksMy4zMy0yLjE5LDUuMyAwLDEuOTcgMC44LDMuOTEgMi4xOSw1LjMgMS40LDEuNCAzLjMzLDIuMiA1LjMxLDIuMiAxLjk3LDAgMy45MS0wLjggNS4zLTIuMiAxLjQtMS4zOSAyLjItMy4zMyAyLjItNS4zIDAtMS45Ny0wLjgtMy45MS0yLjItNS4zLTEuNC0xLjQtMy4zMy0yLjItNS4zLTIuMnoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KICAgIDxwYXRoIGQ9Im0yMjEuOTkyLDM3LjI0OGMxLjMxLDAgMi42LTAuNTMgMy41My0xLjQ2IDAuOTMtMC45MyAxLjQ3LTIuMjIgMS40Ny0zLjU0IDAtMS4zMi0wLjU0LTIuNi0xLjQ3LTMuNTQtMC45My0wLjkzLTIuMjItMS40Ni0zLjUzLTEuNDYtMS4zMiwwLTIuNjEsMC41My0zLjU0LDEuNDYtMC45MywwLjkzLTEuNDYsMi4yMi0xLjQ2LDMuNTQgMCwxLjMyIDAuNTMsMi42MSAxLjQ2LDMuNTQgMC45MywwLjkzIDIuMjIsMS40NiAzLjU0LDEuNDZ6IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+CiAgPC9nPgo8L2c+PC9zdmc+Cg==">
+			                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 3" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA0NjcuMjExIDQ2Ny4yMTEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxnPgogIDxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cGF0aCBkPSJtNDEzLjkxNyw5Ni43NzVoLTM2MC42MjJjLTYuMzY5LDAtMTEuNTUxLDUuMTgxLTExLjU1MSwxMS41NXYyMTMuMTgyYzAsNi4zNjkgNS4xODIsMTEuNTUgMTEuNTUxLDExLjU1aDM2MC42MjJjNi4zNjgsMCAxMS41NS01LjE4MSAxMS41NS0xMS41NXYtMjEzLjE4MWMtNS42ODQzNGUtMTQtNi4zNjktNS4xODItMTEuNTUxLTExLjU1LTExLjU1MXptMS41NSwyMjQuNzMyYzAsMC44NTUtMC42OTUsMS41NS0xLjU1LDEuNTVoLTM2MC42MjJjLTAuODU1LDAtMS41NTEtMC42OTYtMS41NTEtMS41NXYtMjEzLjE4MWMwLTAuODU1IDAuNjk1LTEuNTUgMS41NTEtMS41NWgzNjAuNjIyYzAuODU0LDAgMS41NSwwLjY5NiAxLjU1LDEuNTV2MjEzLjE4MXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiLz4KICAgIDxwYXRoIGQ9Im00NTkuNzExLDM0MC41NThoLTExLjc0NHYtMjM3LjcxNWMwLTE1Ljc1Mi0xMi44MTUtMjguNTY4LTI4LjU2OC0yOC41NjhoLTM3MS41ODZjLTE1Ljc1MywwLTI4LjU2OCwxMi44MTUtMjguNTY4LDI4LjU2OHYyMzcuNzE0aC0xMS43NDVjLTQuMTQzLDAtNy41LDMuMzU4LTcuNSw3LjV2MjAuNjA1YzAsMTMuMzg0IDEwLjg4OSwyNC4yNzIgMjQuMjcyLDI0LjI3Mmg0MTguNjY2YzEzLjM4NCwwIDI0LjI3Mi0xMC44ODkgMjQuMjcyLTI0LjI3MnYtMjAuNjA1YzAuMDAxLTQuMTQxLTMuMzU2LTcuNDk5LTcuNDk5LTcuNDk5em0tNDI1LjQ2Ny0yMzcuNzE1Yy0yLjg0MjE3ZS0xNC03LjQ4MSA2LjA4Ny0xMy41NjggMTMuNTY4LTEzLjU2OGgzNzEuNTg2YzcuNDgxLDAgMTMuNTY4LDYuMDg2IDEzLjU2OCwxMy41Njh2MjM3LjcxNGgtMzk4LjcyMnYtMjM3LjcxNHptMTc3LjM2MSwyNTIuNzE1aDQ0djMuOTIyYzAsMS43NTUtMS40MjgsMy4xODQtMy4xODQsMy4xODRoLTM3LjYzM2MtMS43NTYsMC0zLjE4NC0xLjQyOC0zLjE4NC0zLjE4NHYtMy45MjJ6bTI0MC42MDcsMTMuMTA1YzAsNS4xMTMtNC4xNTksOS4yNzItOS4yNzIsOS4yNzJoLTQxOC42NjdjLTUuMTEzLDAtOS4yNzItNC4xNi05LjI3Mi05LjI3MnYtMTMuMTA1aDExLjc0NCAxNzQuODYxdjMuOTIyYzAsNy4yNyA1LjkxNCwxMy4xODQgMTMuMTg0LDEzLjE4NGgzNy42MzNjNy4yNywwIDEzLjE4NC01LjkxNCAxMy4xODQtMTMuMTg0di0zLjkyMmgxNzQuODYxIDExLjc0NHYxMy4xMDV6IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIi8+CiAgPC9nPgo8L2c+PC9zdmc+Cg==">
+			                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 4" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA0OTAuNjQ1IDQ5MC42NDUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTM4My45ODksMjEzLjMxMmM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3di0yMS4zMzNjMC01Ljg4OC00Ljc3OS0xMC42NjctMTAuNjY3LTEwLjY2NyAgICBzLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3di0yMS4zMzNjMC0yNi4wNDgtMTguODE2LTQ3LjcyMy00My41NDEtNTIuMzUyTDMxOS45NjgsOS42Yy0wLjU1NS01LjQ0LTUuMTQxLTkuNi0xMC42MjQtOS42ICAgIEgxNjAuMDExYy01LjQ4MywwLTEwLjA5MSw0LjE2LTEwLjYyNCw5LjZsLTkuODEzLDk4LjAyN2MtMjQuNzQ3LDQuNTg3LTQzLjU4NCwyNi4yODMtNDMuNTg0LDUyLjM1MnYxNzAuNjY3ICAgIGMwLDI2LjA0OCwxOC44MzcsNDcuNzIzLDQzLjU2Myw1Mi4zNTJsOS44MTMsOTguMDQ4YzAuNTU1LDUuNDQsNS4xNDEsOS42LDEwLjYyNCw5LjZoMTQ5LjMzM2M1LjQ4MywwLDEwLjA2OS00LjE2LDEwLjYwMy05LjYgICAgbDkuODEzLTk4LjA0OGMyNC43NDctNC42MjksNDMuNTg0LTI2LjMwNCw0My41ODQtNTIuMzUydi0yMS4zMzNjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N3MxMC42NjctNC43NzksMTAuNjY3LTEwLjY2NyAgICB2LTIxLjMzM2MwLTUuODg4LTQuNzc5LTEwLjY2Ny0xMC42NjctMTAuNjY3cy0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YtODUuMzMzICAgIEMzNzMuMzIzLDIwOC41MzMsMzc4LjEwMSwyMTMuMzEyLDM4My45ODksMjEzLjMxMnogTTE2OS42NTMsMjEuMzEySDI5OS42OGw4LjUzMyw4NS4zMzNIMTYxLjEyTDE2OS42NTMsMjEuMzEyeiBNMjk5LjY1OSw0NjkuMzEyICAgIEgxNjkuNjMybC04LjUzMy04NS4zNTVoMTQ3LjA5M0wyOTkuNjU5LDQ2OS4zMTJ6IE0zNTEuOTg5LDMzMC42NDVjMCwxNy42NDMtMTQuMzU3LDMyLTMyLDMySDE0OS4zMjNjLTE3LjY0MywwLTMyLTE0LjM3OS0zMi0zMiAgICBWMTU5Ljk3OWMwLTE3LjY0MywxNC4zNTctMzIsMzItMzJoMTcwLjY2N2MxNy42NDMsMCwzMiwxNC4zMzYsMzIsMzJWMzMwLjY0NXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+Cg==">
+			                <img class="iconoDispositivo" ng-if="dispositivo.ID_TIPO_DISPOSITIVO == 5" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA1MTEuOTk5IDUxMS45OTkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGNpcmNsZSBjeD0iMzA1Ljg0IiBjeT0iMzU4LjEyIiByPSI3LjczOSIgZmlsbD0iIzAwYTllMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiIvPgoJPC9nPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+Cgk8Zz4KCQk8cGF0aCBkPSJNNDM4LjIyLDMzMy44N2MtMTMuMzcyLDAtMjQuMjUsMTAuODc4LTI0LjI1LDI0LjI1czEwLjg3OCwyNC4yNSwyNC4yNSwyNC4yNXMyNC4yNS0xMC44NzgsMjQuMjUtMjQuMjUgICAgUzQ1MS41OTIsMzMzLjg3LDQzOC4yMiwzMzMuODd6IE00MzguMjIsMzY2Ljg5MWMtNC44MzcsMC04Ljc3MS0zLjkzNS04Ljc3MS04Ljc3MXMzLjkzNS04Ljc3MSw4Ljc3MS04Ljc3MSAgICBjNC44MzcsMCw4Ljc3MSwzLjkzNSw4Ljc3MSw4Ljc3MVM0NDMuMDU3LDM2Ni44OTEsNDM4LjIyLDM2Ni44OTF6IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+Cgk8L2c+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnPgoJCTxwYXRoIGQ9Ik00OTQuMDY5LDI3Ny4wNzdoLTg3LjA0OGMxNS4xMzktMTYuODg4LDIxLjQ1Mi00MC42NDksMTUuNjAzLTYzLjQ3NmwtMTkuOTE3LTc3LjcyM2MtMS4wNjEtNC4xNC01LjI3NS02LjYzNS05LjQxOC01LjU3NiAgICBjLTQuMTQsMS4wNjEtNi42MzcsNS4yNzctNS41NzYsOS40MThsMTkuOTE3LDc3LjcyM2M1Ljc0OSwyMi40MzQtMy42MjMsNDYuMDM4LTIyLjg4NCw1OC41bC00MS4yNS01MS42NjIgICAgYy04LjA5Ny0xMC4xNDItMjAuMTg1LTE1Ljk1OC0zMy4xNjMtMTUuOTU4SDI1NmgtNTQuMzMyYy0xMi45NzgsMC0yNS4wNjYsNS44MTctMzMuMTY0LDE1Ljk1OGwtNDEuMjQ5LDUxLjY2MiAgICBjLTE5LjI2MS0xMi40NjItMjguNjMyLTM2LjA2Ni0yMi44ODQtNTguNWwyNS4yODMtOTguNjY2YzQuMDczLTE1Ljg5NiwxNS42ODEtMjguODE3LDMxLjA1MS0zNC41NjRsMjEuMjU1LTcuOTQ3ICAgIGM0LjkyNC0xLjg0MywxMC41MDktMC42MjksMTQuMjI3LDMuMDg4YzAuMDAxLDAuMDAxLDAuMDAxLDAuMDAxLDAuMDAyLDAuMDAybDIxLjE5LDIxLjE5YzUuMzU2LDUuMzU2LDEyLjQ3Niw4LjMwNSwyMC4wNSw4LjMwNSAgICBIMjU2aDE4LjU3MWM3LjU3NCwwLDE0LjY5NC0yLjk1LDIwLjA1MS04LjMwNWwyMS4xOTEtMjEuMTkxYzMuNzE4LTMuNzE4LDkuMy00LjkzLDE0LjIyOS0zLjA4OWwyMS4yNTQsNy45NDcgICAgYzEyLjQ5Nyw0LjY3MywyMi40NTEsMTMuOTIxLDI4LjAyNywyNi4wNGMxLjMwNSwyLjgzNSw0LjEwNyw0LjUwNyw3LjAzNiw0LjUwN2MxLjA4MiwwLDIuMTgyLTAuMjI4LDMuMjMtMC43MSAgICBjMy44ODMtMS43ODcsNS41ODMtNi4zODMsMy43OTYtMTAuMjY2Yy03LjI5NS0xNS44NTUtMjAuMzE3LTI3Ljk1NC0zNi42NjctMzQuMDY4bC0yMS4yNTQtNy45NDcgICAgYy05LjUwNi0zLjU1NS0yMC4xNDgtMS44MDItMjguMDEzLDQuMzc1aC0xMDIuOWMtNy44NjQtNi4xNzgtMTguNTA2LTcuOTMxLTI4LjAxMi00LjM3NWwtMjEuMjU1LDcuOTQ3ICAgIGMtMjAuMTA5LDcuNTE5LTM1LjI5NSwyNC40MjMtNDAuNjI0LDQ1LjIxOWwtMjUuMjgzLDk4LjY2NmMtNS44NDksMjIuODI3LDAuNDYzLDQ2LjU4OSwxNS42MDIsNjMuNDc2SDE3LjkzMiAgICBDOC4wNDQsMjc3LjA3NywwLDI4NS4xMjEsMCwyOTUuMDA4djQ5LjE4MXYyNy44NjJ2NDkuMThjMCw5Ljg4Nyw4LjA0NCwxNy45MzEsMTcuOTMyLDE3LjkzMWgzMS40Mjd2NS4xNTEgICAgYzAsNC4yNzQsMy40NjUsNy43MzksNy43MzksNy43MzljNC4yNzQsMCw3LjczOS0zLjQ2NSw3LjczOS03LjczOXYtNS4xNTFoMzgyLjMyNXY1LjE1MWMwLDQuMjc0LDMuNDY1LDcuNzM5LDcuNzM5LDcuNzM5ICAgIGM0LjI3NCwwLDcuNzM5LTMuNDY1LDcuNzM5LTcuNzM5di01LjE1MWgzMS40MjhjOS44ODcsMCwxNy45MzEtOC4wNDQsMTcuOTMxLTE3LjkzMVYyOTUuMDA4ICAgIEM1MTIsMjg1LjEyMSw1MDMuOTU2LDI3Ny4wNzcsNDk0LjA2OSwyNzcuMDc3eiBNMjkxLjY1Niw4MS42MjJsLTcuOTc5LDcuOTc5Yy0yLjQzMiwyLjQzMy01LjY2NywzLjc3Mi05LjEwNiwzLjc3MkgyNTZoLTE4LjU3MSAgICBjLTMuNDM5LDAtNi42NzMtMS4zMzktOS4xMDUtMy43NzFsLTcuOTgtNy45OEgyOTEuNjU2eiBNNDk0LjA2OSw0MjMuNjgzSDE3LjkzMmMtMS4zNTIsMC0yLjQ1My0xLjEtMi40NTMtMi40NTJ2LTQ5LjE4di0yMC4xMjIgICAgaDI0Ni4xMTJ2MTIuMzgzSDQwLjkzM2MtNC4yNzQsMC03LjczOSwzLjQ2NS03LjczOSw3LjczOWMwLDQuMjc0LDMuNDY1LDcuNzM5LDcuNzM5LDcuNzM5aDIyMS43OTEgICAgYzcuOTExLDAsMTQuMzQ2LTYuNDM1LDE0LjM0Ni0xNC4zNDZ2LTE0LjY0OGMwLTcuOTExLTYuNDM1LTE0LjM0Ni0xNC4zNDYtMTQuMzQ2SDE1LjQ3OXYtNDEuNDQxYzAtMS4zNTIsMS4xLTIuNDUyLDIuNDUzLTIuNDUyICAgIGgxMDkuOTU2YzAuMDc5LDAuMDAyLDAuMTU4LDAuMDE1LDAuMjM2LDAuMDE1YzAuMDkxLDAsMC4xODEtMC4wMTMsMC4yNzItMC4wMTVoMzUuNjc5YzQuMjc0LDAsNy43MzktMy40NjUsNy43MzktNy43MzkgICAgYzAtNC4yNzQtMy40NjUtNy43MzktNy43MzktNy43MzloLTE3LjkxOWwzNC40NDMtNDMuMTM4YzUuMTQ0LTYuNDQyLDEyLjgyMy0xMC4xMzgsMjEuMDY4LTEwLjEzOEgyNTZoNTQuMzMzICAgIGM4LjI0NSwwLDE1LjkyNCwzLjY5NSwyMS4wNjgsMTAuMTM4bDM0LjQ0NCw0My4xMzhIMTk3Ljg1OGMtNC4yNzQsMC03LjczOSwzLjQ2NS03LjczOSw3LjczOWMwLDQuMjc0LDMuNDY1LDcuNzM5LDcuNzM5LDcuNzM5ICAgIGgxODUuNzQ1YzAuMDkxLDAuMDAyLDAuMTgxLDAuMDE1LDAuMjcyLDAuMDE1YzAuMDc5LDAsMC4xNTctMC4wMTQsMC4yMzYtMC4wMTVoMTA5Ljk1N2MxLjM1MiwwLDIuNDUyLDEuMSwyLjQ1MiwyLjQ1MnYxMjYuMjIyICAgIGgwLjAwMUM0OTYuNTIxLDQyMi41ODMsNDk1LjQyMSw0MjMuNjgzLDQ5NC4wNjksNDIzLjY4M3oiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTE3NS40NzIsODkuNDMxYy0xNC40MzIsMC0yNi4xNzUsMTEuNzQyLTI2LjE3NSwyNi4xNzVjMCwxNC40MzMsMTEuNzQyLDI2LjE3NCwyNi4xNzUsMjYuMTc0ICAgIGMxNC40MzMsMCwyNi4xNzQtMTEuNzQyLDI2LjE3NC0yNi4xNzRDMjAxLjY0NiwxMDEuMTczLDE4OS45MDQsODkuNDMxLDE3NS40NzIsODkuNDMxeiBNMTc1LjQ3MiwxMjYuMzAxICAgIGMtNS44OTgsMC0xMC42OTYtNC43OTgtMTAuNjk2LTEwLjY5NnM0Ljc5OC0xMC42OTYsMTAuNjk2LTEwLjY5NmM1Ljg5OCwwLDEwLjY5Niw0Ljc5OCwxMC42OTYsMTAuNjk2ICAgIEMxODYuMTY3LDEyMS41MDMsMTgxLjM2OSwxMjYuMzAxLDE3NS40NzIsMTI2LjMwMXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTMwMi43NjcsMTQwLjM3OWMtMTQuNDMyLDAtMjYuMTc1LDExLjc0Mi0yNi4xNzUsMjYuMTc1YzAsMTQuNDMzLDExLjc0MiwyNi4xNzQsMjYuMTc1LDI2LjE3NCAgICBzMjYuMTc0LTExLjc0MiwyNi4xNzQtMjYuMTc0QzMyOC45NDEsMTUyLjEyMiwzMTcuMTk5LDE0MC4zNzksMzAyLjc2NywxNDAuMzc5eiBNMzAyLjc2NywxNzcuMjUgICAgYy01Ljg5OCwwLTEwLjY5Ni00Ljc5OC0xMC42OTYtMTAuNjk2YzAtNS44OTgsNC43OTgtMTAuNjk2LDEwLjY5Ni0xMC42OTZzMTAuNjk2LDQuNzk4LDEwLjY5NiwxMC42OTYgICAgQzMxMy40NjMsMTcyLjQ1MiwzMDguNjY1LDE3Ny4yNSwzMDIuNzY3LDE3Ny4yNXoiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGNpcmNsZSBjeD0iMzQwLjAzIiBjeT0iOTkuMjgiIHI9IjcuNzM5IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+Cgk8L2c+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnPgoJCTxjaXJjbGUgY3g9IjM0MC4wMyIgY3k9IjE0MC4zOCIgcj0iNy43MzkiIGZpbGw9IiMwMGE5ZTAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiIGNsYXNzPSIiLz4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPGNpcmNsZSBjeD0iMzE3LjkzIiBjeT0iMTIwLjE1IiByPSI3LjczOSIgZmlsbD0iIzAwYTllMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiIvPgoJPC9nPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+Cgk8Zz4KCQk8Y2lyY2xlIGN4PSIzNjIuMTMiIGN5PSIxMjAuMTUiIHI9IjcuNzM5IiBmaWxsPSIjMDBhOWUwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIi8+Cgk8L2c+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxnPgoJCTxwYXRoIGQ9Ik0yMzQuNzI5LDE1OC44MTVoLTEwLjY5NnYtMTAuNjk2YzAtNC4yNzQtMy40NjUtNy43MzktNy43MzktNy43MzlzLTcuNzM5LDMuNDY1LTcuNzM5LDcuNzM5djEwLjY5NmgtMTAuNjk2ICAgIGMtNC4yNzQsMC03LjczOSwzLjQ2NS03LjczOSw3LjczOWMwLDQuMjc0LDMuNDY1LDcuNzM5LDcuNzM5LDcuNzM5aDEwLjY5NnYxMC42OTZjMCw0LjI3NCwzLjQ2NSw3LjczOSw3LjczOSw3LjczOSAgICBzNy43MzktMy40NjUsNy43MzktNy43Mzl2LTEwLjY5NmgxMC42OTZjNC4yNzQsMCw3LjczOS0zLjQ2NSw3LjczOS03LjczOUMyNDIuNDY4LDE2Mi4yOCwyMzkuMDAzLDE1OC44MTUsMjM0LjcyOSwxNTguODE1eiIgZmlsbD0iIzAwYTllMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiIgY2xhc3M9IiIvPgoJPC9nPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjwvZz48L3N2Zz4K">
+						</div>
+	                </div>
+	                <div layout="column" flex="15" layout-align="start start" style="margin-left: 20px">
+	                	<span style="color: #0066ff;font-size: 15px;margin: 0;text-transform: uppercase;font-weight: bold">{{dispositivo.DS_TIPO_DISPOSITIVO}}</span>
+	                	<p style="    color: #6a6a6a;margin: 0;text-transform: uppercase">{{dispositivo.DS_BANDA_DISPOSITIVO}}</p>
+	                </div>
+	                <div flex="50" layout="row" layout-align="start start" style="margin-left: 20px;margin-top: 30px;">
+		                <md-input-container flex-gt-sm="30" class="md-block">
+	                        <label>Marca</label>
+	                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DISPOSITIVOS.LST_DISPOSITIVOS[$index].DS_MARCA" required>
+	                    </md-input-container>
+		                <md-input-container flex-gt-sm="30" class="md-block">
+	                        <label>Modelo</label>
+	                        <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DISPOSITIVOS.LST_DISPOSITIVOS[$index].DS_MODELO" required>
+	                    </md-input-container>
+	                </div>
+				</div>
+
+                <h4 class="header-data-defense-ins" style="font-weight: bold">
+                    3. DATOS DE PAGO
+                </h4>
+                <md-divider></md-divider>
+                <div class="separadorDesplegables he-24"></div>
+                
+                <div layout-gt-sm="row" layout-align="center center">
+                    <md-input-container class="md-block" flex-gt-sm="30" style="text-align: center;padding-top: 20px!important;">
+                        <span style="font-size: 14px;font-weight: bold">FORMA DE PAGO: DOMICILIACIÓN BANCARIA</span>
+                    </md-input-container>
+	                <md-input-container class="md-block" flex-gt-sm="30">
+	                     <label>IBAN</label>
+	                     <!-- <input ng-model="$ctrl.bankAccount.ibanCode" name="input_ibanCode" minlength="24" maxlength="24"
+	                         ng-change="$ctrl.checkInput($ctrl.formConChild.input_ibanCode, 'ibanNum')" required> -->
+	                     <input ng-disabled="$ctrl.camposEditablesContratacion.CO_IBAN == false" ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_PAGO.CO_IBAN" name="input_ibanCode" minlength="24" maxlength="24"
+                            cvalidation="iban" uppercase required>
+	                 </md-input-container>
+	             </div>
+	             <div layout="row" layout-sm="column" layout-margin="" style="margin: 30px 10% 20px 10%">
+                    <div flex="">
+                        <div layout="row" layout-sm="column">
+                            <md-checkbox
+                                ng-model="$ctrl.acceptTC">
+                                He leído y acepto la Información Básica y la Información Adicional de protección de datos, los Términos y Condiciones de Contratación a Distancia, las Condiciones de la Póliza, las Cláusulas Limitativas de la Póliza y el Documento de Información sobre Producto de Seguro.
+                            </md-checkbox>
+                        </div>
+<!--                        <div layout="row" layout-sm="column">-->
+<!--                            Lea atentamente la información básica sobre protección de datos antes de enviar su solicitud.-->
+<!--                        </div>-->
+                    </div>
+                </div>
+                <div class="container_TarMovil_btn" layout-gt-sm="row" layout-align="center" layout-margin="">
+                    <md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.volver()">
+                        <i class="fa-duotone fa-backward"></i>
+                        Volver
+                    </md-button>
+                    <md-button class="md-raised md-primary medium-blue button-action-main" ng-disabled="$ctrl.acceptTC != true" ng-click="$ctrl.validate($ctrl.formDispositivos)">
+                        <i class="fa-duotone fa-check-double"></i>
+                        Contratar
+                    </md-button>
+                </div>
+            </form>
+        </div>
+    </md-content>
+
+    <!-- DATOS PÓLIZA -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 3" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll">
+<!--    <md-content layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll" resize>-->
+        <div class="container_TarMovil" flex>
+            <legend><span ng-if="$ctrl.firmaDigital">1.</span> RESUMEN DE LA CONTRATACIÓN <span ng-if="$ctrl.firmaDigital">(PENDIENTE DE CONFIRMACIÓN)</span></legend>
+            <div class="separadorDesplegables"></div>
+            <div layout-gt-sm="row" layout-align="center center">
+                <md-input-container class="md-block" flex-gt-sm="15">
+                    <label>Nº de Póliza</label>
+                    <input ng-model="$ctrl.datos.NU_POLIZA" disabled>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm="20">
+                    <label>Modalidad</label>
+                    <input ng-model="$ctrl.datos.OTARIFA.NO_PRODUCTO" disabled>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm="10">
+                    <label>Prima {{$ctrl.periodicidad.DS_FORMAPAGO |lowercase}}</label>
+                    <input ng-model="$ctrl.datos.OTARIFA.IM_PRIMA_TOT" amount disabled>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="10">
+                    <label>NIF/NIE/CIF</label>
+                    <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_DOCUMENTO" disabled uppercase>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="20" ng-if="$ctrl.isEmpresa == true">
+                    <label>{{ 'CORPORATE_NAME' | translate }}</label>
+                    <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_NOMBRE" disabled>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="15" ng-if="$ctrl.isEmpresa != true">
+                    <label>{{ 'NAME' | translate }}</label>
+                    <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_NOMBRE" disabled>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="15" ng-if="$ctrl.isEmpresa != true">
+                    <label>{{ 'SURNAME_1' | translate }}</label>
+                    <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_APELLIDO1" disabled>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="15" ng-if="$ctrl.isEmpresa != true">
+                    <label>{{ 'SURNAME_2' | translate }}</label>
+                    <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_APELLIDO2" disabled>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row" layout-align="center center">
+                <md-input-container class="md-block" flex-gt-sm="15">
+                    <label>Tfno. Contacto</label>
+                    <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_TELEFONO" disabled>
+                </md-input-container>
+    
+                <md-input-container class="md-block" flex-gt-sm="15">
+                    <label>Email</label>
+                    <input ng-model="$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_EMAIL" disabled>
+                </md-input-container>
+            </div>
+            
+        <div ng-if="$ctrl.signatureFailed">
+             <md-input-container class="md-block" flex-gt-sm="15" style="padding-top: 17px!important; margin-left:85%">
+                 <md-button class="md-raised md-primary medium-blue button-action-main-accent" ng-click="$ctrl.resendSign()">
+                     <i class="fa-duotone fa-rotate" style="margin-right: 5px;font-size: 14px"></i> Reenviar a firma
+                     <div class="lds-ring" style="margin-right: 8px;" ng-if="$ctrl.reenviando">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                      </div>
+                 </md-button>
+             </md-input-container>
+        </div>
+
+		<div ng-if="$ctrl.firmaDigital">
+            <legend>2. FIRMA DIGITAL DE LA P&#211;LIZA DE SEGURO</legend>
+            <div class="separadorDesplegables"></div>
+            <div layout-gt-sm="row" layout-align="center center">
+            	<h5 style="padding-top: 10px;">Hemos enviado el PIN al tel&#233;fono <span style="color: #00a9e0; font-weight: bold;">{{$ctrl.datos.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_TELEFONO1}}</span>. Si no es correcto puedes 
+            	<a style="color: #00a9e0; font-weight: bold; text-decoration: underline; font-size: 14px!important;" ng-click="$ctrl.resendPinCode()">Reenviar el PIN a otro n&#250;mero de tel&#233;fono.</a></h5>
+            </div>
+            <div layout-gt-sm="row" layout-align="center center" style="margin-top: 20px !important">
+                <md-input-container class="md-block margin-input-detail"  flex="20" >
+                     <label class="">PIN (6 dígitos)</label>
+                     <input class="ellipsis" ng-model="$ctrl.pinCode" maxlength="6">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="15" style="padding-top: 17px!important">
+                    <md-button class="md-raised md-primary medium-blue button-action-main-accent" ng-click="$ctrl.validatePinCode()" ng-disabled="$ctrl.confirmando || $ctrl.reenviandoCode">
+                        <i class="fa-duotone fa-comments" style="margin-right: 5px;font-size: 14px"></i> Confirmar PIN
+                        <div class="lds-ring" style="margin-right: 8px;" ng-if="$ctrl.confirmando">
+                             <div></div>
+                             <div></div>
+                             <div></div>
+                             <div></div>
+                         </div>
+                    </md-button>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row" layout-align="center center" style="margin-top: 30px!important">
+                <span>Si el PIN es correcto formalizaremos la póliza y enviaremos toda la documentación al email del cliente que has indicado.</span>
+            </div>
+		</div>
+ 	</div>
+            
+    </md-content>
+    
+    <!-- DATOS PREPÓLIZA -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 4" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+
+        <div class="container_TarMovil tarMovil_prepoliza" flex>
+	        <div class="titlePrepoliza" layout="row">
+	            <h2><i class="fa-duotone fa-check-double"></i> ¡Ya solo te queda activar tu póliza!</h2>
+	        </div>
+            
+            <div class="texto-prepoliza">
+	            <div layout-gt-sm="row">
+	                <p><span class="text-blue"><b>Para activar la póliza necesitamos comprobar tu tableta realizando dos sencillas pruebas del estado de la pantalla de tu dispositivo</b></span>. Te hemos enviado un <b>SMS y un correo electrónico</b> con un enlace para que puedas realizar la prueba en tu tableta y terminar de tramitar tu póliza.</p>
+	            </div>
+	            <div layout-gt-sm="row">
+	                <p><b>La entrada en vigor quedará supeditada a que revisemos si tu tableta ha superado el test.</b></p>
+	            </div>
+	            <div layout-gt-sm="row">
+	                <p>Te enviaremos la póliza definitiva a tu correo electrónico una vez tu tableta supere el test.</p>
+	            </div>
+            </div>
+            
+            <div class="como-validar-poliza">
+            	<p class="title">¿Cómo validar tu póliza?</p>
+            	<div class="separador-validar-poliza"></div>
+            	<div class="pasos-validar-poliza">
+            		<div flex="33" class="md-padding">
+            			<p class="numero-paso">1</p>
+            			<img ng-src="src/img/revisa_ipad_01.png">
+            			<p class="title-paso">Accede a la prueba</p>
+            			<p class="subtitle-paso">Desde el SMS o el correo electrónico</p>
+            		</div>
+            		<div flex="33" class="md-padding">
+            			<p class="numero-paso">2</p>
+            			<img ng-src="src/img/revisa_ipad_02.png">
+            			<p class="title-paso">Realiza el test</p>
+            			<p class="subtitle-paso">De una forma rápida y sencilla con la App</p>
+            		</div>
+            		<div flex="33" class="md-padding">
+            			<p class="numero-paso">3</p>
+            			<img ng-src="src/img/revisa_ipad_03.png">
+            			<p class="title-paso">Ya estás asegurado</p>
+            			<p class="subtitle-paso">Recibe tu póliza definitiva en tu email</p>
+            		</div>
+            	</div>
+            </div>
+        </div>
+            
+    </md-content>
+    
+    <!-- CONDICIONADO-->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 5" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+
+        <div class="container_TarMovil tarMovil_prepoliza" flex>
+	        <div layout-gt-sm="row" layout-align="center center">
+                <h3>Solicitud de póliza registrada correctamente.</h3>
+            </div>
+            <div layout-gt-sm="row" layout-align="center center">
+                <h4>Se ha enviado por correo electrónico una copia del condicionado al cliente para que la firme de forma digital.</h4>
+            </div>
+            <div layout-gt-sm="row" layout-align="center center">
+                <h4>El cliente tiene como fecha máxima el día de hoy para poder realizar la firma.</h4>
+            </div>
+            <div layout-gt-sm="row" layout-align="center center">
+                <h4>Una vez sea firmado por el cliente, se gestionará el alta de la póliza de forma automática.</h4>
+            </div>
+            <div layout-gt-sm="row" layout-align="center">
+                <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.descargarCondicionado()">
+                    <md-icon>picture_as_pdf</md-icon>
+                    Descargar condicionado
+                </md-button>
+            </div>
+        </div>
+            
+    </md-content>
+
+</div>

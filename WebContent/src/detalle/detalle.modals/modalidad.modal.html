@@ -1,0 +1,96 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="md-dialog-container">
+    <md-dialog flex style="max-width: 1000px">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="height:44px">
+                <h2>Personaliza tu seguro</h2>
+                <md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+                    <md-icon aria-label="Close dialog">clear</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+<!-- 		<ng-dialog-content> -->
+        <md-dialog-content style="padding: 20px" layout="row">
+            
+            <div layout="column" flex-gt-sm="60">
+            	<h4 ng-if="$ctrl.tipo == 'B'">Añade coberturas</h4>
+            	<div ng-if="$ctrl.tipo == 'B'" layout="row">
+            		<md-checkbox
+		            	ng-disabled="$ctrl.cargaRecalcular == true"
+						ng-checked="$ctrl.protJurVivienda === true"
+						ng-model="$ctrl.protJurVivienda" 
+						ng-click="$ctrl.protJurVivienda = !$ctrl.protJurVivienda">
+		                Protección jurídica de la vivienda
+		            </md-checkbox>
+		            
+		            <md-checkbox
+		            	ng-disabled="$ctrl.cargaRecalcular == true"
+						ng-checked="$ctrl.asisUrgHogar === true"
+						ng-model="$ctrl.asisUrgHogar" 
+						ng-click="$ctrl.asisUrgHogar = !$ctrl.asisUrgHogar">
+		                Asistencia urgente en el hogar
+		            </md-checkbox>
+            	</div>
+            	
+            	<h4>Selecciona tu periocidad de pago</h4>
+            	<div layout-gt-sm="row">
+            	
+	            	<div layout-gt-sm="column" style="margin-right: 20px">
+			            <md-checkbox
+			            	ng-disabled="$ctrl.cargaRecalcular == true"
+			                ng-true-value="'2'" 
+			                ng-model="$ctrl.datos.PRESUPUESTO.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" 
+			                ng-click="$ctrl.changeFormaPago(2)">
+			                Anual
+			            </md-checkbox>
+			            <p><span ng-if="$ctrl.precioAnual > 0">+</span>{{ $ctrl.toFixed($ctrl.precioAnual) }} €</p>
+			        </div>
+		        
+		        	<div layout-gt-sm="column" style="margin-right: 20px">
+			            <md-checkbox
+			            	ng-disabled="$ctrl.cargaRecalcular == true"
+			                ng-true-value="'3'" 
+			                ng-model="$ctrl.datos.PRESUPUESTO.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" 
+			                ng-click="$ctrl.changeFormaPago(3)">
+			                Semestral
+			            </md-checkbox>
+			            <p><span ng-if="$ctrl.precioSemestral > 0">+</span>{{ $ctrl.toFixed($ctrl.precioSemestral) }} €</p>
+			        </div>
+			        
+			        <div layout-gt-sm="column" style="margin-right: 20px">
+			            <md-checkbox
+			            	ng-disabled="$ctrl.cargaRecalcular == true"
+			                ng-true-value="'5'" 
+			                ng-model="$ctrl.datos.PRESUPUESTO.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" 
+			                ng-click="$ctrl.changeFormaPago(5)">
+			                Trimestral
+			            </md-checkbox>
+			            <p><span ng-if="$ctrl.precioTrimestral > 0">+</span>{{ $ctrl.toFixed($ctrl.precioTrimestral) }} €</p>
+			        </div>
+		        </div>
+            </div>
+            
+            <div ng-if="$ctrl.cargaRecalcular != true && (($ctrl.tieneGarantias() == false && $ctrl.tipo == 'B') || $ctrl.tipo != 'B')" layout="column" flex-gt-sm="40">
+            	<h3>{{ $ctrl.nombreModalidad }}</h3>
+            	<h2>{{ $ctrl.toFixed($ctrl.modalidad.IM_PRIMA_ANUAL_TOT) }} €</h2>
+            	<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.reemplazarPoliza()">Continuar</md-button>
+            </div>
+            
+            <div ng-if="$ctrl.cargaRecalcular != true && $ctrl.tieneGarantias() == true && $ctrl.tipo == 'B'" layout="column" flex-gt-sm="40">
+            	<h3>{{ $ctrl.nombreModalidad }}</h3>
+            	<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.recalcular()">Recalcular</md-button>
+            </div>
+            
+            <div layout="column" flex-gt-sm="40" ng-if="$ctrl.cargaRecalcular == true" id="buscandoGif" style="padding: 0px 16px;display: flex;align-items: center;justify-content: center;z-index: 999999999;">
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+            
+        </md-dialog-content>
+    </md-dialog>
+</div>

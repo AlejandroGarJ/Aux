@@ -1,0 +1,44 @@
+<div flex>
+    <uib-tabset class="tabsPasos" type="pills" justified="true" flex="none">
+            <!--CONTENIDO DE RESUMEN-->
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaResumen}})">
+                <div flex>
+                    <legend>Datos de la tarifa</legend>
+                    <div layout-gt-sm="row" class="margenPresupuestos">
+                        <div flex-gt-sm>
+                            <label>Tipo de poducto:
+                            </label>
+                        </div>
+                        <md-radio-group flex-gt-sm layout-gt-sm="row" ng-model="$ctrl.datos.TARIF_ASISTENCIA.ID_TIPO_PRODUCTO">
+                            <md-radio-button ng-value="'01'" disabled> Anual </md-radio-button>
+                            <md-radio-button ng-value="'02'" disabled> Temporal </md-radio-button>
+                        </md-radio-group>
+                    </div>
+
+                    <div layout-gt-sm="row" class="margenPresupuestos">
+                        <div flex-gt-sm>
+                            <label>Número de asegurados
+                            </label>
+                        </div>
+                        <md-radio-group flex-gt-sm layout-gt-sm="row" ng-model="$ctrl.datos.TARIF_ASISTENCIA.NU_ASEGURADOS_ANUAL">
+                            <md-radio-button ng-value="'02'" disabled> Producto familiar </md-radio-button>
+                            <md-radio-button ng-value="'01'" disabled> Producto individual </md-radio-button>
+                        </md-radio-group>
+                    </div>
+
+                    <legend>Datos del Pago</legend>
+                    <div layout-gt-sm="row" class="margenPresupuestos">
+                        <div flex-gt-sm>
+                            <label>Fecha de inico
+                            </label>
+                        </div>
+                        <div flex-gt-sm>
+                            <md-datepicker ng-if="($ctrl.datos.DATOS_PAGO.FD_INICIO == null || $ctrl.datos.DATOS_PAGO.FD_INICIO == undefined) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null : $ctrl.datos.DATOS_PAGO.FD_INICIO" ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" disabled></md-datepicker>
+                        </div>
+                    </div>
+                </div>
+            </md-content>
+
+    </uib-tabset>
+
+</div>

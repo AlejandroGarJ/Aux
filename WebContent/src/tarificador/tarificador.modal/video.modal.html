@@ -1,0 +1,22 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="overflow-x: hidden;">
+	<!-- <md-toolbar> -->
+		<div class="md-toolbar-tools" style="height:44px;">
+            <h4 style="color: #0066ff; left:60px; position:absolute;">CiberSeguro Empresas</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute;">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	<!-- </md-toolbar> -->
+    <md-dialog-content>
+        <div ng-if="$ctrl.showVideo">
+            <iframe width="560" height="315" src="{{$ctrl.videoLink | trusted }}" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div ng-if="$ctrl.openIframe">
+            <iframe width="960" height="715" src="{{$ctrl.iframeUrl | trusted }}" height="700px" width="300%"></iframe>
+        </div>
+    </md-dialog-content>
+</md-dialog>

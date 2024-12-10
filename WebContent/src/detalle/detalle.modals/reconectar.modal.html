@@ -1,0 +1,36 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:55%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>{{ 'SESSION_EXPIRED' | translate }}</h2>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="height:100px;">
+		<form style="margin-top: 20px;" class="formClass">
+			<div layout="row" flex="100" style="margin-top: 10px; margin-left:20px;">
+				<div ng-if="$ctrl.cargarReconectar == true" id="buscandoGif" style="margin-top: 0px;padding:0px; display:table; z-index: 999999999; position: fixed; width: 90%; height: 2%;">
+		            <div class="centered" style="display:table-cell; vertical-align: middle;">
+						<div class="blob-3"></div>
+						<div class="blob-4"></div>
+					</div>
+		        </div>
+				
+				<md-input-container class="md-block" flex="50" ng-if="!$ctrl.is2fa">
+					<label>{{ 'PASSWORD' | translate }}</label>
+					<input ng-disabled="$ctrl.cargarReconectar == true" type="password" ng-model="$ctrl.PASS_RECONECTAR">
+				</md-input-container>
+				<md-input-container flex="50" ng-if="!$ctrl.is2fa">
+					<md-button ng-disabled="$ctrl.cargarReconectar == true" ng-click="$ctrl.reconectar()" class="dark-blue btnNuevo">{{ 'RECONNECT' | translate }}</md-button>
+					<md-button ng-disabled="$ctrl.cargarReconectar == true" ng-click="$ctrl.desconectar()" class="dark-blue btnNuevo">{{ 'LOG_OUT' | translate }}</md-button>
+				</md-input-container>
+
+				<md-input-container flex="100" ng-if="$ctrl.is2fa">
+					<md-button ng-disabled="$ctrl.cargarReconectar == true" ng-click="$ctrl.desconectar()" class="dark-blue btnNuevo">{{ 'LOG_OUT' | translate }}</md-button>
+				</md-input-container>
+
+        	</div>
+		</form>
+	</md-dialog-content>
+</md-dialog>

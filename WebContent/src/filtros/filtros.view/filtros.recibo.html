@@ -1,0 +1,173 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color: #ffffff">
+	<form ng-submit="$ctrl.buscar('recibos')" class="form-busqueda">
+		<div class="form-scroll" resize>
+			<div style="position: relative;height: auto;width: 100%;border-top: 1px solid #d5d5d5;margin-top: 10px;margin-bottom: 10px;" layout-align="center center">
+				<div style="position: absolute;top: -10px;left: 20px;height: auto;width: auto;background-color: white;text-align: center;padding: 0 20px">
+					<p style="text-transform:uppercase;color: #0066FF;font-size: 20px;letter-spacing: 1px;"><span style="color: #031a34;font-family: TelefonicaWebRegular"><i class="fa-regular fa-magnifying-glass"></i> {{ 'SEARCH' | translate }} DE </span> {{ 'SEARCH_RECEIPT' | translate }}</p>
+				</div>
+			</div>
+				<div flex="100" class="flex-100">
+					<div layout="row" layout-align="center center" class="layout-align-center-center layout-row" style="padding-top: 10px;">
+						<md-input-container class="md-block ic-margin" flex-gt-sm="25" layout-align="center center" style="max-width: 20%;">
+							<label><i class="fa-duotone fa-grid-2" style="margin-right: 5px"></i> {{ 'PRODUCT' | translate }}</label>
+							<md-select ng-change="$ctrl.changePrograma()" class="" ng-model="$ctrl.ID_PROGRAMA" multiple>
+								<md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+									{{$ctrl.parentApp.getDescriptivo(programa, 'DS_PROGRAMA') | uppercase}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block ic-margin" flex-gt-sm="25" layout-align="center center" style="max-width: 20%;">
+							<label><i class="fa-duotone fa-grid-2" style="margin-right: 5px"></i> {{ 'BYPRODUCTS' | translate }}</label>
+							<md-select ng-disabled="$ctrl.ID_PROGRAMA == null || $ctrl.ID_PROGRAMA.length == 0" ng-model="$ctrl.form.LST_PRODUCTOS.value" multiple ng-change="$ctrl.changeSubproducto()">
+								<md-option ng-repeat="subproducto in $ctrl.productosMulti" ng-value="subproducto.id">
+									{{subproducto.label | uppercase}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block ic-margin" flex-gt-sm="25" style="max-width: 20%;">
+							<label><i class="fa-duotone fa-grid-2" style="margin-right: 5px"></i> {{ 'PARTNER' | translate }}</label>
+							<md-select ng-model="$ctrl.form.LST_ID_TIPO_POLIZA.value" multiple>
+								<md-option ng-class="{'optionPadre': colectivo.IS_PADRE == true, 'optionHijo': colectivo.IS_PADRE != true}" ng-click="$ctrl.changeColectivos(colectivo)" ng-repeat="colectivo in $ctrl.tipos.colectivosProducto" ng-value="colectivo.ID_TIPO_POLIZA">
+									<span>{{$ctrl.parentApp.getDescriptivo(colectivo, 'DS_TIPO_POLIZA')}}</span>
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block ic-margin" flex-gt-sm="25" style="max-width: 20%;">
+							<label><i class="fa-duotone fa-grid-2" style="margin-right: 5px"></i> {{ 'CHANNEL' | translate }}</label>
+							<md-select ng-model="$ctrl.form.LST_CO_CANAL.value" multiple>
+								<md-option ng-repeat="canal in $ctrl.canales" ng-value="canal.CO_TIPO" style="text-transform: uppercase">
+									{{$ctrl.parentApp.getDescriptivo(canal, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block ic-margin" flex-gt-sm="25" style="max-width: 20%;">
+							<label>{{ 'STATUS' | translate }}</label>
+							<md-select ng-model="$ctrl.form.LST_SITUARECIBO.value" multiple>
+								<md-option ng-repeat="estado in $ctrl.tipos.situaRecibo" ng-value="estado.ID_SITUARECIBO">
+									{{$ctrl.parentApp.getDescriptivo(estado, 'DS_SITUARECIBO')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+					</div>
+				</div>
+			<!-- </div> -->
+			<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100" class="margin-top-25">
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label>{{ 'RECEIPT' | translate }}</label>
+					<input class="md-input-accent" ng-model="$ctrl.form.NU_RECIBO.value">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label>{{ 'POLICY_NU' | translate }}</label>
+					<input ng-model="$ctrl.form.NU_POLIZA.value">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="10">
+					<label><i class="fa-solid fa-fingerprint" style="margin-right:5px"></i>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+					<input ng-model="$ctrl.form.NU_DOCUMENTO.value">
+				</md-input-container>
+				<md-input-container class="md-block ic-margin margin-select-detail" flex-gt-sm="15">
+					<label>{{ 'RECEIPT_TYPE' | translate }}</label>
+					<md-select ng-model="$ctrl.form.LST_TIPORECIBO.value" multiple>
+						<md-option ng-repeat="tipo in $ctrl.tipos.tiposRecibo" ng-value="tipo.ID_TIPORECIBO">
+							{{$ctrl.parentApp.getDescriptivo(tipo, 'DS_TIPORECIBO')}}
+							<!-- 							{{tipo.DS_TIPORECIBO}} -->
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block ic-margin margin-select-detail" flex-gt-sm="10">
+					<label>{{ 'POSTED' | translate }}</label>
+					<md-select ng-model="$ctrl.form.LST_CONTABILIZADO.value" multiple>
+						<md-option value="1">{{ 'NO' | translate }}</md-option>
+						<md-option value="2">{{ 'YES' | translate }}</md-option>
+					</md-select>
+				</md-input-container>
+				<!-- <md-input-container class="md-block margin-select-detail" flex-gt-sm="15">
+					<label>{{ 'SETTLED' | translate }}</label>
+					<md-select ng-model="$ctrl.form.IN_ENVIO_LIQ_SAP.value">
+						<md-option value=false>{{ 'NO' | translate }}</md-option>
+						<md-option value=true>{{ 'YES' | translate }}</md-option>
+					</md-select>
+				</md-input-container> -->
+				<md-input-container class="md-block ic-margin margin-select-detail" flex-gt-sm="10">
+					<label>{{ 'LOCKED' | translate }}</label>
+					<md-select ng-model="$ctrl.form.LST_BLOQUEADO.value" multiple>
+						<md-option value="1">{{ 'NO' | translate }}</md-option>
+						<md-option value="2">{{ 'YES' | translate }}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block ic-margin" flex-gt-sm="20">
+					<label>{{ 'PAYMENT_METHOD' | translate }}</label>
+					<md-select ng-model="$ctrl.form.LST_MEDIO_PAGO.value" multiple>
+						<md-option ng-repeat="medioPago in $ctrl.tipos.pago" ng-value="medioPago.ID_TIPO_MEDIO_PAGO">
+							{{$ctrl.parentApp.getDescriptivo(medioPago, 'DS_TIPO_MEDIO_PAGO')}}
+<!-- 						   {{medioPago.DS_TIPO_MEDIO_PAGO}} -->
+					 	</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="10">
+					<label>{{ 'REMITTANCE' | translate }}</label>
+					<input ng-model="$ctrl.form.ID_RECIBO_REMESA.value">
+				</md-input-container>
+			</div>
+			<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100" class="inputs-without-label-value">
+				<md-input-container class="md-block ic-margin margin-select-detail" flex-gt-sm="15">
+					<label>Estado póliza</label>
+					<md-select ng-model="$ctrl.form.OPOLIZA.LST_SITUAPOLIZA.value" multiple>
+						<md-option ng-repeat="estado in $ctrl.tipos.situaPoliza" ng-value="estado.ID_SITUAPOLIZA">
+							{{$ctrl.parentApp.getDescriptivo(estado, 'DS_SITUAPOLIZA')}}
+							<!-- 								   {{estado.DS_SITUAPOLIZA}} -->
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_ACCOUNTING_FROM' | translate }}</label>
+					<md-datepicker ng-model="$ctrl.form.FD_SAP.value" ng-init="$ctrl.form.FD_SAP.value = null"
+								   ng-click="($ctrl.form.FD_SAP.value == null || $ctrl.form.FD_SAP.value == undefined) ? $ctrl.form.FD_SAP.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_ACCOUNTING_TO' | translate }}</label>
+					<md-datepicker ng-model="$ctrl.form.FD_SAP_HASTA.value" ng-init="$ctrl.form.FD_SAP_HASTA.value = null"
+								   ng-click="($ctrl.form.FD_SAP_HASTA.value == null || $ctrl.form.FD_SAP_HASTA.value == undefined) ? $ctrl.form.FD_SAP_HASTA.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_ISSUANCE_FROM' | translate }}</label>
+					<md-datepicker ng-model="$ctrl.form.FD_EMISION.value" ng-init="$ctrl.form.FD_EMISION.value = null"
+								   ng-click="($ctrl.form.FD_EMISION.value == null || $ctrl.form.FD_EMISION.value == undefined) ? $ctrl.form.FD_EMISION.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_ISSUANCE_TO' | translate }}</label>
+					<md-datepicker ng-model="$ctrl.form.FD_EMISION_HASTA.value" ng-init="$ctrl.form.FD_EMISION_HASTA.value = null"
+								   ng-click="($ctrl.form.FD_EMISION_HASTA.value == null || $ctrl.form.FD_EMISION_HASTA.value == undefined) ? $ctrl.form.FD_EMISION_HASTA.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_INCEPTION_FROM' | translate }}</label>
+					<md-datepicker ng-model="$ctrl.form.FD_INICIO_REC.value" ng-init="$ctrl.form.FD_INICIO_REC.value = null"
+								   ng-click="($ctrl.form.FD_INICIO_REC.value == null || $ctrl.form.FD_INICIO_REC.value == undefined) ? $ctrl.form.FD_INICIO_REC.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_INCEPTION_TO' | translate }}</label>
+					<md-datepicker ng-model="$ctrl.form.FD_INICIO_REC_HASTA.value" ng-init="$ctrl.form.FD_INICIO_REC_HASTA.value = null"
+								   ng-click="($ctrl.form.FD_INICIO_REC_HASTA.value == null || $ctrl.form.FD_INICIO_REC_HASTA.value == undefined) ? $ctrl.form.FD_INICIO_REC_HASTA.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+			</div>
+		</div>
+		<div style="text-align:center;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				{{ 'SEARCH_BTN' | translate }}
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-trash"></i>
+				{{ 'CLEAN' | translate }}
+			</md-button>
+		</div>
+	</form>
+</md-content>

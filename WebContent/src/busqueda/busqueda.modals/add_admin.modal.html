@@ -1,0 +1,303 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="height:44px">
+            <h4 class="modal-title" style="text-align: center">Añadir</h4>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+    </md-toolbar>
+
+    <ng-dialog-content class="md-dialog-content formCliente formClass">
+<!--     	GARANTÍAS -->
+        <div ng-if="$ctrl.tipo == 'garantias'">
+            <md-input-container class="md-block">
+	        	<label>Nombre garantía</label>
+            	<input ng-model="$ctrl.noGarantia" ng-required="true">
+            </md-input-container>
+        </div>
+        
+<!--         PRODUCTOS -->
+        <div ng-if="$ctrl.tipo == 'productos'">
+			<md-input-container class="md-block" flex-gt-sm>
+                <label>Nombre producto</label>
+                <input ng-model="$ctrl.form.noProducto">
+            </md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+                <label>Descripción producto</label>
+                <input ng-model="$ctrl.form.noDescProducto">
+            </md-input-container>
+        </div>
+        
+<!--         RAMOS -->
+        <div ng-if="$ctrl.tipo == 'ramos'">
+	        <div layout-gt-sm="row" layout-align="center center">
+				<md-input-container class="md-block hide-validation-error" flex-gt-sm>
+	                <label>{{ 'DESCRIPTION' | translate }}</label>
+	                <input ng-model="$ctrl.form.noDescripcionRamo">
+	            </md-input-container>
+				<md-input-container ng-init="$ctrl.form.tarificaRamo == undefined ? $ctrl.form.tarificaRamo = false: ''" layout-gt-sm="row" layout-align="center center" flex-gt-sm>
+	           		Tarifica&nbsp;
+	                <md-switch ng-model="$ctrl.form.tarificaRamo" class="switch-mov"></md-switch>
+	            </md-input-container>
+<!-- 	            <md-input-container class="md-block hide-validation-error" flex-gt-sm> -->
+<!-- 	                <label>Configuración</label> -->
+<!-- 	                <input type="number" ng-model="$ctrl.form.configuracionRamo"> -->
+<!-- 	            </md-input-container> -->
+	        </div>
+        </div>
+	        
+<!-- 	        CÓDIGOS POSTALES -->
+		<div ng-if="$ctrl.tipo == 'cp'">
+			<div layout="row" layout-align="center start">
+				<md-input-container class="md-block" flex-gt-sm>
+	               <label>Código Postal</label>
+	               <input ng-model="$ctrl.form.CO_POSTAL">
+	            </md-input-container>
+	            <md-input-container class="md-block" flex-gt-sm>
+	               <label>Provincia</label>
+	               <md-select ng-model="$ctrl.form.PROVINCIA" required>
+	                   <md-option ng-repeat="provincia in $ctrl.tipos.provincias" ng-value="provincia">{{provincia.NO_PROVINCIA}}</md-option>
+	               </md-select>
+	           </md-input-container>
+			</div>
+			<div layout="row" layout-align="center start">
+	           <md-input-container class="md-block" flex-gt-sm>
+	               <label>Localidad</label>
+	               <input ng-model="$ctrl.form.NO_POBLACION">
+	           </md-input-container>
+	           <md-input-container class="md-block" flex-gt-sm>
+	               <label>Localidad INE</label>
+	               <input ng-model="$ctrl.form.NO_POBLACION_INE">
+	           </md-input-container>
+			</div>
+		</div>
+		
+<!-- 		FORMA PAGO -->
+		<div ng-if="$ctrl.tipo == 'formaPago'">
+			<md-input-container class="md-block" flex-gt-sm>
+	         	<label>{{ 'DESCRIPTION' | translate }}</label>
+	        	<input ng-model="$ctrl.form.DS_FORMAPAGO" ng-required="true">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+	        	<label>Código</label>
+	            <input ng-model="$ctrl.form.CO_FORMAPAGO" ng-required="true">
+	        </md-input-container>
+        </div>
+        
+<!--         MEDIO PAGO -->
+		<div ng-if="$ctrl.tipo == 'medioPago'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+            	<input ng-model="$ctrl.form.DS_TIPO_MEDIO_PAGO" ng-required="true">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>Código</label>
+            	<input ng-model="$ctrl.form.CO_TIPO_MEDIO_PAGO" ng-required="true">
+            </md-input-container>
+        </div>
+        
+<!--         TIPO TIPOS -->
+		<div ng-if="$ctrl.tipo == 'tiposTipos'">
+			<md-input-container class="md-block" flex-gt-sm>
+                 <label>{{ 'DESCRIPTION' | translate }}</label>
+                 <input ng-model="$ctrl.form.DS_TIPOS">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                 <label>Tipo</label>
+                 <input ng-model="$ctrl.form.CO_TIPO">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                 <label>Código</label>
+                 <md-select ng-model="$ctrl.form.CODIGO" required>
+					<md-option ng-repeat="cod in $ctrl.codigos" ng-value="cod">{{cod.NO_CODIGO}}</md-option>
+				</md-select>
+             </md-input-container>
+        </div>
+        
+<!--         TIPOS VÍA -->
+		<div ng-if="$ctrl.tipo == 'tiposVia'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+            	<input ng-model="$ctrl.form.DS_TIPO_VIA" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         TIPOS DOCUMENTO -->
+		<div ng-if="$ctrl.tipo == 'tiposDocumento'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+            	<input ng-model="$ctrl.form.DS_TIPO_DOCUMENTO" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         TIPOS SEXO -->
+		<div ng-if="$ctrl.tipo == 'tiposSexo'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+            	<input ng-model="$ctrl.form.DS_SEXO" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         TIPOS PÓLIZA -->
+		<div ng-if="$ctrl.tipo == 'tiposPoliza'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+                <input ng-model="$ctrl.form.DS_SITUAPOLIZA" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         TIPOS CLIENTE -->
+		<div ng-if="$ctrl.tipo == 'tiposCliente'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+                <input ng-model="$ctrl.form.DS_SITUACION_CLIENTE" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         TIPOS RECIBO -->
+		<div ng-if="$ctrl.tipo == 'tiposRecibo'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+                <input ng-model="$ctrl.form.DS_SITUARECIBO" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         TIPOS SINIESTRO -->
+		<div ng-if="$ctrl.tipo == 'tiposSiniestro'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+                <input ng-model="$ctrl.form.DS_ESTADO_SINIESTRO" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         MOTIVOS ANULACIÓN -->
+		<div ng-if="$ctrl.tipo == 'anulacion'">
+			<md-input-container class="md-block" flex-gt-sm>
+                <label>{{ 'DESCRIPTION' | translate }}</label>
+                <input ng-model="$ctrl.form.DS_CAUSAANULACION">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Uso</label>
+                <md-select ng-model="$ctrl.form.TIPOS">
+                    <md-option ng-repeat="anul in $ctrl.usos" ng-value="anul">
+	                 	{{anul.DS_TIPOS}}
+	                </md-option>
+             	</md-select>
+            </md-input-container>
+        </div>
+        
+<!--         TIPOS DE CLIENTE -->
+		<div ng-if="$ctrl.tipo == 'tiposSujetos'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+                <input ng-model="$ctrl.form.DS_TIPO_CLIENTE" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         PROGRAMAS -->
+		<div ng-if="$ctrl.tipo == 'programas'">
+			<md-input-container class="md-block" flex-gt-sm>
+            	<label>{{ 'DESCRIPTION' | translate }}</label>
+                <input ng-model="$ctrl.form.DS_PROGRAMA" ng-required="true">
+        	</md-input-container>
+        </div>
+        
+<!--         CONVERSOR -->
+		<div ng-if="$ctrl.tipo == 'conversor'">
+			<div layout="row" layout-align="row">
+				<md-autocomplete name="Aseguradora" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral" required
+					md-search-text="$ctrl.searchAseg"
+					md-items="item in $ctrl.parent.querySearch($ctrl.searchAseg, $ctrl.compania, 'NO_COMERCIAL')"
+					md-item-text="item.NO_COMERCIAL" md-min-length="0" md-floating-label="Aseguradora"
+					md-selected-item="$ctrl.autocomplete.ASEG"
+					md-selected-item-change="$ctrl.form.COMPANIA = $ctrl.autocomplete.ASEG.ID_COMPANIA"
+					ng-blur="$ctrl.autocomplete.ASEG == undefined ? $ctrl.searchAseg = '' : ''">
+					<md-item-template>
+						<span md-highlight-text="$ctrl.searchAseg" md-highlight-flags="^i">{{item.NO_COMERCIAL}}</span>
+					</md-item-template>
+					<md-not-found>
+						No existe la aseguradora "{{$ctrl.searchAseg}}".
+					</md-not-found>
+				</md-autocomplete>
+				<md-autocomplete name="Campo" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral" required
+					md-search-text="$ctrl.searchCampo"
+					md-items="item in $ctrl.parent.querySearch($ctrl.searchCampo, $ctrl.campos, 'DS_CAMPO')"
+					md-item-text="item.DS_CAMPO" md-min-length="0"
+					md-floating-label="Campo"
+					md-selected-item="$ctrl.autocomplete.CAMPO"
+					md-selected-item-change="$ctrl.form.CAMPO = $ctrl.autocomplete.CAMPO.ID_CAMPO"
+					ng-blur="$ctrl.autocomplete.CAMPO == undefined ? $ctrl.searchCampo = '' : ''">
+					<md-item-template>
+						<span md-highlight-text="$ctrl.searchCampo"
+							md-highlight-flags="^i">{{item.DS_CAMPO}}</span>
+					</md-item-template>
+					<md-not-found>
+						No existe el campo "{{$ctrl.searchCampo}}".
+					</md-not-found>
+				</md-autocomplete>
+			</div>
+			<div layout="row" layout-align="row">
+	            <md-input-container class="md-block" flex-gt-sm>
+	                <label>Dato Aseguradora</label>
+	                   <input ng-model="$ctrl.form.CO_DATO_COMPANIA">
+	            </md-input-container>
+	            <md-input-container class="md-block" flex-gt-sm>
+	                <label>Dato Intermedio</label>
+	                   <input ng-model="$ctrl.form.CO_DATO_INTERNO">
+	            </md-input-container>
+			</div>
+        </div>
+        
+        
+<!--         DATOS ASEGURADORA -->
+		<div ng-if="$ctrl.tipo == 'datosAseguradora'">
+			<div layout="row" layout-align="row">
+				<md-input-container class="md-block" flex-gt-sm>
+                    <label>Campo</label>
+                    <md-select ng-model="$ctrl.form.CAMPO" required>
+		         		<md-option ng-repeat="camp in $ctrl.campos" ng-value="camp">
+		         			{{camp.DS_CAMPO}}
+		         		</md-option>
+		         	</md-select>
+                </md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+                    <label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+                    <md-select ng-model="$ctrl.form.COMPANIA" required>
+		         		<md-option ng-repeat="tipo in $ctrl.compania" ng-value="tipo">
+		         			{{tipo.NO_COMERCIAL}}
+		         		</md-option>
+		         	</md-select>
+                </md-input-container>
+			</div>
+			<div layout="row" layout-align="row" class="margin-top-20">
+	            <md-input-container class="md-block" flex-gt-sm>
+                    <label>{{ 'BRANCH' | translate }}</label>
+                    <md-select ng-model="$ctrl.form.RAMO" required>
+		         		<md-option ng-repeat="ramo in $ctrl.ramos" ng-value="ramo">
+		         			{{ramo.NO_RAMO}}
+		         		</md-option>
+		         	</md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Valor</label>
+                       <input ng-model="$ctrl.form.NO_VALOR"  ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Operación</label>
+                       <input ng-model="$ctrl.form.NO_OPERACION">
+                </md-input-container>
+			</div>
+        </div>
+        
+        <div flex="100" layout-gt-sm="row" layout-align="center center" class="margin-top-20  md-padding">
+            <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.add()">
+                <i class="fa-duotone fa-check-double"></i>
+                Añadir
+            </md-button>
+        </div>
+    </ng-dialog-content>
+</md-dialog>

@@ -1,0 +1,38 @@
+<!-- Tabla de polizas -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+            <div ng-if="$ctrl.vista == 4 && $ctrl.tipo == 'polizas'" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="$ctrl.screenHeight < 620 ? $ctrl.getTableHeight() : $ctrl.gridOptions.totalItems < 30 ? resizeHeight(377) : $ctrl.getTableHeight()"></div>
+        </md-tab>
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index" label="{{ 'POLICY_NU' | translate }}: {{detalles.NU_POLIZA}}">
+            <md-tab-label ng-if="detalles != null">
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='poliza' ">{{ 'POLICY_NU' | translate }}: {{detalles.NU_POLIZA}}</span>
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='tomador' ">{{ 'CLIENT' | translate }} {{detalles.NU_DOCUMENTO}}</span>
+                <span ng-if="detalles == null && $ctrl.nomDetalles[$index]=='solicitud' ">{{$ctrl.heading}}</span>
+                <span ng-if="detalles != null && detalles.ID_SOLICITUD != null && $ctrl.nomDetalles[$index]=='solicitud' ">{{ 'REQUEST' | translate }}: {{ detalles.ID_SOLICITUD }}</span>
+                <span ng-if="detalles == null && $ctrl.nomDetalles[$index]=='poliza'">{{ 'NEW_POLICY' | translate }}
+                </span>
+                <span ng-if="detalles == null && $ctrl.nomDetalles[$index]=='siniestro' ">Nuevo siniestro</span>
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='renovar-poliza' ">Renovación {{detalles.NU_POLIZA}}</span>
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </md-tab-label>
+            <md-tab-body>
+            	<detalle-sd call-get-detail="$ctrl.callGetDetail" ng-if="detalles.ID_SOLICITUD != undefined && detalles.ID_SOLICITUD != null && $ctrl.nomDetalles[$index]=='solicitud'" id-detalle="detalles" tipo="'solicitud'"></detalle-sd>
+                <detalle-sd datos-cliente="$ctrl.datosCliente" llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='poliza'" id-detalle="detalles" tipo="'poliza'"></detalle-sd>
+                <detalle-sd llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='tomador'" id-detalle="$ctrl.detallesCliente" tipo="'cliente'"></detalle-sd>
+                <detalle-sd call-get-detail="$ctrl.callGetDetail" llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='siniestro'" tipo="'siniestro'"></detalle-sd>
+                <sd-solicitud datos-poliza="$ctrl.datosPoliza" datos-cliente="$ctrl.datosCliente" ng-if="(detalles.ID_SOLICITUD == undefined || detalles.ID_SOLICITUD == null) && $ctrl.nomDetalles[$index] != 'poliza' && $ctrl.nomDetalles[$index] != 'tomador'" tipo-head="$ctrl.headTipo" detalle-cliente="$ctrl.detalleCliente"></sd-solicitud>
+                <renovacion-polizas-app ng-if="$ctrl.nomDetalles[$index]=='renovar-poliza'" detalles="detalles"></renovacion-polizas-app>
+            </md-tab-body>
+
+        </md-tab>
+
+    </md-tabs>
+
+</div>

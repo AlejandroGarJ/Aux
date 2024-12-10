@@ -1,0 +1,101 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="height:1000px">
+	<div layout="row" layout-padding class="formCliente formClass">
+		<md-card flex="50">
+			<md-card-content>
+				<md-button class="dark-purple">
+					<md-icon>picture_as_pdf</md-icon>
+					Imprimir PDF
+				</md-button>
+				<div layout="row" class="margin-top-20">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Tipo de fecha</label>
+						<md-select ng-model="$ctrl.form.ID_TIPO_FECHA">
+							<md-option ng-value="1">Fecha de efecto</md-option>
+							<md-option ng-value="2">Fecha de emisión</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'DATE_START' | translate }}</label>
+
+						<md-datepicker ng-model="$ctrl.form.FD_INICIO"></md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Fecha final</label>
+
+						<md-datepicker ng-model="$ctrl.form.FD_FIN"></md-datepicker>
+					</md-input-container>
+				</div>
+				<div layout="row" style="margin-bottom:20px">
+					<md-input-container class="md-block" flex-gt-sm="33">
+						<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+						<md-select ng-model="$ctrl.form.ID_COMPANIA">
+							<md-option ng-repeat="ase in $ctrl.tipos.compania" ng-value="ase.ID_COMPANIA">{{ase.NO_COMPANIA}}</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm="33">
+						<label>Negocio</label>
+						<md-select ng-model="$ctrl.form.CO_NEGOCIO">
+							<md-option ng-value="1">Fecha de efecto</md-option>
+							<md-option ng-value="2">Fecha de emisión</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm="33">
+						<label>Empresa</label>
+						<md-select ng-model="$ctrl.form.ID_EMPRESA">
+							<md-option ng-value="1">Fecha de efecto</md-option>
+							<md-option ng-value="2">Fecha de emisión</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Provincia</label>
+						<md-select ng-model="$ctrl.form.ID_PROVINCIA">
+							<md-option ng-repeat="pro in $ctrl.tipos.provincias" ng-value="pro.ID_PROVINCIA">{{pro.NO_PROVINCIA}}</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout="row" layout-align="center center">
+					<h3>Recibos a imprimir: 0</h3>
+				</div>
+			</md-card-content>
+		</md-card>
+		<md-card flex="50">
+			<md-card-content>
+				<md-button class="dark-purple">
+					<md-icon>picture_as_pdf</md-icon>
+					Imprimir PDF
+				</md-button>
+				<div layout="row" class="margin-top-20">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Matrícula</label>
+						<input ng-model="$ctrl.sec.NU_MATRICULA">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Nº Recibo</label>
+						<input ng-model="$ctrl.sec.NU_RECIBO">
+					</md-input-container>
+				</div>
+				<div layout="row" style="margin-bottom:20px">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'DATE_START' | translate }}</label>
+
+						<md-datepicker ng-model="$ctrl.sec.FD_INICIO">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Fecha final</label>
+
+						<md-datepicker ng-model="$ctrl.sec.FD_FIN">
+					</md-input-container>
+				</div>
+				
+				<div layout="row" layout-align="center center">
+					<h3>Recibos a imprimir: 0</h3>
+				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+</md-content>

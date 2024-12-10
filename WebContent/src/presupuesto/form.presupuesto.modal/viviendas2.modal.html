@@ -1,0 +1,42 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width: 60%"><md-dialog-content style="min-height:260px;">
+    
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="height:44px">
+            <h4 class="modal-title" style="text-align: center">Tipos de vivienda asegurables</h4>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="min-height:260px;">
+        <form style="margin-top: 20px;" class="formClass">
+            <div layout="row" flex="100" style="margin-top: 10px; margin-left:10px; margin-right: 10px;">
+                
+                <div layout="column" layout-align="center center">
+                    
+                    <div class="row">
+
+                        <div class="col-xs-12">
+                            <legend class="titular" style="font-weight: bold;"><span class="ic-ciber-ico-casa-corazon ico-big"></span> Viviendas que puedes asegurar</legend>
+                                    <p style="padding-left:40px"><span class="ic-ciber-ico-flecha ico-flip"></span> Viviendas en propiedad de uso habitual o secundario y destinada a alquiler.</p>
+                                    <p style="padding-left:40px"><span class="ic-ciber-ico-flecha ico-flip"></span> Viviendas en alquiler con uso habitual.</p>
+
+                            <legend class="titular" style="font-weight: bold;"><span class="ic-ciber-ico-casa-corazon ico-big ico-red"></span> Viviendas excluidas</legend>
+                                <p style="padding-left:40px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> No se pueden asegurar viviendas fabricadas de madera, en multipropiedad, en despoblados, deshabitadas mas de 12 meses seguidos o en las que se desarrollen una actividad profesional o comercial. </p>
+
+                        </div>
+                                
+                    </div>
+                    
+                        <div layout="row" layout-align="center center">
+                            <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.aceptar()">
+                                {{ 'CONFIRM' | translate }}
+                            </md-button>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </form>
+        </md-dialog-content>
+</md-dialog>

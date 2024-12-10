@@ -1,0 +1,58 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-respuesta-inmediata"></span> Cambio de datos del beneficiario
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="!$ctrl.isCollapsed2">
+	<div class="separadorDesplegables"></div>
+	<div layout="row" style="margin-bottom:20px">
+		<md-input-container flex-gt-sm>
+			<label>Beneficiario seleccionado</label>
+			<md-select ng-model="$ctrl.form.BENEFICIARIO">
+				<md-option ng-repeat="beneficiario in $ctrl.form.POLIZA.LST_BENEFICIARIOS | filter:{ID_TIPO_CLIENTE:2}" ng-value="beneficiario.ID_CLIENTE">{{beneficiario.NO_NOMBRE_COMPLETO}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	<div layout="row" ng-if="tipoPropietario != 2">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'NAME' | translate }}</label>
+			<input ng-model="$ctrl.form.NO_NOMBRE" required>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'SURNAME_1' | translate }}</label>
+			<input ng-model="$ctrl.form.NO_APELLIDO1" required>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'SURNAME_2' | translate }}</label>
+			<input ng-model="$ctrl.form.NO_APELLIDO2" required>
+		</md-input-container>
+	</div>
+	<div layout="row" ng-if="tipoPropietario != 2">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'DOCUMENT_TYPE' | translate }}</label>
+			<md-select ng-model="$ctrl.form.ID_TIPO_DOCUMENTO" required>
+				<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">{{tipo.DS_TIPO_DOCUMENTO}}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+			<input ng-model="$ctrl.form.NU_DOCUMENTO1" required>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'BIRTH_DATE' | translate }}</label>
+
+			<md-datepicker ng-model="$ctrl.form.FD_NACIMIENTO" ng-click="$ctrl.calcEdad($ctrl.form.FD_NACIMIENTO)" required></md-datepicker>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'GENDER' | translate }}</label>
+			<md-select ng-model="$ctrl.form.ID_SEXO" required>
+				<md-option ng-value="1">{{ 'MALE' | translate }}</md-option>
+				<md-option ng-value="2">{{ 'FEMALE' | translate }}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+</div>

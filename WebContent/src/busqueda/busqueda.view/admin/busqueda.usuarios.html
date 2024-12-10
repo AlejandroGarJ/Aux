@@ -1,0 +1,41 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results">
+	<md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+		
+		<md-tab label="Resultado de la búsqueda">
+	        <div layout="row" layout-align="end center" class="md-padding">
+				<md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4" ng-click="$ctrl.parent.exportarExcelGrid($ctrl.gridOptions, $ctrl.gridApi.grid, 'usuarios.xlsx')" class="md-raised md-primary medium-blue button-action-main">
+					<span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+				</md-button>
+	        </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se ha encontrado ningún Usuario</h4>
+            </div>
+			<div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+	        	<!-- <h2>Busque un usuario</h2> -->
+	        </div>
+	        <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+		
+			<div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-exporter ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(189)"></div>
+		</md-tab>
+		<md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index" label="Póliza: {{detalles.NU_POLIZA}}">
+			<md-tab-label ng-if="detalles != null">
+				<span ng-if="detalles != null">Usuario: {{detalles.NO_USUARIO}}</span>
+				<span ng-if="detalles == null">Nueva Usuario</span>
+				<div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab($index)">
+					<span aria-hidden="true">×</span>
+				</div>
+			</md-tab-label> 
+			<md-tab-body>
+				<detalle-sd id-detalle="detalles" tipo="'userws'"></detalle-sd>
+			</md-tab-body>		    
+	 </md-tab>
+	</md-tabs>
+</div>

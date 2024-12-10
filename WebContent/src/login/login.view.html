@@ -1,0 +1,262 @@
+﻿<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="login-container" ng-if="$ctrl.parent.cargandoAuth != true && $ctrl.parent.errorAuth != true">
+    <div class="login-main-box-container">
+        <div class="login-main-box">
+
+            <div class="login-box login-logo-box">
+                <div>
+                    <img src="src/img/logo-telefonica-70h.png">
+                </div>
+                <div class="flags-container">
+                    <button ng-if="$ctrl.lang != 'en'" ng-click="$ctrl.changeLang('en')" class="flag_btn">
+                        <md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false"
+                                    class="rose_bg_ti">{{'LANG_EN' | translate | uppercase}}
+                        </md-tooltip>
+                        <div class="flag_icon">
+                            <img src="src/img/flags/en-gb.png">
+                        </div>
+                    </button>
+                    <button ng-if="$ctrl.lang != 'es'" ng-click="$ctrl.changeLang('es')" class="flag_btn">
+                        <md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false"
+                                    class="rose_bg_ti">{{'LANG_ES' | translate | uppercase}}
+                        </md-tooltip>
+                        <div class="flag_icon">
+                            <img src="src/img/flags/es-es.png">
+                        </div>
+                    </button>
+                    <button ng-if="$ctrl.lang != 'de'" ng-click="$ctrl.changeLang('de')" class="flag_btn">
+                        <md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false"
+                                    class="rose_bg_ti">{{'LANG_DE' | translate | uppercase}}
+                        </md-tooltip>
+                        <div class="flag_icon">
+                            <img src="src/img/flags/de-de.png">
+                        </div>
+                    </button>
+                    <button ng-if="$ctrl.lang != 'pt'" ng-click="$ctrl.changeLang('pt')" class="flag_btn">
+                        <md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false"
+                                    class="rose_bg_ti">{{'LANG_PT' | translate | uppercase}}
+                        </md-tooltip>
+                        <div class="flag_icon">
+                            <img src="src/img/flags/pt-br.png">
+                        </div>
+                    </button>
+                </div>
+                <div class="app-version-container">
+                    <span>{{'MANAGER_PORTAL' | translate }} {{$ctrl.versionPackage}}</span>
+                </div>
+                <div ng-if="$ctrl.parent.firstStep">
+                    <legend></legend>
+                    <div layout="row" class="layout-row" layout-align="center center" style="display: flex" ng-if="$ctrl.authMethodPref === 'GOOGLE'">
+                        <p style="text-transform:none!important;display: flex;color: #3b3b3b;font-size: 15px!important;">
+                            <img class="img-responsive center-block" src="src/img/google.authenticator-logo.png" style="width: 16px;height: 16px;margin-right: 2px;margin-top: 2px">
+                            <span><strong>Google Authenticator</strong></span>
+                        </p>
+                    </div>
+                    <div ng-if="$ctrl.authMethodPref === 'GOOGLE'">
+                        <p style="font-size: 11px;padding-top: 15px;color: #0066ff!important;margin: 0!important;text-align: center;text-transform: none!important;">
+                            <a  style="font-size: 12px!important;">
+                                {{'MSG_RESEND_INSTRUCTIONS' | translate }}</a>
+                        </p>
+                    </div>
+                    <div ng-if="$ctrl.authMethodPref === 'EMAIL'">
+                        <p style="font-size: 12px;padding-top: 2px;color: #3b3b3b!important;margin: 0!important;text-align: center;text-transform: none!important;">
+                            {{'MSG_RECEIVE_EMAIL' | translate }}
+                        </p>
+                        <p style="font-size: 12px;padding-top: 8px;color: #3b3b3b!important;margin: 0!important;text-align: center;text-transform: none!important;">
+                            {{'APP_AVAILABLE' | translate }}
+                        </p>
+                        <p style="font-size: 11px;padding-top: 15px;color: #0066ff!important;margin: 0!important;text-align: center;text-transform: none!important;">
+                            <a ng-click="$ctrl.setCookieAuthMethod('GOOGLE')" style="font-size: 12px!important;">{{'SELECT_VERIFICATION_METHOD' | translate }}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="login-box">
+                <md-card class="card-login">
+                    <md-card-content style="padding: 16px 16px 0 16px;">
+<!--                        <p style="color: #031A34; letter-spacing: 1px;font-size: 12px;text-align: center;margin: 0 0 30px 0">-->
+<!--                            {{ 'LOGIN_SUBHEADER' | translate }}-->
+<!--                        </p>-->
+                        <form name="form" ng-submit="$ctrl.login()" role="form" novalidate>
+                            <div layout="row" class="layout-row" layout-align="start start">
+                                <p style="background-color:white;margin-bottom: -8px;margin-left:15px;border-radius:20px;padding:0 10px;color: #3b3b3b;font-size: 11px;text-align: left;font-weight: bold;border-left: 1px solid #ccc;border-right: 1px solid #ccc;"> {{ 'USER' | translate }}</p>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                                <input type="text" name="username" id="username" class="form-control" ng-model="$ctrl.username" ng-disabled="$ctrl.parent.firstStep"
+                                	ng-focus="$ctrl.noUser = false" style="text-align: center;height:38px"/>
+                                <span ng-show="$ctrl.noUser" class="help-block">{{ 'WARN_EMPTY_USER' | translate }}</span>
+                            </div>
+                            <div layout="row" class="layout-row" layout-align="start start" style="position: relative">
+                                <p style="background-color:white;margin-bottom: -8px;margin-left:15px;border-radius:20px;padding:0 10px;color: #3b3b3b;font-size: 11px;text-align: left;font-weight: bold;border-left: 1px solid #ccc;border-right: 1px solid #ccc;">{{ 'PASSWORD' | translate }}</p>
+                            </div>
+                            <div class="form-group" layout="colum" layout-align="center center" flex-gt-sm="100" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                                <input flex-gt-sm="60"  style="height:38px;text-align: center;border-radius: 20px 0px 0px 20px!important;border-right: none!important;" ng-if="$ctrl.showPass == false" type="password" name="password" id="password" ng-disabled="$ctrl.parent.firstStep" ng-click="$ctrl.changeUser()"
+                                        class="form-control input-password" ng-model="$ctrl.password" ng-focus="$ctrl.noPassword = false" />
+                                <input flex-gt-sm="60"  style="height:38px;text-align: center;border: 1px solid #0066ff;border-radius: 20px 0px 0px 20px!important;border-right: none!important;" ng-if="$ctrl.showPass == true" type="text" name="password" id="password" ng-disabled="$ctrl.parent.firstStep"
+                                        class="form-control input-password" ng-model="$ctrl.password" ng-focus="$ctrl.noPassword = false"/>
+                                <md-button type="submit" class="md-raised md-primary medium-blue button-action-main" style="font-weight:bold;min-width: 30px!important;min-height: 34px!important;width: 140px;height: 38px;font-size: 11px;border-radius: 0 20px 20px 0!important;padding: 0!important;position: static;margin: 0;background-color: #ffffff!important;color: #0066ff!important;border-color: #ccc!important;">
+                                    {{ 'VALIDATE_SESSION' | translate | uppercase }}
+                                </md-button>
+<!--                                <span style="text-align: left;" ng-if="$ctrl.showPass == false" ng-click="$ctrl.showPassword()" class="icon-visibility-password material-icons-outlined">visibility</span>-->
+<!--                                <span style="text-align: left;" ng-if="$ctrl.showPass == true" ng-click="$ctrl.showPassword()" class="icon-visibility-password material-icons-outlined">visibility_off</span>-->
+
+<!--                                <span ng-show="$ctrl.noPassword" class="help-block">{{ 'WARN_EMPTY_PASSWORD' | translate }}</span>-->
+<!--                                -->
+                            </div>
+                            <div class="btn-forgot-pass" ng-click="$ctrl.checkPassOpt($ctrl.showRPI, 'showRPI')" style="text-align: left;margin-top: -7px;margin-left: 16px;font-size: 11px;color: #3b3b3b;font-weight: 100;">
+                                {{ 'FORGOTTEN_PASSWORD' | translate }}
+                            </div>
+                            <p ng-if="$ctrl.isError == true" class="txt_alg_cent msgErrorLogin">
+                                <span class="msgError">{{$ctrl.msgError}}</span>
+                                <br>
+                                <span ng-if="$ctrl.isError && $ctrl.idResult == 31" ng-click="$ctrl.checkPassOpt($ctrl.showCPI, 'showCPI')">Puede restablecer la contraseña pulsado aquí</span>
+                            </p>
+<!--                            <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">-->
+<!--                                <label for="password"><i class="fas fa-key"></i> {{ 'PASSWORD' | translate }}</label>-->
+<!--                                <input style="text-align: center;" ng-if="$ctrl.showPass == false" type="password" name="password" id="password" ng-disabled="$ctrl.parent.firstStep" ng-click="$ctrl.changeUser()"-->
+<!--                                	class="form-control input-password" ng-model="$ctrl.password" ng-focus="$ctrl.noPassword = false"/>-->
+<!--                                <input style="text-align: center;" ng-if="$ctrl.showPass == true" type="text" name="password" id="password" ng-disabled="$ctrl.parent.firstStep"-->
+<!--                                	class="form-control input-password" ng-model="$ctrl.password" ng-focus="$ctrl.noPassword = false"/>-->
+
+<!--                                <span style="text-align: left;" ng-if="$ctrl.showPass == false" ng-click="$ctrl.showPassword()" class="icon-visibility-password material-icons-outlined">visibility</span>-->
+<!--                                <span style="text-align: left;" ng-if="$ctrl.showPass == true" ng-click="$ctrl.showPassword()" class="icon-visibility-password material-icons-outlined">visibility_off</span>-->
+
+<!--                                <span ng-show="$ctrl.noPassword" class="help-block">{{ 'WARN_EMPTY_PASSWORD' | translate }}</span>-->
+
+<!--                            </div>-->
+<!--                               <div class="form-group" ng-if="!$ctrl.parent.firstStep">-->
+<!--	                                <div class="title-titularidad"> -->
+<!--                                    	DOBLE AUTENTICACIÓN -->
+<!--                                	</div>-->
+<!--                                	 <md-input-container class="md-block autocomplete-container" flex-gt-sm style="margin-right: 0!important;">-->
+<!--		                            	<div layout-gt-sm="row" layout-align="center center">-->
+<!--			                               -->
+<!--			                                <md-button id="btnGoogle"-->
+<!--		                                           class="md-raised md-primary medium-blue button-action-02-hogar"-->
+<!--		                                           ng-class="{'md-raised md-primary medium-blue button-action-02-hogar': (!$ctrl.mfa || $ctrl.mfa == '1'),-->
+<!--  		                                                    'md-raised md-primary medium-blue button-action-01-hogar': ($ctrl.mfa == '2')}"  -->
+<!--		                                           ng-click="$ctrl.setAuthentication('2')" ng-disabled="!$ctrl.password && !$ctrl.username">-->
+<!--		                                        <div style="display:inline">-->
+<!--		                                        	<span style="width: 35px; height: 35px; margin-left:-22px"><i class="fa-brands fa-google"></i></span>-->
+<!--                            						 <span>GOOGLE AUTHENTICATOR</span>-->
+<!--                       							</div>		         -->
+<!--			                                </md-button>-->
+
+<!--			                                <md-button id="btnMail"-->
+<!--			                                		class="md-raised md-primary medium-blue button-action-02-hogar"-->
+<!--		                                            ng-class="{'md-raised md-primary medium-blue button-action-02-hogar': (!$ctrl.mfa || $ctrl.mfa == '2'),-->
+<!--  		                                        			'md-raised md-primary medium-blue button-action-01-hogar': ($ctrl.mfa == '1')}" -->
+<!--		                                            ng-click="$ctrl.setAuthentication('1')" ng-disabled="!$ctrl.password && !$ctrl.username">-->
+<!--		                                            <i class="fa-regular fa-envelope" class="fa-brands fa-google" style="width: 12px; height: 10px;"></i>-->
+<!--			                                    	<span>EMAIL</span>			                              -->
+<!--			                                </md-button>-->
+<!--		                                </div>-->
+<!--									</md-input-container>-->
+<!--                            	</div>-->
+
+<!--                            <div style="margin-top:40px" ng-if="$ctrl.parent.firstStep">-->
+                            <div style="margin-top:40px" ng-if="$ctrl.parent.firstStep">
+<!--	                            <div layout="row">-->
+<!--		                            <label for="code" style="text-transform: none; color: #3b3b3b;"><i class="fa-solid fa-key"></i> Introduce el código enviado a tu email</label>-->
+<!--		                        </div>-->
+                                <legend style="margin-bottom: 10px"></legend>
+<!--                                <div layout="row" class="layout-row" layout-align="center center">-->
+<!--                                    <p style="margin: 0!important;"></p>-->
+<!--                                </div>-->
+                                <div ng-if="$ctrl.authMethodPref === 'EMAIL' || $ctrl.authMethodPref === undefined" layout="row" class="layout-row" layout-align="center center">
+                                    <p style="padding: 10px 0 5px 0;color: #3b3b3b;font-size: 13px;text-align: center;text-transform: none!important;margin: 0;">
+                                        <i class="fa-duotone fa-paper-plane" style="color: #60951e;margin-right: 3px"></i> {{ 'ENTER_CODE_EMAIL' | translate }}
+                                    </p>
+                                </div>
+                                <div ng-if="$ctrl.authMethodPref === 'GOOGLE'" layout="row" class="layout-row" layout-align="center center">
+                                    <p style="padding: 0 0 10px 0;color: #3b3b3b;font-size: 13px;text-align: center;text-transform: none!important;margin: 0;">
+                                        Introduce el código generado en <strong>Authenticator©</strong>
+                                    </p>
+                                </div>
+                                <div layout="colum" layout-align="center center" flex-gt-sm="100" style="margin-top: 3px!important;">
+                                    <input type="text" ng-if="$ctrl.authMethodPref === 'EMAIL'" name="code" id="code" class="form-control" ng-model="$ctrl.code" style="height:38px;text-align: center;border: 1px solid #0066ff;border-radius: 20px 0px 0px 20px!important;border-right: none!important;" flex-gt-sm="60" placeholder="{{ 'CODE_10_DIGITS' | translate }}"/>
+                                    <input type="text" ng-if="$ctrl.authMethodPref === 'GOOGLE'" name="code" id="code" class="form-control" ng-model="$ctrl.code" style="height:38px;text-align: center;border: 1px solid #0066ff;border-radius: 20px 0px 0px 20px!important;border-right: none!important;" flex-gt-sm="60" placeholder="Código Authenticator (6 dígitos)"/>
+                                    <md-button ng-click="$ctrl.loginCode()" class="md-raised md-primary medium-blue button-action-main" style="min-width: 30px!important;min-height: 34px!important;width: 140px;height: 38px;font-size: 12px;border-radius: 0 20px 20px 0!important;padding: 0!important;position: static;margin: 0;">
+                                        <i class="fa-duotone fa-right-to-bracket"></i> {{ 'ACCESS' | translate | uppercase}}
+                                    </md-button>
+                                </div>
+                                <div layout="row" class="layout-row" layout-align="start start">
+                                    <a ng-click="$ctrl.login()" ng-if="$ctrl.authMethodPref === 'EMAIL' && $ctrl.isErrorCode == true || $ctrl.resendCode == true" style="font-weight: 100;font-size: 13px;color: #3b3b3b;margin-top: 8px">
+                                        <i class="fa-duotone fa-arrows-rotate" style="font-size: 11px;margin-left: 15px"></i> {{ 'RESEND_CODE_EMAIL' | translate }}
+                                    </a>
+                                </div>
+                                <div ng-if="$ctrl.authMethodPref === 'GOOGLE'" layout="row" class="layout-row" layout-align="start start">
+                                    <a ng-click="$ctrl.switchToEmailMFA()" style="font-weight: 100;font-size: 13px;margin-top: 8px;margin-left: 15px">
+                                        Usar verificación por email
+                                    </a>
+                                </div>
+<!--	                            <div layout-gt-sm="row" style="margin-top: 25px!important;" layout-align="center center">-->
+<!--&lt;!&ndash;	                           		 <input type="text" name="code" id="code" class="form-control" ng-model="$ctrl.code" style="text-align: center; margin-top:6px" flex-gt-sm="90" placeholder="Introduce el PIN enviado a tu email"/>&ndash;&gt;-->
+<!--	                                 <div class="btn-forgot-pass" ng-click="$ctrl.login()" ng-if="$ctrl.isErrorCode == true || $ctrl.resendCode == true"-->
+<!--                                		style="margin-left: 25px; margin-top: 15px; color: #8A1A93;">-->
+<!--                                    	<i class="fa-duotone fa-arrows-rotate"></i> {{ 'RESEND_CODE' | translate }}-->
+<!--                               	 	</div>-->
+<!--                               	 </div>-->
+
+
+                                <div layout-gt-sm="row" style="margin-left:100px;">
+		                             <p class="txt_alg_cent msgErrorLogin" style="text-transform: none;" >
+		                                <span class="msgError" ng-if="$ctrl.isErrorCode == true">{{$ctrl.msgErrorCode}}</span>
+		                                <span class="msgInfo" ng-if="$ctrl.resendCode == true">{{ 'MSG_CODE_RESENT' | translate }}.</span>
+		                             </p>		                             
+		                         </div>
+
+<!--		                         <div class="form-actions txt_alg_cent" style="margin-top: 5px;">		                             -->
+<!--	                                <md-button ng-click="$ctrl.loginCode()" class="md-raised md-primary medium-blue button-action-main" style="width: 100%;height: 34px;font-size: 13px">-->
+<!--	                                     {{ 'LOG_IN' | translate }} -->
+<!--	                                </md-button>-->
+<!--		                          </div>-->
+
+		                     </div>
+		                     
+<!--                            <div class="form-actions txt_alg_cent"  ng-if="!$ctrl.parent.firstStep">-->
+<!--                                <md-button ng-if="!$ctrl.dataLoading" type="submit" class="md-raised md-primary medium-blue button-action-main" style="width: 100%;height: 34px;font-size: 13px"-->
+<!--                                 	ng-disabled="!$ctrl.mfaValidation">-->
+<!--                                    	{{ 'LOG_IN' | translate }}-->
+<!--                                </md-button>-->
+<!--                                <p ng-if="$ctrl.isError == true" class="txt_alg_cent msgErrorLogin">-->
+<!--                                    <span class="msgError">{{$ctrl.msgError}}</span>-->
+<!--                                    <br>-->
+<!--                                    <span ng-if="$ctrl.isError && $ctrl.idResult == 31" ng-click="$ctrl.checkPassOpt($ctrl.showCPI, 'showCPI')">Puede restablecer la contraseña pulsado aquí</span>-->
+<!--                                </p>-->
+<!--                            </div>-->
+
+
+
+                        </form>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+        <div class="txt_alg_cent" >
+            <span class="txt-login-comp" style="color: #fff!important;">Dispositivo {{$ctrl.resolutionDesc}}</span>
+        </div>
+        <div ng-if="$ctrl.dataLoading">
+            <div class="cs-loader-inner" style="position: relative;width: auto;top: 0">
+                <label>●</label>
+                <label>●</label>
+                <label>●</label>
+                <label>●</label>
+                <label>●</label>
+                <label>●</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="invalid-token-container" ng-if="$ctrl.parent.errorAuth == true">
+    <div layout="column">
+        <h2>El token no es válido</h2>
+        <div layout="row" layout-align="center center">
+            <md-button class="dark-blue btnLogin margin-top-10" ng-click="$ctrl.redirectLogin('#!')">
+                Iniciar sesión
+            </md-button>
+        </div>
+    </div>
+</div>

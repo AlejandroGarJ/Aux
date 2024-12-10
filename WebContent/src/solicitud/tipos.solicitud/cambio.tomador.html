@@ -1,0 +1,32 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-numero-trabajadores"></span> {{ 'POLICY_HOLDER_CHANGE' | translate }}
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+	<div class="separadorDesplegables"></div>
+	<div layout="row">
+		<md-input-container flex-gt-sm="50" class="md-block">
+			<label>{{ 'POLICY_HOLDER_CURRENT' | translate }}</label>
+			<input ng-model="$ctrl.form.OPOLIZA.tomador.NO_NOMBRE_COMPLETO" disabled>
+		</md-input-container>
+		<md-autocomplete flex-gt-sm="50" ng-init="$ctrl.clientes = []"
+			  md-no-cache
+	          md-selected-item="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUAL"
+	          md-search-text="$ctrl.searchTomador"
+	          md-search-text-change="$ctrl.querySearchAsync($ctrl.searchTomador)"
+	          md-items="cliente in $ctrl.clientes"
+	          md-item-text="cliente.NO_NOMBRE_COMPLETO"
+	          md-input-minlength="0"
+	          md-delay="100"
+              md-floating-label="{{ 'POLICY_HOLDER_NEW' | translate }}" required>
+	          <md-item-template>
+	            <span md-highlight-text="$ctrl.searchTomador" md-highlight-flags="^i">{{cliente.NO_NOMBRE_COMPLETO}}</span>
+	          </md-item-template>
+        </md-autocomplete>
+	</div>
+</div>

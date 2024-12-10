@@ -1,0 +1,29 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width: 40%">
+	<md-dialog-content style="min-height:260px;">
+		<form style="margin-top: 20px;" class="formClass">
+			<div layout="row" flex="100" style="margin-top: 10px; margin-left:10px; margin-right: 10px;">
+				
+				<div layout="column" layout-align="center center">
+				    <md-icon class="icono-warning-modal">info</md-icon>
+	            
+	            	<p class="text-confirmacion-dispositivos">Por favor, confirme con el usuario que <span class="bold">ha facilitado información veraz y completa</span>, que sus dispositivos <span class="bold">han sido adquiridos o facilitados en los canales de distribución de Movistar</span>, 
+	            	que tienen <span class="bold">menos de 30 días de antigüedad</span>, que están en <span class="bold">perfecto estado de funcionamiento, sin defectos externos</span> y su precio de compra nuevo no <span class="bold">superó 2.500€ individualmente</span>.</p>
+	            
+	            	<div layout="row" layout-align="center center">
+		            	<md-button style="line-height: 0px" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.cancel()">
+	                        {{ 'CANCEL' | translate }}
+	                    </md-button>
+		            	<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.aceptar()">
+	                        {{ 'CONFIRM' | translate }}
+	                    </md-button>
+	            	</div>
+	            	
+	            </div>
+				
+        	</div>
+		</form>
+	</md-dialog-content>
+</md-dialog>

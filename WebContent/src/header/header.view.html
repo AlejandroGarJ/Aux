@@ -1,0 +1,84 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<!--  <div class="navbar-fixed-top"> style="position:fixed; display:block; clear:both; width: 100%" -->
+<header class="container-fluid cabecera" style="height:5%" ng-if="$ctrl.isLogged == 'logueado'">
+	<div class="cols-sm-12">
+		<div class="row" style="display: flex">
+			<div class="text-left" flex="40">
+				<img ng-if="$ctrl.logoDe != true" style="padding: 30px 0px 20px 35px;width: 190px;" src="src/img/logo-telefonica-50h.png">
+				<img ng-if="$ctrl.logoDe == true" style="padding: 30px 0px 10px 35px; height: 85px" src="src/img/telefonicaDE.png">
+				<!--					<p style="color:#0066ff;margin: 0px!important;background-color: transparent; padding-left: 30px "> {{ 'WELCOME' | translate }} {{$ctrl.nombre}}</p>-->
+			</div>
+
+			<div class="text-center" flex="20" layout="row" layout-align="center center">
+				<img ng-if="$ctrl.idCompania == 29" class="logo_subcompania" ng-src="src/img/logo-espabrok-header.png">
+			</div>
+
+			<div class="paddingCabecera text-right" flex="40" layout="column" layout-align="center end">
+				<!--					<img ng-if="$ctrl.logoDe != true" style="margin-right: 40px;width: 130px" src="src/img/segurodigital/seguro-digital-black.svg">-->
+				<div layout="row">
+
+					<!--			        	<div ng-if="$ctrl.isLogged == 'logueado'">-->
+					<!--							<md-button ng-click="$ctrl.redirect()" class="buttonNombreHeader">-->
+					<!--								<md-icon class="icono_usuario_login">home</md-icon> {{ 'START' | translate }}-->
+					<!--							</md-button>-->
+					<!--						</div>-->
+
+					<!-- <div ng-if="$ctrl.parent.menuGestor != null && $ctrl.isLogged == 'logueado' && ($ctrl.rol == 3 || $ctrl.rol == 11)">
+
+					</div> -->
+					<!-- <div layout="row" layout-align="center end" flex> -->
+						<!-- <p ng-if="$ctrl.idCompania != 4" style="font-size: 13px;text-align: center; padding: 7px 35px; background-color: #cbe0ff; border-radius: 20px; letter-spacing: 0.05em; color: #3b3b3b;">Tenemos novedades que pueden interesarte, puedes conocerlas si <a style="font-weight: bold; text-decoration: underline; font-size: 13px!important;" ng-click="$ctrl.navTo('#!/broker')">pinchas aquí.</a></p> -->
+					<!-- </div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="row navBarDark">
+	<div class="col-md-8">
+		<nav-bar app-menus="$ctrl.menus" ng-if="$ctrl.isLogged == 'logueado'"></nav-bar>
+	</div>
+	<div class="col-md-4" style="text-align: right;padding-right: 20px;">
+		<div ng-if="$ctrl.isLogged == 'logueado'">
+			<span style="position: relative;top: 2px; font-size: 11.5px; padding-right: 30px; font-weight: 100; border-right: 1px solid #f2f4ff">Bienvenid@ <span style="text-transform: capitalize!important">{{$ctrl.noNombreWelcome}}</span> ({{$ctrl.noUsuarioWelcome}})</span>
+			<md-button ng-click="$ctrl.checkPassOpt($ctrl.showCPI, 'showCPI')" style="font-size: 10px;margin: 0px!important;background-color: transparent;color: white!important;"><i class="fas fa-unlock-alt" style="padding-right:5px;"></i> {{ 'CHANGE_PASSWORD' | translate }}</md-button>
+			<md-button ng-click="$ctrl.cerrarSesion()" style="font-size: 10px;margin: 0px!important;background-color: transparent;color: white!important;"><i class="fas fa-door-open" style="padding-right:5px;"></i> {{ 'LOG_OUT' | translate }}</md-button>
+			<!--				<md-fab-speed-dial md-direction="left" md-open="false" class="md-scale btn_user">-->
+			<!--					<md-fab-trigger>-->
+			<!--						<md-button aria-label="menu" class="buttonNombreHeader">-->
+			<!--							<md-icon class="icono_usuario_login">person_outline</md-icon> {{ 'WELCOME' | translate }} {{$ctrl.nombre}}-->
+			<!--						</md-button>-->
+			<!--					</md-fab-trigger>-->
+
+			<!--					<md-fab-actions>-->
+			<!--						<md-button class="md-fab md-raised md-mini" ng-click="$ctrl.cerrarSesion()">-->
+			<!--							<md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false" class="rose_bg_ti">{{ 'LOG_OUT' | translate }}</md-tooltip>-->
+			<!--							<md-icon class="green_ti">power_settings_new</md-icon>-->
+			<!--						</md-button>-->
+			<!--						<md-button class="md-fab md-raised md-mini" ng-click="$ctrl.checkPassOpt($ctrl.showCPI, 'showCPI')">-->
+			<!--							<md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false" class="rose_bg_ti">{{ 'CHANGE_PASSWORD' | translate }}</md-tooltip>-->
+			<!--							<md-icon class="green_ti">vpn_key</md-icon>-->
+			<!--						</md-button>-->
+			<!--					</md-fab-actions>-->
+			<!--				</md-fab-speed-dial>-->
+		</div>
+		<!--			<md-menu-bar>-->
+		<!--				-->
+		<!--				<md-menu>-->
+		<!--					<md-button class="buttonNombreHeader" ng-click="$ctrl.openMenuAdmin($mdMenu, $event)">-->
+		<!--						<md-icon class="icono_usuario_login">view_headline</md-icon>{{$ctrl.parent.menuGestor.NO_MENU}}-->
+		<!--					</md-button>-->
+		<!--					<md-menu-content width="4">-->
+		<!--						<md-menu-item ng-repeat="sub in $ctrl.parent.menuGestor.SUBMENUS.SUBMENU">-->
+		<!--							<md-button class="buttonAdmin" ng-href="#!/{{sub.NO_TOKEN}}">{{sub.NO_MENU}}</md-button>-->
+		<!--						</md-menu-item>-->
+		<!--					</md-menu-content>-->
+		<!--				</md-menu>-->
+		<!--			</md-menu-bar>-->
+	</div>
+
+</div>
+
+<!-- </div> -->

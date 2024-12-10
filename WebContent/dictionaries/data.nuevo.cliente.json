@@ -1,0 +1,36 @@
+{
+	"data":{
+		"NO_NOMBRE":{
+			"value":"",
+			"$error":{}
+        },
+        "NO_APELLIDO1":{
+			"value":"",
+			"$error":{}
+		},
+		"NO_APELLIDO2":{
+			"value":"",
+			"$error":{}
+        },
+        "ID_TIPO_DOCUMENTO":{
+			"value":"",
+			"$error":{}
+		},
+		"NU_DOCUMENTO":{
+			"value":"",
+			"$error":{}
+        },
+        "CO_NACIONALIDAD":{
+			"value":"",
+			"$error":{}
+        }
+	} 
+}
+
+
+
+
+
+
+
+

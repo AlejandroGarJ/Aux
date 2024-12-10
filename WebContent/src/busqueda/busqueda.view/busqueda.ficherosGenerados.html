@@ -1,0 +1,47 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+        	<div layout="row" layout-align="end center" class="md-padding">
+		        <!-- <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.parent.url == 'ficherosGenerados' && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()"> -->
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.parent.url == 'ficherosGenerados'" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+		            <md-icon>file_copy</md-icon>Exportar a excel
+		        </md-button>
+	        </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se ha encontrado ningún fichero generado</h4>
+            </div>
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+<!--                 <h2>Busque un fichero procesado</h2> -->
+            </div>
+            <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+                <!-- 			            <h2>Buscando</h2> -->
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-grouping
+                resize ng-style="$ctrl.screenHeight < 620 ? $ctrl.getTableHeight() : $ctrl.gridOptions.totalItems < 30 ? resizeHeight(377) : $ctrl.getTableHeight()"></div>
+        </md-tab>
+        
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+
+            <md-tab-label ng-if="detalles.ID_TIPO_ARCHIVO != null">
+                <span>{{detalles.NO_FICHERO}}</span>
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab($index)">
+       				<span aria-hidden="true">×</span>
+       			</div>
+            </md-tab-label>
+            <md-tab-body>
+                <detalle-sd ng-if="detalles.ID_TIPO_ARCHIVO != null" id-detalle="detalles" tipo="'fichero'"></detalle-sd>
+            </md-tab-body>
+
+        </md-tab>
+        
+    </md-tabs>
+</div>

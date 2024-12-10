@@ -1,0 +1,150 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="column" resize ng-style="resizeHeight(147)">
+	<section layout="row" flex>
+		<md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4">
+	    	<md-toolbar>
+				<!-- <div class="md-toolbar-tools" style="height:44px">
+					<h2>Tipo de informes</h2>
+	        	</div> -->
+			</md-toolbar>
+	      	<md-content class="informesClass">
+											
+				<!-- LIQUIDACIÓN IMPUESTOS-->
+				<md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(1)">
+					<div>Liquidación Impuestos</div>
+					<div ng-if="$ctrl.listaPadres[1] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[1] == true"><md-icon>expand_less</md-icon></div>
+				</md-button>
+				
+				<div ng-if="$ctrl.listaPadres[1] == true" class="animationIf btn-informe-padre">
+					<md-button ng-class="{'active':$ctrl.option == 14}" ng-click="$ctrl.openInforme('mensualImpuestos', 14)"><span>Impuesto IPS</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 17}" ng-click="$ctrl.openInforme('tirea', 17)"><span>Impuesto tirea</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 30}" ng-click="$ctrl.openInforme('arbitrio', 30)"><span>Arbitrio de bomberos</span></md-button>
+				</div>
+				
+				<!-- LIQUIDACIÓN MEDIADOR-->
+				<md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(2)">
+					<div>Liquidación Mediador</div>
+					<div ng-if="$ctrl.listaPadres[2] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[2] == true"><md-icon>expand_less</md-icon></div>
+				</md-button>
+				
+				<div ng-if="$ctrl.listaPadres[2] == true" class="animationIf btn-informe-padre">
+					<md-button ng-class="{'active':$ctrl.option == 2}" ng-click="$ctrl.openInforme('comisionista', 2)"><span>Liquidación mediador</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 222}" ng-click="$ctrl.openInforme('mediadorHogar', 222)"><span>Liquidación mediador hogar</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 117}" ng-click="$ctrl.openInforme('colaborador', 117)"><span>Liquidación colaborador</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 118}" ng-click="$ctrl.openInforme('colaboradortc', 118)"><span>Liquidación colaborador TC</span></md-button>
+				</div>
+
+				<!-- LIQUIDACIÓN REASEGURO-->
+				<md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(3)">
+					<div>Liquidación Reaseguro</div>
+					<div ng-if="$ctrl.listaPadres[3] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[3] == true"><md-icon>expand_less</md-icon></div>
+				</md-button>
+				
+				<div ng-if="$ctrl.listaPadres[3] == true" class="animationIf btn-informe-padre">
+					<md-button ng-class="{'active':$ctrl.option == 26}" ng-click="$ctrl.openInforme('bbva', 26)"><span>BBVA</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 27}" ng-click="$ctrl.openInforme('europe-assistance', 27)"><span>Europ Assistance</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 32}" ng-click="$ctrl.openInforme('helvetia', 32)"><span>Helvetia</span></md-button>
+				</div>
+
+				<!-- OTRAS LIQUIDACIONES-->
+				<md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(4)">
+					<div>Otras Liquidaciones</div>
+					<div ng-if="$ctrl.listaPadres[4] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[4] == true"><md-icon>expand_less</md-icon></div>
+				</md-button>
+				
+				<div ng-if="$ctrl.listaPadres[4] == true" class="animationIf btn-informe-padre">
+					<md-button ng-class="{'active':$ctrl.option == 31}" ng-click="$ctrl.openInforme('fees', 31)"><span>Fees</span></md-button>
+				</div>
+
+				<!-- BORDERO -->
+				<md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(6)">
+					<div>Bordero</div>
+					<div ng-if="$ctrl.listaPadres[6] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[6] == true"><md-icon>expand_less</md-icon></div>
+				</md-button>
+				
+				<div ng-if="$ctrl.listaPadres[6] == true" class="animationIf btn-informe-padre">			
+					<md-button ng-class="{'active':$ctrl.option == 18}" ng-click="$ctrl.openInforme('bordero', 18)"><span>Bordero mensual</span></md-button>
+					<!-- <md-button class="bloquearInforme" ng-class="{'active':$ctrl.option == 22}" ng-click="$ctrl.openInforme('borderoSiniestros', 22, true)"><span>Bordero Siniestros</span></md-button> -->
+					<md-button ng-class="{'active':$ctrl.option == 19}" ng-click="$ctrl.openInforme('borderoTrimestral', 19)"><span>Bordero trimestral</span></md-button>
+				</div>
+				
+				<!-- REASEGURO -->
+				<!-- <md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(7)">
+					<div>Reaseguro</div>
+					<div ng-if="$ctrl.listaPadres[7] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[7] == true"><md-icon>expand_less</md-icon></div>
+				</md-button> -->
+				
+				<!-- <div ng-if="$ctrl.listaPadres[7] == true" class="animationIf btn-informe-padre">			
+					<md-button ng-class="{'active':$ctrl.option == 26}" ng-click="$ctrl.openInforme('bbva', 26)"><span>BBVA</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 25}" ng-click="$ctrl.openInforme('lovys', 25)"><span>Europe Assistance</span></md-button>
+				</div> -->
+				
+				<!-- PÓLIZAS -->
+				<md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(7)">
+					<div>Pólizas</div>
+					<div ng-if="$ctrl.listaPadres[7] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[7] == true"><md-icon>expand_less</md-icon></div>
+				</md-button>
+				<div ng-if="$ctrl.listaPadres[7] == true" class="animationIf btn-informe-padre">
+					<md-button ng-class="{'active':$ctrl.option == 1}" ng-click="$ctrl.openInforme('polizas2', 1)"><span>Detalle Pólizas</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 20}" ng-click="$ctrl.openInforme('multidispositivos', 20)"><span>Dispositivos de la póliza</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 24}" ng-click="$ctrl.openInforme('renovacion', 24)"><span>Renovaciones</span></md-button>
+				</div>
+				
+				<!-- RECIBOS -->
+				<md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(8)">
+					<div>Recibos</div>
+					<div ng-if="$ctrl.listaPadres[8] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[8] == true"><md-icon>expand_less</md-icon></div>
+				</md-button>
+				<div ng-if="$ctrl.listaPadres[8] == true" class="animationIf btn-informe-padre">
+					<md-button ng-class="{'active':$ctrl.option == 28}" ng-click="$ctrl.openInforme('bonificaciones', 28)"><span>Bonificaciones</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 29}" ng-click="$ctrl.openInforme('movimientoRecibos', 29)"><span>{{ 'SEARCH_RECEIPT' | translate }}</span></md-button>
+				</div>
+
+				<!-- SINIESTROS -->
+				<md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(9)">
+					<div>Siniestros</div>
+					<div ng-if="$ctrl.listaPadres[9] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[9] == true"><md-icon>expand_less</md-icon></div>
+				</md-button>
+				<div ng-if="$ctrl.listaPadres[9] == true" class="animationIf btn-informe-padre">
+					<md-button ng-class="{'active':$ctrl.option == 13}" ng-click="$ctrl.openInforme('siniestros', 13)"><span>{{ 'DETAIL_MOVEMENTS' | translate}}</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 21}" ng-click="$ctrl.openInforme('siniestrosLiq', 21)"><span>Liquidación de siniestros</span></md-button>
+				</div>
+
+				<!-- <md-button ng-class="{'active':$ctrl.option == 7}" ng-click="$ctrl.openInforme('polizas', 7)">Pólizas emitidas</md-button> -->
+				<!-- <md-button class="bloquearInforme" ng-class="{'active':$ctrl.option == 8}" ng-click="$ctrl.openInforme('presupuesto', 8, true)">Presupuestos emitidos</md-button> -->
+				
+				<md-button ng-class="{'active':$ctrl.option == 8}" ng-click="$ctrl.openInforme('presupuesto', 8)">{{ 'BUDGETS' | translate}}</md-button>
+				<md-button ng-class="{'active':$ctrl.option == 23}" ng-click="$ctrl.openInforme('usuarios', 23)"><span>Usuarios</span></md-button>
+				
+
+				<!-- TERMINALES -->
+				<!-- <md-button layout="row" layout-align="space-between center" class="informe-padre" ng-click="$ctrl.clickPadre(5)">
+					<div>Terminales</div>
+					<div ng-if="$ctrl.listaPadres[5] == false"><md-icon>expand_more</md-icon></div>
+					<div ng-if="$ctrl.listaPadres[5] == true"><md-icon>expand_less</md-icon></div>
+				</md-button> -->
+				<!-- <div ng-if="$ctrl.listaPadres[5] == true" class="animationIf btn-informe-padre">
+					<md-button ng-class="{'active':$ctrl.option == 20}" ng-click="$ctrl.openInforme('multidispositivos', 20)"><span>Dispositivos</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 16}" ng-click="$ctrl.openInforme('aplicacion', 16)"><span>Pólizas por canales</span></md-button>
+					<md-button ng-class="{'active':$ctrl.option == 15}" ng-click="$ctrl.openInforme('preciario', 15)"><span>Preciario de terminales</span></md-button>	
+				</div> -->
+	      	</md-content>
+	    </md-sidenav>
+	    <md-content flex layout-padding class="bg-color-white">
+			<div ng-include="$ctrl.plantillaInforme" style="width: 80%; margin:auto"></div>
+		</md-content>
+    </section>
+</div>
+
+

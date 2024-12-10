@@ -1,0 +1,33 @@
+{
+  "name": "angular-ui-grid-translate",
+  "version": "0.0.2",
+  "description": "An angular-translate extension for angular-ui-grid",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "angular",
+    "ui-grid",
+    "angular-translate",
+    "angular-ui-grid",
+    "i18n",
+    "localization"
+  ],
+  "authors": [
+    "Deyan Garvanski (dgarvanski@gmail.com)"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/DGarvanski/angular-ui-grid-translate",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-translate": "^2.11.0",
+    "angular-ui-grid": "~3.0.7",
+    "angular": "^1.4.9"
+  }
+}

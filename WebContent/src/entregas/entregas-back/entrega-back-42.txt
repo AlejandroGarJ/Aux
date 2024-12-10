@@ -1,0 +1,15 @@
+En esta entrega back 42, se han realizado los siguientes cambios:
+- Siniestros (Petición 5150):
+	+ Sistema para recibir los siniestros de Seguro móvil a Seguro digital.
+- Hogar (Petición 5152):
+	+ Se ha modificado el servicio para poder devolver las primas netas.
+	+ Se han arreglado las condiciones de Rechazo en el SetCapitales.
+	+ Implementar la Firma digital desde 0.
+	+ Buscar qué recibos entran en la promoción y crear el recibo de la devolución del 20%.
+	+ (Petición 5154): Emision diferida de las polizas de Santa Lucia de Seguro de hogar.
+	+ (Petición 5155): Firma Digital.
+- Fix:
+	- Portal:
+		+ Creación de registro, login y recordatorio de contraseña
+	- Ciberempresas:
+		+ Se ha añadido el símbolo del € a la descarga de presupuesto de Alemania.

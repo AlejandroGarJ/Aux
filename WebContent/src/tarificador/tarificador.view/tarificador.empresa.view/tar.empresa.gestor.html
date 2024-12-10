@@ -1,0 +1,547 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex xmlns="http://www.w3.org/1999/html">
+
+    <!-- CIBERSEGURO TELEFONICA SECCION DE TARIFICACIÓN ROL GESTOR -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 1" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll" resize>
+		<!--GESTOR VIEW CIBERSEGURO TELEFONICA -->
+		<div ng-include="$ctrl.templateTarificador" flex-gt-sm="80"></div>
+    </md-content>
+
+    <!-- CONTRATACIÓN -->
+    <md-content ng-show="$ctrl.step == 2" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll" resize>
+        <div class="container_TarMovil" flex>
+			<div class="animationIf">
+				<div layout="row" layout-align="start center" flex="100" style="margin-top: -35px;">
+					<div class="md-toolbar-tools toolbar-filtro">
+					</div>
+				</div>
+				<div layout="row" layout-align="center center" style="margin-bottom:20px">
+					<div class="container_TarMovil_div" layout="column" flex="66">
+						<div layout="column" layout-gt-sm="row" layout-margin="" style="text-align: center">
+							<div class="" flex="">
+								<div class="box-covers-tarCiber">
+									<div class="coversBoxTitle">
+										<p><span style="text-align: center"><i class="fa-regular fa-shield-check" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 1</span></p>
+									</div>
+									<p class="textCobertura">Respuesta ante Incidentes Cibernéticos</p>
+									<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite DE cobertura: {{$ctrl.amount.DS_TIPOS}}</p>
+									<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> 100% DEL LÍMITE AGREGADO</p>
+								</div>
+							</div>
+							<div class="" flex="">
+								<div class="box-covers-tarCiber">
+									<div class="coversBoxTitle">
+										<p><span style="text-align: center"><i class="fa-regular fa-shield-check" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 2</span></p>
+									</div>
+									<p class="textCobertura">Responsabilidad por Seguridad en las Redes, Privacidad y Multimedia</p>
+									<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite DE cobertura: {{$ctrl.amount.DS_TIPOS}}</p>
+									<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> 100% DEL LÍMITE AGREGADO</p>
+								</div>
+							</div>
+							<div class="" flex="">
+								<div class="box-covers-tarCiber">
+									<div class="coversBoxTitle">
+										<p><span style="text-align: center"><i class="fa-regular fa-shield-check" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 3</span></p>
+									</div>
+									<p class="textCobertura">Daños a los Sistemas e Interrupción de Negocio</p>
+									<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite DE cobertura: {{$ctrl.amount.DS_TIPOS}}</p>
+									<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5" class="limiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> 100% DEL LÍMITE AGREGADO</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="" layout="column" flex="33" >
+						<div layout="column" layout-gt-sm="row" layout-margin="" style="text-align: center">
+							<div class="" flex="">
+								<div class="box-covers-tarCiber" style="border-bottom: 1px solid #ebeaea;">
+									<div class="coversBoxTitle">
+										<p><span style="text-align: center"><i class="fa-regular fa-shield-check" style="color: #0066ff;font-size: 1.2em;margin-right: 3px"></i> COBERTURA 4 CIBERDELINCUENCIA</span></p>
+									</div>
+									<div ng-if="$ctrl.addCCE == false || $ctrl.addCCE == undefined" flex="" style="margin-top: 31px">
+										<div layout="row" layout-align="center center" style="padding: 0px 15px;">
+											<div layout="column" flex="60">
+												<p class="c4_box">EXTORSIÓN CIBERNÉTICA</p>
+											</div>
+											<div layout="column" flex="40">
+												<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 6" class="c4LimiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite {{$ctrl.amount.DS_TIPOS}}</p>
+												<p ng-if="$ctrl.productoCiberSelected.ID_PRODUCTO == 5" class="c4LimiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> 100% DEL LÍMITE AGREGADO</p>
+											</div>
+										</div>
+										<div layout="row" layout-align="center center" style="padding: 0px 15px;">
+											<div layout="column" flex="60">
+												<p class="c4_box">ROBO DE IDENTIDAD | FRAUDE POR TRANSFERENCIA DE FONDOS </p>
+											</div>
+											<div layout="column" flex="40">
+												<p class="c4LimiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite {{$ctrl.amountCC}}</p>
+											</div>
+										</div>
+									</div>
+									<div ng-if="$ctrl.addCCE == true" flex="" style="margin-top: 20px">
+										<div layout="row" layout-align="center center" style="padding: 0px 15px;">
+											<div layout="column" flex="60">
+												<p class="c4_box">EXTORSIÓN CIBERNÉTICA: </p>
+											</div>
+											<div layout="column" flex="40">
+												<p class="c4LimiteTag"><i class="fa-regular fa-arrow-up-to-line"></i> Límite {{$ctrl.amount.DS_TIPOS}}</p>
+											</div>
+										</div>
+										<div layout="row" layout-align="center center" style="padding: 0px 15px;">
+											<div layout="column" flex="60">
+												<p style="font-size: 0.7em!important;" class="c4_box">ROBO DE IDENTIDAD | FRAUDE POR TRANSFERENCIA DE FONDOS | ROBO DE FONDOS DE LA CUENTA FIDUCIARIA | ROBO DE FONDOS PERSONALES | HACKING TELEFÓNICO | PHISING</p>
+											</div>
+											<div layout="column" flex="40">
+												<p class="c4LimiteTag c4LimiteTagExt"><i class="fa-regular fa-arrow-up-to-line"></i> Límite {{$ctrl.amountCC}}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<form name="$ctrl.formPasoDatosEmpresa" id="formPasoDatosEmpresa">
+					<div ng-if="$ctrl.mostrarPasoEmision('datosEmpresa') == true" id="boxDF_Asegurado" style="border: 1px solid #f2f2f2;margin: 0px 0px 0px;">
+						<h5 ng-class="{headerDisabled: $ctrl.pasoAnadidoEmision('datosEmpresa') == true}" class="h5HeaderCiber row">
+							<div class="col-md-11" style="text-align: center">
+								DATOS FISCALES DE LA EMPRESA ASEGURADA
+							</div>
+							<div class="col-md-1" style="text-align: right">
+								<span ng-click="$ctrl.extenderPasoEmision('datosEmpresa', false)" ng-show="$ctrl.pasoExtenderEmision('datosEmpresa') == true"><i class="fa-solid fa-arrow-down-left-and-arrow-up-right-to-center i_pointer" ></i></span>
+								<span ng-click="$ctrl.extenderPasoEmision('datosEmpresa', true)" ng-show="$ctrl.pasoExtenderEmision('datosEmpresa') != true"><i class="fa-solid fa-arrow-up-right-and-arrow-down-left-from-center i_pointer"></i></span>
+							</div>
+						</h5>
+						<div class="separadorDesplegables"></div>
+						<div ng-show="$ctrl.pasoExtenderEmision('datosEmpresa') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('datosEmpresa') == true}" style="padding: 20px">
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="15">
+									<label>NIF/CIF</label>
+									<input name="documentNumber" ng-model="$ctrl.objHolder.NU_DOCUMENTO" cvalidation="document_a" uppercase required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="45">
+									<label>{{ 'CORPORATE_NAME' | translate | uppercase }}</label>
+									<input ng-model="$ctrl.objHolder.NO_NOMBRE" uppercase required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="15">
+									<label>TFNO. DE CONTACTO</label>
+									<input ng-model="$ctrl.NU_TELEFONO" ng-pattern="/^[0-9]{9}$/" maxlength="9" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="25">
+									<label>EMAIL DE LA EMPRESA</label>
+									<input ng-model="$ctrl.objHolder.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" uppercase required>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="md-block" flex="40">
+									<label>DIRECCIÓN FISCAL</label>
+									<input ng-model="$ctrl.address.NO_DIRECCION" uppercase required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="10">
+									<label>CP</label>
+									<input ng-model="$ctrl.address.CO_POSTAL" ng-change="$ctrl.checkPostal($ctrl.address.CO_POSTAL)" ng-pattern="/^[0-9]{5}$/" maxlength="5" required>
+								</md-input-container>
+	
+								<md-input-container class="md-block" flex="25">
+									<label>LOCALIDAD</label>
+									<input ng-model="$ctrl.address.NO_LOCALIDAD" required uppercase disabled>
+								</md-input-container>
+	
+								<md-input-container class="md-block" flex="25">
+									<label>PROVINCIA</label>
+									<input ng-model="$ctrl.address.NO_PROVINCIA" required uppercase disabled>
+								</md-input-container>
+							</div>
+							<div id="box-button-empresa-asegurada" layout="row" layout-align="center center" style="margin-top: 25px!important">
+								<div flex="100" style="text-align: center">
+									<md-button ng-click="$ctrl.anteriorInfo('formPasoDatosEmpresa', 'datosEmpresa')" class="md-raised md-primary medium-blue button-action-erase">
+										<span><i class="fa-light fa-backward-step"></i> COTIZACIÓN</span>
+									</md-button>
+									<md-button ng-click="$ctrl.siguienteInfo('formPasoDatosEmpresa', 'datosEmpresa')" class="md-raised md-primary medium-blue button-action-main">
+										<span><i class="fa-light fa-check"></i> CONFIRMAR DATOS FISCALES</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<form name="$ctrl.formPasoDatosAutorizado" id="formPasoDatosAutorizado">
+					<div ng-if="$ctrl.mostrarPasoEmision('datosAutorizado') == true" id="boxDF_PAutorizada" style="border: 1px solid #f2f2f2;margin: 0px 0px 0px;">
+						<h5 ng-class="{headerDisabled: $ctrl.pasoAnadidoEmision('datosAutorizado') == true}" class="h5HeaderCiber row">
+							<div class="col-md-11" style="text-align: center">
+								DATOS FISCALES DE LA PERSONA AUTORIZADA
+							</div>
+							<div class="col-md-1" style="text-align: right">
+								<span ng-click="$ctrl.extenderPasoEmision('datosAutorizado', false)" ng-show="$ctrl.pasoExtenderEmision('datosAutorizado') == true"><i class="fa-solid fa-arrow-down-left-and-arrow-up-right-to-center i_pointer" ></i></span>
+								<span ng-click="$ctrl.extenderPasoEmision('datosAutorizado', true)" ng-show="$ctrl.pasoExtenderEmision('datosAutorizado') != true"><i class="fa-solid fa-arrow-up-right-and-arrow-down-left-from-center i_pointer"></i></span>
+							</div>
+						</h5>
+						<div class="separadorDesplegables"></div>
+						<div ng-show="$ctrl.pasoExtenderEmision('datosAutorizado') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('datosAutorizado') == true}" style="padding: 20px">
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="15">
+									<label>NIF</label>
+									<input ng-model="$ctrl.objAutPer.NU_DOCUMENTO" cvalidation="document_n" uppercase required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>{{ 'NAME' | translate | uppercase }}</label>
+									<input ng-model="$ctrl.objAutPer.NO_NOMBRE" uppercase required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>{{ 'SURNAME_1' | translate }}</label>
+									<input ng-model="$ctrl.objAutPer.NO_APELLIDO1" uppercase required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>{{ 'SURNAME_2' | translate | uppercase }}</label>
+									<input ng-model="$ctrl.objAutPer.NO_APELLIDO2" uppercase>
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>CARGO</label>
+									<input ng-model="$ctrl.objAutPer.NO_CARGO" uppercase required>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="15">
+									<label>TELÉFONO DE CONTACTO</label>
+									<input ng-model="$ctrl.objAutPer.NU_TELEFONO" ng-pattern="/^[0-9]{9}$/" maxlength="9" required>
+								</md-input-container>
+	
+								<md-input-container class="md-block" flex="25">
+									<label>EMAIL PERSONAL</label>
+									<input ng-model="$ctrl.objAutPer.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" uppercase required>
+								</md-input-container>
+							</div>
+							<div id="box-button-persona-autorizada" layout="row" layout-align="center center" style="margin-top: 25px!important">
+								<div flex="100" style="text-align: center">
+									<md-button ng-click="$ctrl.anteriorInfo('formPasoDatosAutorizado', 'datosAutorizado')" class="md-raised md-primary medium-blue button-action-erase">
+										<span><i class="fa-light fa-backward-step"></i> EMPRESA ASEGURADA</span>
+									</md-button>
+									<md-button ng-click="$ctrl.siguienteInfo('formPasoDatosAutorizado', 'datosAutorizado')" class="md-raised md-primary medium-blue button-action-main">
+										<span><i class="fa-light fa-check"></i> CONFIRMAR DATOS DE LA PERSONA AUTORIZADA</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<form name="$ctrl.formPasoDatosPago" id="formPasoDatosPago">
+					<div ng-if="$ctrl.mostrarPasoEmision('datosPago') == true" id="box-DFMedioPago" style="border: 1px solid #f2f2f2;margin: 0px 0px 0px;">
+						<h5 ng-class="{headerDisabled: $ctrl.pasoAnadidoEmision('datosPago') == true}" class="h5HeaderCiber row">
+							<div class="col-md-11" style="text-align: center">
+								CONFIGURACIÓN DE PAGO
+							</div>
+							<div class="col-md-1" style="text-align: right">
+								<span ng-click="$ctrl.extenderPasoEmision('datosPago', false)" ng-show="$ctrl.pasoExtenderEmision('datosPago') == true"><i class="fa-solid fa-arrow-down-left-and-arrow-up-right-to-center i_pointer" ></i></span>
+								<span ng-click="$ctrl.extenderPasoEmision('datosPago', true)" ng-show="$ctrl.pasoExtenderEmision('datosPago') != true"><i class="fa-solid fa-arrow-up-right-and-arrow-down-left-from-center i_pointer"></i></span>
+							</div>
+						</h5>
+						<div class="separadorDesplegables"></div>
+						<div ng-show="$ctrl.pasoExtenderEmision('datosPago') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('datosPago') == true}" id="box-DFMedioPago-Gestor">
+							<div layout-gt-sm="row" layout-align="center center" style="margin-top: 25px!important">
+								<md-radio-group class="radioGroupCoberturas" layout-gt-sm="row" ng-model="$ctrl.tipoPagoAdhoc" ng-init="$ctrl.getMedioPago()" ng-change="$ctrl.bankAccount = null" required>
+									<md-radio-button ng-repeat="medioPago in $ctrl.tiposMedioPago" ng-value="medioPago.ID_TIPO_MEDIO_PAGO">
+										{{medioPago.DS_TIPO_MEDIO_PAGO}}
+									</md-radio-button>
+									
+								</md-radio-group>
+							</div>
+							<div class="separadorDesplegables"></div>
+							<div class="margin-top-20" layout-gt-sm="row" ng-if="$ctrl.tipoPagoAdhoc == 7" layout-align="center center">
+								<md-input-container class="md-block" flex="30">
+									<label>TITULAR DE LA CUENTA BANCARIA</label>
+									<input ng-model="$ctrl.bankAccount.NO_TITULAR" uppercase required>
+								</md-input-container>
+	
+								<md-input-container class="md-block" flex="10">
+									<label>BIC/SWIFT</label>
+									<input ng-model="$ctrl.bankAccount.CO_BIC" cvalidation="bic" required>
+								</md-input-container>
+	
+								<md-input-container class="md-block" style="margin-right: 0px !important;max-width: 9%;" flex="7">
+									<label>DC</label>
+									<input ng-model="$ctrl.bankAccount.DC" minlength="4" maxlength="4" placeholder="ES66" required>
+								</md-input-container>
+								<md-input-container class="md-block" style="margin-right: 0px !important; margin-left: 0px !important;max-width: 9%;" flex="7">
+									<label>ENTIDAD</label>
+									<input ng-model="$ctrl.bankAccount.ENTIDAD" minlength="4" maxlength="4" placeholder="2100" required>
+								</md-input-container>
+								<md-input-container class="md-block" style="margin-right: 0px !important; margin-left: 0px !important;max-width: 9%;" flex="7">
+									<label>OFICINA</label>
+									<input ng-model="$ctrl.bankAccount.OFICINA" minlength="4" maxlength="4" placeholder="0418" required>
+								</md-input-container>
+								<md-input-container class="md-block" style="margin-right: 0px !important; margin-left: 0px !important;max-width: 9%;" flex="7">
+									<label>D.Control</label>
+									<input ng-model="$ctrl.bankAccount.DIGITO_CONTROL" minlength="2" maxlength="2" placeholder="40" required>
+								</md-input-container>
+								<md-input-container class="md-block" style="margin-right: 0px !important; margin-left: 0px !important" flex="15">
+									<label>NºCUENTA</label>
+									<input ng-model="$ctrl.bankAccount.NU_CUENTA" minlength="10" maxlength="10" placeholder="1234567891" required>
+								</md-input-container>
+							</div>
+							<div layout="row" layout-align="center center" style="margin-top: 25px!important;margin-bottom: 20px!important;">
+								<div flex="100" style="text-align: center">
+									<md-button ng-click="$ctrl.anteriorInfo('formPasoDatosPago', 'datosPago')" class="md-raised md-primary medium-blue button-action-erase">
+										<span><i class="fa-light fa-backward-step"></i> PERSONA AUTORIZADA</span>
+									</md-button>
+									<md-button ng-click="$ctrl.siguienteInfo('formPasoDatosPago', 'datosPago')" class="md-raised md-primary medium-blue button-action-main">
+										<span><i class="fa-light fa-check"></i> CONFIRMAR CONFIGURACIÓN DE PAGO</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<form name="$ctrl.formFechasGestor" id="formFechasGestor">
+					<div ng-if="$ctrl.mostrarPasoEmision('datosFechasGestor') == true" id="boxDF-fechasGestor" style="border: 1px solid #f2f2f2;margin: 0px 0px 0px;">
+						<h5 ng-class="{headerDisabled: $ctrl.pasoAnadidoEmision('datosFechasGestor') == true}" class="h5HeaderCiber row">
+							<div class="col-md-11" style="text-align: center">
+								CONFIGURACIÓN DE VIGENCIA
+							</div>
+							<div class="col-md-1" style="text-align: right">
+								<span ng-click="$ctrl.extenderPasoEmision('datosFechasGestor', false)" ng-show="$ctrl.pasoExtenderEmision('datosFechasGestor') == true"><i class="fa-solid fa-arrow-down-left-and-arrow-up-right-to-center i_pointer" ></i></span>
+								<span ng-click="$ctrl.extenderPasoEmision('datosFechasGestor', true)" ng-show="$ctrl.pasoExtenderEmision('datosFechasGestor') != true"><i class="fa-solid fa-arrow-up-right-and-arrow-down-left-from-center i_pointer"></i></span>
+							</div>
+						</h5>
+						<div class="separadorDesplegables"></div>
+						<div ng-show="$ctrl.pasoExtenderEmision('datosFechasGestor') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('datosFechasGestor') == true}" id="adminBoxChild" class="text-center margin-top-20">
+							<span style="color: #6E7894"><i class="fa-light fa-bell" style="color: #0066ff;margin-right: 5px;"></i> ¿Quieres modificar las <span style="color: #0066ff;">FECHAS DE VIGENCIA</span> de la póliza a emitir?</span>
+							<div id="boxVigencia" layout="row" layout-align="center center">
+								<div flex="100">
+									<div layout="row" layout-align="center center" flex="100">
+										<div flex="25" style="text-align: center">
+											<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+												<md-list-item layout-align="center center">
+													<md-input-container flex="100">
+														<md-checkbox class="checBoxCiber" ng-change="$ctrl.changeFechaVigorPolizaCheck()" ng-model="$ctrl.checkFecha" ng-true-value="true"><span><i class="fa-light fa-binary-circle-check" style="color: #0066ff;margin-right: 3px"></i> ESTABLECER ENTRADA EN VIGOR: </span></md-checkbox>
+													</md-input-container>
+												</md-list-item>
+											</md-list>
+										</div>
+										<div flex="25" style="text-align: center">
+											<md-list style="margin-top: 0px;padding: 5px" layout="colum" layout-align="start center" >
+												<md-list-item>
+													<md-input-container flex="100">
+
+														<md-datepicker ng-change="$ctrl.changeFechaVigor()" ng-model="$ctrl.opciones.fechaEfecto" ng-disabled="$ctrl.checkFecha!=true" md-min-date="$ctrl.date" md-max-date="$ctrl.maxDateInicio" required md-no-asterisk>
+														</md-datepicker>
+													</md-input-container>
+												</md-list-item>
+											</md-list>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div ng-show="$ctrl.pasoExtenderEmision('datosFechasGestor') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('datosFechasGestor') == true}" layout="row" layout-align="center center" style="margin-top: 25px!important;margin-bottom: 20px!important;">
+							<div flex="100" style="text-align: center">
+								<md-button ng-click="$ctrl.anteriorInfo('formFechasGestor', 'datosFechasGestor')" class="md-raised md-primary medium-blue button-action-erase">
+									<span><i class="fa-light fa-backward-step"></i> CONFIGURACIÓN DE PAGO</span>
+								</md-button>
+								<md-button ng-click="$ctrl.siguienteInfo('formFechasGestor', 'datosFechasGestor')" class="md-raised md-primary medium-blue button-action-main">
+									<span><i class="fa-light fa-check"></i> CONFIRMAR CONFIGURACIÓN DE VIGENCIA</span>
+								</md-button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<form name="$ctrl.formPasoDocumentos" id="formPasoDocumentos">
+					<div ng-if="$ctrl.mostrarPasoEmision('documentos') == true" id="boxDF-EnvioDocs" style="border: 1px solid #f2f2f2;margin: 0px 0px 0px;">
+						<h5 ng-class="{headerDisabled: $ctrl.pasoAnadidoEmision('documentos') == true}" class="h5HeaderCiber row">
+							<div class="col-md-11" style="text-align: center">
+								CONFIGURACIÓN DE ENVÍO DE DOCUMENTOS
+							</div>
+							<div class="col-md-1" style="text-align: right">
+								<span ng-click="$ctrl.extenderPasoEmision('documentos', false)" ng-show="$ctrl.pasoExtenderEmision('documentos') == true"><i class="fa-solid fa-arrow-down-left-and-arrow-up-right-to-center i_pointer" ></i></span>
+								<span ng-click="$ctrl.extenderPasoEmision('documentos', true)" ng-show="$ctrl.pasoExtenderEmision('documentos') != true"><i class="fa-solid fa-arrow-up-right-and-arrow-down-left-from-center i_pointer"></i></span>
+							</div>
+						</h5>
+						<div class="separadorDesplegables"></div>
+						<div ng-show="$ctrl.pasoExtenderEmision('documentos') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('documentos') == true}" style="padding: 20px">
+							<div layout-gt-sm="row" layout-align="center center" style="padding: 20px">
+								<span style="color: #6E7894"><i class="fa-light fa-bell-exclamation" style="color: #0066ff;font-size: 20px"></i> ¡ATENCIÓN! Por defecto el sistema envía la <span style="color: #0066ff;">PÓLIZA Y DOCUMENTOS ASOCIADOS</span> al <span style="color: #0066ff;">email de la empresa asegurada.</span> Puedes  <span style="color: #0066ff;">cambiar a dónde los enviamos</span></span>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-checkbox
+										ng-model="$ctrl.checkEmail"
+										ng-change="$ctrl.emailAccept = false; $ctrl.opciones.email = null;">
+									QUIERO QUE LA <span style="color: #6E7894;font-family: TelefonicaWebBold">PÓLIZA </span> Y LOS <span style="color: #6E7894;font-family: TelefonicaWebBold">DOCUMENTOS DE LA CONTRATACIÓN</span> SE ENVÍEN A
+								</md-checkbox>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="40">
+									<label>INTRODUCIR EMAIL DE RECEPCIÓN DE PÓLIZA Y DOCUMENTOS</label>
+									<input ng-model="$ctrl.opciones.email" ng-disabled="$ctrl.checkEmail == false" ng-required="$ctrl.checkEmail == true" type="email" uppercase>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center" style="margin-top: 25px!important">
+								<md-button ng-click="$ctrl.anteriorInfo('formPasoDocumentos', 'documentos')" class="md-raised md-primary medium-blue button-action-erase">
+									<span><i class="fa-light fa-backward-step"></i> CONFIGURACIÓN DE VIGENCIA</span>
+								</md-button>
+								<md-button ng-click="$ctrl.aceptarEmail(); $ctrl.siguienteInfo('formPasoDocumentos', 'documentos')" class="md-raised md-primary medium-blue button-action-main">
+									<span>CONFIRMAR CONFIGURACIÓN DE ENVÍO</span>
+								</md-button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<form name="$ctrl.formDominios" id="formDominios">
+					<div ng-if="$ctrl.mostrarPasoEmision('dominios') == true" id="boxDF-dominios" style="border: 1px solid #f2f2f2;margin: 0px 0px 0px;">
+						<h5 ng-class="{headerDisabled: $ctrl.pasoAnadidoEmision('dominios') == true}" class="h5HeaderCiber row">
+							<div class="col-md-11" style="text-align: center">
+								DOMINIOS WEB CORPORATIVOS
+							</div>
+							<div class="col-md-1" style="text-align: right">
+								<span ng-click="$ctrl.extenderPasoEmision('dominios', false)" ng-show="$ctrl.pasoExtenderEmision('dominios') == true"><i class="fa-solid fa-arrow-down-left-and-arrow-up-right-to-center i_pointer" ></i></span>
+								<span ng-click="$ctrl.extenderPasoEmision('dominios', true)" ng-show="$ctrl.pasoExtenderEmision('dominios') != true"><i class="fa-solid fa-arrow-up-right-and-arrow-down-left-from-center i_pointer"></i></span>
+							</div>
+						</h5>
+						<div class="separadorDesplegables"></div>
+						<div ng-show="$ctrl.pasoExtenderEmision('dominios') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('dominios') == true}" class="text-center margin-top-20">
+							<p style="text-align: center;color: #6e7894;"><i class="fa-regular fa-globe"></i> Indica el número y denominación de los dominios web pertenecientes a la empresa asegurada.</p>
+							<div layout="row" layout-align="center center" flex="100" style="margin-top: 40px">
+								<div layout-gt-sm="row" layout-align="center center" class="domain-form-container">
+									<div flex="100">
+										<md-input-container class="selectAdmin" flex="100" style="margin-bottom: 35px;">
+											<label>NÚMERO DE DOMINIOS</label>
+											<md-select ng-model="$ctrl.nuDomains" ng-change="$ctrl.chkDomains($ctrl.nuDomains)" required>
+												<md-option ng-value=1>1 DOMINIO</md-option>
+												<md-option ng-value=2>2 DOMINIOS</md-option>
+												<md-option ng-value=3>3 DOMINIOS</md-option>
+												<md-option ng-value=4>4 DOMINIOS</md-option>
+												<md-option ng-value=5>5 DOMINIOS</md-option>
+												<md-option ng-value=6>6 DOMINIOS</md-option>
+												<md-option ng-value=7>7 DOMINIOS</md-option>
+												<md-option ng-value=8>8 DOMINIOS</md-option>
+												<md-option ng-value=9>9 DOMINIOS</md-option>
+												<md-option ng-value=10>10 DOMINIOS</md-option>
+											</md-select>
+										</md-input-container>
+									</div>
+									<div flex="100">
+										<div ng-repeat="domain in $ctrl.lstDomains track by $index" style="margin-bottom: 35px;">
+											<label>Introducir dominio web</label>
+											<md-input-container flex="100" style="width: 100%;">
+												<input ng-model="$ctrl.lstDomains[$index]" domain required value="https://www.">
+											</md-input-container>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div ng-show="$ctrl.pasoExtenderEmision('dominios') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('dominios') == true}" id="box-button-datos-pago-admin" layout="row" layout-align="center center" style="margin-bottom: 20px">
+							<div flex="100" style="text-align: center">
+								<md-button ng-click="$ctrl.anteriorInfo('formDominios', 'dominios')" class="md-raised md-primary medium-blue button-action-erase">
+									<span><i class="fa-light fa-backward-step"></i> CONFIGURACIÓN DE ENVÍO DE DOCUMENTOS</span>
+								</md-button>
+								<md-button ng-click="$ctrl.siguienteInfo('formDominios', 'dominios')" class="md-raised md-primary medium-blue button-action-main">
+									<span><i class="fa-light fa-check"></i> CONFIRMAR DOMINIOS WEB</span>
+								</md-button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<form name="$ctrl.formPasoEbroker" id="formPasoEbroker">
+					<div ng-if="$ctrl.mostrarPasoEmision('ebroker') == true" id="boxDF-ebroker" style="border: 1px solid #f2f2f2;margin: 0px 0px 0px;">
+						<div class="accentBox">
+							<div ng-class="{headerDisabled: $ctrl.pasoAnadidoEmision('ebroker') == true}" layout-gt-sm="row" layout-align="space-between center" flex="100">
+								<img style="margin-left: 25px;" src="src/img/ebroker_logo.png" class="ng-scope" />
+								<span ng-click="$ctrl.extenderPasoEmision('ebroker', false)" ng-show="$ctrl.pasoExtenderEmision('ebroker') == true"><i class="fa-solid fa-arrow-down-left-and-arrow-up-right-to-center i_pointer" style="color: #12578e;"></i></span>
+								<span ng-click="$ctrl.extenderPasoEmision('ebroker', true)" ng-show="$ctrl.pasoExtenderEmision('ebroker') != true"><i class="fa-solid fa-arrow-up-right-and-arrow-down-left-from-center i_pointer" style="color: #12578e;"></i></span>
+							</div>
+							<div ng-show="$ctrl.pasoExtenderEmision('ebroker') == true" ng-class="{formDisabled: $ctrl.pasoAnadidoEmision('ebroker') == true}">
+								<div layout-gt-sm="row" layout-align="center center" style="margin-bottom: 30px;">
+									<span style="color: #6E7894"><i class="fa-light fa-file-certificate" style="color: #0066ff;font-size: 20px"></i> Rellena la siguiente información sobre la <span style="color: #0066ff;">CORREDURÍA DE EBORKER ASOCIADA </span> para que podamos generar la documentación CiberWay asociada.</span>
+								</div>
+								<div layout-gt-sm="row" layout-align="center center" flex="100">
+									<md-input-container class="md-block" flex="40">
+										<label>NOMBRE DE LA CORREDURÍA</label>
+										<input ng-model="$ctrl.objEbroker.nombreCorreduria" uppercase required>
+									</md-input-container>
+									<md-input-container class="md-block" flex="15">
+										<label>DGS CORREDURÍA</label>
+										<input ng-model="$ctrl.objEbroker.dgsCorreduria" uppercase required>
+									</md-input-container>
+									<md-input-container class="md-block" flex="15">
+										<label>TELÉFONO DE LA CORREDURÍA</label>
+										<input ng-model="$ctrl.objEbroker.telefonoCorreduria" required>
+									</md-input-container>
+									<md-input-container class="md-block" flex="15">
+										<label>EMAIL DE LA CORREDURÍA</label>
+										<input ng-model="$ctrl.objEbroker.emailCorreduria" uppercase required>
+									</md-input-container>
+								</div>
+								<div layout-gt-sm="row" layout-align="center center" flex="100">
+									<md-input-container class="md-block" flex="30">
+										<label>DIRECCIÓN DE LA CORREDURÍA</label>
+										<input ng-model="$ctrl.objEbroker.direccionCorreduria" ng-model="$ctrl.address.NO_DIRECCION" uppercase required>
+									</md-input-container>
+									<md-input-container class="md-block" flex="10">
+										<label>CÓDIGO POSTAL</label>
+										<input ng-model="$ctrl.objEbroker.cpCorreduria" maxlength="5" ng-change="$ctrl.changeCoPostalCorreduria()" required>
+									</md-input-container>
+		
+									<md-input-container class="md-block" flex="20">
+										<label>LOCALIDAD DE LA CORREDURÍA</label>
+										<input ng-model="$ctrl.objEbroker.poblacionCorreduria" required uppercase disabled>
+									</md-input-container>
+		
+									<md-input-container class="md-block" flex="20">
+										<label>PROVINCIA DE LA CORREDURÍA</label>
+										<input ng-model="$ctrl.objEbroker.provinciaCorreduria" required uppercase disabled>
+									</md-input-container>
+								</div>
+								<div layout="row" layout-align="center center" style="margin-top: 25px!important">
+									<div flex="100" style="text-align: center">
+										<md-button ng-click="$ctrl.anteriorInfo('formPasoEbroker', 'ebroker')" class="md-raised md-primary medium-blue button-action-erase">
+											<span><i class="fa-light fa-backward-step"></i> ANTERIOR: DOMINIOS WEB</span>
+										</md-button>
+										<md-button ng-click="$ctrl.siguienteInfo('formPasoEbroker', 'ebroker')" class="md-raised md-primary medium-blue button-action-main">
+											<span><i class="fa-light fa-check"></i> CONFIRMAR DATOS DE CORREDURÍA</span>
+										</md-button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div ng-if="$ctrl.showBoxFinalizar == true">
+					<div ng-if="$ctrl.loading != true" id="box-button-Contratar" layout="row" layout-align="center center" style="margin-top: 25px!important">
+						<div flex="100" style="text-align: center">
+							<h5 style="margin: 30px;color: #5eba7d;letter-spacing: 1px;font-family: 'TelefonicaWebRegular';border: 2px solid #5eba7d;padding: 20px;"><i class="fa-sharp fa-solid fa-check-double"></i> TOMA DE DATOS FINALIZADA. TODO SE ENCUENTRA LISTO PARA REALIZAR LA CONTRATACIÓN</h5>
+							<md-button ng-click="$ctrl.anteriorInfo('formPasoDatosPago', 'finalizacion')" class="md-raised md-primary medium-blue button-action-erase">
+								<span><i class="fa-light fa-backward-step"></i> {{ ($ctrl.showEbroker == true) ? "CORREDURÍA DE EBROKER ASOCIADA " : "DOMINIOS WEB CORPORATIVOS" }}</span>
+							</md-button>
+							<md-button ng-click="$ctrl.contract()" class="md-raised md-primary medium-blue button-action-main">
+								<span><i class="fa-light fa-check"></i> FINALIZAR CONTRATACIÓN Y GENERAR DOCUMENTACIÓN</span>
+							</md-button>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center">
+						<div class="cs-loader" ng-if="$ctrl.loading == true" style="height: auto; width: 97%; position: relative; height: 40px;">
+							<div class="cs-loader-inner">
+								<label>●</label>
+								<label>●</label>
+								<label>●</label>
+								<label>●</label>
+								<label>●</label>
+								<label>●</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </md-content>
+
+    <!-- DATOS PÓLIZA -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 3" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll">
+        <div class="container_TarMovil" flex="" layout-align="center center" style="text-align: center">
+            <h3 style="padding: 20px;text-transform: uppercase;letter-spacing: 0.015em;color: #74b957"><i class="fa-light fa-check-double" style="color:#74b957; margin-right: 3px;"></i> Contratación realizada correctamente</h3>
+			<div style="padding: 20px">
+				<h5>{{$ctrl.objPres.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NO_NOMBRE}} con CIF {{$ctrl.objPres.PRESUPUESTO.PECUNIARIAS.DATOS_TOMADOR.NU_DOCUMENTO}} queda asegurada en <span style="color: #0066ff">Telefónica Seguros</span> en la póliza con número de referencia {{$ctrl.objPres.NU_POLIZA}}</h5>
+				<h5>Fecha de activación de la póliza: <span style="color: #0066ff">{{ $ctrl.objPres.PRESUPUESTO.PECUNIARIAS.DATOS_PAGO.FD_INICIO | date:"dd/MM/yyyy"}}</span></h5>
+			</div>
+        </div>
+    </md-content>
+
+</div>

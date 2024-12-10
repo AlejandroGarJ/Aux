@@ -1,0 +1,142 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="row" resize ng-style="resizeHeight({{$ctrl.medida}})">
+	<form role="form" id="formReclamacion" class="formClass form-detalle" flex>
+		<legend>{{ 'CLIENT_CLAIM' | translate }}</legend>
+			<section>
+				<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'CLIENT_DATA' | translate }}
+				<button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+					<span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos del cliente"></span>
+					<span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos del cliente"></span>
+				</button>
+				</legend>
+					<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+						<div class="separadorDesplegables"></div>
+						<div layout="row">	
+							<md-input-container class="md-block" flex-gt-sm="20">
+								<label>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+								<input ng-model="$ctrl.form.OCLIENTE.NU_DOCUMENTO" required>
+								<a class="glyBuscar"  ng-click="$ctrl.busClient($ctrl.form.OCLIENTE.NU_DOCUMENTO)" ng-show="!$ctrl.loading1"><i class="glyphicon glyphicon-search"></i></a>
+								<img ng-src="src/img/loading.gif" width="30" class="loading" ng-show="$ctrl.loading1"/>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm="40">
+								<label>{{ 'FULL_NAME' | translate }}</label>
+								<input ng-model="$ctrl.form.OCLIENTE.NO_NOMBRE_COMPLETO" disabled>
+								</md-select>
+							</md-input-container>
+								<md-autocomplete name="Aseguradora" flex-gt-sm required md-no-cache="true" ng-if="!$ctrl.compania"
+								ng-disabled="$ctrl.form.OCLIENTE.NO_NOMBRE_COMPLETO == undefined"
+								md-search-text="$ctrl.textoBusquedaAseguradora"
+								md-selected-item="$ctrl.tipoAseguradoraSeleccionada"
+								md-items="aseguradora in $ctrl.filtrarAseg($ctrl.textoBusquedaAseguradora, $ctrl.companias, 'DS_SITUACION_CLIENTE')"
+								md-item-text="aseguradora.DS_SITUACION_CLIENTE" md-min-length="0" md-require-match
+								md-floating-label="{{ 'JURIDICAL' | translate }}">
+								<md-item-template>
+									<span md-highlight-text="$ctrl.textoBusquedaAseguradora"
+										md-highlight-flags="^i">{{aseguradora.DS_SITUACION_CLIENTE}}</span>
+								</md-item-template>
+								<md-not-found>
+									{{ 'NOT_FOUND_INSURER' | translate }} '{{$ctrl.textoBusquedaAseguradora}}'.
+								</md-not-found>
+							</md-autocomplete>
+							<md-input-container class="md-block" flex-gt-sm="40" ng-if="$ctrl.compania">
+								<label>{{ 'JURIDICAL' | translate }}</label>
+								<input type="text" ng-model="$ctrl.dsSituacion" disabled> 
+							</md-input-container>		
+						</div>
+					</div>
+			</section>
+			<section>
+				<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'POLICY_DATA' | translate }}
+				<button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed3 = !$ctrl.isCollapsed3">
+					<span ng-if="$ctrl.isCollapsed3" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos de la póliza"></span>
+					<span ng-if="!$ctrl.isCollapsed3" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos de la póliza"></span>
+				</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="$ctrl.isCollapsed3">
+					<div class="separadorDesplegables"></div>
+					<div layout="row" style="margin-bottom:2%">
+						<md-input-container class="md-block" flex-gt-sm="20"  >
+							<label>{{ 'BRANCH' | translate }}</label>
+							<md-select ng-model="$ctrl.form.CONSULTA_EXTERNA.DATOS_POLIZA.ID_RAMO" ng-disabled="$ctrl.form.OCLIENTE.NO_NOMBRE_COMPLETO == undefined" required>
+								<md-option ng-repeat="ramo in $ctrl.ramosFiltrados" ng-click="$ctrl.buscarPolizas($ctrl.form.OCLIENTE.NU_DOCUMENTO, ramo.ID_RAMO)"
+								value={{ramo.ID_RAMO}}>{{ramo.NO_RAMO}}</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm="60">
+							<label>{{ 'POLICY_NU' | translate }}</label>
+							<md-select ng-model="$ctrl.form.OPOLIZA" ng-disabled="$ctrl.polbuscadas == false" required>
+								<md-option  ng-repeat="poliza in $ctrl.polizas" ng-value="poliza">									
+									<span class="item-title"  md-highlight-flags="^i">
+										{{poliza.NU_POLIZA}} - {{poliza.DS_SITUAPOLIZA}}
+									</span>
+									<span class="item-metadata" style="font-size:10px;color:gray;">
+										{{poliza.NO_COMPANIA}} - {{poliza.NO_RAMO}}
+									</span>
+								</md-option>
+								<md-option ng-value="0" ng-if="$ctrl.noPoliza == true" style="color:red;">
+									*{{ 'ERROR_POLICY_BRANCH' | translate }}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm="20">
+							<label>{{ 'CLAIM_REASON' | translate }}</label>
+							<md-select ng-model="$ctrl.form.CONSULTA_EXTERNA.ID_MOTIVO" ng-disabled="$ctrl.motivos == undefined" required>
+								<md-option ng-repeat="motivo in $ctrl.motivos" ng-value="motivo.ID_MOTIVO">{{motivo.DS_MOTIVO}}</md-option>
+							</md-select>
+						</md-input-container>
+					</div>
+				</div>
+			</section>
+			<section>
+				<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'ADDITIONAL_DATA' | translate }}
+				<button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed1 = !$ctrl.isCollapsed1">
+					<span ng-if="$ctrl.isCollapsed1" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos adicionales"></span>
+					<span ng-if="!$ctrl.isCollapsed1" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos adicionales"></span>
+				</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="$ctrl.isCollapsed1">
+					<div class="separadorDesplegables"></div>
+					<div layout="row" style="margin-left: 1%">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'OBSERVATIONS' | translate }}</label>
+							<textarea ng-model="$ctrl.form.CONSULTA_EXTERNA.XML_OBSERVACIONES.TX_OBSERVACIONES"></textarea>
+						</md-input-container>
+					</div>
+				</div>
+			</section>	
+			<section>
+				<legend><span class="mov-ico ic-ciber-ico-seguridad-informatica"></span> {{ 'ATTACHED_FILES' | translate }}
+					<button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+						<span ng-if="isCollapsed"class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de los ficheros adjuntos"></span> 
+						<span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de los ficheros adjuntos"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed">
+					<div class="separadorDesplegables"></div>				
+						<input type="file" id="file_sr" name="file" class="inputfile" />
+							<label class="dark-blue md-button btnOpcion" for="file_sr">
+								<i class="material-icons btnIconoNube">cloud_upload</i> {{ 'ADD' | translate | uppercase }}
+							</label>
+						<div class="margin-top-20" ng-repeat="archivo in $ctrl.listaArchivos" layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm flex="20">
+								<label>{{ 'FILE' | translate }}</label>
+								<input ng-model="archivo.NO_ARCHIVO" disabled>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm flex="20">
+								<label>{{ 'STATUS' | translate }}</label>
+								<input type="text" ng-model="archivo.DS_ESTADO" disabled>
+							</md-input-container>
+							<i class="material-icons btnIcono" ng-click="$ctrl.deleteFile(archivo)">delete_outline</i>
+					</div>
+				</div>
+		</section>		
+		<div layout="row" layout-align="center" layout-margin>
+			<md-button class="md-raised md-primary medium-blue button-action-main" form="formReclamacion" ng-click="$ctrl.nuevaSolicitudReclamacion()">
+				<md-icon>save</md-icon> {{ 'ACCEPT' | translate }}
+			</md-button>
+		</div>
+
+	</form>
+</div>	

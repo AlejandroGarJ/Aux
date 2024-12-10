@@ -1,0 +1,49 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color: #ffffff">
+	<form ng-submit="$ctrl.buscar('remesas')" class="form-busqueda">
+		<div class="form-scroll" resize>
+			<div layout="row" style="width: 100%" class="layout-row">
+				<h4 ng-hide="$ctrl.desplegado == false" style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="25" ><span><i class="fas fa-search"></i></span><span style="color:#0066ff!important"> BÚSQUEDA DE REMESAS </span></h4>
+			</div>
+			<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100" class="inputs-without-label-value margin-top-10">
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label>Remesa</label>
+					<input ng-model="$ctrl.form.ID_RECIBO_REMESA.value">
+				</md-input-container>
+				<md-input-container class="md-block margin-select-detail" flex-gt-sm="25">
+					<label>Mediador</label>
+					<md-select ng-model="$ctrl.form.ID_COMPANIA.value">
+						<md-option ng-repeat="compania in $ctrl.tipos.compania" ng-value="compania.ID_COMPANIA">
+							{{$ctrl.parentApp.getDescriptivo(compania, 'NO_COMERCIAL')}}
+							<!-- 			              	{{compania.NO_COMERCIAL}} -->
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="20">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>Fecha Contab. desde...</label>
+
+					<md-datepicker ng-model="$ctrl.form.FD_SAP.value" ng-init="$ctrl.form.FD_SAP.value = null"
+								   ng-click="($ctrl.form.FD_SAP.value == null || $ctrl.form.FD_SAP.value == undefined) ? $ctrl.form.FD_SAP.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="20">
+					<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>Fecha Contab. hasta...</label>
+
+					<md-datepicker ng-model="$ctrl.form.FD_SAP_HASTA.value" ng-init="$ctrl.form.FD_SAP_HASTA.value = null"
+								   ng-click="($ctrl.form.FD_SAP_HASTA.value == null || $ctrl.form.FD_SAP_HASTA.value == undefined) ? $ctrl.form.FD_SAP_HASTA.value = null : ' '">
+					</md-datepicker>
+				</md-input-container>
+				<md-button style="margin-top: 20px!important;" class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2" >
+					<i class="fa fa-magnifying-glass"></i>
+					{{ 'SEARCH_BTN' | translate }}
+				</md-button>
+				<md-button style="margin-top: 20px!important;" class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+					<i class="fa fa-trash"></i>
+					{{ 'CLEAN' | translate }}
+				</md-button>
+			</div>
+		</div>
+	</form>
+</md-content>

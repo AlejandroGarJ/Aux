@@ -1,0 +1,17 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%">
+	<md-toolbar style="background-color: white; min-height:25px;">
+		<div class="md-toolbar-tools" style="height:25px">
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+			<div class="md-dialog-content modalContenedorMsg" layout="row" layout-align="center center">
+				<p>{{$ctrl.msg}}</p>
+			</div>
+			<div layout="row" class="modalContenedorBtn" layout-align="center center">
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.cancel()">Aceptar</md-button>
+			</div>
+	</md-dialog-content>
+</md-dialog>

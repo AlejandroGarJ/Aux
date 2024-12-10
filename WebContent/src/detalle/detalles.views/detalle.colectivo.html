@@ -1,0 +1,152 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+	<form class="formClass" name="$ctrl.formAseguradora" id="formSubmitAseguradora">
+		
+		<div class="margenPresupuestos">
+			<div class="separadorDesplegables"></div>
+			<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos de partner</legend>
+			<div layout-gt-sm="row">
+				<md-input-container class="flex" flex-gt-sm>
+					<label>Partner padre</label>
+					<md-select ng-model="$ctrl.datos.ID_TIPO_POLIZA">
+						<md-option ng-repeat="sub in $ctrl.listSubcolectivos" ng-value="sub.ID_TIPO_POLIZA">
+							{{sub.DS_TIPO_POLIZA}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="flex" flex-gt-sm>
+					<label>Nombre partner</label>
+					<input ng-model="$ctrl.datos.DS_TIPO_POLIZA" required>
+				</md-input-container>
+			</div>
+
+<!-- 			<legend><span class="mov-ico ic-ciber-ico-seguridad-informatica"></span> Logos</legend> -->
+			
+		</div>
+	</form>
+
+	<div layout="row" layout-align="center none">
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.permisos.IN_ESCRITURA == true" ng-click="$ctrl.saveColectivo()" form="{{$ctrl.formulario}}">
+			<md-icon>save</md-icon>
+			Validar y guardar
+		</md-button>
+	</div>
+</div>
+
+
+<!--
+<div flex>
+	<uib-tabset active="$ctrl.indice" class="tabsPasos" type="pills" justified="true" flex="none">
+
+		<uib-tab index="1" heading="Detalle del partner" class="btn-sm">
+			<md-content md-whiteframe="1" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight(295)">
+				<div flex>
+					<form name="$ctrl.formAseguradora" id="formSubmitAseguradora">
+						<legend>Datos de partner</legend>
+						<div class="margenPresupuestos" uib-collapse="isCollapsed">
+							<div class="separadorDesplegables"></div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Subcolectivo</label>
+									<md-select ng-model="$ctrl.datos.ID_TIPO_POLIZA">
+										<md-option ng-repeat="sub in $ctrl.listSubcolectivos" ng-value="sub.ID_TIPO_POLIZA">
+											{{sub.DS_TIPO_POLIZA}}
+										</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'DESCRIPTION' | translate }}</label>
+									<input ng-model="$ctrl.datos.DS_TIPO_POLIZA" required>
+								</md-input-container>
+							</div>
+							<legend>Datos de partner para el presupuesto (PDF)</legend>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex="30">
+									<label>Teléfono presupuesto</label>
+									<input ng-model="$ctrl.datos.NU_TELEFONO">
+								</md-input-container>
+								<md-input-container class="flex" flex="70">
+									<label>Correo electrónico presupuesto</label>
+									<input ng-model="$ctrl.datos.DS_MAIL_COLECTIVO">
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex="100">
+									<label>Encargado de tratamiento de datos (LOPD)</label>
+									<input ng-model="$ctrl.datos.TX_LOPD2">
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex="100">
+									<label>Buzón correo electrónico (LOPD)</label>
+									<input ng-model="$ctrl.datos.TX_LOPD3">
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex="100">
+									<label>Consentimiento (LOPD)</label>
+									<input ng-model="$ctrl.datos.TX_LOPD4">
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex="100">
+									<label>Propiedad de datos (LOPD)</label>
+									<textarea rows="3" ng-model="$ctrl.datos.TX_LOPD1">
+									</textarea>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex="100">
+									<label>Promoción presupuesto</label>
+									<textarea rows="3">
+									</textarea>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex="100">
+									<label>Footer presupuesto</label>
+									<textarea rows="3" ng-model="$ctrl.datos.TX_FOOTER">
+									</textarea>
+								</md-input-container>
+							</div>
+							<legend>Logos</legend>
+							
+						</div>
+					</form>
+				</div>
+			</md-content>
+		</uib-tab>
+			
+
+		<uib-tab disable="$ctrl.formAseguradora.$invalid" index="2" heading="Listado de usuarios" class="btn-sm">
+			<md-content md-whiteframe="1" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeightTable()">
+				<div ng-if="$ctrl.load == true" class = "centered" style="display:table-cell; vertical-align: middle; margin-top: 150px;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+				<div ng-if="$ctrl.load != true" flex>	
+					<div class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(260)"></div>
+				</div>
+			</md-content>
+		</uib-tab>
+	</uib-tabset>
+
+	<div layout="row" layout-align="center none">
+		<md-button class="medium-orange btnCancelar" ng-if="$ctrl.indice > 1" ng-click="$ctrl.anterior()">
+			<md-icon>navigate_before</md-icon>
+			Anterior
+		</md-button>
+		<md-button class="medium-green btnAceptar" ng-if="$ctrl.indice < 6" ng-click="$ctrl.siguiente($ctrl.indice)" form="{{$ctrl.formulario}}">
+			<md-icon>navigate_next</md-icon>
+			Siguiente
+		</md-button>
+		<md-button class="medium-green btnAceptar" ng-if="$ctrl.permisos.IN_ESCRITURA == true" ng-click="$ctrl.saveColectivo()" form="{{$ctrl.formulario}}">
+			<md-icon>save</md-icon>
+			Validar y guardar
+		</md-button>
+	</div>
+</div>
+-->
+

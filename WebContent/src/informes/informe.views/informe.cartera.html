@@ -1,0 +1,58 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div ng-init="$ctrl.form = { LST_ID_COMP_RAMO_PROD: undefined }" class="formClass" id="form" ng-form="$ctrl.informeCartera">
+	<h3>Cartera</h3>
+	<div layout-gt-sm="row" class="margin-top-20">
+		<md-input-container class="md-block" flex="50">
+         	<label>{{ 'PRODUCT' | translate }}</label>
+         	<md-select ng-change="$ctrl.changePrograma()" ng-model="$ctrl.ID_PROGRAMA" multiple>
+				<md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+               		{{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+<!-- 				   {{programa.DS_PROGRAMA}} -->
+			 	</md-option>
+			</md-select>
+       	</md-input-container>
+		<md-input-container class="md-block ic-margin" flex-gt-sm="50">
+			<label>{{ 'PARTNER' | translate }}</label>
+			<md-select ng-model="$ctrl.form.LST_ID_TIPO_POLIZA" multiple>
+				<md-option ng-class="{'optionPadre': colectivo.IS_PADRE == true, 'optionHijo': colectivo.IS_PADRE != true}" ng-click="$ctrl.changeColectivos(colectivo)" ng-repeat="colectivo in $ctrl.tipos.colectivosProducto" ng-value="colectivo.ID_TIPO_POLIZA">
+<!-- 					<span>{{colectivo.DS_TIPO_POLIZA}}</span> -->
+               		{{$ctrl.parent.getDescriptivo(colectivo, 'DS_TIPO_POLIZA')}}
+				</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	<div layout-gt-sm="row">
+		<div layout-gt-sm="row">
+        	<md-input-container class="md-block min-w-160" flex-gt-sm>
+        		<label>Fecha desde</label>
+
+          		<md-datepicker ng-click="($ctrl.form.FD_CRITERIO_FROM == null || $ctrl.form.FD_CRITERIO_FROM == undefined) ? $ctrl.form.FD_CRITERIO_FROM = null : ''" ng-model="$ctrl.form.FD_CRITERIO_FROM"></md-datepicker>
+          	</md-input-container>
+        	<md-input-container class="md-block min-w-160" flex-gt-sm>
+        		<label>Fecha hasta</label>
+
+          		<md-datepicker ng-click="($ctrl.form.FD_CRITERIO_TO == null || $ctrl.form.FD_CRITERIO_TO == undefined) ? $ctrl.form.FD_CRITERIO_TO = null : ''" ng-model="$ctrl.form.FD_CRITERIO_TO"></md-datepicker>
+          	</md-input-container>
+    	</div>
+	</div>
+	<div style="text-align:center" ng-if="$ctrl.cargando == false">
+		<!-- <md-button class="md-raised md-primary dark-green" ng-click ="$ctrl.exportarExcel()"> -->
+		<md-button class="md-raised md-primary medium-blue button-action-main" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informeCartera.$valid, 'xls')">
+			<i class="fa-duotone fa-download" style="margin-right: 5px"></i>
+			Descargar Excel
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar($ctrl.form)">
+			<i class="fa fa-trash"></i>
+			LIMPIAR
+		</md-button>
+	</div>
+
+	<div id="buscandoGif" style="width: 100%; margin: 10% auto 0;" ng-if="$ctrl.cargando == true">
+		<div class="centered" style="height: 100%; margin: 0 auto;">
+			<div class="blob-3"></div>
+			<div class="blob-4"></div>
+		</div>
+	</div>
+</div>

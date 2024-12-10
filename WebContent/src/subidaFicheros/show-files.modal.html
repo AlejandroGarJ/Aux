@@ -1,0 +1,42 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:50%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Listado de archivos</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<!-- <form class="formClass formModal">
+		</form> -->
+		<div flex="">
+			<div class="dialog-files-container">
+				<div ng-repeat="file in $ctrl.listFiles track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+					<div flex="70">
+						<span>
+							{{file.NO_ARCHIVO}}
+						</span>
+					</div>
+					<div flex="20">
+						<span ng-if="file.ESTADO">
+							{{file.ESTADO}}
+						</span>
+						<span ng-if="!file.ESTADO">
+							{{ 'NOT_SAVED' | translate }}
+						</span>
+					</div>
+					<div flex="" class="txt-center">
+						<div>
+							<md-icon class="icon-blue" ng-click="$ctrl.deleteFile($index)">delete_forever</md-icon>
+							<md-tooltip md-direction="bottom">{{ 'DELETE' | translate }}</md-tooltip>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</md-dialog-content>
+</md-dialog>

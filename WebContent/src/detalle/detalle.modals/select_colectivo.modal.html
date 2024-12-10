@@ -1,0 +1,32 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:30%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>{{ 'SELECT_PARTNER' | translate }}</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="padding:10px 10px">
+		<div layout="row" layout-align="center center">
+			<md-input-container class="md-block" flex="70">
+                <label>{{ 'PARTNER' | translate }}</label>
+                <md-select ng-model="$ctrl.idColectivo" required>
+                	<!-- <md-optgroup label="{{colectivoPadre.DS_TIPO_POLIZA}}" ng-repeat="colectivoPadre in $ctrl.colectivosPadre">
+                    	<md-option ng-if="colectivo.ID_TIPOCOLECTIVO_PADRE == colectivoPadre.ID_TIPO_POLIZA || colectivo.ID_TIPO_POLIZA == colectivoPadre.ID_TIPO_POLIZA" ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">{{colectivo.DS_TIPO_POLIZA}}</md-option>
+                   	</md-optgroup> -->
+					<md-option ng-if="colectivoHijo.IN_TARIFICA == true" ng-repeat="colectivoHijo in $ctrl.colectivosHijo" ng-value="colectivoHijo.ID_TIPO_POLIZA">{{colectivoHijo.DS_TIPO_POLIZA}}</md-option>
+                </md-select>
+             </md-input-container>
+		</div>
+		<div layout="row" layout-align="center center">
+	        <md-button flex="30" ng-disabled="$ctrl.idColectivo == null" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.confirmarColectivo()">
+	            <md-icon>navigate_next</md-icon>
+            	{{ 'NEXT' | translate }}
+	        </md-button>
+		</div>
+	</md-dialog-content>
+</md-dialog>

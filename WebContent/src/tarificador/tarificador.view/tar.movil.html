@@ -1,0 +1,261 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+    <md-content ng-show="$ctrl.loading == true" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+        resize>
+        <div id="buscandoGif" 
+                style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+                resize ng-style="resizeHeight(330)">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+        </div>
+    </md-content>
+
+    <!-- TARIFICACIÓN -->
+    <md-content ng-show="$ctrl.loading == false" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+        <div flex ng-style="{ 'pointer-events': $ctrl.calc == true ? 'none' : 'all', 'opacity': $ctrl.calc == true ? '0.7' : '1', 'transition': $ctrl.calc == true ? '0.5s' : '0s'}">
+
+            <form name="$ctrl.formTarMobile" id="formSubmitTarMovil" flex novalidate>
+				<div layout="row" layout-sm="column" layout-xs="column" flex="80" class="formTarMovil" style="margin-top: 40px;">
+
+					<div class="self-center" ng-click="$ctrl.navTo('#!/area_privada?smovil=true')">
+						<span class="fas fa-chevron-left" style="font-size: 1.7em; margin-right: 10px"></span>
+					</div>
+
+                    <div class="" layout="column" layout-sm="column" layout-xs="column" flex="66">
+                        <div layout="row" layout-sm="column" layout-xs="column" layout-margin="">
+                            <div class="" flex="">
+								<div class="labelTarMovil">
+									<i class="fa-thin fa-phone-flip" style="font-size: 50px;color: #0066ff"></i>
+								</div>
+								<div class="labelTarMovil" style="margin: 15px 0px">
+									<p>NÚMERO DE TELÉFONO</p>
+								</div>
+                                <md-input-container class="md-block" >
+                                    <input ng-model="$ctrl.objMovil.msisdn" ng-change="$ctrl.check_num($ctrl.objMovil.msisdn)" ng-pattern="/^[0-9]{9}$/" md-maxlength="9" required />
+                                </md-input-container>
+                            </div>
+                            <div class="" flex="">
+								<div class="labelTarMovil">
+									<i class="fa-thin fa-barcode-read" style="font-size: 50px;color: #0066ff"></i>
+								</div>
+								<div class="labelTarMovil" style="margin: 15px 0px">
+									<p>IMEI</p>
+								</div>
+                                <md-input-container class="md-block" >
+                                    <input ng-model="$ctrl.objMovil.imei" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div class="" flex="">
+	                            <div class="labelTarMovil">
+									<i class="fa-thin fa-font-awesome" style="font-size: 50px;color: #0066ff"></i>
+	                            </div>
+								<div class="labelTarMovil" style="margin: 15px 0px">
+									<p>CANAL DE VENTA</p>
+								</div>
+                                <md-input-container class="md-block" >
+                                    <input ng-model="$ctrl.objMovil.opComercial" disabled/>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div layout="column" layout-gt-sm="row" layout-margin="">
+                            <div class="" flex="">
+								<div class="labelTarMovil">
+									<i class="fa-thin fa-rectangles-mixed" style="font-size: 50px;color: #0066ff"></i>
+								</div>
+								<div class="labelTarMovil" style="margin: 15px 0px">
+									<p>MARCA</p>
+								</div>
+                                <md-input-container class="md-block">
+                                    <input ng-model="$ctrl.objMovil.brandName" required disabled />
+                                </md-input-container>
+                            </div>
+                            
+                            <div class="" flex="">
+								<div class="labelTarMovil">
+									<i class="fa-thin fa-mobile" style="font-size: 50px;color: #0066ff"></i>
+								</div>
+								<div class="labelTarMovil" style="margin: 15px 0px">
+									<p>MODELO DE TERMINAL</p>
+								</div>
+                                <md-input-container class="md-block">
+                                    <md-select class="upperCase" ng-model="$ctrl.selModel" ng-disabled="$ctrl.objMovil.brandName == undefined || $ctrl.step != 1 || $ctrl.lstModels.length == 1" ng-change="$ctrl.rateMovil()" required>
+                                        <md-option class="upperCase" ng-repeat="mod in $ctrl.lstModels" ng-value="mod">{{mod.modelName}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="" flex="">
+								<div class="labelTarMovil">
+									<i class="fa-thin fa-calendar-star" style="font-size: 50px;color: #0066ff"></i>
+								</div>
+								<div class="labelTarMovil" style="margin: 15px 0px">
+									<p>FECHA DE COMPRA</p>
+								</div>
+                                <md-input-container class="md-block">
+
+                                    <md-datepicker  ng-model="$ctrl.objMovil.saleDate" ng-disabled="$ctrl.selModel == undefined || $ctrl.step != 1" required
+                                        ng-click="($ctrl.objMovil.saleDate == undefined || $ctrl.objMovil.saleDate == null) ? $ctrl.objMovil.saleDate = null : ''">
+                                    </md-datepicker>
+                                </md-input-container>
+                            </div>
+                        </div>
+		                <div layout="column">
+                            <div class="" flex="">
+								<div class="labelTarMovil">
+									<i class="fa-thin fa-shield-check" style="font-size: 50px;color: #0066ff"></i>
+								</div>
+								<div class="labelTarMovil" style="margin: 15px 0px">
+									<p>SELECCIONA LA COBERTURA A CONTRATAR</p>
+								</div>
+
+
+								<md-radio-group class="radioGroupCoberturas" layout="row" layout-align="center center" ng-disabled="$ctrl.objMovil.saleDate == null || $ctrl.step != 1" ng-model="$ctrl.objMovil.modalidad" ng-change="$ctrl.rateMovil()"  required>
+									<div  ng-repeat="cover in $ctrl.coversWMO">
+										<md-radio-button ng-value="cover.productCode" >{{cover.coverWMO}}</md-radio-button>
+									</div>
+								</md-radio-group>
+
+                            </div>
+			            </div>
+
+		                <div class="tarMovilStep2Container" ng-if="$ctrl.step != 1" layout="column" layout-gt-sm="row" layout-margin="">
+                            <div class="" flex="">
+	                            <div class="labelTarMovil">
+	                                <p>Titular y tomador</p>
+	                            </div>
+                                <md-input-container class="md-block">
+                                    <input ng-model="$ctrl.nombreCompleto" uppercase disabled/>
+                                </md-input-container>
+                            </div>
+                            
+                            <div class="" flex="">
+	                            <div class="labelTarMovil">
+	                                <p>NIF</p>
+	                            </div>
+                                <md-input-container class="md-block">
+                                    <input ng-model="$ctrl.objPres.num_identificacion" uppercase disabled/>
+                                </md-input-container>
+                            </div>
+                            
+                            <div class="" flex="">
+	                            <div class="labelTarMovil">
+	                                <p>Email</p>
+	                            </div>
+                                <md-input-container class="md-block">
+                                    <input ng-model="$ctrl.objPres.email" ng-disabled="$ctrl.step != 2" required/>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+
+					<div layout="column" flex="33">
+						<div class="TarMovil_div_container" layout="column" layout-sm="column" layout-xs="column">
+	                        <div layout="column" layout-sm="column" layout-margin="">
+	                            <div class="container_TarMovil_price">
+		                            <md-progress-circular md-mode="indeterminate" ng-show="$ctrl.calc == true" style="margin: 0 auto;"></md-progress-circular>
+		                            <span ng-hide="$ctrl.calc == true" class="priceTarMovil"><span class="price">{{$ctrl.price}}</span>€/ mes</span>
+		                            <span ng-hide="$ctrl.calc == true" class="txtRegular">{{ 'TAXES_INCLUDED' | translate }}</span>
+	                            </div>
+								<div layout="row" layout-align="center center">
+									<span ng-if="$ctrl.campaign != null && $ctrl.campaign.description != null" class="text-center subtitle_tarific" style="white-space: normal;margin: 2px;font-family: TelefonicaWebBold,serif;background-color: #8a1a93; color: white;padding: 5px 20px;border-radius: 3px"> {{$ctrl.campaign.description}} APLICABLE</span>
+									<div ng-hide="$ctrl.dataWarning != false" class="container_TarMovil_btn" layout="row" layout-align="center center" flex="50" style="margin: 2px;">
+										<md-button style="white-space: normal; line-height: 18px;padding-top: 3px !important;padding-bottom: 3px !important;" ng-if="$ctrl.step == 1" ng-disabled="$ctrl.price <= 0" ng-click="$ctrl.validateDevice()" class="btnTarMovilGreen text-center">
+											Confirmar datos
+										</md-button>
+										<md-button style="white-space: normal; line-height: 18px;padding-top: 3px !important;padding-bottom: 3px !important;" ng-if="$ctrl.step == 2" ng-disabled="$ctrl.price <= 0 || $ctrl.objPres.email == null || $ctrl.objPres.email == ''" ng-click="$ctrl.contract()" class="btnTarMovilGreen text-center">
+											Realizar contratación
+										</md-button>
+										<md-button style="white-space: normal; line-height: 18px;padding-top: 3px !important;padding-bottom: 3px !important;" ng-if="$ctrl.step == 3" ng-disabled="$ctrl.price <= 0" ng-click="$ctrl.nuevoCliente()" class="btnTarMovilGreen text-center">
+											Nuevo cliente
+										</md-button>
+									</div>
+								</div>
+	                            <div ng-hide="$ctrl.dataWarning == false" class="container_TarMovil_msg" layout="column" layout-align="center center">
+									<div layout="row" layout-align="center center">
+										<span class="text"><i class="fa-light fa-bell-on" style="margin-right: 3px"></i>Completa todas las opciones para calcular el precio del seguro</span>
+									</div>
+						            <div style="margin-top: 7px" ng-style="{'display': $ctrl.nodevice == true ? 'block' : 'none'}">
+						            	<span class="text"><i class="fa-light fa-triangle-exclamation" style="margin-right: 3px"></i>{{$ctrl.msgWarning}}</span>
+						                <div ng-show="$ctrl.nodevice == true && $ctrl.nodeviceBtns == true" style="display: inline-block;">
+						                    <md-button ng-click="$ctrl.sendSms()" class="md-raised md-primary medium-blue button-action-main">
+						                        Enviar SMS
+						                    </md-button>
+						                    <md-button ng-click="$ctrl.confirmKO()" class="md-raised md-primary medium-blue button-action-main">
+						                        Rechazar póliza
+						                    </md-button>
+						                </div>
+						            </div>
+	                            </div>
+	                            <div ng-if="$ctrl.msgWarning != '' && $ctrl.msgWarning != null && $ctrl.dataWarning == false" class="container_TarMovil_msg" layout="column" layout-align="center center">
+									<div style="margin-top: 7px">
+						            	<span class="text"><i class="fa-light fa-triangle-exclamation" style="margin-right: 3px"></i>{{$ctrl.msgWarning}}</span>
+						            </div>
+	                            </div>
+								<div ng-if="$ctrl.tieneImportesFranquicia == true" class="ventajasTarMovilContainer">
+									<div layout="row" flex="100"  layout-align="center center" style="text-align: center">
+										<p class="title" style="text-transform: uppercase">INFORMACIÓN SOBRE FRANQUICIAS</p>
+									</div>
+									<div layout="row">
+										<div ng-if="$ctrl.importesFranquicia.SCREEN_DAMAGE != null" flex="50" layout="column" layout-align="center center" style="text-align: center">
+											<p class="titleVentaja" style="font-size: 0.8em;font-family: TelefonicaWebBold,serif"><span>REPARACIÓN DE PANTALLA {{$ctrl.importesFranquicia.SCREEN_DAMAGE}}</span>€</p>
+										</div>
+										<div ng-if="$ctrl.importesFranquicia.OTHER != null" flex="50" layout="column" layout-align="center center" style="text-align: center">
+											<p class="titleVentaja" style="font-size: 0.8em;font-family: TelefonicaWebBold,serif"><span >OTRO TIPO DE DAÑOS {{$ctrl.importesFranquicia.OTHER}}</span>€</p>
+										</div>
+									</div>
+									<div ng-if="$ctrl.importesFranquicia.STOLEN != null" layout="row" flex="100"  layout-align="center center" style="text-align: center">
+										<p class="titleVentaja" style="font-size: 0.8em;font-family: TelefonicaWebBold,serif;"><span>SUSTRACCIÓN {{$ctrl.importesFranquicia.STOLEN}}</span>€</p>
+									</div>
+								</div>
+								<div ng-if="$ctrl.tieneImportesFranquicia != true" class="ventajasTarMovilContainer">
+									<div layout="row" flex="100"  layout-align="center center" style="text-align: center">
+										<p class="title" style="text-transform: uppercase">INFORMACIÓN SOBRE FRANQUICIAS</p>
+									</div>
+									<div layout="row" flex="100"  layout-align="center center" style="text-align: center">
+										<p><span class="precioFranquicia">{{$ctrl.priceFranquicia}}</span>€</p>
+									</div>
+								</div>
+	                            <div ng-hide="$ctrl.step != 3" class="container_TarMovil_msgPoliza" layout="row">
+	                                <span class="icon ic-ciber-ico-felicidad"></span>
+	                                <span ng-if="$ctrl.isPrepoliza != true" class="text">Contratación finalizada correctamente. Póliza: {{$ctrl.objPol.policyNumber}}</span>
+	                                <span ng-if="$ctrl.isPrepoliza == true" class="text">{{ $ctrl.msgPrepoliza }} <span class="bold" ng-click="$ctrl.openPoliza($ctrl.objPol.policyNumber)"><u>Ver prepóliza</u></span></span>
+	                            </div>
+	                            <div class="ventajasTarMovilContainer">
+	                            	<p class="title" style="text-transform: uppercase">Ventajas exclusivas del Seguro Móvil Movistar</p>
+	                            	<div layout="row">
+	                            		<div flex="33" layout="column">
+	                            			<img src="src/img/ventaja-1.jpg" />
+	                            			<p class="titleVentaja">Sustitución de dispositivos</p>
+	                            		</div>
+	                            		<div flex="33" layout="column">
+	                            			<img src="src/img/ventaja-2.jpg" />
+	                            			<p class="titleVentaja">Recambios originales</p>
+	                            		</div>
+	                            		<div flex="33" layout="column">
+	                            			<img src="src/img/ventaja-3.jpg" />
+	                            			<p class="titleVentaja">Servicio Express</p>
+	                            		</div>
+	                            	</div>
+	                            </div>
+
+	                        </div>
+	                    </div>
+		                <div class="container_TarMovil_info documentoTarMovil">
+			                <div>
+			                    <span class="ic-ciber-ico-info color-blue"></span> 
+			                    <a href="src/documentos/DIPmovistar.pdf" class="" target="_blank">Ver el Documento de Información sobre Producto de Seguro</a>
+			                </div>
+			            </div>
+					</div>
+                    
+                    
+                </div>
+            </form>
+            
+        </div>
+    </md-content>
+</div>

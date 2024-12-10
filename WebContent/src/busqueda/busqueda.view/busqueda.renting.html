@@ -1,0 +1,81 @@
+<!-- Tabla de solicitudes de renting -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<!-- <div class="col-md-12 grid-results" id="resultadosBusqueda" ng-if="$ctrl.vista == 4"> -->
+<div class="grid-results" id="resultadosBusqueda">
+	<md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+    	<div>
+			<md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4  && $ctrl.parent.url == 'renting' && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+				<md-icon>file_copy</md-icon>Exportar a excel
+			</md-button>
+		</div>
+		
+<!-- 		<div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1"> -->
+<!-- 		<!--     <h2>Busque una solicitud de renting</h2> -->
+<!-- 		</div> -->
+		
+<!-- 		<div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2"> -->
+<!-- 		    			            <h2>Buscando</h2> -->
+<!-- 		    <div class="centered" style="display:table-cell; vertical-align: middle;"> -->
+<!-- 		        <div class="blob-3"></div> -->
+<!-- 		        <div class="blob-4"></div> -->
+<!-- 		    </div> -->
+<!-- 		</div> -->
+		
+<!-- 		<div id="mensajeNingunResultado" class="mensajesBusqueda" ng-if="$ctrl.vista == 3"> -->
+<!-- 		    <h2>No se ha encontrado ningún solicitud renting</h2> -->
+<!-- 		</div> -->
+
+		<md-tab label="Resultado de la búsqueda">
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1"></div>
+            <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+            <div id="mensajeNingunResultado" class="mensajesBusqueda" ng-if="$ctrl.vista == 3">
+                <h2>No se ha encontrado ninguna solicitud</h2>
+            </div>
+            
+			<div ng-if="$ctrl.vista == 4" layout="row" layout-align="left left" layout-margin>
+				<md-button class="dark-blue btnNuevo" ng-click="$ctrl.confirmarSolicitud()">
+					Confirmar solicitud 
+				</md-button>
+				<md-button class="dark-blue btnNuevo" ng-click="$ctrl.asignarConcesion()">
+					Asignar concesión 
+				</md-button>
+				<md-button class="dark-blue btnNuevo" ng-click="$ctrl.asignarAseguradora()">
+					Asignar aseguradora 
+				</md-button>
+			</div>
+			
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(205)"></div>
+		</md-tab>
+
+<!--     <uib-tabset class="tabsBusqueda" active="$ctrl.active"> -->
+<!--         <uib-tab index="0" heading="Listado" ng-if="$ctrl.gridOptions.data != null"> -->
+<!--             <div class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeightTable()"></div> -->
+<!--         </uib-tab> -->
+<!--         <uib-tab index="100" heading="{{$ctrl.heading}}" ng-if="$ctrl.heading != null"> -->
+<!--             <sd-solicitud tipo-head="$ctrl.tipo"></sd-solicitud> -->
+<!--         </uib-tab> -->
+	        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+	            <md-tab-label ng-if="detalles != null">
+			   		<span ng-if="$ctrl.nomDetalles[$index]=='renting'">Solicitud: {{detalles.ID_SOLICITUD}}</span>
+			   		<span ng-if="$ctrl.nomDetalles[$index]=='cliente'">Cliente: {{detalles.ID_CLIENTE}}</span>
+			   		<span ng-if="$ctrl.nomDetalles[$index]=='poliza'">Póliza: {{detalles.ID_POLIZA}}</span>
+			   		<div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+	             				<span aria-hidden="true">×</span>
+	             			</div>
+			   	</md-tab-label> 
+	            <md-tab-body>
+	                <detalle-sd ng-if="$ctrl.nomDetalles[$index]=='renting'" id-detalle="detalles" llave="$ctrl.llave" tipo="'solicitud'"></detalle-sd>
+	                <detalle-sd ng-if="$ctrl.nomDetalles[$index]=='cliente'" id-detalle="detalles" llave="$ctrl.llave" tipo="'cliente'"></detalle-sd>
+	                <detalle-sd ng-if="$ctrl.nomDetalles[$index]=='poliza'" id-detalle="detalles" llave="$ctrl.llave" tipo="'poliza'"></detalle-sd>
+			   	</md-tab-body>		    
+	        </md-tab>
+<!--     </uib-tabset> -->
+    </md-tabs>
+</div>

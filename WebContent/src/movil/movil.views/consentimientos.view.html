@@ -1,0 +1,61 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+    <md-content ng-show="$ctrl.loading == true" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+        resize ng-style="resizeHeight({{$ctrl.cutMH}})">
+        <div id="buscandoGif" 
+                style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+                resize ng-style="resizeHeight(330)">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+        </div>
+    </md-content>
+
+    <!-- CONSENTIMIENTOS -->
+    <md-content ng-show="$ctrl.loading == false" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+        resize ng-style="resizeHeight({{$ctrl.cutMH}})">
+        <div class="container_adminMobile" flex>
+            <h4 class="h4Tar"></span>Consentimientos</h4>
+            
+            <form name="$ctrl.formGenToken" id="formSubmitGenToken" flex novalidate>
+            <h5 class="h5Tar">Actualizaci&#243;n de las cuentas bancarias del proceso de Portabilidad</h5>
+            <div layout="row">
+								
+				<div flex="55" layout="column" class="divBlue">
+					<p style="color:#0066ff">Pendientes de actualizar.</p>
+					<md-input-container>
+						<label>Indique el email al que enviar el informe</label>	
+						<input ng-model="$ctrl.form.email"> 
+						<button class="btnEnviar md-button" ng-click="$ctrl.enviarInforme()">
+						 	<span class="fas fa-file-upload m-r_15"></span>Enviar
+						</button>
+					</md-input-container>	
+				</div>	
+
+			
+							
+				<div flex="55" layout="column" class="divBlue" style="margin-left: 2%;">
+					<p style="color:#0066ff">Subir el informe actualizado</p>
+					<div layout="row" style="margin-top:3%">
+						<label for="subirInforme" class="btnEnviar md-button">
+						    {{$ctrl.NO_ARCHIVO}}
+						</label>		
+						<button class="btnEnviar md-button" ng-click="$ctrl.subirInforme()">
+						    <span class="fas fa-file-upload m-r_15"></span>Subir
+						</button>		
+						<input type="file" id="subirInforme" name="subirInforme">
+					</div>
+				</div>	
+
+			</div>
+					
+            </form>
+            
+        </div>
+    </md-content>
+    
+
+</div>

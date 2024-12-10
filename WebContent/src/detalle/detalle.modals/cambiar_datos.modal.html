@@ -1,0 +1,32 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+--><md-dialog style="width:45%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Cambiar datos de contacto del cliente</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<form ng-submit="$ctrl.cambiar()" class="formClass formCliente" name="newPresupuesto" role="form">
+				<div class="separadorDesplegables"></div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Tel&#233;fono</label>
+						<input ng-model="$ctrl.telefono">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Email</label>
+						<input ng-model="$ctrl.email">
+					</md-input-container>
+				</div>
+				<div class="margin-top-20" style="text-align: center">
+					<md-button type="submit" class="dark-blue btnNuevo">Cambiar datos de contacto</md-button>
+				</div>
+			</form>
+		</div>
+	</md-dialog-content>
+</md-dialog>

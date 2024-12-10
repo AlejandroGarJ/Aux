@@ -1,0 +1,20 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+    <ng-dialog-content>
+        <div class="md-dialog-content" layout="column" layout-align="center center" flex>
+            <div layout="row" layout-align="center center">
+<!--                 <div flex="20"> -->
+<!--                     <img ng-src="src/img/aseguradoras/INFO.png"> -->
+<!--                 </div> -->
+                <div class="md-dialog-content modalContenedorMsg layout-align-center-center layout-row" layout="row" layout-align="center none" flex="100">
+                    <p>Es obligatorio rellenar un campo para realizar la búsqueda</p>
+                </div>
+            </div>
+            <div layout="row" style="margin:10px" layout-align="center center">
+                <md-button class="md-raised md-primary dark-blue md-button md-ink-ripple btnOpcion" ng-click="$ctrl.cancel()">Aceptar</md-button>
+            </div>
+        </div>
+    </ng-dialog-content>
+</md-dialog>

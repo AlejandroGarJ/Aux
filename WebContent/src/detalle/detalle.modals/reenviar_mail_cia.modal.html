@@ -1,0 +1,34 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="md-dialog-container">
+    <md-dialog flex>
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="height:44px">
+                <h2>Reenviar mail cia.</h2>
+                <md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+                    <md-icon aria-label="Close dialog">clear</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+<!-- 		<ng-dialog-content> -->
+        <md-dialog-content>
+            <div layout="row" layout-margin layout-align="right right" style="margin-top: 8px;">
+                <md-button ng-click="$ctrl.addMail()" class="md-raised md-primary medium-blue button-action-main">Añadir destinatario</md-button>
+                <md-button ng-click="$ctrl.eliminarMail()" class="md-raised md-primary medium-blue button-action-main">Borrar</md-button>
+                <md-button ng-click="$ctrl.enviarMail()" class="md-raised md-primary medium-blue button-action-main">Enviar</md-button>
+			</div>
+			<!-- <div ng-if="$ctrl.cargar==true" id="buscandoGif" style="margin-top: 200px;padding:0px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 20%;">
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div> -->
+			<div>
+            	<div class="ui-grid" ui-grid="$ctrl.gridMails" ui-grid-edit ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize></div>
+            </div>
+            
+        </md-dialog-content>
+    </md-dialog>
+</div>

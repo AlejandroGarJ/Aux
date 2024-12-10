@@ -1,0 +1,32 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>{{ 'AFFECTED_COVERAGES' | translate }}</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<div class="separadorDesplegables"></div>
+			<div layout-gt-sm="column" class="formClass">
+				<div ng-repeat="garantia in $ctrl.coberturasModal" style="margin-bottom: 10px">
+					<div layout="row" layout-align="start center">
+						<span ng-if="garantia.ACTIVO == false" class="material-icons" style="margin-right: 6px">check_box_outline_blank</span>
+						<span ng-if="garantia.ACTIVO == true" class="material-icons" style="margin-right: 6px">check_box</span>
+						<h4 style="margin-bottom: 0px; margin-top: 0px">{{ garantia.NO_GARANTIA }}</h4>
+					</div>
+					<div ng-repeat="garantiaHijo in garantia.GARANTIAS_HIJO" style="margin: 10px 0px 10px 30px;" layout="row" layout-align="start center">
+						<span ng-if="garantiaHijo.ACTIVO != true" class="material-icons" style="margin-right: 6px">check_box_outline_blank</span>
+						<span ng-if="garantiaHijo.ACTIVO == true" class="material-icons" style="margin-right: 6px">check_box</span>
+						<p style="margin-bottom: 0px; font-size: 14px">{{ garantiaHijo.NO_GARANTIA }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</md-dialog-content>
+</md-dialog>

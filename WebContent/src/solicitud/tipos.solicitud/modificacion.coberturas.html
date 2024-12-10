@@ -1,0 +1,125 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-button ng-click="$ctrl.guardarSolicitudModificacion()" class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 15px;">Guardar solicitud</md-button>
+<!-- <legend>Modificación de garantías -->
+<!--    <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2"> -->
+<!--        <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span> -->
+<!--        <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span> -->
+<!--    </button> -->
+<!-- </legend> -->
+<!-- <div id="divPoliza" uib-collapse="$ctrl.isCollapsed2"> -->
+<!--  <h4>Alta de asegurado</h4> -->
+<!-- 	<div class="separadorDesplegables"></div> -->
+	
+	
+	
+<!-- 	<div ng-if="$ctrl.carga == true" layout="row"> -->
+<!-- 		<div layout="row" flex-gt-sm="100"> -->
+<!-- 			<div id="buscandoGif" -->
+<!-- 		         style="padding:15px 16px; display:table; z-index: 999999999; width: 100%; height: 10%;" -->
+<!-- 		         resize"> -->
+<!-- 		         <div class="centered" style="display:table-cell; vertical-align: middle;"> -->
+<!-- 		             <div class="blob-3"></div> -->
+<!-- 		             <div class="blob-4"></div> -->
+<!-- 		         </div> -->
+<!-- 		     </div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+<!--  	PASO 1 -->
+<!-- 	<div ng-if="$ctrl.carga !== true && $ctrl.pasoGarantia == 1 && $ctrl.idCompania === 111 && $ctrl.modificacionGarantias.ID_RESULT != 710" layout="row"> -->
+<!-- 		<div div layout="row" flex-gt-sm="50"> -->
+<!-- 			<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 				<label>Continente</label> -->
+<!-- 				<input type="number" ng-model="$ctrl.modificacionGarantias.HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTINENTE"> -->
+<!-- 			</md-input-container> -->
+<!-- 		</div> -->
+<!-- 		<div div layout="row" flex-gt-sm="50"> -->
+<!-- 			<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 				<label>Contenido</label> -->
+<!-- 				<input type="number" ng-model="$ctrl.modificacionGarantias.HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTENIDO"> -->
+<!-- 			</md-input-container> -->
+<!-- 		</div> -->
+<!-- 		<div ng-if="$ctrl.carga !== true" layout="row" flex-gt-sm="50"> -->
+<!-- 			<md-button ng-click="$ctrl.recuperarPrecio()" class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 0;">Continuar</md-button> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+<!-- 	<div ng-if="$ctrl.carga !== true && $ctrl.pasoGarantia == 1 && $ctrl.idCompania === 78 && $ctrl.modificacionGarantias.ID_RESULT != 500" layout="row"> -->
+<!-- 		<div div layout="row" flex-gt-sm="20"> -->
+<!-- 			<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 				<label>Continente</label> -->
+<!-- 				<input type="number" ng-model="$ctrl.modificacionGarantias.HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTINENTE"> -->
+<!-- 			</md-input-container> -->
+<!-- 		</div> -->
+<!-- 		<div div layout="row" flex-gt-sm="20"> -->
+<!-- 			<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 				<label>Contenido</label> -->
+<!-- 				<input type="number" ng-model="$ctrl.modificacionGarantias.HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTENIDO"> -->
+<!-- 			</md-input-container> -->
+<!-- 		</div> -->
+<!-- 		<div div layout="row" flex-gt-sm="20"> -->
+<!-- 			<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 				<label>Anexos</label> -->
+<!-- 				<input type="number" ng-model="$ctrl.modificacionGarantias.HOGAR.BLOCK_CAPITALES.IM_VALOR_ANEXOS"> -->
+<!-- 			</md-input-container> -->
+<!-- 		</div> -->
+<!-- 		<div div layout="row" flex-gt-sm="20"> -->
+<!-- 			<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 				<label>Bienes</label> -->
+<!-- 				<input type="number" ng-model="$ctrl.modificacionGarantias.HOGAR.BLOCK_CAPITALES.IM_OBJETOS_VALOR_EN_VIVIENDA"> -->
+<!-- 			</md-input-container> -->
+<!-- 		</div> -->
+<!-- 		<div ng-if="$ctrl.carga !== true" layout="row" flex-gt-sm="50"> -->
+<!-- 			<md-button ng-click="$ctrl.tarificaPoliza()" class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 0;">Continuar</md-button> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+<!-- 	<div style="padding:5px 10px 15px 10px" ng-if="$ctrl.modificacionGarantias.ID_RESULT == 500" layout="column"> -->
+<!-- 		<div div layout="column" flex-gt-sm="50"> -->
+<!-- 			<h4 style="margin-bottom: 30px"><md-icon style="margin-right: 13px">clear</md-icon><strong>{{ $ctrl.modificacionGarantias.DS_RESULT }}</strong></h4> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+<!--  	PASO 2 -->
+<!-- 	<div style="padding:5px 10px 15px 10px" ng-if="$ctrl.carga !== true && $ctrl.pasoGarantia == 2 && $ctrl.modificacionGarantias.ID_RESULT == 0" layout="column"> -->
+<!-- 		<div div layout="column" flex-gt-sm="50" ng-repeat="modalidad in $ctrl.modificacionGarantias.MODALIDADES.MODALIDAD"> -->
+<!-- 			<h4 style="margin-bottom: 30px"><strong>Precio: {{ $ctrl.toFixed(modalidad.IM_PRIMA_ANUAL_TOT) }} € </strong></h4> -->
+			
+<!-- 			<span ng-repeat="garantia in modalidad.GARANTIAS.GARANTIA"> -->
+<!-- 				<md-checkbox ng-if="garantia.ID_GARANTIA != 1073 && garantia.ID_GARANTIA != 1077"  -->
+<!-- 					ng-checked="garantia.IN_SELECTED === true"  -->
+<!-- 					ng-disabled="garantia.ID_GARANTIA == 1072" -->
+<!-- 					ng-model="$ctrl.modalidad.GARANTIAS.GARANTIA[$index]"  -->
+<!-- 					ng-click="$ctrl.changeGarantia(garantia, modalidad, $index)"> -->
+<!-- 	                {{ garantia.NO_GARANTIA }} | {{ garantia.ID_GARANTIA == 1072 ? $ctrl.toFixed(modalidad.IM_PRIMA_ANUAL_TOT) : $ctrl.toFixed(garantia.IM_PRIMA_NETA) }} € -->
+<!-- 	            </md-checkbox> -->
+<!-- 			</span> -->
+			
+<!--             <div ng-if="$ctrl.carga !== true" layout="row" flex-gt-sm="50"> -->
+<!-- 				<md-button ng-click="$ctrl.reemplazoPoliza()" class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 15px;">Continuar</md-button> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+<!-- 	<div style="padding:5px 10px 15px 10px" ng-if="$ctrl.carga !== true && ($ctrl.pasoGarantia == 2 || $ctrl.pasoGarantia == 3) && $ctrl.modificacionGarantias.ID_RESULT == 700" layout="column"> -->
+<!-- 		<h4 style="margin-bottom: 20px; margin-left: 8px"> -->
+<!-- 			<strong>{{ $ctrl.modificacionGarantias.DS_RESULT }}</strong> -->
+<!-- 		</h4> -->
+<!-- 		<div div layout="column" flex-gt-sm="50" ng-repeat="mensaje in $ctrl.modificacionGarantias.MESSAGES.MESSAGE"> -->
+<!-- 			<h5 style="margin-bottom: 10px"> -->
+<!-- 				<md-icon ng-if="mensaje.CO_MESSAGE_TYPE == 'ERROR'" style="margin-right: 13px">clear</md-icon> -->
+<!-- 				<md-icon ng-if="mensaje.CO_MESSAGE_TYPE == 'INFO'" style="margin-right: 13px">priority_high</md-icon> -->
+<!-- 				{{ mensaje.DS_MESSAGE }} -->
+<!-- 			</h5> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+<!-- 	PASO 3 -->
+<!-- 	<div style="padding:5px 10px 15px 10px" ng-if="$ctrl.carga !== true && $ctrl.pasoGarantia == 3 && $ctrl.modificacionGarantias.ID_RESULT == 0" layout="column"> -->
+<!-- 		<div div layout="column" flex-gt-sm="50"> -->
+<!-- 			<h4 style="margin-bottom: 30px"><md-icon style="margin-right: 13px">done</md-icon><strong>Se ha retarificado correctamente</strong></h4> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->

@@ -1,0 +1,219 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:50%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>
+				<span ng-if="!$ctrl.edit">Añadir </span>
+				<span ng-if="$ctrl.edit">Editar </span>
+				{{$ctrl.element}}
+			</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form class="formClass formModal" name="$ctrl.formAddElement">
+			<!-- PRODUCTO -->
+			<div ng-if="$ctrl.elemType == 'producto'">
+
+				<div layout-gt-sm="row">
+					<md-autocomplete name="Ramo" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+						md-search-text="$ctrl.searchRamo"
+						md-items="item in $ctrl.parent.querySearch($ctrl.searchRamo, $ctrl.ramos, 'NO_RAMO')"
+						md-item-text="item.NO_RAMO" md-min-length="0"
+						md-floating-label="Ramo"
+						md-selected-item="$ctrl.autocomplete.RAMO"
+						md-selected-item-change="$ctrl.form.ID_RAMO = $ctrl.autocomplete.RAMO.ID_RAMO"
+						ng-blur="$ctrl.autocomplete.RAMO == undefined ? $ctrl.searchRamo = '' : ''">
+						<md-item-template>
+							<span md-highlight-text="$ctrl.searchRamo"
+								md-highlight-flags="^i">{{item.NO_RAMO}}</span>
+						</md-item-template>
+						<md-not-found>
+							No existe el ramo "{{$ctrl.searchRamo}}".
+						</md-not-found>
+					</md-autocomplete>
+				</div>
+
+				<!-- <div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>                                    
+						<label>Producto</label>
+						<md-select name="Producto"
+							ng-model="$ctrl.productoSeleccionado"
+							ng-change="$ctrl.seleccionarProducto($ctrl.productoSeleccionado.ID_PRODUCTO)"
+							required>
+							<md-option ng-repeat="producto in $ctrl.productos" ng-value="producto">
+								{{producto.NO_PRODUCTO}}
+							</md-option> -->
+							<!-- <md-option
+								data-ng-click="$ctrl.datos.DATOS_ASEGURADO.ID_COMPANIA_AUTO = ''; $ctrl.datos.DATOS_ASEGURADO.CA_TIEMPO_OTRA_CIA = ''; $ctrl.datos.DATOS_ASEGURADO.NU_POLIZA='';
+							$ctrl.datos.DATOS_ASEGURADO.NU_MATRICULA_ANTERIOR='';$ctrl.datos.DATOS_ASEGURADO.CA_TIEMPO_SIN_SINIESTROS='';$ctrl.datos.DATOS_ASEGURADO.ID_MODALIDAD_AUTO_ANT='';"
+								ng-if="$ctrl.cargar!=true" ng-value="'0'">
+								Otra póliza diferente
+							</md-option> -->
+							<!-- <md-option ng-value="0">
+								Otro producto diferente
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div> -->
+				<!-- md-selected-item-change="$ctrl.form.ID_PRODUCTO = $ctrl.autocomplete.PRODUCTO.ID_PRODUCTO" -->
+				<div layout-gt-sm="row">
+					<md-autocomplete name="Producto" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+						md-search-text="$ctrl.searchProducto"
+						md-items="item in $ctrl.parent.querySearch($ctrl.searchProducto, $ctrl.productos, 'NO_PRODUCTO')"
+						md-item-text="item.NO_PRODUCTO" md-min-length="0"
+						md-floating-label="Producto"
+						md-selected-item="$ctrl.autocomplete.PRODUCTO"
+						md-selected-item-change="$ctrl.seleccionarProducto($ctrl.autocomplete.PRODUCTO.ID_PRODUCTO)"
+						ng-blur="$ctrl.autocomplete.PRODUCTO == undefined ? $ctrl.searchProducto = '' : ''">
+						<md-item-template>
+							<!-- <span md-highlight-text="$ctrl.searchProducto" ng-style="item.ID_PRODUCTO == 0 && {'fontWeight':'bold'}"
+								md-highlight-flags="^i">{{item.NO_PRODUCTO}}</span> -->
+							<span md-highlight-text="$ctrl.searchProducto" ng-class="item.ID_PRODUCTO == 0 ? 'autocomplete-otro-elem' : ''"
+								md-highlight-flags="^i">{{item.NO_PRODUCTO}}</span>
+						</md-item-template>
+						<md-not-found>
+							No existe el producto "{{$ctrl.searchProducto}}".
+						</md-not-found>
+					</md-autocomplete>
+				</div>
+
+				<div layout-gt-sm="row" ng-if="$ctrl.autocomplete.PRODUCTO.ID_PRODUCTO == 0">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Nombre del producto</label>
+						<input ng-model="$ctrl.form.NO_PRODUCTO" />
+					</md-input-container>
+				</div>
+
+				<div layout-gt-sm="row" ng-if="$ctrl.autocomplete.PRODUCTO.ID_PRODUCTO == 0">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Descripción del producto</label>
+						<input ng-model="$ctrl.form.DS_PRODUCTO" />
+					</md-input-container>
+				</div>
+
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Comisión</label>
+						<input ng-model="$ctrl.form.NU_COMISION" />
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Comisión cartera</label>
+						<input ng-model="$ctrl.form.NU_COMISION_CARTERA" />
+					</md-input-container>
+				</div>
+
+				<md-input-container class="md-block" flex-gt-sm>
+					<md-button class="dark-blue btnNuevo" ng-click="$ctrl.addElement($ctrl.elemType)">
+						<md-icon>add</md-icon>
+						Añadir
+					</md-button>
+				</md-input-container>
+			</div>
+
+			<!-- NEGOCIO -->
+			<div ng-if="$ctrl.elemType == 'negocio'">
+				<div layout-gt-sm="row">
+					<md-autocomplete name="Ramo" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+						md-search-text="$ctrl.searchRamo"
+						md-items="item in $ctrl.parent.querySearch($ctrl.searchRamo, $ctrl.ramos, 'NO_RAMO')"
+						md-item-text="item.NO_RAMO" md-min-length="0"
+						md-floating-label="Ramo"
+						md-selected-item="$ctrl.autocomplete.RAMO"
+						md-selected-item-change="$ctrl.form.ID_RAMO = $ctrl.autocomplete.RAMO.ID_RAMO"
+						ng-blur="$ctrl.autocomplete.RAMO == undefined ? $ctrl.searchRamo = '' : ''">
+						<md-item-template>
+							<span md-highlight-text="$ctrl.searchRamo"
+								md-highlight-flags="^i">{{item.NO_RAMO}}</span>
+						</md-item-template>
+						<md-not-found>
+							No existe el ramo "{{$ctrl.searchRamo}}".
+						</md-not-found>
+					</md-autocomplete>
+				</div>
+
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>{{ 'NAME' | translate }}</label>
+					<input ng-model="$ctrl.form.NO_NEGOCIO" required />
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Código</label>
+					<input ng-model="$ctrl.form.CO_NEGOCIO" required />
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Mediador</label>
+					<input ng-model="$ctrl.form.NO_MEDIADOR" required />
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Comisión</label>
+					<input ng-model="$ctrl.form.NU_COMISION" required />
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<md-button class="dark-blue btnNuevo" ng-click="$ctrl.addElement($ctrl.elemType)">
+						<md-icon>add</md-icon>
+						Añadir negocio
+					</md-button>
+				</md-input-container>
+			</div>
+
+			<!-- CONTACTO -->
+			<div ng-if="$ctrl.elemType == 'contact'">
+
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>{{ 'NAME' | translate }}</label>
+					<input ng-model="$ctrl.form.NO_PERSONA" required />
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Tipo de destinatario</label>
+					<md-select ng-model="$ctrl.form.IN_TIPO_DESTINATARIO" class="mb_24" required>
+						<md-option ng-repeat="type in $ctrl.lstRecipientType" ng-value="type.CO_TIPO">
+							{{$ctrl.appParent.getDescriptivo(type, 'DS_TIPOS')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Tipo de contacto</label>
+					<md-select ng-model="$ctrl.form.ID_TIPOCONTACTO" class="mb_24" required>
+						<md-option ng-repeat="tipo in $ctrl.listTiposContacto" ng-value="tipo.CO_TIPO">
+							{{$ctrl.appParent.getDescriptivo(tipo, 'DS_TIPOS')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Programa</label>
+					<md-select ng-model="$ctrl.form.ID_PROGRAMA" class="mb_24">
+						<md-option ng-repeat="program in $ctrl.lstPrograms" ng-value="program.ID_PROGRAMA">
+							<!-- {{$ctrl.appParent.getDescriptivo(programa, 'DS_PROGRAMA')}} -->
+							{{program.DS_PROGRAMA}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Dirección</label>
+					<input ng-model="$ctrl.form.NO_DIRECCION" />
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Email</label>
+					<input ng-model="$ctrl.form.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" required />
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>{{ 'TELEPHONE' | translate }}</label>
+					<input type="number" ng-model="$ctrl.form.NU_TELEFONO1" ng-pattern="/^[0-9]{9}$/" maxlength="9" />
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.addElement($ctrl.elemType)">
+						<md-icon ng-if="!$ctrl.edit">add</md-icon>
+						<span ng-if="!$ctrl.edit">Añadir contacto</span>
+						<md-icon ng-if="$ctrl.edit">edit</md-icon>
+						<span ng-if="$ctrl.edit">Editar contacto</span>
+					</md-button>
+				</md-input-container>
+			</div>
+
+		</form>
+	</md-dialog-content>
+</md-dialog>

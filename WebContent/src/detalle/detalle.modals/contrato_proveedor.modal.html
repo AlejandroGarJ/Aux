@@ -1,0 +1,60 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:70%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Subir contrato</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form name="formContrato" id="formContrato" ng-value="$ctrl.formContrato=!formContrato.$valid" class="md-dialog-content formClass">
+			<div layout="row">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Día de preaviso</label>
+
+					<md-datepicker md-min-date="$ctrl.minDate" ng-model="$ctrl.form.FD_PREAVISO" required></md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>¿Cuántos días antes quieres que se te avise del preaviso?</label>
+					<input type="number" ng-model="$ctrl.form.NU_DIAS_PREAVISO" required>
+				</md-input-container>
+			</div>
+			<div layout="row">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Fecha de vencimiento</label>
+
+					<md-datepicker md-min-date="$ctrl.minDate" ng-model="$ctrl.form.FD_VENCIMIENTO" required></md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>¿Cuántos días antes quieres que se te avise del vencimiento?</label>
+					<input type="number" ng-model="$ctrl.form.NU_DIAS_VENCIMIENTO" required>
+				</md-input-container>
+			</div>
+			<div layout="row" layout-align="start start" flex-gt-sm="33">
+                <input type="file" id="file_contrato_modal" name="file_contrato_modal" class="inputfile" multiple />
+                <label ng-if="$ctrl.nombreArchivoContrato == null" class="dark-blue md-button btnNuevo" for="file_contrato_modal">
+                    <i class="material-icons btnIconoNube">attachment</i> {{ 'SELECT_FILE' | translate }}
+                </label>
+                <label ng-if="$ctrl.nombreArchivoContrato != null" class="dark-blue md-button btnNuevo" for="file_contrato_modal">
+                    <i class="material-icons btnIconoNube">attachment</i> {{$ctrl.nombreArchivoContrato}}
+                </label>
+            </div>
+			<div ng-if="$ctrl.cargar == true" id="buscandoGif" style="margin-top: 0px;padding:0px; display:table; z-index: 999999999; position: fixed; width: 90%; height: 2%;">
+	            <div class="centered" style="display:table-cell; vertical-align: middle;">
+					<div class="blob-3"></div>
+					<div class="blob-4"></div>
+				</div>
+	        </div>
+			
+			<div layout="row" layout-align="center center">
+				<md-button class="fade-out md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardar()">
+	                 Guardar contrato
+	            </md-button>
+			</div>
+		</form>
+	</md-dialog-content>
+</md-dialog>

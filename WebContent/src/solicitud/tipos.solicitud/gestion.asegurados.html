@@ -1,0 +1,157 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 51"><span class="mov-ico ic-ciber-ico-numero-trabajadores"></span> Gestión de asegurados
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+	<div class="separadorDesplegables"></div>
+    <div layout="row" layout-align="center center">
+		<md-radio-group ng-change="$ctrl.changeTipoSolicitudAsegurado($ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC)" layout-gt-sm="row" ng-init="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC = 1" ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC" style="margin-bottom:10px; margin-left:20px;" required>
+			<md-radio-button value="1" ng-if="$ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD != 2">
+				Alta asegurado
+			</md-radio-button>
+			<md-radio-button value="1" ng-if="$ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 2">
+				Cambio asegurado
+			</md-radio-button>
+			<md-radio-button value="2">
+				Modificación datos asegurado
+			</md-radio-button>
+			<md-radio-button value="3" ng-if="$ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD != 2">
+				Baja de asegurado
+			</md-radio-button>
+		</md-radio-group>
+	</div> 
+	<div layout="row" class="margin-top-10" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 || $ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 3">
+		<md-input-container flex-gt-sm>
+			<label>{{ 'INSURED_SELECTED' | translate }}</label>
+			<md-select ng-change="$ctrl.changeAsegurado($ctrl.aseguradoSeleccionado)" ng-model="$ctrl.aseguradoSeleccionado">
+				<md-option ng-repeat="asegurado in $ctrl.form.OPOLIZA.LST_ASEGURADOS | filter:{ID_TIPO_CLIENTE:2}" ng-value="asegurado">{{asegurado.NO_NOMBRE_COMPLETO}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	
+	<div ng-if="$ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD != 6 && $ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD != 5">
+		<div class="margin-top-20" layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC != 3">
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>{{ 'NAME' | translate }}</label>
+				<input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_NOMBRE" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>{{ 'SURNAME_1' | translate }}</label>
+				<input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_APELLIDO1" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2&& $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>{{ 'SURNAME_2' | translate }}</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_APELLIDO2" ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+		</div>
+	    <div layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC != 3">
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Tipo documento</label>
+	            <md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].ID_TIPO_DOCUMENTO" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && ($ctrl.aseguradoSeleccionado == null || $ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 2)">
+	            	<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">
+						{{tipo.DS_TIPO_DOCUMENTO}}
+	                </md-option>
+				</md-select>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>NIF</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NU_DOCUMENTO" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && ($ctrl.aseguradoSeleccionado == null || $ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 2)" cvalidation="document_n">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Fecha de nacimiento</label>
+
+	            <md-datepicker ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].FD_NACIMIENTO" required
+	            		ng-change="$ctrl.calcEdad($ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].FD_NACIMIENTO)"
+	            		ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 3 && $ctrl.aseguradoSeleccionado == null">
+				</md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Sexo</label>
+	            <md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].ID_SEXO" ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+					<md-option ng-value="1">Hombre</md-option>
+					<md-option ng-value="2">Mujer</md-option>
+				</md-select>
+			</md-input-container>
+		</div>
+	    <div layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC != 3 && $ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD != 2">
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>{{ 'ROAD_TYPE' | translate }}</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].ID_TIPO_VIA" ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Dirección</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_DIRECCION" ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2  && $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>Número</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NU_NUMERO" ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+		</div>
+	    <div layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC != 3 && $ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD != 2">
+			<md-input-container class="md-block" flex-gt-sm>
+	         	<label>Código postal</label>
+	             <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].CO_POSTAL" ng-keyup="$ctrl.updateDir($ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].CO_POSTAL)" ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+	       	</md-input-container>
+	       	<md-input-container class="md-block" flex-gt-sm>
+	         	<label>Localidad</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_LOCALIDAD" disabled>
+	       	</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm="">
+				<label>Provincia</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_PROVINCIA" disabled>
+			</md-input-container>
+		</div>
+	</div>
+	
+	<div ng-if="$ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 6 || $ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 5 || $ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 2">
+		<div class="margin-top-20" layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC != 3 && ($ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 6 || $ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 5)">
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>{{ 'CORPORATE_NAME' | translate }}</label>
+				<input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_NOMBRE" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 3 && $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>CIF</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NU_DOCUMENTO" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null" cvalidation="document_a">
+			</md-input-container>
+		</div>
+	    <!-- <div layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2">
+			<md-input-container class="md-block" flex-gt-sm="">
+				<label>Dirección</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_DIRECCION" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+	         	<label>Código postal</label>
+	             <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].CO_POSTAL" required ng-keyup="$ctrl.updateDir($ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].CO_POSTAL)" ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+	       	</md-input-container>
+	       	<md-input-container class="md-block" flex-gt-sm>
+	         	<label>Localidad</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_LOCALIDAD" required disabled>
+	       	</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm="">
+				<label>Provincia</label>
+	            <input ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_PROVINCIA" required disabled>
+			</md-input-container>
+		</div> -->
+	    <div layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC != 3">
+			<md-input-container class="md-block" flex-gt-sm="">
+				<label>{{ 'TELEPHONE' | translate }}</label>
+	            <input ng-pattern="/^[0-9]{9}$/" required maxlength="9" ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NU_TELEFONO" ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm  ng-if="$ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD != 2">
+	         	<label>{{ 'EMAIL' | translate }}</label>
+	            <input ng-pattern="/^.+@.+\..+$/" required ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_EMAIL" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null"
+				ng-init="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 1 ? $ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_EMAIL = $ctrl.tomador.NO_EMAIL : ''">
+	       	</md-input-container>
+	       	<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.form.OPOLIZA.ID_COMP_RAMO_PROD == 2">
+	         	<label>{{ 'EMAIL' | translate }}</label>
+	            <input ng-pattern="/^.+@.+\..+$/" required ng-model="$ctrl.form[$ctrl.tipoSolicitud][$ctrl.tipoSolicitudAsegurado].NO_EMAIL" required ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_GESTION_ASEGURADOS.CO_TIPO_SOLICITUD_SC == 2 && $ctrl.aseguradoSeleccionado == null">
+	       	</md-input-container>
+		</div>
+	</div>
+    
+</div>

@@ -1,0 +1,116 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color:white">
+
+	<div layout-gt-sm="row" class="inputs-without-label-value" style="background-color:white; margin-top: 15px;margin-left: 13px;margin-right: 10px;border-left: 3px solid #0066ff">
+		<h3 style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="50" >
+			<span style="color:#5e5e5e!important">
+				{{ 'SEARCH' | translate }} DE</span><span style="color:#0066ff!important"> {{$ctrl.tipoText.charAt(0).toUpperCase() + $ctrl.tipoText.slice(1)}}
+			</span>
+			<div layout-gt-sm="row">
+				<h6 style="text-align: center;text-transform: uppercase">BÚSQUEDA Y GESTIÓN DE {{$ctrl.tipoText.charAt(0).toUpperCase() + $ctrl.tipoText.slice(1)}}</h6>
+			</div>
+		</h3>
+	</div>
+	<div layout-gt-sm="row" >
+		<a ng-click="$ctrl.showBasicSearch()" ng-if="$ctrl.basicSearch == true">{{ 'SHOW_SEARCH_FIELDS' | translate }}</a>
+	</div>
+	
+    <form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('tipo-'+$ctrl.typeText)">
+        <div class="form-scroll" resize>
+            <div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+                <md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.typeText == 'producto'">
+					<label>Producto</label>
+					<input ng-model="$ctrl.form.NO_PRODUCTO.value">
+				</md-input-container>
+				<md-autocomplete ng-if="$ctrl.typeText == 'tiposTipos'" name="Código" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+					md-search-text="$ctrl.searchCodigo"
+					md-items="item in $ctrl.parent.querySearch($ctrl.searchCodigo, $ctrl.tipos.codigos, 'NO_CODIGO')"
+					md-item-text="item.NO_CODIGO" md-min-length="0"
+					md-floating-label="Código"
+					md-selected-item="$ctrl.autocomplete.CODIGO"
+					md-selected-item-change="$ctrl.form.ID_CODIGO.value = $ctrl.autocomplete.CODIGO.ID_CODIGO"
+					ng-blur="$ctrl.autocomplete.CODIGO == undefined ? $ctrl.searchCodigo = '' : ''">
+					<md-item-template>
+						<span md-highlight-text="$ctrl.searchCodigo"
+							md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_CODIGO')}}</span>
+					</md-item-template>
+					<md-not-found>
+						No existe el campo "{{$ctrl.searchCodigo}}".
+					</md-not-found>
+				</md-autocomplete>
+		       	<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.typeText == 'anul'">
+		         	<label>Uso</label>
+		         	<md-select ng-model="$ctrl.form.ID_TIPOANULACION.value" style="margin-bottom:20px">
+		           		<md-option ng-repeat="uso in $ctrl.tipos.usos" ng-value="uso.ID_TIPOS">
+							{{$ctrl.parent.parent.getDescriptivo(uso, 'DS_TIPOS')}}
+<!-- 			              	{{uso.DS_TIPOS}} -->
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container>
+		       	<md-autocomplete name="Aseguradora" ng-if="$ctrl.typeText == 'producto'" 
+			   	  md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchAseg"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchAseg, $ctrl.tipos.compania, 'NO_COMERCIAL')"
+				   md-item-text="item.NO_COMERCIAL" md-min-length="0"
+				   md-floating-label="Aseguradora"
+				   md-selected-item="$ctrl.autocomplete.ASEG"
+				   md-selected-item-change="$ctrl.form.ID_COMPANIA.value = $ctrl.autocomplete.ASEG.ID_COMPANIA"
+				   ng-blur="$ctrl.autocomplete.ASEG == undefined ? $ctrl.searchAseg = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchAseg"
+					   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_COMERCIAL')}}</span>
+						   <!-- md-highlight-flags="^i">{{item.NO_COMERCIAL}}</span> -->
+				   </md-item-template>
+				   <md-not-found>
+					   No existe la aseguradora "{{$ctrl.searchAseg}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			   <md-autocomplete name="Ramo" ng-if="$ctrl.typeText == 'producto'" 
+				   md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchRamo"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchRamo, $ctrl.tipos.ramos, 'NO_RAMO')"
+				   md-item-text="item.NO_RAMO" md-min-length="0"
+				   md-floating-label="Ramo"
+				   md-selected-item="$ctrl.autocomplete.RAMO"
+				   md-selected-item-change="$ctrl.form.ID_RAMO.value = $ctrl.autocomplete.RAMO.ID_RAMO"
+				   ng-blur="$ctrl.autocomplete.RAMO == undefined ? $ctrl.searchRamo = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchRamo"
+						   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_RAMO')}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el ramo "{{$ctrl.searchRamo}}".
+				   </md-not-found>
+			   	</md-autocomplete>
+			    <md-input-container ng-if="$ctrl.typeText != 'producto'" class="md-block" flex-gt-sm="30">
+				   <label>{{ 'DESCRIPTION' | translate }}</label>
+				   <input ng-model="$ctrl.form[$ctrl.key].value">
+				</md-input-container>
+				<md-input-container ng-if="$ctrl.typeText == 'ramo'" class="md-block" flex-gt-sm style="margin-top: 20px!important;">
+		         	<md-checkbox ng-model="$ctrl.form.IN_TARIFICABLE.value">Tarificable</md-checkbox>
+		       	</md-input-container>
+		       	<md-input-container ng-if="$ctrl.typeText == 'tiposTipos'" class="md-block" flex-gt-sm>
+		         	<label>Tipo</label>
+		         	<input ng-model="$ctrl.form.CO_TIPO.value">
+		       	</md-input-container>
+		       	<md-input-container ng-if="$ctrl.typeText == 'tiposTipos'" class="md-block" flex-gt-sm>
+		         	<label>ID Interno</label>
+		         	<input ng-model="$ctrl.form.ID_TIPO_INTERNO.value">
+		       	</md-input-container>
+		       	
+				<md-input-container class="md-block" flex-gt-sm style="margin-top: 14px!important;">
+					<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+						<i class="fa fa-magnifying-glass"></i>
+						{{ 'SEARCH_BTN' | translate }}
+					</md-button>
+					<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+						<i class="fa fa-trash"></i>
+						{{ 'CLEAN' | translate }}
+					</md-button>
+				</md-input-container>
+            </div>
+        </div>
+    </form>
+</md-content>

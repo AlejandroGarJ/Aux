@@ -1,0 +1,95 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<uib-tabset class="tabsPasos" type="pills" justified="true" flex="none">
+	<md-content layout="row" layout-align="center" layout-padding class="margin-top-20 formCliente formClass form-scroll">
+		<div layout-align="center center" style="margin: 0 auto;" flex>
+			<h3 style="text-transform: uppercase; padding-left: 15px; text-align: center; margin-bottom:50px" flex-gt-sm="100" ><span style="color:#2b3447!important"></span><span style="color:#0066ff!important"> Renovación de póliza</span></h3>
+			<div layout="column" layout-align="center center" flex="100" class="margin-top-20">
+				<div layout="row" layout-align="center center">
+					<md-input-container ng-hide="$ctrl.cargandoPoliza == true" class="hide-validation-error md-block">
+						<label>Número de la póliza</label>
+						<input ng-model="$ctrl.nuPoliza" ng-disabled="$ctrl.polizaSelected == true">
+					</md-input-container>
+					<md-button ng-if="$ctrl.polizaSelected == true && $ctrl.inPoliza != true" class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.reset()"> <md-icon>sync</md-icon> Cambiar póliza</md-button>
+					<md-input-container ng-if="$ctrl.cargandoPoliza != true && $ctrl.polizaSelected != true" class="md-block">
+						<md-button class="fade-out md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.getPoliza()">
+			                 <i class="fa-duotone fa-check-double"></i>  Seleccionar póliza
+			            </md-button>
+					</md-input-container>
+					<div ng-if="$ctrl.cargandoPoliza == true" id="buscandoGif" style="padding: 0px 16px;display: table;z-index: 999999999;position: fixed;width: 100%;margin-top: 50px;height: 968px;" resize ng-style="resizeHeight(1)">
+				        <div class = "centered" style="display:table-cell; vertical-align: middle;">
+							<div class = "blob-3"></div>
+							<div class = "blob-4"></div>
+						</div>
+				    </div>
+				</div>
+				<div ng-if="$ctrl.polizaSelected == true" layout="row" layout-margin="">
+                        	
+                    <form name="$ctrl.formRenovacion" flex="100" layout="column">
+	                   	<div layout="row">
+	                   		<div layout="column" layout-align="center center" class="primas-admin">
+		                    	<p>Prima total anual</p>
+<!-- 		                    	<p>El resto de campos se calculará automáticamente</p> -->
+		                    	<div layout="row" layout-align="center center">
+									<input type="number" ng-model="$ctrl.primas.PRIMA_TOTAL" class="md-margin" flex-gt-sm="80"  required step="any">
+								    <button ng-click="$ctrl.changePrimas()" class="button-editar-facturacion" flex-gt-sm="20">
+								        <i class="material-icons btnIcono">done</i> 
+								    </button>
+								</div>
+		                   	</div>
+	                     	<div layout="row" class="primas-admin">
+		                      	<div layout="column" layout-align="center center" flex-gt-sm="33">
+		                      		<p><span class="material-icons icon-prima">paid</span> IPS. 8% sobre P.Neta.</p>
+									<input ng-disabled="$ctrl.isCalcula != true" class="md-margin" type="number" ng-model="$ctrl.primas.IPS" step="any">
+		                      	</div>
+		                      	<div layout="column" layout-align="center center" flex-gt-sm="33">
+		                      		<p><span class="material-icons icon-prima">paid</span>LEA. 0,15% sobre P.Neta.</p>
+									<input ng-disabled="$ctrl.isCalcula != true" class="md-margin" type="number" ng-model="$ctrl.primas.LEA" step="any">
+		                      	</div>
+		                      	<div layout="column" layout-align="center center" flex-gt-sm="33">
+		                      		<p><span class="material-icons icon-prima">credit_card</span>Franquicia</p>
+									<input ng-disabled="$ctrl.isCalcula != true" class="md-margin" type="number" ng-model="$ctrl.primas.FRANQUICIA" step="any">
+		                      	</div>
+	                     	</div>
+		                   	<div layout="column" layout-align="start center" class="primas-admin">
+		                   		<p>Prima neta</p>
+			               		<div flex="70">
+									<input ng-disabled="$ctrl.isCalcula != true" type="number" class="md-margin" ng-model="$ctrl.primas.PRIMA_NETA" step="any">
+								</div>
+		                   	</div>
+	                    </div>
+	                	
+	                	<div layout="column">
+		                    <div layout="row" class="margin-top-20" layout-align="start start">
+				                <md-input-container class="md-block" flex-gt-sm>
+									<label>Fecha de efecto</label>
+
+		                            <md-datepicker ng-model="$ctrl.FD_EFECTO" md-min-date="$ctrl.date" required>
+		                            </md-datepicker>
+		                        </md-input-container>
+				                <md-input-container class="md-block" flex-gt-sm>
+									<label>Fecha de vencimiento</label>
+
+		                            <md-datepicker ng-model="$ctrl.FD_VENCIMIENTO" md-min-date="$ctrl.FD_EFECTO != null ? $ctrl.FD_EFECTO : $ctrl.date" required>
+		                            </md-datepicker>
+		                        </md-input-container>
+								<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.replicarPrimas()"> <md-icon>content_copy</md-icon> Replicar anteriores primas
+								</md-button>
+		                    </div>
+	                	</div>
+	                	
+	                	<div layout="row" layout-align="center center">
+							<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.renovarPoliza()"> <md-icon>save</md-icon> Renovar póliza
+							</md-button>
+	                	</div>
+<!-- 	                   	<div layout="column" layout-align="center center" class="primas-admin"> -->
+<!-- 	                   		<p>*Todas las primas tienen un redondeo al alza de dos decimales.</p> -->
+<!-- 	                   	</div> -->
+                    </div>
+                    
+                </div>
+			</div>
+		</div>
+	</md-content>
+</uib-tabset>

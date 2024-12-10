@@ -1,0 +1,239 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<!-- <div layout="row" layout-padding layout-align="center none">
+    <div ng-click="$ctrl.tipoTarificador = 1" class="navOpt">
+        Movil
+    </div>
+    <div ng-click="$ctrl.tipoTarificador = 2" ng-class="{navOpt_sel: $ctrl.tipoTarificador == 2}" class="navOpt">
+        CiberHijos
+    </div>
+    <div ng-click="$ctrl.tipoTarificador = 3" ng-class="{navOpt_sel: $ctrl.tipoTarificador == 3}" class="navOpt">
+        CiberSeguro
+    </div>
+    <div ng-click="$ctrl.tipoTarificador = 4" ng-class="{navOpt_sel: $ctrl.tipoTarificador == 4}" class="navOpt">
+        CiberIdentidad
+    </div>
+</div> -->
+
+<div ng-if="($ctrl.tipoTarificador == undefined || $ctrl.tipoTarificador == 0) && $ctrl.isTarMovil != true && $ctrl.isTarEmpresa != true" class="feeCalc_container">
+	<div class="products_container_flex" style="margin-top:30px">
+	    <div class="products_container">
+		    <div ng-if="$ctrl.showBtnSH == true" class="porcentaje-columna">
+		        <div ng-click="$ctrl.navTo('#!/area_privada?tar=7')" class="feeCalc_btn">
+		            <img src="src/img/tar-hogar.png" />
+		            <span class="title_tarific">Seguro hogar</span>
+		            <span class="subtitle_tarific">Producto de hogar de Telefónica Seguros y Santa Lucía</span>
+		        </div>
+		    </div>
+		    <div ng-if="$ctrl.showBtnSM == true" class="porcentaje-columna">
+		        <div ng-click="$ctrl.openTarMovil()" class="feeCalc_btn">
+                    <img src='src/img/tar-smovil.png'/>
+		            <span class="title_tarific">Seguro móvil</span>
+		            <span class="subtitle_tarific">Producto único para seguro móvil</span>
+		        </div>
+		    </div>
+		    <div ng-if="$ctrl.showBtnCH == true" class="porcentaje-columna">
+		        <div ng-click="$ctrl.navTo('#!/area_privada?tar=2')" class="feeCalc_btn">
+		            <img src="src/img/tar-hijos.png" />
+		            <span class="title_tarific">CiberHijos</span>
+		            <span class="subtitle_tarific">Productos de Ciber hijos</span>
+		        </div>
+		    </div>
+		    <div ng-if="$ctrl.showBtnCS == true" class="porcentaje-columna">
+                <div ng-click="$ctrl.openTarEmpresa()" class="feeCalc_btn">
+		            <img src="src/img/tar-empresa.png" /> 
+		            <span class="title_tarific">CiberSeguro Telefónica</span>
+		            <span class="subtitle_tarific">Ciberseguro Telefónica</span>
+		        </div>
+		    </div>
+		    <div ng-if="$ctrl.showBtnCS_de == true" class="porcentaje-columna">
+		        <div ng-click="$ctrl.navTo('#!/area_privada?tar=6')" class="feeCalc_btn">
+		            <img src="src/img/tar-empresade.png" /> 
+		            <span class="title_tarific">Cyber-Versicherung Telefónica</span>
+		            <span class="subtitle_tarific">Cyber-Versicherung Telefónica</span>
+		        </div>
+		    </div>
+		    <div class="porcentaje-columna" ng-if="$ctrl.showBtnCI == true">
+		        <div ng-click="$ctrl.navTo('#!/area_privada?tar=4')" class="feeCalc_btn">
+		            <img src="src/img/tar-identidad.png"/>
+		            <span class="title_tarific">CiberIdentidad</span>
+		            <span class="subtitle_tarific">Productos de Ciber identidad</span>
+		        </div>
+		    </div>
+		    <div ng-if="$ctrl.showBtnCP == true" class="porcentaje-columna">
+		        <div ng-click="$ctrl.navTo('#!/area_privada?tar=8')" class="feeCalc_btn">
+		            <img src="src/img/tar-particulares.png"/>
+		            
+		            <span class="title_tarific">Seguro de Protección Digital</span>
+		            <span class="subtitle_tarific">Productos de CiberSeguro Telefónica</span>
+		        </div>
+		    </div>
+			<div ng-if="$ctrl.showBtnSD == true" class="porcentaje-columna">
+				<div ng-click="$ctrl.navTo('#!/area_privada?tar=5')" class="feeCalc_btn">
+					<img src="src/img/tar-dispositivos.png"/>
+
+					<span class="title_tarific">Seguro Dispositivos</span>
+					<span class="subtitle_tarific">Productos de Dispositivos</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div ng-if="($ctrl.tipoTarificador == undefined || $ctrl.tipoTarificador == 0) && $ctrl.isTarMovil == true" layout="row" class="feeCalc_container menu_sm_container" layout-align="center center" resize ng-style="resize()">
+	<div layout="row" style="width: 100%">
+		<div flex="20">
+			<div layout="row" layout-align="center center" class="fullHeight">
+				<div layout="row" layout-align="start center" style="margin-right: 10px">
+					<div layout="row" class="volver-sm" ng-click="$ctrl.isTarMovil = false">
+						<i class="fas fa-chevron-left" style="font-size: 1.7em;"></i>
+					</div>
+				</div>
+				<div ng-click="$ctrl.navTo('#!/area_privada?tar=1')" class="feeCalc_btn tarif_sm_card">
+
+					<div class="fullHeight" layout="column" layout-align="center center">
+						<!--<img src="src/img/tar-smovil.png"/>-->
+						<span style="font-size: 70px;color: #0066ff;">
+							<i class="fa-thin fa-headset"></i>
+						</span>
+						<span class="title_tarific" style="color:#414b61;font-family: TelefonicaWebBold!important">Seguro Móvil Movistar</span>
+						<span class="subtitle_tarific" style="font-family: TelefonicaWebBold,serif;background-color: #67e0e5;color: #031a34;padding: 4px 15px 4px 15px;border-radius: 2px;">Tarificación y Contratación</span>
+						<!--						<span class="subtitle_tarific" style="font-family: TelefonicaWebBold,serif;background-color: #8a1a93; color: white;padding: 4px;border-radius: 3px">Promo 1 Mes Gratis</span>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div flex="80">
+			<div layout="row" layout-align="center center">
+				<div ng-click="$ctrl.navTo('#!/confirmacion_rtr')" class="feeCalc_btn feeCalc_btn_sm_submenu">
+					<!--<img src="src/img/submenu-clientes-fusion.png"/>-->
+					<span style="font-size: 70px;color: #031a34;">
+						<i class="fa-thin fa-cart-shopping-fast"></i>
+					</span>
+					<span class="title_tarific" style="font-family: TelefonicaWebBold!important">WEB CARRITO Y BANNER</span>
+					<span class="subtitle_tarific">Búsqueda y gestión de prepólizas</span>
+				</div>
+				<div ng-click="$ctrl.navTo('#!/portabilidad')" class="feeCalc_btn feeCalc_btn_sm_submenu">
+					<!--<img src="src/img/submenu-clientes-portabilidad.png"/>-->
+					<span style="font-size: 70px;color: #031a34;">
+					</span>
+					<span class="title_tarific" style="font-family: TelefonicaWebBold!important">Portabilidad</span>
+					<span class="subtitle_tarific">Consentimientos y Opciones</span>
+				</div>
+				<div ng-click="$ctrl.navTo('#!/envios_movistar_main')" class="feeCalc_btn feeCalc_btn_sm_submenu">
+					<!--<img src="src/img/submenu-tokens.png"/>-->
+					<span style="font-size: 70px;color: #031a34;">
+						<i class="fa-thin fa-binary-lock"></i>
+					</span>
+					<span class="title_tarific" style="font-family: TelefonicaWebBold!important">Tokens de Contratación</span>
+					<span class="subtitle_tarific">Generación y Consulta</span>
+				</div>
+			</div>
+			<div layout="row" layout-align="center center">
+				<div ng-click="$ctrl.navTo('#!/gestion_terminales')" class="feeCalc_btn feeCalc_btn_sm_submenu">
+					<!--<img src="src/img/submenu-terminales.png"/>-->
+					<span style="font-size: 70px;color: #031a34;">
+						<i class="fa-thin fa-laptop-mobile"></i>
+					</span>
+					<span class="title_tarific" style="font-family: TelefonicaWebBold!important">Terminales y Dispositivos</span>
+					<span class="subtitle_tarific">Consulta, Modificación y PO's</span>
+				</div>
+				<div ng-click="$ctrl.navTo('#!/ficheros_generados')" class="feeCalc_btn feeCalc_btn_sm_submenu">
+					<!--<img src="src/img/submenus-informes.png"/>-->
+					<span style="font-size: 70px;color: #031a34;">
+						<i class="fa-thin fa-database"></i>
+					</span>
+					<span class="title_tarific" style="font-family: TelefonicaWebBold!important">Informes</span>
+					<span class="subtitle_tarific">Para carga en Delio y consulta de estado</span>
+				</div>
+				<div ng-click="$ctrl.navTo('#!/estadisticas_movil')" class="feeCalc_btn feeCalc_btn_sm_submenu" style="visibility: hidden">
+					<img src="src/img/submenus-statistics.png"/>
+					<span class="title_tarific">Estadísticas</span>
+					<span class="subtitle_tarific">Gráficas y Estadísticas</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--	<div flex="100" layout="row" layout-align="center center">-->
+	<!--		<div layout="column">-->
+	<!--			-->
+	<!--		</div>-->
+	<!--		<div layout="column">-->
+	<!--			-->
+	<!--		</div>-->
+
+	<!--	</div>-->
+	<div layout="row" layout-align="center center">
+		<!--<a stylae="margin-left: 7.3em;font-family: TelefonicaWebLight; font-size:1.0em;text-decoration: none" href="#"><span style="color: gray"><i style="font-size: 0.8em" class="fas fa-circle"></i></span> Manual del Gestor </a>-->
+	</div>
+</div>
+
+<div ng-if="($ctrl.tipoTarificador == undefined || $ctrl.tipoTarificador == 0) && $ctrl.isTarEmpresa == true" class="feeCalc_container menu_sm_container" layout="column">
+    <div layout="row" layout-align="center center" style="margin: 0 auto">
+        <!-- <div layout="row" layout-align="start center" style="margin-right: 10px" flex="10">
+            <div layout="row" class="volver-sm" ng-click="$ctrl.isTarEmpresa = false">
+                <i class="fas fa-chevron-left" style="font-size: 1.7em;"></i>
+              </div>
+        </div> -->
+        <div layout="column" layout-align="center center">
+			<div layout="row" style="margin-top: 20px;">
+				<div layout="row" layout-align="center center" ng-click="$ctrl.isTarEmpresa = false">
+					<md-icon>keyboard_backspace</md-icon>
+					{{ 'RETURN' | translate }}
+				</div>
+				<h4 style="color: #0066FF; text-transform: uppercase; margin-left: 10px;font-family: TelefonicaWebBold!important;font-size: 20px !important;">{{$ctrl.dsPrograma}}</h4>
+			</div>
+		   	<legend></legend>
+			<div layout="row" layout-align="center center" flex style="margin-top: 20px;padding: 0!important;">
+				<div ng-if="$ctrl.showBtnCS == true || $ctrl.showBtnCP == true">
+                    <div class="broker_btn" layout="row">	
+						<img src="src/img/espacio_broker.jpg" />
+						<div layout="column" layout-align="center start" flex>
+                        	<span>Accede a toda la documentación <br>en nuestro nuevo <b>Espacio Broker</b></span>
+							<button ng-click="$ctrl.chooseMediator()">
+								Acceder <i class="fa-thin fa-chevron-right"></i>
+							</button>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <div layout="row" layout-align="center center" flex style="margin-top: 20px;">
+                <div ng-if="$ctrl.showBtnCS == true">
+                    <div ng-click="$ctrl.navTo('#!/area_privada?tar=3&prod=6')" class="feeCalc_btn_ciber" style="min-width: 400px; margin: 10px;">
+                        <img src="src/img/Ico_Limites_I.svg"/> 
+                        <span class="title_tarific" style="font-family: TelefonicaWebBold!important">Cotizar Límites Independientes</span>
+                        <!-- <span class="subtitle_tarific">Ciberseguro Telefónica</span> -->
+                    </div>
+                </div>
+                <div ng-if="$ctrl.showBtnCS == true">
+                    <div ng-click="$ctrl.navTo('#!/area_privada?tar=3&prod=5')" class="feeCalc_btn_ciber" style="min-width: 400px; margin: 10px;">
+                        <img src="src/img/Ico_Limites_A.svg"/> 
+                        <span class="title_tarific" style="font-family: TelefonicaWebBold!important">Cotizar Límites Agregados</span>
+                        <!-- <span class="subtitle_tarific">Ciberseguro Telefónica</span> -->
+					</div>
+                </div>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div class="row logo-sd-container" ng-if="$ctrl.showBtnSD == true && $ctrl.tipoTarificador == 0">
+	<span style="font-size: 11px;color: #747782;">Powered by </span><img ng-if="$ctrl.logoDe != true" style="padding-top: 2px;margin-left: 5px;text-align: center;width: 87px" src="src/img/segurodigital/seguro-digital-black.svg">
+</div>
+<div ng-if="$ctrl.showBtnSD == true && $ctrl.tipoTarificador == 0" class="row logo-sd-container" style="font-family: 'TelefonicaWebLight';color: #747782;font-size: 10px;margin-top: 3px;margin-bottom: 15px;">
+	<span>{{ 'INFO_VERSION' | translate}} {{$ctrl.parent.versionPackage}}</span>
+</div>
+<div>
+	<pre-hogar-app ng-if="$ctrl.tipoTarificador == 7"></pre-hogar-app>
+	<tar-movil-app ng-if="$ctrl.tipoTarificador == 1"></tar-movil-app>
+	<tar-hijos-app ng-if="$ctrl.tipoTarificador == 2"></tar-hijos-app>
+	<tar-empresa-app ng-if="$ctrl.tipoTarificador == 3"></tar-empresa-app>
+	<tar-identidad-app ng-if="$ctrl.tipoTarificador == 4"></tar-identidad-app>
+	<tar-dispositivos-app ng-if="$ctrl.tipoTarificador == 5"></tar-dispositivos-app>
+	<tar-empresa-de-app ng-if="$ctrl.tipoTarificador == 6"></tar-empresa-de-app>
+	<tar-ciberparticulares-app ng-if="$ctrl.tipoTarificador == 8"></tar-ciberparticulares-app>
+</div>

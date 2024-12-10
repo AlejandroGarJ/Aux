@@ -1,0 +1,49 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<h2 id="titleDevueltos">GESTIÓN DE RECIBOS DEVUELTOS</h2>
+
+<div layout="row" layout-align="center start" style="margin-bottom: 8%;">
+
+	<div layout="column" ng-if="$ctrl.rol != 8">
+		<div  layout="column" layout-align="center center">
+			<div layout="column" class="containerDashboardPorcentaje">
+				<div class="divPorcentaje">
+					<p><span class="numeroPorcentaje">{{$ctrl.formatPercent($ctrl.nuRecibos.PORCENTAJE_GESTIONADOS)}}</span> %</p>
+				</div>
+				<p class="pRecibosGestionados">recibos cobrados de los gestionados</p>
+				<canvas id="chartPorcentaje" width="100" height="100"></canvas>
+			</div>
+		</div>
+		<div layout="column" layout-align="center center">
+			<div layout="column" class="containerTotales"  ng-click="$ctrl.redirectUrl(0)">
+				<h2><span class="numeroRecibos">{{$ctrl.nuRecibosTotales}}</span> Recibos totales</h2>
+				<canvas id="chartTotales" width="100" height="100"></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div layout="column" flex-md="60" flex-lg="60" flex-xl="60">
+		<div layout="row" layout-align="center center">
+			<div flex="50" layout="column" class="containerDashboard" ng-click="$ctrl.redirectUrl(1)">
+				<h2><span class="numeroRecibos">{{$ctrl.nuRecibos.PENDIENTES}}</span> Recibos sin gestionar</h2>
+				<canvas id="chartPendienteGestion" width="100" height="100"></canvas>
+			</div>
+			<div flex="50" layout="column" class="containerDashboard" ng-click="$ctrl.redirectUrl(3)">
+				<h2><span class="numeroRecibos">{{$ctrl.nuRecibos.GESTIONADOS}}</span> Recibos enviados a cobro</h2>
+				<canvas id="chartGestionados" width="100" height="100"></canvas>
+			</div>
+		</div>
+		<div layout="row" layout-align="center center">
+			<div flex="50" layout="column" class="containerDashboard" ng-click="$ctrl.redirectUrl(4)">
+				<h2><span class="numeroRecibos">{{$ctrl.nuRecibos.EN_PROCESO}}</span> Recibos en proceso</h2>
+				<canvas id="chartEnProceso" width="100" height="100"></canvas>
+			</div>
+			<div flex="50" layout="column" class="containerDashboard" ng-click="$ctrl.redirectUrl(2)" ng-if="$ctrl.rol != 8">
+				<h2><span class="numeroRecibos">{{$ctrl.nuRecibos.AUTOMATICOS}}</span> Recibos automáticos</h2>
+				<canvas id="chartAutomaticos" width="100" height="100"></canvas>
+			</div>
+		</div>
+	</div>
+	
+</div>

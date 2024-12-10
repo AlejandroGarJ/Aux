@@ -1,0 +1,19 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>{{$ctrl.header}}</h2>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content modalContenedorMsg" layout="row" layout-align="center center">
+			<p>{{$ctrl.msg}}</p>
+		</div>
+		<div layout="row" class="modalContenedorBtn" style="margin-top: 12px;" layout-align="center center">
+			<md-button class="md-raised md-primary medium-blue button-action-main" style="display: block;" ng-click="$ctrl.accept()">Sí</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-main-clean" style="display: block;" ng-click="$ctrl.cancel()">No</md-button>
+		</div>
+	</md-dialog-content>
+</md-dialog>

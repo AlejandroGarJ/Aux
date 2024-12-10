@@ -1,0 +1,68 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toolbar>
+	<div class="md-toolbar-tools" style="height:44px">
+        <h2>Búsqueda de Alarmas <i class="fa fa-magnifying-glass"></i></h2>
+        <md-button class="md-icon-button filtroLateral" ng-click="$ctrl.filtro.lateral()" style="right:20px; position:absolute">
+            <md-icon aria-label="Close dialog">arrow_back_ios</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+	<form class="formClass" id="form" ng-submit="$ctrl.buscar('todasalarmas')">
+		<div class="form-scroll" resize ng-style="resizeHeight(261)">
+			<div layout-gt-sm="row" class="margin-top-20">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Nº Alarma</label>
+		         	<input ng-model="$ctrl.form.ID_SOLICITUD.value">
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm>
+			       	<label>Tipo de alarma</label>
+		           	<md-select ng-model="$ctrl.form.ID_TIPO_ALARMA.value">
+		           		<md-option ng-repeat="alarma in $ctrl.tipos.tiposAlarmas" ng-value="alarma.ID_TIPOS">{{alarma.DS_TIPOS}}</md-option>
+		           	</md-select>
+	           	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+				<md-input-container class="md-block" flex-gt-sm>
+	        		<label>Creado desde...</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FT_USU_ALTA_FROM.value" ng-init="$ctrl.form.FT_USU_ALTA_FROM.value = null"
+          						ng-click="($ctrl.form.FT_USU_ALTA_FROM.value == null || $ctrl.form.FT_USU_ALTA_FROM.value == undefined) ? $ctrl.form.FT_USU_ALTA_FROM.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+	          	<md-input-container class="md-block" flex-gt-sm>
+	        		<label>Creado en hasta...</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FT_USU_ALTA_TO.value" ng-init="$ctrl.form.FT_USU_ALTA_TO.value = null"
+	          					ng-click="($ctrl.form.FT_USU_ALTA_TO.value == null || $ctrl.form.FT_USU_ALTA_TO.value == undefined) ? $ctrl.form.FT_USU_ALTA_TO.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+	    	</div>
+	    	<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm>
+			       	<label>Asignado a</label>
+		           	<md-select ng-model="$ctrl.form.NO_USUARIO.value">
+                       	<md-option ng-value="1">García Rodriguez, Oscar</md-option>
+						<md-option ng-value="2">CHACON FELIPE, DAVID</md-option>
+						<md-option ng-value="3">García Alcazar, David</md-option>
+						<md-option ng-value="4">BAYON OLMOS, JUAN CARLOS</md-option>
+		           	</md-select>
+	           	</md-input-container>
+			</div>
+		</div>
+		<div style="text-align:center;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				Buscar
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-trash"></i>
+				LIMPIAR
+			</md-button>
+		</div>
+	</form>
+</md-content>

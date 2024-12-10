@@ -1,0 +1,185 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="md-dialog-container">
+    <md-dialog flex>
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="height:44px">
+                <h2>{{ 'DETAIL_MOVEMENT_CLAIM' | translate | uppercase }}</h2>
+                <md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+                    <md-icon aria-label="Close dialog">clear</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content form-scroll formClass">
+                
+                <div layout="row">
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'CLAIM_NUMBER' | translate }}</label>
+                        <input ng-model="$ctrl.datos.NU_SINIESTRO" disabled>
+                    </md-input-container>   
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'MOVEMENT_NO' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.ID_MOV_ECOM" disabled>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'ASSOCIATED_MOVEMENT_NO' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.ID_MOV_ASOCIADO" disabled>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'MOVEMENT_OF_TYPE' | translate }}</label>
+                        <md-select ng-model="$ctrl.movimiento.CO_TIPOMOV" disabled>
+							<md-option ng-repeat="tipo in $ctrl.tipos.movEcon" ng-value="tipo.CO_TIPO">{{ tipo.DS_TIPOS }}</md-option>
+						</md-select>
+                    </md-input-container>
+                    <md-input-container ng-if="$ctrl.movimiento.IM_TOTAL == null || $ctrl.movimiento.IM_TOTAL == 0" class="flex" flex-gt-sm>
+                        <label>{{ 'TOTAL' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.IM_BASE" disabled>
+                    </md-input-container>
+                    <md-input-container ng-if="$ctrl.movimiento.IM_TOTAL != null && $ctrl.movimiento.IM_TOTAL != 0" class="flex" flex-gt-sm>
+                        <label>{{ 'TOTAL' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.IM_TOTAL" disabled>
+                    </md-input-container>
+                </div>
+                
+                <div layout="row">
+                    <md-input-container ng-if="$ctrl.movimiento.oMovEconGaran.NO_GARANTIA_PADRE != null && $ctrl.movimiento.oMovEconGaran.NO_GARANTIA_PADRE != ''" class="flex" flex-gt-sm>
+                        <label>{{ 'AFFECTED_COVERAGE' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.oMovEconGaran.NO_GARANTIA_PADRE" disabled>
+                    </md-input-container>
+                    <md-input-container ng-if="$ctrl.movimiento.oMovEconGaran.DS_GARANTIA != null && $ctrl.movimiento.oMovEconGaran.DS_GARANTIA != ''" class="flex" flex-gt-sm>
+                        <label>
+                            <span ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 3 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 4 ||
+                                $ctrl.datos.OPOLIZA.ID_PRODUCTO == 5 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 6 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 29">Sección</span>
+                            <span ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 3 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 4 &&
+                                $ctrl.datos.OPOLIZA.ID_PRODUCTO != 5 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 6 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 29">Cobertura afectada</span>
+                        </label>
+                        <input ng-model="$ctrl.movimiento.oMovEconGaran.DS_GARANTIA" disabled>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+		          		<md-checkbox ng-model="$ctrl.aprobado" ng-true-value=true ng-false-value=false ng-init="$ctrl.movimiento.oMovEconGaran.FD_APROBACION != null ? $ctrl.aprobado = true : false" disabled>
+							{{ 'APPROVED' | translate }}
+		          		</md-checkbox>
+		          	</md-input-container>
+		          	<!-- <div ng-if="$ctrl.movimiento.FICHEROS != null && $ctrl.movimiento.FICHEROS.length > 0" layout="row" layout-align="center center" flex="25">
+		          		<md-input-container class="md-block" flex-gt-sm>
+	                        <label>{{ 'FILE' | translate }}</label>
+	                        <input ng-model="$ctrl.movimiento.FICHEROS[0].NO_ARCHIVO" disabled>
+	                    </md-input-container>
+						<i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo($ctrl.movimiento.FICHEROS[0])">
+	                        cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip>
+	                    </i>
+		          	</div> -->
+                </div>
+                <div layout="row">
+                    <md-input-container class="flex" flex-gt-sm="15">
+                        <label>{{ 'DATE_MOVEMENT' | translate }}</label>
+
+                        <md-datepicker ng-model="$ctrl.movimiento.FT_MOV" disabled></md-datepicker>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'DESCRIPTION' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.oMovEconGaran.DS_CONCEPTO" disabled>
+                    </md-input-container>
+                    <md-input-container class="flex" ng-if="$ctrl.datos.ID_COMP_RAMO_PROD != 28" flex-gt-sm>
+                        <label>{{ 'SUPPLIER' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.DS_PERCEPTOR" disabled>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'WAY_PAY' | translate }}</label>
+                        <md-select ng-model="$ctrl.movimiento.ID_FPAGO" disabled>
+							<md-option ng-repeat="tipo in $ctrl.formaPagoList" ng-value="tipo.CO_TIPO">{{ tipo.DS_TIPOS }}</md-option>
+						</md-select>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'PAYMENT_STATUS' | translate }}</label>
+                        <md-select ng-model="$ctrl.movimiento.ID_SITPAGO" disabled>
+							<md-option ng-repeat="tipo in $ctrl.estadoPagoList" ng-value="tipo.CO_TIPO">{{ tipo.DS_TIPOS }}</md-option>
+						</md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container ng-if="$ctrl.movimiento.CO_TIPOMOV == 1" class="flex" flex-gt-sm="25">
+                        <label>{{ 'BILL' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.NU_FACTURA" disabled>
+                    </md-input-container>
+                    <md-input-container ng-if="$ctrl.movimiento.CO_TIPOMOV == 1" class="flex" flex-gt-sm="15">
+                        <label>{{ 'DATE_BILL' | translate }}</label>
+
+                        <md-datepicker ng-model="$ctrl.movimiento.FT_MOV" disabled></md-datepicker>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm="25">
+                        <label>{{ 'SAP_NO' | translate }}</label>
+                        <input ng-model="$ctrl.movimiento.NU_SAP" disabled>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm="25">
+                        <label>{{ 'SAP_DATE' | translate }}</label>
+
+                        <md-datepicker ng-model="$ctrl.movimiento.FD_SAP" disabled></md-datepicker>
+                    </md-input-container>
+                    <md-input-container ng-if="$ctrl.movimiento.ID_SITPAGO == 1" class="flex" flex-gt-sm="25">
+                        <label>{{ 'DATE_SETTLEMENT' | translate }}</label>
+
+                        <md-datepicker ng-model="$ctrl.movimiento.FT_SITUACION" disabled></md-datepicker>
+                    </md-input-container>
+                </div>
+                
+                <!-- <div layout="row" class="margin-top-20"> -->
+                	<!-- <h4>Lista de archivos</h4> -->
+	                <!-- <div ng-repeat="archivo in $ctrl.movimiento.FICHEROS" layout-gt-sm="row" layout-margin> -->
+						<!-- <md-input-container class="md-block" flex-gt-sm flex="25"> -->
+	                        <!-- <label>{{ 'FILE' | translate }}</label> -->
+	                        <!-- <input ng-model="archivo.NO_ARCHIVO" disabled> -->
+	                    <!-- </md-input-container> -->
+						<!-- <i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(archivo)"> -->
+	                        <!-- cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip> -->
+	                    <!-- </i> -->
+					<!-- </div>	 -->
+                <!-- </div> -->
+                <div class="files-container" ng-if="$ctrl.movimiento.FICHEROS != null && $ctrl.movimiento.FICHEROS.length > 0">
+                    <h4>Archivos adjuntados</h4>
+                    <div class="files-container" layout="column">
+                        <div layout="row" ng-repeat="file in $ctrl.movimiento.FICHEROS track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+                            <div flex="60">
+                                <span>
+                                    {{file.NO_ARCHIVO}}
+                                </span>
+                            </div>
+                            <div flex="20">
+                                <span ng-if="file.ESTADO">
+                                    {{file.ESTADO}}
+                                </span>
+                                <span ng-if="!file.ESTADO">
+                                    {{ 'NOT_SAVED' | translate }}
+                                </span>
+                            </div>
+                            <div flex="" class="txt-center">
+                                <span ng-click="$ctrl.descargarArchivo(file)" ng-if="file.DESCARGAR != false">
+                                    <md-icon class="icon-blue">download_for_offline</md-icon>
+                                    <md-tooltip md-direction="bottom">{{ 'DOWNLOAD' | translate }}</md-tooltip>
+                                </span>
+                            </div>
+                            <!-- <div flex="" class="txt-center">
+                                <span ng-click="$ctrl.eliminarArchivo(file, $index)">
+                                    <div ng-if="!file.ESTADO || !file.IS_DELETED">
+                                        <md-icon class="icon-blue">delete_forever</md-icon>
+                                        <md-tooltip md-direction="bottom">Eliminar</md-tooltip>
+                                    </div>
+                                    <div ng-if="file.IS_DELETED">
+                                        <md-icon class="icon-blue">undo</md-icon>
+                                        <md-tooltip md-direction="bottom">Volver a incluir</md-tooltip>
+                                    </div>
+                                </span>
+                            </div>		 -->
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </md-dialog-content>
+
+    </md-dialog>
+</div>

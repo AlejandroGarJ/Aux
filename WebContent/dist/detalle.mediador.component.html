@@ -1,0 +1,595 @@
+<div fxFlex>
+  <mat-card
+    fxLayout="row"
+    fxLayoutAlign="center none"
+    class="formCliente formClass form-scroll"
+    style="margin-bottom: 0 !important"
+  >
+    <div fxFlex="70">
+      <form
+        #formMediador="ngForm"
+        id="formSubmitMediador"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+        <!-- Datos Mediador -->
+        <mat-card-title>
+          <legend class="margin-top-20">
+            <span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos
+            del Mediador
+          </legend>
+        </mat-card-title>
+        <div>
+          <div class="separadorDesplegables"></div>
+          <div fxLayout.gt-sm="row" fxLayoutGap="16px">
+            <mat-form-field
+              [ngClass]="
+                form.controls['NO_COMPANIA'].invalid &&
+                form.controls['NO_COMPANIA'].touched
+                  ? 'invalid-input'
+                  : ''
+              "
+              appearance="fill"
+              fxFlex="40"
+            >
+              <mat-label>Nombre</mat-label>
+              <input matInput required formControlName="NO_COMPANIA" />
+              @if (form.controls['NO_COMPANIA'].invalid) {
+              <mat-error>Nombre inválido</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field
+              [ngClass]="
+                form.controls['NO_COMERCIAL'].invalid &&
+                form.controls['NO_COMERCIAL'].touched
+                  ? 'invalid-input'
+                  : ''
+              "
+              appearance="fill"
+              fxFlex="40"
+            >
+              <mat-label>Nombre Comercial</mat-label>
+              <input matInput required formControlName="NO_COMERCIAL" />
+              @if (form.controls['NO_COMERCIAL'].invalid) {
+              <mat-error>Nombre comercial inválido</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              fxFlex
+              [ngClass]="
+                form.controls['NU_CIF'].invalid &&
+                form.controls['NU_CIF'].touched
+                  ? 'invalid-input'
+                  : ''
+              "
+            >
+              <mat-label>CIF</mat-label>
+              <input matInput required formControlName="NU_CIF" />
+              @if (form.controls['NU_CIF'].invalid) {
+              <mat-error>CIF inválido</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div fxLayout.gt-sm="row" fxLayoutGap="16px">
+            <mat-form-field
+              appearance="fill"
+              fxFlex="calc((20% - 16px))"
+              [ngClass]="
+                form.controls['NO_DIRECCION'].invalid &&
+                form.controls['NO_DIRECCION'].touched
+                  ? 'invalid-input'
+                  : ''
+              "
+            >
+              <mat-label>Dirección</mat-label>
+              <input matInput required formControlName="NO_DIRECCION" />
+              @if (form.controls['NO_DIRECCION'].invalid) {
+              <mat-error>Dirección inválida</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              fxFlex="20"
+              [ngClass]="
+                form.controls['CO_POSTAL'].invalid &&
+                form.controls['CO_POSTAL'].touched
+                  ? 'invalid-input'
+                  : ''
+              "
+            >
+              <mat-label>Código Postal</mat-label>
+              <input
+                matInput
+                required
+                type="number"
+                formControlName="CO_POSTAL"
+              />
+              @if (form.controls['CO_POSTAL'].invalid) {
+              <mat-error>CP inválido</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              fxFlex="15"
+              [ngClass]="
+                form.controls['NO_LOCALIDAD'].invalid &&
+                form.controls['NO_LOCALIDAD'].touched
+                  ? 'invalid-input'
+                  : ''
+              "
+            >
+              <mat-label>Localidad</mat-label>
+              <input matInput required formControlName="NO_LOCALIDAD" />
+              @if (form.controls['NO_LOCALIDAD'].invalid) {
+              <mat-error>Localidad incorrecta</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="fill"
+              fxFlex="15"
+              [ngClass]="
+                form.controls['ID_PROVINCIA'].invalid &&
+                form.controls['ID_PROVINCIA'].touched
+                  ? 'invalid-input'
+                  : ''
+              "
+            >
+              <mat-label>Provincia</mat-label>
+              <mat-select formControlName="ID_PROVINCIA">
+                @for (provincia of provincias; track provincia) {
+                <mat-option [value]="provincia.ID_PROVINCIA">{{
+                  provincia.NO_PROVINCIA
+                }}</mat-option>
+                }
+              </mat-select>
+              <mat-error *ngIf="form.controls['ID_PROVINCIA'].invalid"
+                >Escoge una provincia</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field
+              [ngClass]="
+                form.controls['NO_EMAIL'].invalid &&
+                form.controls['NO_EMAIL'].touched
+                  ? 'invalid-input'
+                  : ''
+              "
+              appearance="fill"
+              fxFlex="30"
+            >
+              <mat-label>Email</mat-label>
+              <input
+                placeholder="Ex. pat@example.com"
+                matInput
+                type="email"
+                required
+                formControlName="NO_EMAIL"
+              />
+              <mat-error *ngIf="form.controls['NO_EMAIL'].invalid"
+                >Email no válido</mat-error
+              >
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-card-title class="margin-top-20">
+          <legend class="margin-top-20">
+            <span class="mov-ico ic-ciber-ico-rellenoformulario"></span>
+            Programas
+          </legend>
+        </mat-card-title>
+        <div class="programas" formArrayName="PARTNERS">
+          <!-- Programa -->
+          @for (partner of PARTNERS.controls; track $index; let programaIndex =
+          $index) {
+
+          <div
+            [formGroup]="partner"
+            class="programa"
+            style="padding-left: 60px; padding-bottom: 20px"
+          >
+            <div fxLayout fxLayoutGap="16px">
+              @if (programaIndex > 0) {
+              <a (click)="deletePrograma(programaIndex)">
+                <div style="height: 18px"></div>
+                <span
+                  style="padding: 0"
+                  id="delete"
+                  class="glyphicon glyphicon-trash"
+                ></span>
+              </a>
+              }
+              <legend>
+                <span
+                  class="headerDetailSearch"
+                  style="padding-left: 0 !important"
+                  ><i class="fa-duotone fa-rotate"></i> Datos del programa
+                </span>
+              </legend>
+            </div>
+
+            <div class="margenPresupuestos">
+              <div fxLayout.gt-sm="row" fxLayoutGap="16px">
+                <mat-form-field
+                  appearance="fill"
+                  fxFlex="30"
+                  [ngClass]="
+                    partner['controls']['ID_PROGRAMA'].invalid &&
+                    partner['controls']['ID_PROGRAMA'].touched
+                      ? 'invalid-input'
+                      : ''
+                  "
+                >
+                  <mat-label>Producto</mat-label>
+                  <mat-select formControlName="ID_PROGRAMA">
+                    @for (producto of productosDisponibles; track
+                    producto.ID_PROGRAMA) {
+                    <mat-option [value]="producto.ID_PROGRAMA">{{
+                      producto.DS_PROGRAMA
+                    }}</mat-option>
+                    }
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      partner['controls']['ID_PROGRAMA'].hasError('required')
+                    "
+                    >Elige un producto</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      partner['controls']['ID_PROGRAMA'].hasError(
+                        'duplicateIDPrograma'
+                      )
+                    "
+                    >Ya has elegido ese producto
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field
+                  appearance="fill"
+                  fxFlex="30"
+                  [ngClass]="
+                    partner['controls']['DS_TIPO_POLIZA'].invalid &&
+                    partner['controls']['DS_TIPO_POLIZA'].touched
+                      ? 'invalid-input'
+                      : ''
+                  "
+                >
+                  <mat-label>Partner</mat-label>
+                  <input matInput required formControlName="DS_TIPO_POLIZA" />
+                  <mat-error
+                    *ngIf="
+                      partner['controls']['DS_TIPO_POLIZA'].invalid &&
+                      partner['controls']['DS_TIPO_POLIZA'].touched
+                    "
+                    >Escoge partner
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field
+                  [ngClass]="
+                    partner['controls']['LST_ID_TIPO_MEDIO_PAGO'].invalid &&
+                    partner['controls']['LST_ID_TIPO_MEDIO_PAGO'].touched
+                      ? 'invalid-input'
+                      : ''
+                  "
+                >
+                  <mat-label>Medios Pago</mat-label>
+                  <mat-select formControlName="LST_ID_TIPO_MEDIO_PAGO" multiple>
+                    @for (medioPago of mediosPago; track medioPago) {
+                    <mat-option [value]="medioPago.ID_TIPO_MEDIO_PAGO">{{
+                      medioPago.DS_TIPO_MEDIO_PAGO
+                    }}</mat-option>
+                    }
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      partner['controls']['LST_ID_TIPO_MEDIO_PAGO'].invalid &&
+                      partner['controls']['LST_ID_TIPO_MEDIO_PAGO'].touched
+                    "
+                    >Selecciona al menos un medio de pago
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field
+                  appearance="fill"
+                  fxFlex
+                  [ngClass]="
+                    partner['controls']['PO_COMISION'].invalid &&
+                    partner['controls']['PO_COMISION'].touched
+                      ? 'invalid-input'
+                      : ''
+                  "
+                >
+                  <mat-label>Comisión</mat-label>
+
+                  <input
+                    matInput
+                    type="number"
+                    required
+                    formControlName="PO_COMISION"
+                  />
+                  <mat-error
+                    *ngIf="
+                      partner['controls']['PO_COMISION'].invalid &&
+                      partner['controls']['PO_COMISION'].touched
+                    "
+                    >Introduce una comisión correcta
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Contactos -->
+            <div style="padding-left: 60px">
+              <legend>
+                <span
+                  class="headerDetailSearch"
+                  style="padding-left: 0 !important"
+                  ><i class="fa-duotone fa-contact-book"></i> Contactos
+                </span>
+              </legend>
+              @for (contacto of partner['controls']['LISTA_CONTACTOS'].controls;
+              track $index; let contactoIndex = $index) {
+
+              <div [formGroup]="contacto">
+                <div fxLayoutGap="16px">
+                  @if(contactoIndex > 0){
+                  <a (click)="deleteContacto(programaIndex, contactoIndex)">
+                    <div style="height: 18px"></div>
+                    <span
+                      style="padding: 0"
+                      id="delete"
+                      class="glyphicon glyphicon-trash"
+                    ></span>
+                  </a>
+                  } @else {
+                  <a style="visibility: hidden">
+                    <div style="height: 18px"></div>
+                    <span
+                      style="padding: 0"
+                      id="delete"
+                      class="glyphicon glyphicon-trash"
+                    ></span>
+                  </a>
+                  }
+
+                  <mat-form-field
+                    appearance="fill"
+                    fxFlex="25"
+                    [ngClass]="
+                      contacto['controls']['ID_TIPOCONTACTO'].invalid &&
+                      contacto['controls']['ID_TIPOCONTACTO'].touched
+                        ? 'invalid-input'
+                        : ''
+                    "
+                  >
+                    <mat-label>Tipo de contacto </mat-label>
+
+                    <mat-select formControlName="ID_TIPOCONTACTO">
+                      <mat-option
+                        *ngFor="let tipoContacto of tiposContacto"
+                        [value]="tipoContacto.CO_TIPO"
+                      >
+                        {{ tipoContacto.DS_TIPOS }}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error
+                      *ngIf="
+                        contacto['controls']['ID_TIPOCONTACTO'].invalid &&
+                        contacto['controls']['ID_TIPOCONTACTO'].touched
+                      "
+                    >
+                      Selecciona el tipo de contacto
+                    </mat-error>
+                  </mat-form-field>
+
+                  <!-- Nombre Contacto -->
+                  <mat-form-field
+                    appearance="fill"
+                    fxFlex="30"
+                    [ngClass]="
+                      contacto['controls']['NO_PERSONA'].invalid &&
+                      contacto['controls']['NO_PERSONA'].touched
+                        ? 'invalid-input'
+                        : ''
+                    "
+                  >
+                    <mat-label>Nombre</mat-label>
+                    <input matInput required formControlName="NO_PERSONA" />
+                    <mat-error
+                      *ngIf="
+                        contacto['controls']['NO_PERSONA'].invalid &&
+                        contacto['controls']['NO_PERSONA'].touched
+                      "
+                      >Introduce un nombre
+                    </mat-error>
+                  </mat-form-field>
+
+                  <!-- Email Contacto -->
+                  <mat-form-field
+                    appearance="fill"
+                    fxFlex="30"
+                    [ngClass]="
+                      contacto['controls']['NO_EMAIL'].invalid &&
+                      contacto['controls']['NO_EMAIL'].touched
+                        ? 'invalid-input'
+                        : ''
+                    "
+                  >
+                    <mat-label>Email</mat-label>
+                    <input
+                      matInput
+                      required
+                      formControlName="NO_EMAIL"
+                      placeholder="Ex. pat@example.com"
+                    />
+                    <mat-error
+                      *ngIf="
+                        contacto['controls']['NO_EMAIL'].invalid &&
+                        contacto['controls']['NO_EMAIL'].touched
+                      "
+                      >Introduce un email
+                    </mat-error>
+                  </mat-form-field>
+
+                  <!-- Tipo Destinatario -->
+                  <mat-form-field
+                    appearance="fill"
+                    fxFlex="25"
+                    [ngClass]="
+                      contacto['controls']['IN_TIPO_DESTINATARIO'].invalid &&
+                      contacto['controls']['IN_TIPO_DESTINATARIO'].touched
+                        ? 'invalid-input'
+                        : ''
+                    "
+                  >
+                    <mat-label>Tipo de destinatario </mat-label>
+
+                    <mat-select formControlName="IN_TIPO_DESTINATARIO">
+                      <mat-option
+                        *ngFor="let tipoDestinatario of tiposDestinatario"
+                        [value]="tipoDestinatario.CO_TIPO"
+                      >
+                        {{ tipoDestinatario.DS_TIPOS }}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error
+                      *ngIf="
+                        contacto['controls']['IN_TIPO_DESTINATARIO'].invalid &&
+                        contacto['controls']['IN_TIPO_DESTINATARIO'].touched
+                      "
+                    >
+                      Selecciona un tipo de destinatario
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              }
+
+              <button
+                type="button"
+                style="margin-top: 30px; margin-left: 30px"
+                class="button-action-main flex-btn anadir-contacto-btn"
+                fxLayout="row"
+                fxLayoutAlign="center center"
+                (click)="addContacto($index)"
+              >
+                <mat-icon>add</mat-icon>
+                Añadir contacto
+              </button>
+
+              <!-- Harmony  -->
+              @if ( partner['controls']['ID_PROGRAMA'].value === 2) {
+              <legend style="padding-top: 40px">
+                <span
+                  class="headerDetailSearch"
+                  style="padding-left: 0 !important"
+                  ><i class="fa-duotone fa-file-pdf"></i> Datos de Configuración
+                  Harmony
+                </span>
+              </legend>
+              <div
+                class="harmony"
+                fxLayout="column"
+                fxLayoutAlign="start stretch"
+                formGroupName="HARMONY_CONF"
+              >
+                <mat-form-field
+                  fxFlex
+                  [ngClass]="
+                    partner['controls'].HARMONY_CONF.controls['brokerName']
+                      .invalid &&
+                    partner['controls'].HARMONY_CONF.controls['brokerName']
+                      .touched
+                      ? 'invalid-input'
+                      : ''
+                  "
+                >
+                  <mat-label>Nombre Broker</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    required
+                    formControlName="brokerName"
+                  />
+                  <mat-error
+                    *ngIf="
+                      partner['controls'].HARMONY_CONF.controls['brokerName']
+                        .invalid &&
+                      partner['controls'].HARMONY_CONF.controls['brokerName']
+                        .touched
+                    "
+                  >
+                    Introduce un nombre de Broker
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field
+                  fxFlex
+                  [ngClass]="
+                    partner['controls'].HARMONY_CONF.controls['brokerInfo']
+                      .invalid &&
+                    partner['controls'].HARMONY_CONF.controls['brokerInfo']
+                      .touched
+                      ? 'invalid-input'
+                      : ''
+                  "
+                >
+                  <mat-label>Información de configuración</mat-label>
+                  <textarea
+                    matInput
+                    required
+                    rows="5"
+                    formControlName="brokerInfo"
+                  ></textarea>
+                  <mat-error
+                    *ngIf="
+                      partner['controls'].HARMONY_CONF.controls['brokerInfo']
+                        .invalid &&
+                      partner['controls'].HARMONY_CONF.controls['brokerInfo']
+                        .touched
+                    "
+                  >
+                    Introduce la información de configuración
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              }
+              <legend>
+                <span
+                  class="headerDetailSearch"
+                  style="padding-left: 0 !important"
+                >
+                </span>
+              </legend>
+            </div>
+          </div>
+
+          }
+        </div>
+
+        <button
+          type="button"
+          class="button-action-main flex-btn"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          (click)="addPartner()"
+        >
+          <mat-icon>add</mat-icon>
+          Añadir programa
+        </button>
+
+        <div class="margin-top-10" fxLayout="row" fxLayoutAlign="center none">
+          <button type="submit" mat-raised-button color="primary">
+            <mat-icon>save</mat-icon> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

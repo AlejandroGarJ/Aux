@@ -1,0 +1,18 @@
+En esta entrega front 18, se han realizado los siguientes cambios:
+- Fix:
+	- Informes:
+		+ Habilitar bordero trimestral
+	- Ciberempresa:
+		+ Arreglo en los datos de pago para X mediadores
+	- Hogar:
+		+ Correcciones al mostrar el importe en el cambio de periodicidad
+		+ Añadir máximo 365 días para la contratación
+		+ Cambiar de posición el importe a reembolsar cuando hay descuento
+		+ Arreglo en la forma de pago al editar presupuesto
+		+ Eliminar pago mensual del resumen
+	- Login:
+		+ Añadir nueva autenticación en el login
+	- Recibos:
+		- Arreglo al guardar recibos devueltos
+	- Solicitudes:
+		- Cambios en solicitud de revigorización y en renovación de la póliza

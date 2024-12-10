@@ -1,0 +1,536 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Gestor</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <!-- Nuevo -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <!--<link href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" rel="stylesheet" />-->
+    <script src="src/app-content/fontawesome/js/all.js"></script>
+    <link href="src/app-content/icos-ciberseguro.css" rel="stylesheet" />
+    <link href="src/app-content/comparador.css" rel="stylesheet" />
+    <link href="src/app-content/movil-dashboard.css" rel="stylesheet" />
+    <link href="src/app-content/app.css" rel="stylesheet" />
+    <link href="src/app-content/header.css" rel="stylesheet" />
+    <link href="src/app-content/recibos-devueltos.css" rel="stylesheet" />
+    <link href="src/app-content/login-btns.css" rel="stylesheet" />
+    <link href="src/app-content/detalles.css" rel="stylesheet" />
+    <link href="src/app-content/filtros.css" rel="stylesheet" />
+    <link href="src/app-content/polizas.css" rel="stylesheet" />
+    <link href="src/app-content/isteven-multi-select.css" rel="stylesheet" />
+    <link href="src/app-content/colors-buttons.css" rel="stylesheet" />
+    <link
+      href="node_modules/angular-ui-grid/ui-grid.min.css"
+      rel="stylesheet"
+    />
+    <!-- <link href="https://ui-grid.info/release/ui-grid.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="src/app-content/ui-grid.css" type="text/css" />
+    <link href="src/app-content/table.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+    <link href="node_modules/angular-tree-control/css/tree-control.css" />
+    <link
+      href="node_modules/angular-tree-control/css/tree-control-attribute.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
+    <script src="src/app-content/excel-builder/csv.js"></script>
+    <script src="src/app-content/excel-builder/pdfmake.js"></script>
+    <script src="src/app-content/excel-builder/vfs_fonts.js"></script>
+    <script src="src/app-content/excel-builder/lodash.min.js"></script>
+    <script src="src/app-content/excel-builder/jszip.min.js"></script>
+    <script src="src/app-content/excel-builder/excel-builder.dist.js"></script>
+    <script src="src/app-content/Crypto/md5.js"></script>
+    <link href="src/app-content/segmovil-adminpanel.css" rel="stylesheet" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-KQM92MFC");
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- 	    <script src="https://ui-grid.info/docs/grunt-scripts/csv.js"></script> -->
+    <!-- 	    <script src="https://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script> -->
+    <!-- 	    <script src="https://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script> -->
+    <!-- 	    <script src="https://ui-grid.info/docs/grunt-scripts/lodash.min.js"></script> -->
+    <!-- 	    <script src="https://ui-grid.info/docs/grunt-scripts/jszip.min.js"></script> -->
+    <!-- 	    <script src="https://ui-grid.info/docs/grunt-scripts/excel-builder.dist.js"></script> -->
+
+    <link href="src/app-content/custom.css" rel="stylesheet" />
+    <link href="src/app-content/css/ico.css" rel="stylesheet" />
+
+    <!--         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css"> -->
+    <!--         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">     -->
+    <!--     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css"> -->
+  </head>
+  <body class="footer-block" ng-cloak>
+    <sd-app></sd-app>
+
+    <!--         <div class="outer-wrap"> -->
+    <!--             <div class="inner-wrap"> -->
+    <!--                 <div class="main"> -->
+    <!--                     <div> -->
+    <!--                         <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message">     -->
+    <!--                         </div> -->
+    <!--                         <div ng-view style="margin-top:150px;padding-bottom:200px;"></div> -->
+    <!--                     </div> -->
+    <!--                 </div> /container -->
+
+    <!-- <footer class="footerMargin">
+                    <section class="gr-pie ">
+                        <div class="gr-logos navbar navbar-default navbar-fixed-bottom">
+                             <div class="row">
+                                   <div class="col-xs-12">
+                                        <ul class="list-inline pie padding0">
+                                            <li class="col-xs-12 col-sm-3"><a target="_self">Aviso legal</a></li>
+                                            <li class="col-xs-12 col-sm-3"><a target="_self">Política de cookies</a></li>
+                                            <li class="col-xs-12 col-sm-3"><a target="_self">Contacto</a></li>
+                                            <li class="col-xs-12 col-sm-3"><a target="_self">Condiciones Generales</a></li>
+                                        </ul>
+                                   </div>
+                             </div>
+                        </div>
+                    </section>
+                    <section class="gr-logos visible-xs">
+                        <div class="container">
+                            <div class="row">
+                                <div class="gr-logos">
+                                    <div class="logo-pie"><a class="link-logo-pie" href="#" title="Telefónica"></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </footer> -->
+
+    <!--         		<sd-footer></sd-footer> -->
+    <!-- <footer class="footer-block navbar-fixed-bottom">
+                    <section class="gr-pie">
+                        <div class="col-xs-12 container gr-logos">
+                            <div class="row">
+                                <div class="logo-pie-marca col-sm-4 col-xs-4">
+                                    <span class="marca">UNA MARCA DE</span>
+                                    <img src="src/img//logo-telefonica-footer.png" width="80" alt="Telefónica" title="Telefónica">
+                                </div>
+                                <div class="col-xs-12 col-sm-7 col-xs-7 pull-right">
+                                    <ul class="list-inline pie padding0">
+                                        <li class=""><a id="informacionAvisoLegal">Aviso legal</a></li>
+                                        <li class=""><a id="informacionProteccionDatos">Política de protección de datos</a></li>
+                                        <li class=""><a id="informacionCondicionesUso">Condiciones de uso</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </footer> -->
+
+    <!--             </div>     -->
+    <!--         </div> -->
+
+    <!--         /node_modules/slkaslaksl -->
+    <!--         /node_modules/ajkskasjkas -->
+    <!--         .... -->
+    <!--         /src/app.js -->
+    <!--         /src/app.componente.js  -->
+    <!--         .... -->
+    <!--         /src/app.min.js -->
+    <!--         /src/app.libs.min.js -->
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KQM92MFC"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+    <!--         <script src="//code.jquery.com/jquery-3.1.1.min.js"></script> -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="//code.angularjs.org/1.7.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-sanitize.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js"></script>
+    <!--         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-touch.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-filter/0.4.7/angular-filter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.0.9/ng-file-upload.min.js"></script>
+    <script src="node_modules/angular-ui-grid/ui-grid.min.js"></script>
+    <!--         <script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.core.min.js"></script> -->
+    <script src="//code.angularjs.org/1.7.2/angular-route.min.js"></script>
+    <script src="//code.angularjs.org/1.7.2/angular-cookies.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-messages.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.7.2/angular-locale_es-es.js"></script>
+    <script
+      type="text/javascript"
+      src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"
+    ></script>
+    <script src="node_modules/angular-tree-control/angular-tree-control.js"></script>
+    <script src="node_modules/angular-tree-control/context-menu.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+    <script src="node_modules/moment/moment.js"></script>
+    <script src="node_modules/x2js/x2js.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/1.11.8/angularjs-dropdown-multiselect.min.js"
+      integrity="sha512-n6LmUTom+Lm/XrRWRYJQ3nOWVUMOgnwnoPKLwAhG8dMhGwVvr0+e9gkrZg7ieX92CWmNVkCi0xK2/4OytIKMsQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/ngx-doc-viewer@latest"></script>
+
+    <!-- 		<script src="app/angular.libs.min.js"></script> -->
+
+    <!-- Librería para descargar archivos -->
+    <script src="src/app-content/FileSaver/dist/FileSaver.js"></script>
+    <script src="src/app-content/Chart/Chart.min.js"></script>
+    <script src="src/app-content/Chart/angular-chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <!-- Librería para mostrar documentos word -->
+    <script src="https://unpkg.com/jszip/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx-preview@0.1.15/dist/docx-preview.js"></script>
+
+    <!-- Inicia el sistema -->
+    <!--         <script src="app/componentes.js"></script> -->
+
+    <!-- <script src="app.js?v=132.11.08"></script> -->
+    <script src="dist/main.bundle.js"></script>
+    <script src="appComponent.js?v=132.11.08"></script>
+    <script src="constantsTipos.js?v=132.11.08"></script>
+
+    <!-- Servicios -->
+    <script src="src/app-services/user.service.local-storage.js?v=132.11.08"></script>
+    <script src="src/app-services/share.properties.service.js?v=132.11.08"></script>
+    <script src="src/app-services/flash.service.js?v=132.11.08"></script>
+    <script src="src/app-services/busqueda.service.js?v=132.11.08"></script>
+    <script src="src/app-services/tipos.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/polizas.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/clientes.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/recibos.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/solicitudes.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/siniestros.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/alarmas.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/ficherosProcesados.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/ficherosGenerados.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/presupuesto.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/aseguradoras.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/riesgos.service.js?v=132.11.08"></script>
+    <script src="src/app-services/global/procesos.service.js?v=132.11.08"></script>
+    <script src="src/app-services/detalles.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-cliente-service/cliente.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-poliza-service/poliza.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-solicitud-service/solicitud.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-presupuesto-service/motor.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-presupuesto-service/hogar.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-tarificadores-service/movil.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-tarificadores-service/hijos.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-tarificadores-service/empresa.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-tarificadores-service/dispositivos.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-tarificadores-service/identidad.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-presupuesto-service/presupuesto.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-comisionista-service/comisionista.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-cp-service/cp.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-recibos-service/recibo.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-colectivos-service/colectivo.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-usuarios-service/usuarios.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-aseguradoras-service/aseguradora.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-brokers-service/broker.service.js"></script>
+    <script src="src/app-services/app-siniestros-service/siniestro.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-ficheros-service/fichero.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-concesion-service/concesion.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-simulacion-service/simulacion.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-garantia-service/garantia.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-conversor-service/conversor.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-usuariosws-service/usuariosws.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-procesos-service/proceso.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-admin-service/admin.service.js?v=132.11.08"></script>
+    <script src="src/app-services/user.service.js?v=132.11.08"></script>
+    <script src="src/app-services/authentication.service.js?v=132.11.08"></script>
+    <script src="src/app-services/validaciones.service.js?v=132.11.08"></script>
+    <script src="src/busqueda/validaciones.directive.js?v=132.11.08"></script>
+    <script src="src/app-services/solicitarBaja.service.js?v=132.11.08"></script>
+    <script src="src/cliente/cliente.directive.js?v=132.11.08"></script>
+    <script src="src/app-content/resize.directive.js?v=132.11.08"></script>
+    <script src="src/app-content/validation.directive.js?v=132.11.08"></script>
+    <script src="src/app-content/uppercase.directive.js?v=132.11.08"></script>
+    <script src="src/app-content/amount.directive.js?v=132.11.08"></script>
+    <script src="src/app-content/description.directive.js?v=132.11.08"></script>
+    <script src="src/app-content/domain.directive.js?v=132.11.08"></script>
+    <script src="src/app-services/app-exports-service/export.service.js?v=132.11.08"></script>
+    <script src="src/app-services/validacionPago.service.js?v=132.11.08"></script>
+    <script src="src/app-services/app-proveedores-service/proveedores.service.js?v=132.11.08"></script>
+    <script src="src/app-services/common-utils.service.js?v=132.11.08"></script>
+    <script src="src/app-content/number.no.decimals.directive.js?v=132.11.08"></script>
+    <script src="src/app-content/currency.directive.js?v=132.11.08"></script>
+    <script src="src/app-content/change.color.directive.js?v=132.11.08"></script>
+    <!-- Componentes AngularJS -->
+    <script src="src/header/header.component.js?v=132.11.08"></script>
+    <script src="src/login/login.component.js?v=132.11.08"></script>
+    <script src="src/footer/footer.component.js?v=132.11.08"></script>
+
+    <!-- Componentes de busqueda -->
+    <script src="src/busqueda/busqueda.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.poliza_tiper.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.poliza.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.poliza_rgpd.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.envioMovistar.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.reclamaciones.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.cliente_rgpd.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.cliente.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.alarmas.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.presupuestos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.recibo.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.remesas.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.renting.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.ultRecibos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.recibosDevueltos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.siniestros.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.movimientosEconomicos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.solicitudes.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.errorFicheros.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.ficherosProcesados.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.ficherosGenerados.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.tarifas.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.distribucion.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.bajasVehiculos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.procesos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.aseguradoras.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.reaseguradoras.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.backup.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.campanas.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.colaboradores.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.colectivos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.concesiones.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.contenido_continente.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.conversor.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.cp.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.datosAseguradora.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.garantias.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.maestros.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.tipos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.usuarios.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.proveedores.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.programas.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.avisos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/admin/busqueda.dispositivosMoviles.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.riesgos.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.portabilidad.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.fusion.componente.js?v=132.11.08"></script>
+    <script src="src/busqueda/busqueda.componente/busqueda.firmaDigital.componente.js?v=132.11.08"></script>
+
+    <!-- Componentes de Detalles -->
+    <script src="src/detalle/detalle.component.js?v=132.11.08.06"></script>
+    <script src="src/detalle/detalles.componentes/detalle.clientes.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.clientes_rgpd.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.reclamacion.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.polizas.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.polizas_rgpd.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.recibos.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.remesas.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.reciboDevuelto.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.solicitud.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.tarifa.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.simulacion.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.usuario.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.siniestro.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.aseguradora.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.colaborador.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.reaseguradora.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.mediador.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.colectivo.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.fichero.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.ficheroError.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.producto.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.envioMovistar.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.portabilidad.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.fusion.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.proveedor.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.entregas.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.dispositivoMovil.componente.js?v=132.11.08"></script>
+    <script src="src/detalle/detalles.componentes/detalle.movimiento.componente.js?v=132.11.08"></script>
+
+    <script src="src/cliente/cliente.componente.js?v=132.11.08"></script>
+    <script src="src/recibos/recibos_devueltos_dashboard.componente.js?v=132.11.08"></script>
+    <script src="src/solicitud/solicitud.componente.js?v=132.11.08"></script>
+    <script src="src/solicitud/solicitud.reclamacion.componente.js?v=132.11.08"></script>
+
+    <script src="src/hogar/hogar.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente/tar.movil.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente/tar.hijos.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente/tar.empresa.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente/tar.identidad.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente/tar.dispositivos.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente/tar.empresa-de.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente/tar.ciberparticulares.componente.js?v=132.11.08"></script>
+    <script src="src/tarificador/tarificador.componente/broker.componente.js?v=132.11.08"></script>
+
+    <script src="src/movil/movil.components/preciario_terminales.component.js?v=132.11.08"></script>
+    <script src="src/movil/movil.components/consentimientos.component.js?v=132.11.08"></script>
+    <script src="src/movil/movil_dashboard.componente.js?v=132.11.08"></script>
+    <script src="src/movil/movil.components/estadisticas_movil.component.js?v=132.11.08"></script>
+
+    <script src="src/filtros/filtros.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.consultagdpr.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.poliza.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.poliza_tiper.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.poliza_rgpd.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.reclamaciones.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.cliente.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.cliente_rgpd.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.recibo.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.recibosDevueltos.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.remesas.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.envioMovistar.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.ultRecibo.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.solicitud.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.renting.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.presupuesto.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.siniestro.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.movimientosEconomicos.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.backup.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.alarmas.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.errorsFiles.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.procesados.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.generados.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.firmaDigital.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.aseguradoras.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.reaseguradoras.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.campana.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.colaboradores.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.concesiones.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.conversor.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.cp.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.datosAseguradora.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.garantias.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.maestros.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.tipos.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.usuarios.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.proveedores.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.programas.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.avisos.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/admin/filtros.dispositivosMoviles.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.tarifas.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.distribucion.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.bajasVehiculos.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.portabilidad.componente.js?v=132.11.08"></script>
+    <script src="src/filtros/filtros.componentes/filtros.fusion.componente.js?v=132.11.08"></script>
+
+    <script src="src/presupuesto/presupuesto.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.accidentes.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.asistencia.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.automovil.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.decesos.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.dental.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.multirriesgos.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.proteccion.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.salud.componente.js?v=132.11.08"></script>
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.vida.componente.js?v=132.11.08"></script>
+
+    <script src="src/presupuesto/form.presupuesto.componentes/pre.hogar.componente.js?v=132.11.08"></script>
+
+    <script src="src/informes/informe.componente.js?v=132.11.08"></script>
+    <script src="src/informes/informe-siniestros/informe-siniestros.componente.js?v=132.11.08"></script>
+    <script src="src/subidaFicheros/subidaFicheros.componente.js?v=132.11.08"></script>
+    <script src="src/documentacion/documentacion.componente.js?v=132.11.08"></script>
+
+    <script src="src/flotas/impuestos/impuestos.componente.js?v=132.11.08"></script>
+    <script src="src/polizas/polizas.componente.js?v=132.11.08"></script>
+    <script src="src/tarifas/simulacion_tarifas.componente.js?v=132.11.08"></script>
+    <script src="src/recibos/impresion.componente.js?v=132.11.08"></script>
+    <script src="src/consultas/consultas.componente.js?v=132.11.08"></script>
+
+    <script src="src/descarga/descarga.componente.js?v=132.11.08"></script>
+
+    <script src="src/localidades/localidades.componente.js?v=132.11.08"></script>
+
+    <script src="src/procesos/proceso.componente.js?v=132.11.08"></script>
+
+    <script src="src/renovacion/renovacion-polizas.componente.js?v=132.11.08"></script>
+
+    <script src="src/entregas/entregas.componente.js?v=132.11.08"></script>
+
+    <style
+      type="text/css"
+      src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css"
+    ></style>
+    <!-- Estilos para componentes de Angular2 -->
+    <link rel="stylesheet" href="./angular2/angular2Styles.css" />
+
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.4/angular-translate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.4/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+
+    <script type="text/javascript">
+      //Añadir versionado a los js
+      // 			var js = document.querySelectorAll('script');
+      // 			for (var i = 0; i < js.length; i++) {
+      // 			    js[i].src = js[i].src + '?v=' + Date.now();
+      // 			}
+
+      //  			//Añadir versionado a los css
+      // 			var css = document.querySelectorAll('link');
+      // 			for (var i = 0; i < css.length; i++) {
+      // 			    css[i].href = css[i].href + '?v=' + Date.now();
+      // 			}
+
+      // 			//Añadir versionado a los css
+      // 			var reloadFilesJs = document.querySelectorAll('script[reload="true"]');
+      // 			console.log('reloadFilesJs');
+      // 			console.log(reloadFilesJs);
+      // 			for (var i = 0; i < reloadFilesJs.length; i++) {
+      // 				reloadFilesJs[i].src = reloadFilesJs[i].src + '?v=' + Date.now();
+      // 			}
+    </script>
+
+    <script src="dist/bootstrap.bundle.js"></script>
+  </body>
+</html>

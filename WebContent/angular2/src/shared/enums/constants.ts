@@ -1,0 +1,4 @@
+export enum CONSTANTS {
+  TIPOS_CONTACTO = 14,
+  IN_TIPO_DESTINATARIO = 576,
+}

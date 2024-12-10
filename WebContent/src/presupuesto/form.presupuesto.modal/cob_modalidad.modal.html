@@ -1,0 +1,306 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width: 40%">
+    <md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Coberturas</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="min-height:260px;">
+		<form style="margin-top: 20px;" class="formClass">
+			<div layout="row" flex="100" style="margin-top: 10px; margin-left:10px; margin-right: 10px;">
+				
+				<div layout="column" layout-align="center center">
+<!--				    <md-icon class="icono-warning-modal">info</md-icon>-->
+	            
+	            	<div class="cob-sl" style="padding-left: 20px;" ng-if="$ctrl.codAseguradora == 1 && $ctrl.tipo == '245'">
+                        <legend>Incendio y Explosión</legend>
+                        <ul>
+                        <li>- Incendio, Caída del rayo, Explosión, Autoexplosión y Efectos secundarios</li>
+                        <li>- Reconstrucción del jardín</li>
+                        <li>- Gastos de extinción de incendios</li>
+                        <li>- Gastos de demolición y desescombro</li>
+                        <li>- Humo</li>
+                        </ul>
+                        <legend>Otros daños</legend>
+                        <ul>
+                        <li>- Caída de árboles, postes y antenas</li>
+                        <li>- Fenómenos atmosféricos</li>
+                        <li>- Colisión de vehículos</li>
+                        <li>- Ondas sónicas</li>
+                        <li>- Daños producidos por la electricidad</li>
+                        <li>- Daños a alimentos en frigoríficos o congeladores</li>
+                        <li>- Derrumbe accidental*<sup>1</sup></li>
+                        <li>- Bienes desplazados temporalmente</li>
+                        </ul>
+                        <legend>Agua</legend>
+                        <ul><li>- Daños producidos por el agua y heladas</li></ul>
+                        <legend>Roturas</legend>
+                        <ul>
+                        <li>- Rotura de lunas, espejos, cristales y piezas de metacrilato</li>
+                        <li>- Rotura de elementos vitrocerámicos de cocina</li>
+                        <li>- Rotura de mármoles, granitos y piedras artificiales</li>
+                        <li>- Rotura de aparatos sanitarios fijos</li>
+                        </ul>
+                        <legend>Pérdidas por extravíos, sustracciones y actos de vandalismo</legend>
+                        <ul>
+                        <li>- Robo y expoliación</li>
+                        <li>- Desperfectos al Continente por robo</li>
+                        <li>- Atraco fuera del hogar</li>
+                        <li>- Hurto</li>
+                        <li>- Sustitución de cerraduras</li>
+                        <li>- Uso indebido de tarjetas</li>
+                        <li>- Actos de vandalismo o malintencionados</li>
+                        </ul>   
+                        <legend>Reposición</legend>
+                        <ul>
+                        <li>- Reposición estética del Continente</li>
+                        <li>- Reposición de documentos públicos</li>
+                        <li>- Reposición de documentos personales acrediativos</li>
+                        </ul>
+                        <legend>Otros</legend>
+                        <ul>
+                        <li>- Inhabitabilidad de la vivienda</li>
+                        <li>- Pérdida de alquileres</li>
+                        <li>- Responsabilidad civil general</li>
+                        <li>- Riesgos extraordinarios</li>
+                        <li>- Seguro a valor de nuevo</li>
+                        <li>- Conexión para el mantenimiento de la vivienda</li>
+                        </ul>
+                        <p data-top="30"><small>*<sup>1</sup> No Contratable en Viviendas Unifamiliares, Pareadas o Adosadas, ni tampoco cuando no se contrate capital de continente en cualquiera de sus modalidades.</small></p>
+                    </div> 
+
+                    <div class="cob-sl-ampliacion-asistencia-plus" style="padding-left: 20px;" ng-if="$ctrl.codAseguradora == 1 && $ctrl.tipo == '246'">
+                        <legend>Incendio y Explosión</legend>
+                        <ul>
+                        <li>- Incendio, Caída del rayo, Explosión, Autoexplosión y Efectos secundarios</li>
+                        <li>- Reconstrucción del jardín</li>
+                        <li>- Gastos de extinción de incendios</li>
+                        <li>- Gastos de demolición y desescombro</li>
+                        <li>- Humo</li>
+                        </ul>
+                        <legend>Otros daños</legend>
+                        <ul>
+                        <li>- Caída de árboles, postes y antenas</li>
+                        <li>- Fenómenos atmosféricos</li>
+                        <li>- Colisión de vehículos</li>
+                        <li>- Ondas sónicas</li>
+                        <li>- Daños producidos por la electricidad</li>
+                        <li>- Daños a alimentos en frigoríficos o congeladores</li>
+                        <li>- Derrumbe accidental*<sup>1</sup></li>
+                        <li>- Bienes desplazados temporalmente</li>
+                        </ul>
+                        <legend>Agua</legend>
+                        <ul><li>- Daños producidos por el agua y heladas</li></ul>
+                        <legend>Roturas</legend>
+                        <ul>
+                        <li>- Rotura de lunas, espejos, cristales y piezas de metacrilato</li>
+                        <li>- Rotura de elementos vitrocerámicos de cocina</li>
+                        <li>- Rotura de mármoles, granitos y piedras artificiales</li>
+                        <li>- Rotura de aparatos sanitarios fijos</li>
+                        </ul>
+                        <legend>Pérdidas por extravíos, sustracciones y actos de vandalismo</legend>
+                        <ul>
+                        <li>- Robo y expoliación</li>
+                        <li>- Desperfectos al Continente por robo</li>
+                        <li>- Atraco fuera del hogar</li>
+                        <li>- Hurto</li>
+                        <li>- Sustitución de cerraduras</li>
+                        <li>- Uso indebido de tarjetas</li>
+                        <li>- Actos de vandalismo o malintencionados</li>
+                        </ul>
+                        <legend>Reposición</legend>
+                        <ul>
+                        <li>- Reposición estética del Continente</li>
+                        <li>- Reposición de documentos públicos</li>
+                        <li>- Reposición de documentos personales acreditativos</li>
+                        </ul>
+                        <legend>Asistencia y Conexión</legend>
+                        <ul>
+                        <li>- Asistencia limitada a 2 intervenciones anuales</li>
+                        <li>- Conexión para el mantenimiento de la vivienda</li>
+                        </ul>
+                        <legend>Otros</legend>
+                        <ul>
+                        <li>- Inhabitabilidad de la vivienda</li>
+                        <li>- Pérdida de alquileres</li>
+                        <li>- Protección jurídica integral</li>
+                        <li>- Responsabilidad civil general</li>
+                        <li>- Riesgos extraordinarios</li>
+                        <li>- Seguro a valor de nuevo</li>
+                        </ul>
+                        <p data-top="30"><small>*<sup>1</sup> No Contratable en Viviendas Unifamiliares, Pareadas o Adosadas, ni tampoco cuando no se contrate capital de continente en cualquiera de sus modalidades.</small></p>
+                       </div>
+
+                       <div class="cob-sl-ampliacion-asistencia-ilimitada" style="padding-left: 20px;" ng-if="$ctrl.codAseguradora == 1 && $ctrl.tipo == '247'">
+                        <legend>Incendio y Explosión</legend>
+                        <ul>
+                        <li>- Incendio, Caída del rayo, Explosión, Autoexplosión y Efectos secundarios</li>
+                        <li>- Reconstrucción del jardín</li>
+                        <li>- Gastos de extinción de incendios</li>
+                        <li>- Gastos de demolición y desescombro</li>
+                        <li>- Humo</li>
+                        </ul>
+                        <legend>Otros daños</legend>
+                        <ul>
+                        <li>- Caída de árboles, postes y antenas</li>
+                        <li>- Fenómenos atmosféricos</li>
+                        <li>- Colisión de vehículos</li>
+                        <li>- Ondas sónicas</li>
+                        <li>- Daños producidos por la electricidad</li>
+                        <li>- Daños a alimentos en frigoríficos o congeladores</li>
+                        <li>- Derrumbe accidental*<sup>1</sup></li>
+                        <li>- Bienes desplazados temporalmente</li>
+                        </ul>
+                        <legend>Agua</legend>
+                        <ul><li>- Daños producidos por el agua y heladas</li></ul>
+                        <legend>Roturas</legend>
+                        <ul>
+                        <li>- Rotura de lunas, espejos, cristales y piezas de metacrilato</li>
+                        <li>- Rotura de elementos vitrocerámicos de cocina</li>
+                        <li>- Rotura de mármoles, granitos y piedras artificiales</li>
+                        <li>- Rotura de aparatos sanitarios fijos</li>
+                        </ul>
+                        <legend>Pérdidas por extravíos, sustracciones y actos de vandalismo</legend>
+                        <ul>
+                        <li>- Robo y expoliación</li>
+                        <li>- Desperfectos al Continente por robo</li>
+                        <li>- Atraco fuera del hogar</li>
+                        <li>- Hurto</li>
+                        <li>- Sustitución de cerraduras</li>
+                        <li>- Uso indebido de tarjetas</li>
+                        <li>- Actos de vandalismo o malintencionados</li>
+                        </ul>
+                        <legend>Reposición</legend>
+                        <ul>
+                        <li>- Reposición estética del Continente</li>
+                        <li>- Reposición de documentos públicos</li>
+                        <li>- Reposición de documentos personales acreditativos</li>
+                        </ul>
+                        <legend>Asistencia y Conexión</legend>
+                        <ul>
+                        <li>- Asistencia ilimitada</li>
+                        <li>- Bricoasistencia</li>
+                        <li>- Conexión para el mantenimiento de la vivienda</li>
+                        </ul>
+                        <legend>Otros</legend>
+                        <ul>
+                        <li>- Inhabitabilidad de la vivienda</li>
+                        <li>- Pérdida de alquileres</li>
+                        <li>- Protección jurídica integral</li>
+                        <li>- Responsabilidad civil general</li>
+                        <li>- Ampliación de reposición estética del continente</li>
+                        <li>- Riesgos extraordinarios</li>
+                        <li>- Seguro a valor de nuevo</li>
+                        </ul>
+                        <p data-top="30"><small>*<sup>1</sup> No Contratable en Viviendas Unifamiliares, ni tampoco cuando no se contrate capital de continente en cualquiera de sus modalidades.</small></p>
+                       </div>
+	            	
+	            	
+						<!-- BBVA -->
+						<div class="cob-sl" style="padding-left: 20px;" ng-if="$ctrl.codAseguradora == 2">
+	                        <div>
+		                        <legend>PROTECCIÓN BÁSICA RESPONSABILIDAD CIVIL</legend>
+		                        <ul>
+			                        <li>Incendio, explosión, caída del rayo y humo</li>
+			                        <li>Inundación y daños por líquidos</li>
+		                        	<ul>
+		                        		<li>Exceso de consumo de agua</li>
+		                        	</ul>
+			                        <li>Lluvia copiosa, más de 40 l/m2/h</li>
+			                        <li>Viento fuerte, más de 70 Km/h</li>
+			                        <li>Pedrisco y exceso de nieve</li>
+			                        <li>Gastos de restauración estética</li>
+			                        <li>Gastos de desescombro, salvamento y tasa de bomberos (limite adicional)</li>
+			                        <li>Vivienda de sustitución (habitual)</li>
+		                        	<ul>
+		                        		<li>Por hecho cubierto, alquiler vivienda sustitución</li>
+		                        		<li>Por hecho cubierto, alojamiento en hotel primeros 7 días</li>
+		                        		<li>Por hecho cubierto, alimentación y lavandería primeros 7 días</li>
+		                        		<li>Por desalojo, gastos básicos</li>
+		                        	</ul>
+			                        <li>Reembolso de alquileres</li>
+			                        <li>Daños causados por robo al continente</li>
+			                        <li>Responsabilidad civil extracontractual</li>
+		                        	<ul>
+		                        		<li>Por reclamaciones de empleados domésticos</li>
+		                        	</ul>
+		                        </ul>
+	                        </div>
+	                        <div ng-if="$ctrl.tipo == '241' || $ctrl.tipo == '243' || $ctrl.tipo == '244'">
+		                        <legend>ROTURAS, DAÑOS ELÉCTRICOS y BIENES REFRIGERADOS</legend>
+		                        <ul>
+			                        <li>Rotura de cristales, vidrios, mármoles, loza sanitaria y vitrocerámicas</li>
+			                        <li>Ondas sónicas e impactos desde el exterior</li>
+			                        <li>Daños causados por la electricidad</li>
+			                        <li>Bienes refrigerados o congelados</li>
+		                        </ul>
+	                        </div>
+	                        <div ng-if="$ctrl.tipo == '235' || $ctrl.tipo == '243' || $ctrl.tipo == '244'">
+		                        <legend>PROTECCIÓN AMPLIADA Y ROBO</legend>
+		                        <ul>
+			                        <li>Sustracciones dentro de la vivienda</li>
+			                        <ul>
+				                        <li>Con fuerza en cosas o intimidación personas, bienes en anexos asegurados (*)</li>
+				                        <li>Con fuerza en cosas o intimidación personas, en viviendas secundarias</li>
+				                        <li>Sin fuerza en las cosas ni intimidación en personas, por empleados domésticos</li>
+				                        <li>Sin fuerza en las cosas ni intimidación en personas, por otros terceros</li>
+			                        </ul>
+			                        <li>Atraco al asegurado/s fuera de la vivienda habitual asegurada</li>
+			                        <li>Uso fraudulento de tarjetas de crédito</li>
+			                        <li>Daños causados por robo al contenido</li>
+			                        <li>Sustitución de cerradura por sustracción de llaves</li>
+			                        <li>Reposición de documentos</li>
+			                        <li>Actos vandálicos o malintencionados de terceros</li>
+			                        <ul>
+				                        <li>Causados por arrendados</li>
+			                        </ul>
+		                        </ul>
+	                        </div>
+	                        <div ng-if="$ctrl.tipo == '244'">
+		                        <legend>AMPLIACIONES ALTO VALOR</legend>
+		                        <ul>
+			                        <li>Sustracción sin violencia ni intimidación fuera de la vivienda</li>
+			                        <li>Sustitución de cerradura por extravío de llaves</li>
+			                        <li>Infidelidad de empleados</li>
+			                        <li>Traslado temporal de bienes asegurados en la vivienda habitual</li>
+			                        <li>Garantía especial de daños</li>
+			                        <li>Todo riesgo accidental</li>
+			                        <ul>
+				                        <li>Objetos de electrónica personal/móvil con acceso a redes de telefonía, internet u otras (smartphones, tablets,...)</li>
+				                        <li>Resto bienes especiales, resto equipos eléctricos y resto electrónica (incluido PC)</li>
+				                        <li>Causado por uso o causas remotas</li>
+			                        </ul>
+			                        <li>Asistencia extraordinaria</li>
+		                        </ul>
+	                        </div>
+	                        <div>
+		                        <legend>Servicios Adicionales</legend>
+		                        <ul>
+			                        <li>Defensa juridica</li>
+			                        <li>Manitas</li>
+			                        <li>Asistencia Informatica</li>
+			                        <li>Mantenimiento, Uso y deterioro</li>
+		                        </ul>
+	                        </div>
+	                        <div>
+		                        <legend>Garantias Opcionales:</legend>
+		                        <ul>
+		                        	<li>Servicio reparación averia linea Blanca</li>
+		                        	<li>Servicio express</li>
+		                        </ul>
+	                        </div>
+	                    </div> 
+	            </div>
+				
+        	</div>
+		</form>
+	</md-dialog-content>
+</md-dialog>
+
+
+

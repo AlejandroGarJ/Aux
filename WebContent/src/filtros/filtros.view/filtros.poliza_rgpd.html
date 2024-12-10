@@ -1,0 +1,119 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color: #ffffff">
+	<form ng-submit="$ctrl.buscar('rgpd_polizas')" class="form-busqueda">
+		<div class="form-scroll" resize style="overflow-y: hidden !important;">
+			<div style="position: relative;height: auto;width: 100%;border-top: 1px solid #d5d5d5;margin-top: 10px" layout-align="center center">
+				<div style="position: absolute;top: -10px;left: 20px;height: auto;width: auto;background-color: white;text-align: center;padding: 0 20px">
+					<p style="text-transform:uppercase;color: #0066FF;font-size: 16px;letter-spacing: 1px;"><span style="color: #031a34;font-family: TelefonicaWebRegular"><i class="fa-regular fa-magnifying-glass"></i> {{ 'SEARCH' | translate }} DE </span>{{ 'SEARCH_POLICY' | translate }} RGPD</p>
+				</div>
+			</div>
+			<div layout="row" layout-align="center center" style="width: 100%" class="layout-row">
+				<div flex="100" class="flex-100">
+					<div layout="row" layout-align="center center" class="layout-align-center-center layout-row" style="padding-top: 10px;">
+						<md-input-container class="md-block ic-margin" flex-gt-sm="25" layout-align="center center" style="max-width: 20%;">
+							<i class="fa-light fa-grid-2-plus multiselect-icon"></i>
+							<label>{{ 'PRODUCT' | translate }}   </label>
+							<md-select ng-change="$ctrl.changePrograma()" class="" ng-model="$ctrl.ID_PROGRAMA" multiple>
+								<md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+									{{$ctrl.parentApp.getDescriptivo(programa, 'DS_PROGRAMA') | uppercase}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block ic-margin" flex-gt-sm="25" layout-align="center center" style="max-width: 20%;">
+							<i class="fa-light fa-grid-2-plus multiselect-icon"></i>
+							<label>{{ 'BYPRODUCTS' | translate }}</label>
+							<md-select ng-disabled="$ctrl.ID_PROGRAMA == null || $ctrl.ID_PROGRAMA.length == 0" ng-model="$ctrl.form.LST_PRODUCTOS.value" multiple ng-change="$ctrl.changeSubproducto()">
+								<md-option ng-repeat="subproducto in $ctrl.productosMulti" ng-value="subproducto.id">
+									{{subproducto.label | uppercase}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block ic-margin" flex-gt-sm="25" style="max-width: 20%;">
+							<i class="fa-light fa-grid-2-plus multiselect-icon"></i>
+							<label>{{ 'PARTNER' | translate }}</label>
+							<md-select ng-model="$ctrl.form.LST_ID_TIPO_POLIZA.value" multiple>
+								<md-option ng-class="{'optionPadre': colectivo.IS_PADRE == true, 'optionHijo': colectivo.IS_PADRE != true}" ng-click="$ctrl.changeColectivos(colectivo)" ng-repeat="colectivo in $ctrl.tipos.colectivosProducto" ng-value="colectivo.ID_TIPO_POLIZA">
+									<span>{{$ctrl.parentApp.getDescriptivo(colectivo, 'DS_TIPO_POLIZA')}}</span>
+								</md-option>
+							</md-select>
+						</md-input-container>
+					</div>
+				</div>
+			</div>
+			<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100" class="inputs-without-label-value margin-top-25">
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="fa-light fa-i-cursor" style="margin-right:5px"></i>{{ 'POLICY_NU' | translate }}</label>
+					<input class="md-input-accent" ng-model="$ctrl.form.NU_POLIZA.value">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="15">
+					<label><i class="fa-solid fa-fingerprint" style="margin-right:5px"></i>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+					<input ng-model="$ctrl.form.NU_DOCUMENTO.value">
+				</md-input-container>
+				<md-input-container class="md-block margin-select-detail " flex-gt-sm="20">
+					<label><i class="fa-thin fa-buildings"></i> {{ 'MEDIATOR' | translate }}</label>
+					<md-select ng-model="$ctrl.form.ID_MEDIADOR.value">
+						<md-option ng-repeat="estado in $ctrl.tipos.mediadores" ng-value="estado.ID_COMPANIA">
+							<span class="text-uppercase"><i class="fa-thin fa-buildings"></i> {{$ctrl.parentApp.getDescriptivo(estado, 'NO_COMPANIA')}}</span>
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block ic-margin margin-select-detail" flex-gt-sm="15">
+					<label>{{ 'PAYMENT_METHOD' | translate }}</label>
+					<md-select ng-model="$ctrl.form.LST_MEDIO_PAGO.value" multiple>
+						<md-option ng-repeat="medioPago in $ctrl.tipos.pago" ng-value="medioPago.ID_TIPO_MEDIO_PAGO">
+							{{$ctrl.parentApp.getDescriptivo(medioPago, 'DS_TIPO_MEDIO_PAGO')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+			<div layout-gt-sm="row" class="inputs-without-label-value" flex-gt-sm="100">
+				<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="90"  class="fade-out" style="margin-left:13%">
+					<md-input-container class="md-block margin-top-datepicker" flex-gt-sm="25">
+						<label><i class="fa-light fa-calendar" style="margin-right:5px"></i>{{ 'DATE_EXPIRATION_FROM' | translate }}</label>
+
+						<md-datepicker ng-model="$ctrl.form.FD_VENCIMIENTO_FROM.value" ng-init="$ctrl.form.FD_VENCIMIENTO_FROM.value = null"
+									   ng-click="($ctrl.form.FD_VENCIMIENTO_FROM.value == null || $ctrl.form.FD_VENCIMIENTO_FROM.value == undefined) ? $ctrl.form.FD_VENCIMIENTO_FROM.value = null : ' '">
+						</md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block margin-top-datepicker" flex-gt-sm="25">
+						<label><i class="fa-light fa-calendar" style="margin-right:5px"></i>{{ 'DATE_EXPIRATION_TO' | translate }}</label>
+
+						<md-datepicker ng-model="$ctrl.form.FD_VENCIMIENTO_TO.value" ng-init="$ctrl.form.FD_VENCIMIENTO_TO.value = null"
+									   ng-click="($ctrl.form.FD_VENCIMIENTO_TO.value == null || $ctrl.form.FD_VENCIMIENTO_TO.value == undefined) ? $ctrl.form.FD_VENCIMIENTO_TO.value = null : ' '">
+						</md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block margin-top-datepicker" flex-gt-sm="25">
+						<label><i class="fa-light fa-calendar" style="margin-right:5px"></i>{{ 'DATE_CANCELATION_FROM' | translate }}</label>
+
+						<md-datepicker ng-model="$ctrl.form.FD_CANCELACION_FROM.value" ng-init="$ctrl.form.FD_CANCELACION_FROM.value = null"
+									   ng-click="($ctrl.form.FD_CANCELACION_FROM.value == null || $ctrl.form.FD_CANCELACION_FROM.value == undefined) ? $ctrl.form.FD_CANCELACION_FROM.value = null : ' '">
+						</md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block margin-top-datepicker" flex-gt-sm="25">
+						<label><i class="fa-light fa-calendar" style="margin-right:5px"></i>{{ 'DATE_CANCELATION_TO' | translate }}</label>
+
+						<md-datepicker ng-model="$ctrl.form.FD_CANCELACION_TO.value" ng-init="$ctrl.form.FD_CANCELACION_TO.value = null"
+									   ng-click="($ctrl.form.FD_CANCELACION_TO.value == null || $ctrl.form.FD_CANCELACION_TO.value == undefined) ? $ctrl.form.FD_CANCELACION_TO.value = null : ' '">
+						</md-datepicker>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="10" style="max-width: 18%">
+					<div>
+						<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+							<i class="fa-light fa-magnifying-glass"></i>
+							{{ 'SEARCH_BTN' | translate }}
+						</md-button>
+						<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+							<i class="fa-light fa-trash"></i>
+							{{ 'CLEAN' | translate }}
+						</md-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+	</form>
+</md-content>

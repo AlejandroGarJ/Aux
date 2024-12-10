@@ -1,0 +1,1186 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="col-md-12 padding-0">
+	<div flex class="formClass form-scroll margin-1-1_5" class="formNuevoSiniestro" id="formNSiniestro">
+		<form ng-if="$ctrl.isNew != true" class="formClass form-scroll" id="formNuevoSiniestro" name="formSiniestro" ng-value="$ctrl.formSiniestro=!formSiniestro.$valid" ng-submit="$ctrl.guardarSiniestro($ctrl.formSiniestro)" novalidate>
+			<!--  -->
+			
+			<div layout="row" layout-align="start center" class="tabsSiniestroContainer">
+				<div class="tabSiniestro" ng-click="$ctrl.tabSiniestro = 1" ng-style="{ 'border-bottom' : ($ctrl.tabSiniestro == 1) ? '2px solid #0066ff' : '' }">
+					<p>{{ 'GENERAL_DATA' | translate }}</p>
+				</div>
+				<div class="tabSiniestro" ng-click="$ctrl.tabSiniestro = 7" ng-style="{ 'border-bottom' : ($ctrl.tabSiniestro == 7) ? '2px solid #0066ff' : '' }">
+					<p>{{ 'ADDITIONAL_DATA' | translate }}</p>
+				</div>
+				<div ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5" class="tabSiniestro" ng-click="$ctrl.tabSiniestro = 2; $ctrl.scopeApply()" ng-style="{ 'border-bottom' : ($ctrl.tabSiniestro == 2) ? '2px solid #0066ff' : '' }">
+					<p>{{ 'ECONOMIC_MOVEMENTS' | translate }}</p>
+				</div>
+				<div ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5" class="tabSiniestro" ng-click="$ctrl.tabSiniestro = 3" ng-style="{ 'border-bottom' : ($ctrl.tabSiniestro == 3) ? '2px solid #0066ff' : '' }">
+					<p>{{ 'COMMUNICATIONS_DOCUMENTATION' | translate }}</p>
+				</div>
+				<div ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5"ng-hide="$ctrl.isNew == true || ($ctrl.datos.OPOLIZA.ID_PRODUCTO != 6 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 5 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 4 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 28 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 29 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 32) || $ctrl.datos.OPOLIZA.IN_POLIZAS != 1" class="tabSiniestro" ng-click="$ctrl.tabSiniestro = 4" ng-style="{ 'border-bottom' : ($ctrl.tabSiniestro == 4) ? '2px solid #0066ff' : '' }">
+					<p>{{ 'TEMPLATES' | translate }}</p>
+				</div>
+				<div ng-hide="$ctrl.isNew == true || $ctrl.datos.OPOLIZA.ID_POLIZA == null || $ctrl.inPoliza == true" class="tabSiniestro" ng-click="$ctrl.tabSiniestro = 5; $ctrl.openPoliza();" ng-style="{ 'border-bottom' : ($ctrl.tabSiniestro == 5) ? '2px solid #0066ff' : '' }">
+					<p>{{ 'POLICY_DATA' | translate }}</p>
+				</div>
+				<div ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5" ng-hide="$ctrl.isNew == true || $ctrl.datos.OPOLIZA.ID_POLIZA == null || $ctrl.inPoliza == true" class="tabSiniestro" ng-click="$ctrl.tabSiniestro = 6; $ctrl.cargarHistoricoSiniestro()" ng-style="{ 'border-bottom' : ($ctrl.tabSiniestro == 6) ? '2px solid #0066ff' : '' }">
+					<p>{{ 'HISTORIC' | translate }}</p>
+				</div>
+			</div>
+			
+			<fieldset ng-hide="$ctrl.tabSiniestro != 1" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-alerta"></span> {{ 'CLAIM_DATA' | translate }}
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+						<span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed">
+					<div class="separadorDesplegables"></div>
+					<div layout="row" layout-align="start start">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'CLAIM_NUMBER' | translate }}</label>
+							<input ng-model="$ctrl.datos.NU_SINIESTRO" required disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.datos.NU_SINIESTRO_EXT != null || $ctrl.datos.NU_SINIESTRO_EXT != undefined">
+							<label>{{ 'CLAIM_NUMBER' | translate }} Externo</label>
+							<input ng-model="$ctrl.datos.NU_SINIESTRO_EXT" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'STATUS' | translate }}</label>
+							<md-select ng-model="$ctrl.datos.ID_ESTADO_SINIESTRO" required ng-disabled="!$ctrl.isUpdated || $ctrl.datos.OPOLIZA.IN_POLIZAS == 0" ng-change="$ctrl.changeEstadoSiniestro()">
+								<md-option ng-repeat="estado in $ctrl.tipos.estados" ng-value="estado.ID_ESTADO_SINIESTRO">
+	                            	{{$ctrl.appParent.getDescriptivo(estado, 'DS_ESTADO_SINIESTRO')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'SUBSTATE' | translate }}</label>
+							<md-select ng-model="$ctrl.datos.ID_SUBESTADO_SINIESTRO" ng-disabled="!$ctrl.isUpdated || $ctrl.datos.OPOLIZA.IN_POLIZAS == 0" ng-required="true" ng-change="$ctrl.datos.ID_SUBESTADO_SINIESTRO == 0 ? $ctrl.datos.FD_ACEPTACION = $ctrl.moment : ''">
+								<md-option ng-repeat="estado in $ctrl.tipos.subestados" ng-value="estado.CO_TIPO">
+									{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'REASON_REOPENING' | translate }}</label>
+							<md-select ng-model="$ctrl.siniestroPecuniarias.MOTIVO_REAPERTURA" ng-required="$ctrl.datos.ID_ESTADO_SINIESTRO == 6" ng-disabled="$ctrl.datos.ID_ESTADO_SINIESTRO != 6">
+								<md-option ng-repeat="estado in $ctrl.tipos.motReapertura" ng-value="estado.CO_TIPO">
+									{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.existeMovEcon == true" class="md-block" flex-gt-sm style="max-width: 18%;margin-top: 15px!important;text-align: center">
+							<md-button ng-click="$ctrl.abrirModalCoberturas()" class="md-raised md-primary medium-green btnNuevo">
+								{{ 'AFFECTED_COVERAGES' | translate }}
+							</md-button>
+						</md-input-container>
+					</div>
+					<div layout="row" layout-align="start start" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 28 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 6 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 5 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 29 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 19 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 32">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'SUBSTATE_NOTES' | translate }}</label>
+							<textarea ng-model="$ctrl.siniestroPecuniarias.NOTAS_SUBESTADO" ng-disabled="!$ctrl.isUpdated || $ctrl.datos.OPOLIZA.IN_POLIZAS == 0" rows="3" colums="5"></textarea>
+						</md-input-container>
+					</div>
+					<div layout="row" ng-if="$ctrl.datos.CO_TIPO_SINIESTRO != null && $ctrl.existeMovEcon == false">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'AFFECTED_COVERAGES' | translate }}</label>
+							<input ng-model="$ctrl.datos.CO_TIPO_SINIESTRO" required disabled>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 9" class="md-block" flex-gt-sm>
+							<label>{{ 'FILE_NUMBER' | translate }}</label>
+							<input ng-model="$ctrl.datos.NU_DIGITO" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_NOTIFICATION' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.FD_NOTIFICACION" disabled></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_INCIDENCE' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.FD_OCURRENCOMPANIA" required disabled></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_DISCOVERY' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.siniestroPecuniarias.FD_DESCUBRIMIENTO"></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_OPENING' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.FD_APERTURA" disabled></md-datepicker>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.datos.OPOLIZA.ID_PROGRAMA == 2 || $ctrl.datos.OPOLIZA.ID_PROGRAMA == 10 || $ctrl.datos.OPOLIZA.ID_PROGRAMA == 18 || $ctrl.datos.OPOLIZA.ID_PROGRAMA == 19" class="md-block" flex-gt-sm>
+							<label>{{ 'INCIDENT' | translate }}</label>
+							<md-select ng-model="$ctrl.siniestroPecuniarias.TIPO_INCIDENTE" disabled>
+								<md-option ng-repeat="estado in $ctrl.tipos.incidentes" ng-value="estado.DS_TIPOS">
+									{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container disabled ng-if="$ctrl.mostrarIncidente() == true" ng-show="$ctrl.cierre == true" class="md-block" flex-gt-sm="10">
+							<label>{{ 'QUICK_CLOSURE' | translate }}</label>
+							<md-select ng-model="$ctrl.siniestroPecuniarias.GESTION_RAPIDA">
+								<md-option ng-value="1">{{ 'YES' | translate }}</md-option>
+								<md-option ng-value="0">{{ 'NO' | translate }}</md-option>
+								<md-option ng-value="2" ng-show="false">{{ 'NOT_APPLICABLE' | translate }}</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.mostrarServicio() == true" class="md-block" flex-gt-sm>
+							<label>{{ 'SERVICES' | translate }}</label>
+							<!-- <md-select ng-model="$ctrl.datos.CO_TIPO_ACCIDENTE" multiple> -->
+							<md-select ng-model="$ctrl.servicios" multiple disabled>
+								<md-option ng-repeat="estado in $ctrl.tipos.servicios" ng-value="estado">
+								<!-- <md-option ng-repeat="estado in $ctrl.tipos.servicios" ng-value="estado.DS_TIPOS" disabled> -->
+									{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.mostrarIndemnizacion() == true" class="md-block" flex-gt-sm="30">
+							<label>{{ 'COMPENSATION' | translate }}</label>
+							<md-select ng-model="$ctrl.datos.CO_TIPO_INDEMNIZACION" disabled>
+								<md-option ng-repeat="estado in $ctrl.tipos.indemnizaciones" ng-value="estado.DS_TIPOS">
+									{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_ACCEPTANCE' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.FD_ACEPTACION" ng-disabled="!$ctrl.isUpdated || $ctrl.datos.OPOLIZA.IN_POLIZAS == 0" ng-required="$ctrl.datos.ID_SUBESTADO_SINIESTRO == 0"></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_CLOSING' | translate }}</label>
+							<md-datepicker ng-required="$ctrl.datos.ID_ESTADO_SINIESTRO == 2" ng-model="$ctrl.datos.FD_TERMINACION" ng-disabled="!$ctrl.isUpdated || $ctrl.datos.OPOLIZA.IN_POLIZAS == 0"></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_REOPENING' | translate }}</label>
+							<md-datepicker ng-disabled="!($ctrl.estadoSiniestroCopy == 2 && $ctrl.datos.ID_ESTADO_SINIESTRO == 6 && ($ctrl.rol == 1 || $ctrl.rol == 4))" ng-required="$ctrl.estadoSiniestroCopy == 2 && $ctrl.datos.ID_ESTADO_SINIESTRO == 6 && ($ctrl.rol == 1 || $ctrl.rol == 4)" ng-model="$ctrl.datos.FD_REAPERTURA"></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'AVERAGE_COST' | translate }}</label>
+							<input ng-model="$ctrl.datos.IM_COSTE" disabled>
+						</md-input-container>
+					</div>
+					<div ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 6 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 5 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 29 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 19 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 32" layout="row" layout-align="start center" style="margin-left: 15px; margin-bottom: 20px">
+						<div layout="row">
+							<md-checkbox ng-model="$ctrl.anadirNuevasCoberturas">{{ 'ADD_NEW_WARRANTIES' | translate }}</md-checkbox>
+						</div>
+						<md-input-container ng-if="$ctrl.anadirNuevasCoberturas == true" class="md-block" flex-gt-sm="30">
+							<label>{{ 'AFFECTED_COVERAGE' | translate }}</label>
+							<md-select ng-change="$ctrl.changeCobertura()" ng-model="$ctrl.coberturas" multiple>
+								<md-option ng-if="estado.ID_GARANTIA != 57" ng-repeat="estado in $ctrl.tipos.garantias" ng-value="estado.NO_GARANTIA">
+									{{$ctrl.appParent.getDescriptivo(estado, 'NO_GARANTIA')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.coberturas != null && $ctrl.tipos.garantiasHijoFilter.length > 0 && $ctrl.anadirNuevasCoberturas == true" class="md-block" flex-gt-sm="30">
+							<label>{{ 'SECTION' | translate }}</label>
+							<md-select ng-disabled="$ctrl.coberturas == null || $ctrl.coberturas.length == 0" ng-model="$ctrl.seccion" multiple>
+								<md-option ng-if="$ctrl.ocultarSeccion(estado) == false" ng-repeat="estado in $ctrl.tipos.garantiasHijoFilter" ng-value="estado.NO_GARANTIA">
+									{{$ctrl.appParent.getDescriptivo(estado, 'NO_GARANTIA')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DESCRIPTION' | translate }}</label>
+							<textarea ng-model="$ctrl.datos.DS_SINIESTRO" rows="3" required></textarea>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 9">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DAMAGE_DESCRIPTION' | translate }}</label>
+							<textarea ng-model="$ctrl.datos.CO_TIPO_ACCIDENTE" rows="3" disabled></textarea>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row" layout-align="start center" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 28" style="margin-left: 20px">
+						<md-list style="margin-top: 15px">
+                            <md-list-item layout-gt-sm="row" layout-align="start center" disabled>
+								{{ 'AFFECTED_PERSONAL_DATA' | translate }}
+								<md-switch  ng-true-value="'true'" ng-false-value="'false'" ng-model="$ctrl.siniestroPecuniarias.CIBERPARTICULARES.IMPACTO_PERSONAL_DATOS_SENSIBLES" class="switch-mov" disabled></md-switch>
+								<!-- <md-switch ng-true-value="'1'" ng-false-value="'0'" ng-model="$ctrl.questionsSelected[0]" class="switch-mov" disabled></md-switch> -->
+							</md-list-item>
+							<md-list-item layout-gt-sm="row" layout-align="start center" disabled>
+								{{ 'REQUIRES_DEVICE_SHIPPING' | translate }}
+								<!-- <md-switch ng-true-value="'1'" ng-false-value="'0'" ng-model="$ctrl.questionsSelected[1]" class="switch-mov" disabled></md-switch> -->
+								<md-switch  ng-true-value="'true'" ng-false-value="'false'" ng-model="$ctrl.siniestroPecuniarias.CIBERPARTICULARES.REQUIERE_TECNICOS" class="switch-mov" disabled></md-switch>
+							</md-list-item>
+					 		<!-- <md-list-item ng-repeat="question in $ctrl.questions">{{question}}
+                            <md-switch class="switch-mov" disabled></md-switch> -->
+                        </md-list> 
+				 	</div>
+				</div>
+			</fieldset>
+			<fieldset ng-hide="$ctrl.datos.ID_SUBESTADO_SINIESTRO != 1 || $ctrl.tabSiniestro != 1" id="datosEconomicos" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-precioeurosfactura"></span> {{ 'REJECTION_DATA' | translate }}
+					<button id="btnDesplegarPoliza2" type="button" class="btn btn-link" ng-click="isCollapsed7 = !isCollapsed7">
+						<span ng-if="!isCollapsed7" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos del Rechazo"></span>
+						<span ng-if="isCollapsed7" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos del Rechazo"></span>
+					</button>
+				</legend>
+				<div id="divMovEconomicos" uib-collapse="isCollapsed7">
+					<div class="separadorDesplegables"></div>
+					
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex="40">
+							<label>{{ 'REJECTION_REASON' | translate }}</label>
+							<md-select ng-model="$ctrl.datos.ID_MOTIVO_RECHAZO" ng-change="$ctrl.changeMotivoRechazo()">
+								<md-option ng-repeat="rechazo in $ctrl.tipos.rechazo" ng-value="rechazo.ID_TIPOS">
+									{{$ctrl.appParent.getDescriptivo(rechazo, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+					</div>
+					<div class="separadorDesplegables"></div>	
+				</div>         
+			</fieldset>
+			<fieldset ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 28 && $ctrl.tabSiniestro == 1" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-doc-pdf"></span> {{ 'CONTACT_DATA' | translate }}
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed7 = !isCollapsed7">
+						<span ng-if="!isCollapsed7" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="isCollapsed7" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed7">
+					<div class="separadorDesplegables"></div>
+						<div>
+							<div layout-gt-sm="row" class="margin-top-20">
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'CONTACT_NAME' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.NOMBRE_CONTACTO" disabled>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'CONTACT_DATE' | translate }}</label>
+									<md-datepicker ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.FD_CONTACTO" disabled></md-datepicker>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'CONTACT_EMAIL' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.MAIL_CONTACTO" disabled>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'TELEPHONE' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.TELEFONO" disabled>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'DOMICILE' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.DOMICILIO" disabled>
+								</md-input-container>
+					    	</div>
+						</div>
+					
+					<div class="separadorDesplegables"></div>	
+				</div>
+			</fieldset>
+			<fieldset ng-hide="$ctrl.tabSiniestro != 1" id="datosEconomicos" class="fade-out datos_poliza" ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5">
+				<legend><span class="mov-ico ic-ciber-ico-precioeurosfactura"></span> {{ 'ECONOMIC_DATA' | translate }}
+					<button id="btnDesplegarPoliza6" type="button" class="btn btn-link" ng-click="isCollapsed6 = !isCollapsed6">
+						<span ng-if="!isCollapsed6" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos Económicos"></span>
+						<span ng-if="isCollapsed6" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos Económicos"></span>
+					</button>
+				</legend>
+				<div id="divMovEconomicos" uib-collapse="isCollapsed6">
+					<div class="separadorDesplegables"></div>
+					
+					<div layout-gt-sm="row" layout-align="end end">
+						<div class="md-block" flex-gt-sm layout="column" layout-align="center center">
+							<label>{{ 'TOTAL_CLAIM_AMOUNT' | translate }}</label>
+							<h1 class="margin-top-5">{{$ctrl.beautifyImporte($ctrl.formatDecimal($ctrl.sumaTotal))}}€</h1>
+						</div>
+						<div class="md-block" flex-gt-sm layout="column" layout-align="center center">
+							<label>{{ 'PAYMENTS_MADE' | translate }}</label>
+							<h3 class="margin-top-5">{{$ctrl.datos.IM_PAGO == null ? $ctrl.beautifyImporte(0) : $ctrl.beautifyImporte($ctrl.formatDecimal($ctrl.datos.IM_PAGO)) }}€</h3>
+						</div>
+						<div class="md-block" flex-gt-sm layout="column" layout-align="center center">
+							<label>{{ 'EXPERT_PAYMENTS' | translate }}</label>
+							<h3 class="margin-top-5">{{$ctrl.datos.IM_COSTE_PERITO == null ? $ctrl.beautifyImporte(0) : $ctrl.beautifyImporte($ctrl.formatDecimal($ctrl.datos.IM_COSTE_PERITO)) }}€</h3>
+						</div>
+						<div ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5" class="md-block" flex-gt-sm layout="column" layout-align="center center">
+							<label>{{ 'TOTAL_RESERVES' | translate }}</label>
+							<h3 class="margin-top-5">{{$ctrl.datos.IM_RESERVA == null ? $ctrl.beautifyImporte(0) : $ctrl.beautifyImporte($ctrl.formatDecimal($ctrl.datos.IM_RESERVA))}}€</h3>
+						</div>
+						<div ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5" class="md-block" flex-gt-sm layout="column" layout-align="center center">
+							<label>{{ 'FRANCHISE' | translate }}</label>
+							<h3 class="margin-top-5">{{$ctrl.datos.IM_FRANQUICIA == null ? $ctrl.beautifyImporte(0) : $ctrl.beautifyImporte($ctrl.formatDecimal($ctrl.datos.IM_FRANQUICIA))}}€</h3>
+						</div>
+						<div class="md-block" flex-gt-sm layout="column" layout-align="center center">
+							<label>{{ 'COMPENSATION' | translate }}</label>
+							<h3 class="margin-top-5">{{$ctrl.datos.IM_INDEMNIZACION == null ? $ctrl.beautifyImporte(0) : $ctrl.beautifyImporte($ctrl.formatDecimal($ctrl.datos.IM_INDEMNIZACION))}}€</h3>
+						</div>
+					</div>
+					
+					<div class="separadorDesplegables"></div>	
+				</div>         
+			</fieldset>
+			<!-- <fieldset ng-hide="$ctrl.datos.OPOLIZA.ID_POLIZA == null || $ctrl.isNew == true || $ctrl.tabSiniestro != 1" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-precioeurosfactura"></span> Siniestros de la póliza
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed7 = !isCollapsed7">
+						<span ng-if="!isCollapsed7" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="isCollapsed7" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed7">
+					<div class="separadorDesplegables"></div>
+					<div layout="row">
+					</div>
+					<div ng-if="$ctrl.load != true" flex>		
+						<div class="ui-grid" ui-grid="$ctrl.gridSiniestrosPoliza" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection resize ng-style="resizeHeight(790)"></div>
+					</div>
+					<div class="separadorDesplegables"></div>	
+				</div>
+			</fieldset> -->
+			<fieldset ng-hide="$ctrl.tabSiniestro != 2" id="movEconomicos" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-precioeurosfactura"></span> {{ 'CLAIM_ECONOMIC_MOVEMENTS' | translate }}
+					<button id="btnDesplegarPoliza2" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+						<span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divMovEconomicos" uib-collapse="isCollapsed2">
+						<!-- <div layout="row">
+						</div> -->
+						<div class="margin-bottom-20" layout="row" layout-align="end center" ng-if="$ctrl.datos.OPOLIZA.IN_POLIZAS != 0">
+							<md-button ng-click="$ctrl.enviarSap()" class="md-raised md-primary medium-green btnNuevo" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 29 && ($ctrl.rol == 1 || $ctrl.rol == 4)">
+								{{ 'SEND_SAP' | translate }}
+							</md-button>
+							<md-button ng-click="$ctrl.nuevoMovimiento()" class="md-raised md-primary medium-green btnNuevo">
+								{{ 'NEW_MOVEMENT' | translate }}
+							</md-button>
+						</div>
+					<div ng-if="$ctrl.load != true" flex>		
+						<div class="ui-grid" ui-grid="$ctrl.gridDetalleSiniestro" ui-grid-exporter ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-auto-resize resize ng-style="$ctrl.getTableHeight()"></div>
+					</div>
+					<div class="separadorDesplegables"></div>	
+				</div>     
+				<div class="separadorDesplegables"></div>    
+			</fieldset>
+			<fieldset ng-hide="$ctrl.tabSiniestro != 3" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-doc-pdf"></span> {{ 'DOCUMENTATION' | translate }}
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed8 = !isCollapsed8">
+						<span ng-if="isCollapsed8" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="!isCollapsed8" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed8">
+					<div class="separadorDesplegables"></div>
+						
+					<div layout="row">
+						<div flex="" ng-if="$ctrl.datos.OPOLIZA.IN_POLIZAS == 1">
+							<div layout="column">
+								<div layout-gt-sm="row">
+									<h4>{{ 'UPLOAD_DOCUMENTATION' | translate }}</h4>
+								</div>
+
+								<div layout-gt-sm="row" class="m-t-16">
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'DESCRIPTION' | translate }}</label>
+										<md-select ng-model="$ctrl.descArchivo">
+											<md-option ng-repeat="descripcion in $ctrl.tipos.descripciones" ng-value="descripcion.DS_TIPOS">
+												{{$ctrl.appParent.getDescriptivo(descripcion, 'DS_TIPOS')}}
+											</md-option>
+										</md-select>
+									</md-input-container>
+
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'OBSERVATIONS' | translate }}</label>
+										<input ng-disabled="$ctrl.descArchivo == null" ng-model="$ctrl.obsArchivo" ng-required="$ctrl.descArchivo != null">
+									</md-input-container>
+								</div>
+
+								<div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover" ng-disabled="$ctrl.descArchivo == null || $ctrl.obsArchivo == null">
+									<span><md-icon class="icon-blue">upload_file</md-icon></span>
+									<span>{{ 'DRAG_DROP' | translate }}</span>
+								</div>
+							</div>
+						</div>
+	
+						<div class="divider"></div>
+
+						<div flex="">
+							<div layout="column">
+								<div ng-if="$ctrl.loadDocumentos != true && $ctrl.listArchivosPendientes != null && $ctrl.listArchivosPendientes.length > 0">
+									<div layout-gt-sm="row">
+										<h4>{{ 'UNSAVED_DOCUMENTS' | translate }}</h4>
+									</div>
+									<div ng-repeat="archivo in $ctrl.listArchivosPendientes" layout-gt-sm="row" layout-margin class="m-t-16">
+										<md-input-container class="md-block" flex-gt-sm flex="33" >
+											<label>{{ 'FILE' | translate }}</label>
+											<input ng-model="archivo.NO_ARCHIVO" disabled>
+										</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm flex="33">
+											<label>{{ 'DESCRIPTION' | translate }}</label>
+											<input type="text" ng-model="archivo.DS_ARCHIVO" disabled>
+										</md-input-container>
+									</div>
+								</div>
+								
+								<div ng-if="$ctrl.loadDocumentos != true">
+									<div layout-gt-sm="row">
+										<h4>{{ 'UPLOADED_DOCUMENTS' | translate }}</h4>
+									</div>
+									<div ng-if="$ctrl.listaArchivos != null && $ctrl.listaArchivos.length > 0" ng-repeat="archivo in $ctrl.listaArchivos" layout-gt-sm="row" layout-margin class="m-t-16">
+										<md-input-container class="md-block" flex-gt-sm flex="33" >
+											<label>{{ 'FILE' | translate }}</label>
+											<input ng-model="archivo.NO_ARCHIVO" disabled>
+										</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm flex="33">
+											<label>{{ 'DESCRIPTION' | translate }}</label>
+											<input type="text" ng-model="archivo.DS_ARCHIVO" disabled>
+										</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm flex="33">
+											<label>{{ 'DATE' | translate }}</label>
+											<input type="text" ng-model="archivo.FT_USU_ALTA" disabled>
+										</md-input-container>
+										<i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.verArchivo(archivo, true)">
+											visibility <md-tooltip md-direction="top">{{ 'SEE' | translate | uppercase }}</md-tooltip>
+										</i>
+										<i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(archivo)">
+											cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip>
+										</i>
+										<i ng-if="$ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 11" class="material-icons btnIcono" ng-click="$ctrl.eliminarArchivo(archivo)">
+											delete <md-tooltip md-direction="top">{{ 'DELETE' | translate | uppercase }}</md-tooltip>
+										</i>
+									</div>
+								</div>
+								
+								<div ng-if="($ctrl.listaArchivos == null || $ctrl.listaArchivos.length == 0) && $ctrl.loadDocumentos != true" layout-gt-sm="row" layout-margin>
+									{{ 'NOT_FOUND_DATA' | translate | uppercase }}
+								</div>
+								
+								<div layout="row" layout-align="center center" class="fullWidth fullHeight">
+									<div id="buscandoGif" style="display:table;" ng-if="$ctrl.loadDocumentos == true">
+										<div class="centered" style="display:table-cell; vertical-align: middle;">
+											<div class="blob-3"></div>
+											<div class="blob-4"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="separadorDesplegables"></div>
+        		</div>
+       		</fieldset>
+       		<fieldset class="fade-out datos_poliza" ng-hide="$ctrl.isNew == true || ($ctrl.datos.OPOLIZA.ID_PRODUCTO != 6 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 5 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 4 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 28 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 29 && $ctrl.datos.OPOLIZA.ID_PRODUCTO != 32) || $ctrl.tabSiniestro != 4">
+				<legend><span class="mov-ico ic-ciber-ico-info"></span> {{ 'TEMPLATES' | translate }}
+					<button id="btnDesplegarPoliza3" type="button" class="btn btn-link" ng-click="isCollapsed3 = !isCollapsed3">
+						<span ng-if="isCollapsed3" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="!isCollapsed3" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed3">
+					<div class="separadorDesplegables"></div>
+					<div layout-gt-sm="row">
+						<div layout="column" flex="25" style="margin: 40px; max-width: 180px;" ng-hide="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 28 || $ctrl.datos.OPOLIZA.ID_PRODUCTO == 32">
+                            <div class="documento">
+                                <input type="image" ng-src="src/documentos/previews/cuestionario_preview.png" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <md-button ng-click="$ctrl.verArchivo('src/'+$ctrl.ruta+'Cuestionario_Valoracion_Incidencia.pdf', false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</md-button>
+                                    <md-button ng-click="$ctrl.getPlantillas('Cuestionario_Valoracion_Incidencia.docx')" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</md-button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{ 'CLAIM_QUESTIONNAIRE' | translate }}</span> 
+                        </div>
+						<div layout="column" flex="25" style="margin: 40px; max-width: 180px;" ng-hide="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 32">
+                            <div class="documento">
+                                <input type="image" ng-src="src/documentos/previews/llamada_preview.png" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <md-button ng-click="$ctrl.getDocumentoCallCenter(true)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</md-button>
+                                    <md-button ng-click="$ctrl.getDocumentoCallCenter(false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</md-button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{ 'CALLCENTER_CALL' | translate }}</span> 
+                        </div>
+						<div layout="column" flex="25" style="margin: 40px; max-width: 180px;" ng-show="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 32">
+                            <div class="documento">
+                                <input type="image" ng-src="src/documentos/previews/Questionário_preview.png" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <md-button ng-click="$ctrl.verArchivo('src/'+$ctrl.ruta+'Questionário_Inicial_do_Incidente_KVOR.pdf', false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</md-button>
+                                    <md-button ng-click="$ctrl.getPlantillas('Questionário_Inicial_do_Incidente_KVOR.docx')" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</md-button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{ 'CLAIM_QUESTIONNAIRE' | translate }}</span> 
+                        </div>
+						<div layout="column" flex="25" style="margin: 40px; max-width: 180px;" ng-show="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 32">
+                            <div class="documento">
+                                <input type="image" ng-src="src/documentos/previews/Chamada_KOVR_preview.png" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <md-button ng-click="$ctrl.getDocumentoCallCenter(true)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</md-button>
+                                    <md-button ng-click="$ctrl.getDocumentoCallCenter(false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</md-button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{ 'CALLCENTER_CALL' | translate }}</span> 
+                        </div>
+						<!-- <md-button class="fade-out md-raised md-primary medium-green btnNuevo" ng-click="$ctrl.getPlantillas('Cuestionario_Valoracion_Incidencia.docx')">
+			                 <md-icon>backup</md-icon>&nbsp;{{ 'CLAIM_QUESTIONNAIRE' | translate }}
+			            </md-button>
+						<md-button class="fade-out md-raised md-primary medium-green btnNuevo" ng-click="$ctrl.getDocumentoCallCenter()">
+			                 <md-icon>backup</md-icon>&nbsp;{{ 'CALLCENTER_CALL' | translate }}
+			            </md-button> -->
+					</div>			
+				</div>
+			</fieldset>
+       		<fieldset class="fade-out datos_poliza" ng-hide="$ctrl.datos.OPOLIZA.ID_POLIZA == null || $ctrl.tabSiniestro != 5">
+				<div id="divPoliza">
+		   			<detalle-sd ng-if="$ctrl.detallesPoliza != null && $ctrl.cargarPoliza != true" llave="'poliza'" id-detalle="$ctrl.detallesPoliza" tipo="'poliza'" read-only=true></detalle-sd>
+		   			<div ng-if="$ctrl.cargarPoliza == true" id="buscandoGif" style="z-index: 999999999;">
+				        <div class = "centered" style="display:table-cell; vertical-align: middle;">
+							<div class = "blob-3"></div>
+							<div class = "blob-4"></div>
+						</div>
+				    </div>
+				</div>
+			</fieldset>
+       		<fieldset class="fade-out datos_poliza" ng-hide="$ctrl.datos.OPOLIZA.ID_POLIZA == null || $ctrl.tabSiniestro != 6">
+                <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'CLAIM_HISTORY' | translate }}
+                    <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+                        <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar histórico del siniestro"></span>
+                        <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar histórico del siniestro"></span>
+                    </button>
+                </legend>
+				<div layout="row" layout-align="start center" class="md-padding">
+					<md-menu ng-if="$ctrl.gridOptionsHistorico!=undefined && $ctrl.permisos.IN_EXPORTAR == true">
+						<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$mdMenu.open()">
+							<span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+						</md-button>
+						<md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
+							<md-menu-item>
+								<md-button ng-click="$ctrl.exportarExcel(false)">
+									{{ 'DETAIL_MOVEMENTS' | translate }}
+								</md-button>
+							</md-menu-item>
+							<md-menu-item>
+								<md-button ng-click="$ctrl.exportarExcel(true)">
+									{{ 'MOVEMENT_CLAIM' | translate }}
+								</md-button>
+							</md-menu-item>
+						</md-menu-content>
+					</md-menu>
+				</div>
+                <div id="divPoliza" uib-collapse="isCollapsed">
+                	<div class="ui-grid" ui-grid="$ctrl.gridOptionsHistorico" ui-grid-exporter ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize></div>
+                </div>
+            </fieldset>
+			<fieldset class="fade-out datos_poliza" ng-hide="$ctrl.datos.OPOLIZA.ID_POLIZA == null || $ctrl.tabSiniestro != 7">
+                <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'ADDITIONAL_DATA' | translate }}
+                    <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+                        <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar datos adicionales"></span>
+                        <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar datos adicionales"></span>
+                    </button>
+                </legend>
+                <div id="divPoliza" uib-collapse="isCollapsed7">
+					<div class="separadorDesplegables"></div>
+						<div>
+							<div layout-gt-sm="row" class="margin-top-20" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 28">
+								<!-- <md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 28">
+									<label>{{ 'INCIDENT' | translate }}</label>
+									<md-select ng-model="$ctrl.siniestroPecuniarias.TIPO_INCIDENTE">
+										<md-option ng-repeat="estado in $ctrl.tipos.incidentes" ng-value="estado.DS_TIPOS">
+											{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+										</md-option>
+									</md-select>
+								</md-input-container> -->
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'RUNNER' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.CORREDOR"></input>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'ACTIVITY_DETAIL' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.DETALLE_ACTIVIDAD"></input>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm="33">
+									<label>{{ 'REINSURANCE_CONTRACT' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.CIBERRIESGOSEMPRESAS.CONTRATO_REASEGURO"></input>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row" class="margin-top-20">
+								<md-input-container class="md-block" flex-gt-sm="20">
+									<label>{{ 'INPUT_VECTOR' | translate }}</label>
+									<md-select ng-model="$ctrl.siniestroPecuniarias.VECTOR_DE_ENTRADA">
+										<md-option ng-repeat="vector in $ctrl.vectores" ng-value="vector.DS_TIPOS">
+											{{$ctrl.appParent.getDescriptivo(vector, 'DS_TIPOS')}}
+										</md-option>
+									</md-select>
+									<!-- <textarea rows="3" style="min-height: 110px!important; max-height: 110px!important;" ng-model="$ctrl.siniestroPecuniarias.VECTOR_ENTRADA"></textarea> -->
+								</md-input-container>
+								<md-input-container class="md-block" ng-if="$ctrl.siniestroPecuniarias.VECTOR_DE_ENTRADA == 'Otros'" flex-gt-sm>
+									<label>{{ 'DESCRIPTION_VECTOR' | translate }}</label>
+									<textarea rows="3" style="min-height: 110px!important; max-height: 110px!important;" ng-model="$ctrl.siniestroPecuniarias.DESCRIPCION_VECTOR_ENTRADA"></textarea>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'EXPLOITED_VULNERABILITY' | translate }}</label>
+									<textarea rows="3" style="min-height: 110px!important; max-height: 110px!important;" ng-model="$ctrl.siniestroPecuniarias.VULNERABILIDAD_EXPLOTADA"></textarea>
+								</md-input-container>
+							</div>
+							<div flex class="margin-top-20" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 28">
+								<span style="font-weight: 600;"><i class="fad fa-pencil" style="color: #0066ff"></i>{{ 'MEASURES_AVAILABLE' | translate | uppercase}}</span>
+								<div layout-gt-sm="row">
+									<md-input-container class="md-block" flex-gt-sm="30" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+										<label>{{ 'MEASUREMENT_INSURED' | translate }}</label>
+										<input type="text" ng-model="$ctrl.medidaAseg" placeholder="{{ 'ADD_MEASUREMENT' | translate }}"></input>
+									</md-input-container>
+									<md-input-container class="md-block" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+										<md-button style="width: 10px;" ng-click="$ctrl.addList('medidasAseg', 'medidaAseg')" ng-show="$ctrl.medidaAseg != null">
+											<md-icon class="icon-blue">add</md-icon></md-button>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<div ng-repeat="medida in $ctrl.medidasAseg" style="margin-top: 20px" layout="row">
+											<p style="color: #031a34;margin-left: 15px"><i class="fad fa-check"></i>{{medida}}</p>
+										</div>
+									</md-input-container>
+								</div>
+							</div>
+							<div class="margin-top-20" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 28">
+								<span style="font-weight: 600"><i class="fad fa-pencil" style="color: #0066ff"></i>{{ 'ADDITIONAL_MEASURES' | translate | uppercase}}</span>
+									<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.anadirMedida($ctrl.medidasAdic)" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+										<md-icon>add</md-icon>
+										{{ 'ADD' | translate }}
+									</md-button>
+								<div layout="row" flex-gt-sm>
+									<div class="margin-top-20" layout-align="center" flex-gt-sm>
+										<div layout-gt-sm="row" ng-repeat="dir in $ctrl.medidasAdic track by $index">
+											<a ng-click="$ctrl.eliminarMedida()" ng-if="$ctrl.rol != 2 && $ctrl.rol != 3 && $ctrl.rol != 5">
+												<span id="delete2" class="glyphicon glyphicon-trash"></span>
+										  	</a>
+											<md-input-container class="md-block" flex="30">
+												<label>{{ 'EXTENT' | translate }}</label>
+												<input ng-model="$ctrl.medidasAdic[$index]['NOMBRE_MEDIDA']"></input>
+											</md-input-container>
+											<md-input-container class="md-block" flex="30">
+												<label>{{ 'STATUS' | translate }}</label>
+												<input ng-model="$ctrl.medidasAdic[$index]['STATUS']"></input>
+											</md-input-container>
+										</div>
+									</div>
+								
+									<div class="divider"></div>
+								
+									<div flex-gt-sm ng-if="$ctrl.datos.OPOLIZA.IN_POLIZAS == 1">
+										<div layout="column">
+											
+											<div ng-if="$ctrl.loadDocumentos != true && $ctrl.listArchivosPendientes != null && $ctrl.listArchivosPendientes.length > 0">
+												<div layout-gt-sm="row">
+													<h4>{{ 'UNSAVED_DOCUMENTS' | translate }}</h4>
+												</div>
+												<div ng-repeat="archivo in $ctrl.listArchivosPendientes" ng-if="archivo.DS_ARCHIVO == 'DOCUMENTACIÓN MEDIDAS ADICIONALES'" layout-gt-sm="row" layout-margin class="m-t-16">
+													<md-input-container class="md-block" flex-gt-sm flex="33" >
+														<label>{{ 'FILE' | translate }}</label>
+														<input ng-model="archivo.NO_ARCHIVO" disabled>
+													</md-input-container>
+													<md-input-container class="md-block" flex-gt-sm flex="33">
+														<label>{{ 'DESCRIPTION' | translate }}</label>
+														<input type="text" ng-model="archivo.DS_ARCHIVO" disabled>
+													</md-input-container>
+												</div>
+											</div>
+											<div ng-if="$ctrl.loadDocumentos != true">
+												<div layout-gt-sm="row">
+													<h4>{{ 'UPLOADED_DOCUMENTS' | translate }}</h4>
+												</div>
+												<div ng-if="$ctrl.listaArchivos != null && $ctrl.listaArchivos.length > 0 && archivo.DS_ARCHIVO == 'DOCUMENTACIÓN MEDIDAS ADICIONALES'" ng-repeat="archivo in $ctrl.listaArchivos" layout-gt-sm="row" layout-margin class="m-t-16">
+													<md-input-container class="md-block" flex-gt-sm flex="33" >
+														<label>{{ 'FILE' | translate }}</label>
+														<input ng-model="archivo.NO_ARCHIVO" disabled>
+													</md-input-container>
+													<md-input-container class="md-block" flex-gt-sm flex="33">
+														<label>{{ 'DESCRIPTION' | translate }}</label>
+														<input type="text" ng-model="archivo.DS_ARCHIVO" disabled>
+													</md-input-container>
+													<md-input-container class="md-block" flex-gt-sm flex="33">
+														<label>{{ 'DATE' | translate }}</label>
+														<input type="text" ng-model="archivo.FT_USU_ALTA" disabled>
+													</md-input-container>
+													<i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(archivo)">
+														cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip>
+													</i>
+													<i ng-if="$ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 11" class="material-icons btnIcono" ng-click="$ctrl.eliminarArchivo(archivo)">
+														delete <md-tooltip md-direction="top">{{ 'DELETE' | translate | uppercase }}</md-tooltip>
+													</i>
+												</div>
+											</div>
+											
+											<div ng-if="($ctrl.listaArchivos == null || $ctrl.listaArchivos.length == 0) && $ctrl.loadDocumentos != true" layout-gt-sm="row" layout-margin>
+												{{ 'NOT_FOUND_DATA' | translate | uppercase }}
+											</div>
+											
+											<div layout-gt-sm="row">
+												<md-input-container class="md-block" flex-gt-sm>
+													<label>{{ 'DESCRIPTION' | translate }}</label>
+													<input ng-model="$ctrl.descArchivoAdic" ng-init="$ctrl.descArchivoAdic = 'DOCUMENTACIÓN MEDIDAS ADICIONALES'" disabled></input>
+												</md-input-container>
+			
+												<!-- <md-input-container class="md-block" flex-gt-sm>
+													<label>{{ 'OBSERVATIONS' | translate }}</label>
+													<input ng-disabled="$ctrl.descArchivo == null" ng-model="$ctrl.obsArchivo" ng-required="$ctrl.descArchivo != null">
+												</md-input-container> -->
+											</div>
+			
+											<div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover" ng-disabled="$ctrl.descArchivoAdic == null" ng-change="$ctrl.descArchivo = 'DOCUMENTACIÓN MEDIDAS ADICIONALES'">
+												<span><md-icon class="icon-blue">upload_file</md-icon></span>
+												<span>{{ 'DRAG_DROP' | translate }}</span>
+											</div>
+										</div>
+										<div layout="row" layout-align="center" layout-margin>
+											<md-button ng-if="$ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardarDocumentacionSiniestro()">
+												<md-icon>save</md-icon>
+												{{ 'SAVE_DOCUMENTATION' | translate }}
+											</md-button>
+										</div>
+									</div>
+									<!-- <div class="divider"></div> -->
+								</div>
+									
+							</div>
+							<div flex class="margin-top-20" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 28">
+								<span style="font-weight: 600;"><i class="fad fa-pencil" style="color: #0066ff"></i>{{ 'EXTERNAL_APPLICATIONS_AFFECTED' | translate | uppercase}}</span>
+								<div layout-gt-sm="row">
+									<md-input-container class="md-block" flex-gt-sm="30" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+										<label>{{ 'APPLICATION' | translate }}</label>
+										<input type="text" ng-model="$ctrl.aplicacion" placeholder="{{ 'ADD_APPLICATION' | translate }}"></input>
+									</md-input-container>
+									<md-input-container class="md-block" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+										<md-button style="width: 10px;" ng-click="$ctrl.addList('aplicaciones', 'aplicacion')" ng-show="$ctrl.aplicacion != null">
+											<md-icon class="icon-blue">add</md-icon></md-button>
+									<md-input-container class="md-block" flex-gt-sm>
+										<div ng-repeat="aplicacion in $ctrl.aplicaciones" style="margin-top: 20px" layout="row">
+											<p style="color: #031a34;margin-left: 15px"><i class="fad fa-check"></i>{{aplicacion}}</p>
+										</div>
+									</md-input-container>
+								</div>
+							</div>
+							<div class="margin-top-20" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 28">
+								<span style="font-weight: 600"><i class="fad fa-pencil" style="color: #0066ff"></i>{{ 'MEASURES_IMPLEMENT' | translate | uppercase}}</span>
+								<div layout-gt-sm="row">
+								
+								<div class="margin-top-20" layout-align="center" flex-gt-sm>
+									<md-input-container class="md-block" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+										<label>{{ 'RECOMMENDATION' | translate }}</label>
+										<input type="text" ng-model="$ctrl.recomendacion"  placeholder="{{ 'ADD_RECOMMENDATION' | translate }}"></input>
+									</md-input-container>
+									<md-input-container class="md-block" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+										<md-button style="width: 10px;" ng-click="$ctrl.addList('recomendaciones', 'recomendacion')" ng-show="$ctrl.recomendacion != null">
+											<md-icon class="icon-blue">add</md-icon></md-button>
+									</md-input-container>
+									<md-input-container class="md-block">
+										<div ng-repeat="recomendacion in $ctrl.recomendaciones" style="margin-top: 20px" layout="row">
+											<p style="color: #031a34;margin-left: 15px"><i class="fad fa-check"></i>{{recomendacion}}</p>
+										</div>
+									</md-input-container>
+								</div>
+							<!-- </div> -->
+							
+							<div class="divider"></div>
+								
+							<div flex-gt-sm ng-if="$ctrl.datos.OPOLIZA.IN_POLIZAS == 1" style="margin-top: 20px">
+								<div layout="column">
+									
+									<div ng-if="$ctrl.loadDocumentos != true && $ctrl.listArchivosPendientes != null && $ctrl.listArchivosPendientes.length > 0">
+										<div layout-gt-sm="row">
+											<h4>{{ 'UNSAVED_DOCUMENTS' | translate }}</h4>
+										</div>
+										<div ng-repeat="archivo in $ctrl.listArchivosPendientes" ng-if="archivo.DS_ARCHIVO == 'DOCUMENTACIÓN MEDIDAS IMPLEMENTAR ASEGURADO'" layout-gt-sm="row" layout-margin class="m-t-16">
+											<md-input-container class="md-block" flex-gt-sm flex="33" >
+												<label>{{ 'FILE' | translate }}</label>
+												<input ng-model="archivo.NO_ARCHIVO" disabled>
+											</md-input-container>
+											<md-input-container class="md-block" flex-gt-sm flex="33">
+												<label>{{ 'DESCRIPTION' | translate }}</label>
+												<input type="text" ng-model="archivo.DS_ARCHIVO" disabled>
+											</md-input-container>
+										</div>
+									</div>
+									<div ng-if="$ctrl.loadDocumentos != true">
+										<div layout-gt-sm="row">
+											<h4>{{ 'UPLOADED_DOCUMENTS' | translate }}</h4>
+										</div>
+										<div ng-if="$ctrl.listaArchivos != null && $ctrl.listaArchivos.length > 0 && archivo.DS_ARCHIVO == 'DOCUMENTACIÓN MEDIDAS IMPLEMENTAR ASEGURADO'" ng-repeat="archivo in $ctrl.listaArchivos" layout-gt-sm="row" layout-margin class="m-t-16">
+											<md-input-container class="md-block" flex-gt-sm flex="33" >
+												<label>{{ 'FILE' | translate }}</label>
+												<input ng-model="archivo.NO_ARCHIVO" disabled>
+											</md-input-container>
+											<md-input-container class="md-block" flex-gt-sm flex="33">
+												<label>{{ 'DESCRIPTION' | translate }}</label>
+												<input type="text" ng-model="archivo.DS_ARCHIVO" disabled>
+											</md-input-container>
+											<md-input-container class="md-block" flex-gt-sm flex="33">
+												<label>{{ 'DATE' | translate }}</label>
+												<input type="text" ng-model="archivo.FT_USU_ALTA" disabled>
+											</md-input-container>
+											<i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(archivo)">
+												cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip>
+											</i>
+											<i ng-if="$ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 11" class="material-icons btnIcono" ng-click="$ctrl.eliminarArchivo(archivo)">
+												delete <md-tooltip md-direction="top">{{ 'DELETE' | translate | uppercase }}</md-tooltip>
+											</i>
+										</div>
+									</div>
+									
+									<div ng-if="($ctrl.listaArchivos == null || $ctrl.listaArchivos.length == 0) && $ctrl.loadDocumentos != true" layout-gt-sm="row" layout-margin>
+										{{ 'NOT_FOUND_DATA' | translate | uppercase }}
+									</div>
+									
+									<div layout="row" layout-align="center center" class="fullWidth fullHeight">
+										<div id="buscandoGif" style="display:table;" ng-if="$ctrl.loadDocumentos == true">
+											<div class="centered" style="display:table-cell; vertical-align: middle;">
+												<div class="blob-3"></div>
+												<div class="blob-4"></div>
+											</div>
+										</div>
+									</div>
+									<div layout-gt-sm="row">
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>{{ 'DESCRIPTION' | translate }}</label>
+											<input ng-model="$ctrl.descArchivoRecom" ng-init="$ctrl.descArchivoRecom = 'DOCUMENTACIÓN MEDIDAS IMPLEMENTAR ASEGURADO'" disabled></input>
+										</md-input-container>
+	
+										<!-- <md-input-container class="md-block" flex-gt-sm>
+											<label>{{ 'OBSERVATIONS' | translate }}</label>
+											<input ng-disabled="$ctrl.descArchivo == null" ng-model="$ctrl.obsArchivo" ng-required="$ctrl.descArchivo != null">
+										</md-input-container> -->
+									</div>
+	
+									<div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover" ng-disabled="$ctrl.descArchivoRecom == null" ng-change="$ctrl.descArchivo = 'DOCUMENTACIÓN MEDIDAS IMPLEMENTAR ASEGURADO'">
+										<span><md-icon class="icon-blue">upload_file</md-icon></span>
+										<span>{{ 'DRAG_DROP' | translate }}</span>
+									</div>
+								</div>
+								<div layout="row" layout-align="center" layout-margin>
+									<md-button ng-if="$ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardarDocumentacionSiniestro()">
+										<md-icon>save</md-icon>
+										{{ 'SAVE_DOCUMENTATION' | translate }}
+									</md-button>
+								</div>
+							</div>
+							<!-- <div class="divider"></div> -->
+						</div>
+							
+						</div>
+					
+					<div class="separadorDesplegables"></div>	
+				</div>
+            </fieldset>
+		</form>
+
+
+
+		<form ng-if="$ctrl.isNew == true" class="formClass form-scroll" id="formNuevoSiniestro" name="formSiniestro" ng-value="$ctrl.formSiniestro=!formSiniestro.$valid" ng-submit="$ctrl.guardarSiniestro()" novalidate>
+			<fieldset ng-hide="$ctrl.datos.OPOLIZA.ID_POLIZA != null" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-precioeurosfactura"></span> {{ 'POLICY_DATA' | translate }}
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed1 = !isCollapsed1">
+						<span ng-if="!isCollapsed1" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="isCollapsed1" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed1">
+					<div class="separadorDesplegables"></div>
+					<div layout="row" layout-align="start center">
+						<md-input-container class="hide-validation-error md-block" flex="50">
+							<label>{{ 'POLICY_NU' | translate }}</label>
+							<input ng-model="$ctrl.nuPoliza">
+						</md-input-container>
+						<md-input-container ng-hide="$ctrl.cargandoPoliza == true" class="md-block" flex-gt-sm style="margin-top: 20px!important;">
+							<md-button class="fade-out md-raised md-primary medium-green btnNuevo" ng-click="$ctrl.getPoliza()">
+				                 <i class="fa-duotone fa-check-double"></i> {{ 'SELECT_POLICY' | translate }}
+				            </md-button>
+						</md-input-container>
+						<div ng-if="$ctrl.cargandoPoliza == true" id="buscandoGif" style="padding: 0px 16px;display: table;z-index: 999999999;position: fixed;width: 50%;height: 968px;left: 50%;" resize ng-style="resizeHeight(1)">
+					        <div class = "centered" style="display:table-cell; vertical-align: middle;">
+								<div class = "blob-3"></div>
+								<div class = "blob-4"></div>
+							</div>
+					    </div>
+					</div>
+				</div>
+			</fieldset>
+			
+			<fieldset ng-hide="$ctrl.datos.OPOLIZA.ID_POLIZA == null || $ctrl.isNew == true" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-precioeurosfactura"></span> {{ 'POLICY_CLAIMS' | translate }}
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+						<span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed2">
+					<div class="separadorDesplegables"></div>
+						<!-- <div layout="row">
+						</div> -->
+					<div ng-if="$ctrl.load != true" flex>		
+						<div class="ui-grid" ui-grid="$ctrl.gridSiniestrosPoliza" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection resize ng-style="resizeHeight(790)"></div>
+					</div>
+					
+					<div class="separadorDesplegables"></div>	
+				</div>
+			</fieldset>
+			
+			<fieldset ng-hide="$ctrl.datos.OPOLIZA.ID_POLIZA == null" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'NEW_CLAIM' | translate }}
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed3 = !isCollapsed3">
+						<span ng-if="!isCollapsed3" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="isCollapsed3" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed3">
+					<div class="separadorDesplegables"></div>
+					
+					<div layout="row">
+						<md-input-container class="md-block" flex-gt-sm="30" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO != 28">
+							<label>{{ 'AFFECTED_COVERAGE' | translate }}</label>
+							<md-select ng-change="$ctrl.changeCobertura()" ng-model="$ctrl.coberturas" required multiple>
+								<md-option ng-if="estado.ID_GARANTIA != 57" ng-repeat="estado in $ctrl.tipos.garantias" ng-value="estado.NO_GARANTIA">
+									{{$ctrl.appParent.getDescriptivo(estado, 'NO_GARANTIA')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm="30" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 28">
+							<label>{{ 'AFFECTED_COVERAGE' | translate }}</label>
+							<md-select ng-change="$ctrl.changeCobertura(true)" ng-model="$ctrl.coberturaNoMultiple" required>
+								<md-option ng-if="estado.ID_GARANTIA != 57" ng-repeat="estado in $ctrl.tipos.garantias" ng-value="estado.NO_GARANTIA">
+									{{$ctrl.appParent.getDescriptivo(estado, 'NO_GARANTIA')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.mostrarSeccion() == true" class="md-block" flex-gt-sm="30">
+							<label>{{ 'SECTION' | translate }}</label>
+							<md-select ng-disabled="$ctrl.coberturas == null || $ctrl.coberturas.length == 0" ng-model="$ctrl.seccion" required multiple>
+								<md-option ng-repeat="estado in $ctrl.tipos.garantiasHijoFilter" ng-value="estado.NO_GARANTIA">
+									{{$ctrl.appParent.getDescriptivo(estado, 'NO_GARANTIA')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.mostrarIncidente() == true" class="md-block" flex-gt-sm>
+							<label>{{ 'INCIDENT' | translate }}</label>
+							<md-select ng-model="$ctrl.siniestroPecuniarias.TIPO_INCIDENTE" ng-change="$ctrl.changeCierre()" required>
+								<md-option ng-repeat="estado in $ctrl.tipos.incidentes" ng-value="estado.DS_TIPOS">
+									{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.mostrarIncidente() == true" ng-show="$ctrl.cierre == true" class="md-block" flex-gt-sm="10">
+							<label>{{ 'QUICK_CLOSURE' | translate }}</label>
+							<md-select ng-model="$ctrl.siniestroPecuniarias.GESTION_RAPIDA" ng-required="$ctrl.cierre">
+								<md-option ng-value="1">{{ 'YES' | translate }}</md-option>
+								<md-option ng-value="0">{{ 'NO' | translate }}</md-option>
+								<md-option ng-value="2" ng-show="false">{{ 'NOT_APPLICABLE' | translate }}</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.mostrarServicio() == true" class="md-block" flex-gt-sm="30">
+							<label>{{ 'SERVICES' | translate }}</label>
+							<md-select ng-model="$ctrl.datos.CO_TIPO_ACCIDENTE" multiple ng-disabled="$ctrl.tipos.servicios.length == 0 || $ctrl.coberturaNoMultiple == null" ng-required="$ctrl.tipos.servicios.length > 0 && $ctrl.datos.CO_TIPO_INDEMNIZACION == null">
+								<md-option ng-repeat="estado in $ctrl.tipos.servicios" ng-value="estado.DS_TIPOS">
+									{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.mostrarIndemnizacion() == true" class="md-block" flex-gt-sm>
+							<label>{{ 'COMPENSATION' | translate }}</label>
+							<md-select ng-model="$ctrl.datos.CO_TIPO_INDEMNIZACION" ng-disabled="$ctrl.tipos.indemnizaciones.length == 0 || $ctrl.coberturaNoMultiple == null" ng-required="$ctrl.tipos.indemnizaciones.length > 0 && $ctrl.datos.CO_TIPO_ACCIDENTE == null">
+								<md-option ng-repeat="estado in $ctrl.tipos.indemnizaciones" ng-value="estado.DS_TIPOS">
+									{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+					</div>
+					
+					<div layout="row" class="margin-top-20">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'STATUS' | translate }}</label>
+							<md-select ng-model="$ctrl.datos.ID_ESTADO_SINIESTRO" required>
+								<md-option ng-repeat="estado in $ctrl.tipos.estados" ng-value="estado.ID_ESTADO_SINIESTRO" ng-if="estado.ID_ESTADO_SINIESTRO == 1 || estado.ID_ESTADO_SINIESTRO == 3">
+									{{estado.DS_ESTADO_SINIESTRO}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<!-- <md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'SUBSTATE' | translate }}</label>
+							<md-select ng-model="$ctrl.datos.ID_SUBESTADO_SINIESTRO">
+								<md-option ng-repeat="estado in $ctrl.tipos.subestados" ng-value="estado.CO_TIPO">
+									{{estado.DS_TIPOS}}
+								</md-option>
+							</md-select>
+						</md-input-container> -->
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_OPENING' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.FD_APERTURA" required></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_NOTIFICATION' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.FD_NOTIFICACION"></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_INCIDENCE' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.FD_OCURRENCOMPANIA" required></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DATE_DISCOVERY' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.siniestroPecuniarias.FD_DESCUBRIMIENTO" required></md-datepicker>
+						</md-input-container>
+					</div>
+					
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DESCRIPTION' | translate }}</label>
+							<textarea ng-model="$ctrl.datos.DS_SINIESTRO" rows="3" cols="5" required></textarea>
+						</md-input-container>
+					</div>
+					
+					<div layout-gt-sm="row" layout-align="start center" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 28">
+						<md-input-container class="md-block hide-validation-error" flex="30">
+							<label>{{ 'CLAIMED_AMOUNT' | translate }}</label>
+                            <input ng-model="$ctrl.datos.IM_RESERVA" ng-change="$ctrl.chkReservaCP()" amount>
+						</md-input-container>
+                       	<div layout-gt-sm="row" layout-align="start center">
+							{{ 'AFFECTED_COMPANY_SYSTEMS' | translate }}
+                            <md-switch ng-model="$ctrl.siniestroAmbitoLaboral" class="switch-mov"></md-switch>
+                        </div>
+					</div>
+					
+					<div style="margin-left: 15px" layout-gt-sm="row" layout-align="start center" ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 28">
+						<md-list style="margin-top: 15px"> 
+							<md-list-item layout-gt-sm="row" layout-align="start center" disabled>
+								{{ 'AFFECTED_PERSONAL_DATA' | translate }}
+								<!-- <md-switch ng-true-value="'1'" ng-false-value="'0'" ng-model="$ctrl.datos.DS_ATIS[0]" class="switch-mov"></md-switch> -->
+								<md-switch ng-model="$ctrl.impacto" class="switch-mov"></md-switch>
+                       		 </md-list-item>
+							<md-list-item layout-gt-sm="row" layout-align="start center" disabled>
+								{{ 'REQUIRES_DEVICE_SHIPPING' | translate }}
+								<!-- <md-switch ng-true-value="'1'" ng-false-value="'0'" ng-model="$ctrl.datos.DS_ATIS[1]" class="switch-mov"></md-switch> -->
+								<md-switch ng-model="$ctrl.requiereTecnicos" class="switch-mov"></md-switch>
+							</md-list-item>
+							<!-- <md-list-item ng-repeat="question in $ctrl.questions">{{question.QUESTION}}
+								<md-switch ng-true-value="'1'" ng-false-value="'0'" ng-model="$ctrl.datos.DS_ATIS" class="switch-mov"></md-switch>
+							</md-list-item> -->
+						</md-list> 
+					</div>
+					
+					<div class="separadorDesplegables"></div>	
+				</div>
+			</fieldset>
+			
+			<fieldset ng-if="$ctrl.datos.OPOLIZA.ID_POLIZA != null && $ctrl.datos.OPOLIZA.ID_PRODUCTO == 28" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-doc-pdf"></span> {{ 'CONTACT_DATA' | translate }}
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed7 = !isCollapsed7">
+						<span ng-if="!isCollapsed7" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="isCollapsed7" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed7">
+					<div class="separadorDesplegables"></div>
+						<!-- <div layout="row">
+						</div> -->
+						<div>
+							<div layout-gt-sm="row" class="margin-top-20">
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'CONTACT_NAME' | translate }}</label>
+									<!-- <input ng-model="$ctrl.datos.NO_CONTRARIO"> -->
+									<input ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.NOMBRE_CONTACTO">
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'CONTACT_DATE' | translate }}</label>
+									<md-datepicker ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.FD_CONTACTO"></md-datepicker>
+								</md-input-container>
+								<md-input-container class="md-block ic-margin" flex-gt-sm>
+						        	<label>{{ 'COUNTRY_CALL' | translate }}</label>
+							        <md-select ng-model="$ctrl.formCallCenter.pais" required>
+							           <md-option ng-repeat="pais in $ctrl.tipos.paises" ng-value="pais.NO_PAIS">
+						               		{{$ctrl.appParent.getDescriptivo(pais, 'NO_PAIS')}}
+							            </md-option>
+							        </md-select>
+						        </md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'CONTACT_EMAIL' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.MAIL_CONTACTO">
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'TELEPHONE' | translate }}</label>
+									<input ng-model="$ctrl.siniestroPecuniarias.DATOS_CONTACTO.TELEFONO">
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'DOMICILE' | translate }}</label>
+									<input ng-model="$ctrl.formCallCenter.domicilio">
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'LOCALITY' | translate }}</label>
+									<input ng-model="$ctrl.formCallCenter.localidad">
+								</md-input-container>
+					    	</div>
+						</div>
+					
+					<div class="separadorDesplegables"></div>	
+				</div>
+			</fieldset>
+			
+			<fieldset ng-hide="$ctrl.datos.OPOLIZA.ID_POLIZA == null" class="fade-out datos_poliza">
+				<legend><span class="mov-ico ic-ciber-ico-info"></span> {{ 'COMMUNICATION' | translate }}
+					<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed5 = !isCollapsed5">
+						<span ng-if="!isCollapsed5" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar Datos de la Póliza"></span>
+						<span ng-if="isCollapsed5" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed4">
+					<div class="separadorDesplegables"></div>
+						<!-- <div layout="row">
+						</div> -->
+						<div layout-gt-sm="row">
+							<div layout="column" flex="50">
+								<md-input-container class="md-block" flex-gt-sm>
+									<md-button class="fade-out md-raised md-primary medium-green btnNuevo" ng-click="$ctrl.getDocumentoCallCenter(false)">
+										<md-icon>backup</md-icon>&nbsp;{{ 'CALLCENTER_CALL' | translate }}
+						            </md-button>
+					            </md-input-container>
+							</div>
+							<div layout="column" flex="50">
+								<h5>{{ 'ATTACH_DOCUMENT' | translate }}</h5>
+								<div style="display: inline-block; width: fit-content; margin-bottom: 10%;">
+			                        <input type="file" id="file_ent" name="file_ent" class="inputfile" />
+			                        <label ng-if="$ctrl.nombreArchivo == null" class="dark-blue md-button btnNuevo inline-flex" for="file_ent">
+			                            <i class="material-icons btnIconoNube">attachment</i> {{ 'SELECT_FILE' | translate }}
+			                        </label>
+			                        <label ng-if="$ctrl.nombreArchivo != null" class="dark-blue md-button btnNuevo" for="file_ent">
+			                            <i class="material-icons btnIconoNube">attachment</i> {{$ctrl.nombreArchivo}}
+			                        </label>
+			                    </div>
+							</div>
+						</div>
+					<div class="separadorDesplegables"></div>	
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div layout="row" layout-align="center" layout-margin>
+		<md-button ng-disabled="$ctrl.datos == null" ng-if="$ctrl.navegador != 'internet explorer' && $ctrl.tabSiniestro != 3 && $ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" type="submit" form="formNuevoSiniestro">
+			<md-icon>save</md-icon>
+			{{ 'SAVE' | translate }}
+		</md-button>
+		<md-button ng-disabled="$ctrl.datos == null" ng-if="$ctrl.navegador == 'internet explorer' && $ctrl.tabSiniestro != 3 && $ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardarSiniestro($ctrl.formSiniestro)" form="formNuevoSiniestro">
+			<md-icon>save</md-icon>
+			{{ 'SAVE' | translate }}
+		</md-button>
+		<md-button ng-if="$ctrl.tabSiniestro == 3 && $ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardarDocumentacionSiniestro()">
+			<md-icon>save</md-icon>
+			{{ 'SAVE_DOCUMENTATION' | translate }}
+		</md-button>
+	</div>
+</div>
+
+
+

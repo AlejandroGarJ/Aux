@@ -1,0 +1,25 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<!-- <span aria-hidden="true" style="float: right; margin-top:10px; margin-right:20px; cursor: pointer;" ng-click="$ctrl.cerrar()">×</span><div id="modalHeader" class="modal-header"><h4 class="modal-title" id="myModalLabel">Histórico de clientes</h4></div> -->
+<!-- 	<div id="modalCuerpo" class="modal-body"> -->
+<!-- 		<div class="container-fluid"> -->
+<!-- 			<div class="ui-grid grid-modal" ui-grid="$ctrl.gridClienteHistoricos" ui-grid-pagination></div> -->
+<!-- 		</div> -->
+<!-- 	</div>  -->
+<!-- <div id="modalFooter" class="modal-footer"> <button  id="btnNuevoPre" type="button" class="btn btn-danger btn-sm" ng-click="$ctrl.cerrar()">Cerrar</button></div> -->
+<md-dialog style="width:95%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Histórico del cliente</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<div class="ui-grid grid-modal" ui-grid="$ctrl.gridClienteHistoricos" ui-grid-pagination></div>
+		</div>
+	</md-dialog-content>
+</md-dialog>

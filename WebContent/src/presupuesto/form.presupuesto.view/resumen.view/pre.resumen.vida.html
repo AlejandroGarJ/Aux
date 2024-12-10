@@ -1,0 +1,215 @@
+<div flex>
+    <uib-tabset class="tabsPasos" type="pills" justified="true" flex="none">
+	    
+            <!--CONTENIDO DE RESUMEN-->
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaResumen}})">
+                <div flex>
+                
+                    <!---------------- DATOS DEL ASEGURADO DE VIDA ------------------------>
+                    <legend>Datos del asegurado de vida</legend>
+                        <div layout-gt-sm="row" class="margenPresupuestos"> 
+							<div layout="column" flex class="margenPresupuestos">
+		            			<label>Tomador es la misma persona que asegurado</label>
+			            		<md-radio-group layout-gt-sm="row" ng-model="$ctrl.datos.TARIF_VIDA.IN_TOMADOR_ES_ASEGURADO" disabled>
+									<md-radio-button ng-value="00">
+										Sí
+									</md-radio-button>
+									<md-radio-button ng-value="01">
+										No
+									</md-radio-button>
+								</md-radio-group>
+		            		</div>
+		            	</div>
+						<div layout-gt-sm="row" class="margenPresupuestos">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'NAME' | translate }}</label>
+								<input ng-model="$ctrl.datos.TARIF_VIDA.NO_NOMBRE" disabled>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'SURNAME_1' | translate }}</label>
+								<input ng-model="$ctrl.datos.TARIF_VIDA.NO_APELLIDO1" disabled>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'SURNAME_2' | translate }}</label>
+								<input ng-model="$ctrl.datos.TARIF_VIDA.NO_APELLIDO2" disabled>
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row" class="margenPresupuestos">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Tipo documento</label>
+								<md-select ng-model="$ctrl.datos.TARIF_VIDA.ID_TIPO_DOCUMENTO" disabled>
+									<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">{{tipo.DS_TIPO_DOCUMENTO}}</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>NIF</label>
+								<input ng-model="$ctrl.datos.TARIF_VIDA.NU_DOCUMENTO" disabled>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Fecha Nacimiento</label>
+								<md-datepicker ng-if="($ctrl.datos.TARIF_VIDA.FD_NACIMIENTO == null || $ctrl.datos.TARIF_VIDA.FD_NACIMIENTO == undefined) ? $ctrl.datos.TARIF_VIDA.FD_NACIMIENTO = null : $ctrl.datos.TARIF_VIDA.FD_NACIMIENTO" ng-model="$ctrl.datos.TARIF_VIDA.FD_NACIMIENTO" disabled></md-datepicker>
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row" class="margenPresupuestos">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Sexo</label>
+								<md-select ng-model="$ctrl.datos.TARIF_VIDA.ID_SEXO" disabled>
+									<md-option ng-value=1>Hombre</md-option>
+									<md-option ng-value=2>Mujer</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label for="cliente">Teléfono</label>
+								<input type="tel" ng-model="$ctrl.datos.TARIF_VIDA.NU_TELEFONO1" disabled>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label for="cliente">Correo electrónico</label>
+								<input type="email" ng-model="$ctrl.datos.TARIF_VIDA.NO_EMAIL" disabled>
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row" class="margenPresupuestos">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Nacionalidad</label>
+								<md-select ng-model="$ctrl.datos.TARIF_VIDA.CO_PAIS" disabled>
+									<md-option ng-repeat="tipo in $ctrl.tipos.paises" ng-value="tipo.CO_ISO_A3">{{tipo.NO_PAIS}}</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Estado civil</label>
+								<md-select ng-model="$ctrl.datos.TARIF_VIDA.ID_ESTADO_CIVIL" disabled>
+									<md-option ng-repeat="tipo in $ctrl.tipos.civiles" ng-value="tipo.ID_TIPOS">{{tipo.DS_TIPOS}}</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+				
+				
+						<!---------------- MODALIDAD ------------------------>
+                    	<legend>Modalidad</legend>
+						<div layout="row" class="margenPresupuestos">
+			    			<div flex-gt-sm="50">
+								<label>Modalidad</label>
+							</div>
+							<md-radio-group flex="50" layout-gt-sm="row" ng-model="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA" disabled>
+								<md-radio-button ng-value="'01'">
+									Particular
+								</md-radio-button>
+								<md-radio-button ng-value="'02'">
+									Profesional
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		
+			    		<!---------------- COBERTURAS ------------------------>
+                    	<legend>Coberturas</legend>
+						<div layout="row" class="margenPresupuestos">
+			    			<div flex-gt-sm="50">
+								<label>Fallecimiento (contratación obligatoria)</label>
+							</div>
+							<md-radio-group flex="50" layout-gt-sm="row" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_FALLECIMIENTO" disabled>
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '01'" class="margenPresupuestos">
+			    			<div flex-gt-sm="50">
+								<label>Fallecimiento por accidente</label>
+							</div>
+							<md-radio-group flex="50" layout-gt-sm="row" class="margenPresupuestos" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_FALLECIMIENTO_ACC" disabled>
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+						<div layout="row" class="margenPresupuestos" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '01'">
+			    			<div flex-gt-sm="50">
+								<label>Invalidez permanente absoluta por accidente</label>
+							</div>
+							<md-radio-group flex="50" layout-gt-sm="row" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_INVALIDEZ_ACC" disabled>
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" class="margenPresupuestos" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '01'">
+			    			<div flex-gt-sm="50">
+								<label>Invalidez permanente absoluta</label>
+							</div>
+							<md-radio-group flex="50" layout-gt-sm="row" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_INVALIDEZ" disabled>
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" class="margenPresupuestos" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '02'">
+			    			<div flex-gt-sm="50">
+								<label>Invalidez permanente total</label>
+							</div>
+							<md-radio-group flex="50" layout-gt-sm="row" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IN_COBERTURA_INVALIDEZ_TOTAL" disabled>
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" class="margenPresupuestos" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '02'">
+			    			<div flex-gt-sm="50">
+								<label>Invalidez permanente total + absoluta</label>
+							</div>
+							<md-radio-group flex="50" layout-gt-sm="row" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IN_COBERTURA_INVALIDEZ_TOT_AB" disabled>
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+						<div layout="row" class="margenPresupuestos" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '02'">
+			    			<md-input-container flex-gt-sm="30">
+								<label>Profesión</label>
+								<input ng-model="">
+			    		</div>
+						<div layout="row" class="margenPresupuestos">
+			    			<md-input-container flex-gt-sm="30">
+								<label>Capital</label>
+								<input ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IM_CAPITAL_COBERTURA_VIDA" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '01'" disabled>
+								<input ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IM_CAPITAL_COBERTURA_VIDA" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '02'" disabled>
+							</md-input-container>
+			    		</div>
+				
+					
+						<!---------------- DATOS PAGO ------------------------>
+                    	<legend>Datos del Pago</legend>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm="70">
+								<label>Forma de pago</label>
+								<md-select ng-model="$ctrl.datos.DATOS_PAGO.ID_FORMAPAGO" disabled>
+									<md-option ng-value="2">Anual</md-option>
+									<md-option ng-value="3">Semestral</md-option>
+									<md-option ng-value="5">Trimestral</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+				          		<label>{{ 'DATE_START' | translate }}</label>
+				          		<md-datepicker ng-if="($ctrl.datos.DATOS_PAGO.FD_INICIO == null || $ctrl.datos.DATOS_PAGO.FD_INICIO == undefined) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null : $ctrl.datos.DATOS_PAGO.FD_INICIO" ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" disabled></md-datepicker>
+				          	</md-input-container>
+						</div>
+	            </div>
+        	</md-content>
+	</uib-tabset>     
+</div>   

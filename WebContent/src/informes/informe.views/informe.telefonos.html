@@ -1,0 +1,49 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="formClass" id="form" ng-form="$ctrl.informeTelefono">
+	<h3>Informe Mensual de Liquidacion de telefonos</h3>
+	<div layout-gt-sm="row" class="margin-top-20">
+		<md-input-container class="md-block" flex-gt-sm>
+        	<label>{{ 'PRODUCT' | translate }}</label>
+	        <md-select ng-model="$ctrl.form.ID_PRODUCTO">
+	           <md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PRODUCTO">
+<!-- 	              {{programa.DS_PROGRAMA}} -->
+               		{{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+	            </md-option>
+	        </md-select>
+        </md-input-container>
+	</div>
+	<div layout-gt-sm="row">
+		<div layout-gt-sm="row" class="margin-top-20">
+        	<md-input-container class="md-block min-w-160" flex-gt-sm>
+        		<label>F.Inicio desde...</label>
+
+          		<md-datepicker ng-click="($ctrl.form.FT_FROM == null || $ctrl.form.FT_FROM == undefined) ? $ctrl.form.FT_FROM = null : ''" ng-model="$ctrl.form.FT_FROM"></md-datepicker>
+          	</md-input-container>
+          	<md-input-container class="md-block min-w-160" flex-gt-sm>
+          		<label>F. Inicio hasta...</label>
+
+          		<md-datepicker ng-click="($ctrl.form.FT_TO == null || $ctrl.form.FT_TO == undefined) ? $ctrl.form.FT_TO = null : ''" ng-model="$ctrl.form.FT_TO"></md-datepicker>
+          	</md-input-container>
+    	</div>
+	</div>
+	<div style="text-align:center" ng-if="$ctrl.cargando == false">
+		<!-- <md-button class="md-raised md-primary dark-green" ng-click ="$ctrl.exportarExcel()"> -->
+		<md-button class="md-raised md-primary medium-blue button-action-main" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informeTelefono.$valid, 'informe', 'liquidacionTlf')">
+			<i class="fa-duotone fa-download" style="margin-right: 5px"></i>
+			{{ 'GENERATE_REPORT' | translate | uppercase}}
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar($ctrl.form)">
+			<i class="fa fa-trash"></i>
+			{{ 'CLEAN' | translate | uppercase }}
+		</md-button>
+	</div>
+
+	<div id="buscandoGif" style="width: 100%; margin: 10% auto 0;" ng-if="$ctrl.cargando == true">
+		<div class="centered" style="height: 100%; margin: 0 auto;">
+			<div class="blob-3"></div>
+			<div class="blob-4"></div>
+		</div>
+	</div>
+</div>

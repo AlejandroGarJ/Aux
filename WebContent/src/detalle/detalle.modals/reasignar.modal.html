@@ -1,0 +1,30 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="height:44px">
+            <h4 class="modal-title" style="text-align: center centar ">Reasignar</h4>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	            <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content style="height: 25%" class="md-dialog-content formCliente formClass">
+        <div>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Asignado a</label>
+                <md-select ng-model="$ctrl.datos.NO_USU_RECEPTOR" required>
+                    <md-option ng-repeat="receptor in $ctrl.gestores " ng-click="$ctrl.nombre = receptor.NO_USUARIO" ng-value="receptor.NO_NOMBRECOMPLETO">{{receptor.NO_NOMBRECOMPLETO}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex="100" layout-gt-sm="row">
+            <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.reasignarSolicitud()">
+                <i class="fa-duotone fa-check-double"></i>
+                Reasignar
+            </md-button>
+        </div>
+    </md-dialog-content>
+</md-dialog>

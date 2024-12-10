@@ -1,0 +1,88 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="formClass" id="form" ng-form="$ctrl.informeMensualImpuestos">
+	<div class="filtroInformesContainer">
+		<div class="tituloFiltroInformes">
+			<h3>IMPUESTO IPS</h3>
+		</div>
+		<div  layout-gt-sm="row" class="margin-top-20">
+			<md-input-container class="md-block" flex-gt-sm="25" ng-if="$ctrl.form.IN_PENDIENTES == true">
+	         	<label>{{ 'PRODUCT' | translate }}</label>
+	         	<md-select ng-change="$ctrl.changePrograma()" ng-model="$ctrl.ID_PROGRAMA" multiple>
+					<md-option ng-if="programa.IN_PARTICULAR == '2'" ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+						{{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+				 	</md-option>
+				</md-select>
+	       	</md-input-container>
+			<md-input-container ng-if="$ctrl.form.IN_PENDIENTES != true" class="md-block datepicker-min-w" flex-gt-sm="25">
+				<label>{{ 'DATE_SETTLEMENT' | translate }}</label>
+				<md-datepicker ng-click="($ctrl.fechaMes == null || $ctrl.fechaMes == undefined) ? $ctrl.fechaMes = null : ''" ng-model="$ctrl.fechaMes" required
+							   md-mode="month" md-date-locale="$ctrl.myDateFormat" md-max-date="$ctrl.maxDate" ng-change="$ctrl.changeFechaMes()"></md-datepicker>
+			</md-input-container>
+		</div>
+		<!-- <div layout-gt-sm="row" layout-align="start center" style="margin-top: 20px!important">
+			<md-input-container class="md-block" flex-gt-sm="20">
+				<md-checkbox ng-model="$ctrl.form.IN_PENDIENTES" ng-change="$ctrl.changePendiente()">
+					PENDIENTES
+				</md-checkbox>
+			</md-input-container>
+		</div> -->
+		<div layout="row" layout-align="start center" ng-if="$ctrl.cargando == false" style="margin-top: 20px">
+			<div>
+				<md-button class="md-raised md-primary medium-blue button-action-main" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informeMensualImpuestos.$valid, 'informe', 'impuestosMensual')">
+					<!-- <span ng-if="!$ctrl.form.IN_PENDIENTES">
+						<i class="fa-duotone fa-download"></i>
+					</span> -->
+					<span>
+						<i class="fa-duotone fa-cloud-arrow-down" style="margin-right: 5px"></i>
+					</span>
+					{{ 'GENERATE_REPORT' | translate | uppercase}}
+					<!-- <span ng-if="$ctrl.form.IN_PENDIENTES">*PENDIENTES*</span> -->
+				</md-button>
+			</div>
+			<!-- <div>
+				<md-button ng-if="$ctrl.form.IN_PENDIENTES == true" class="md-raised md-primary medium-blue button-action-main" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informeMensualImpuestos.$valid, 'informe', 'impuestosMensual', true)">
+					<i class="fa fa-magnifying-glass" style="margin-right: 5px"></i>
+					MOSTRAR RECIBOS
+				</md-button>
+				<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar($ctrl.form)">
+					<i class="fa fa-trash" style="margin-right: 5px"></i>
+					LIMPIAR
+				</md-button>
+			</div> -->
+		</div>
+	</div>
+	
+	<!-- <div layout="row" layout-align="start center" ng-if="$ctrl.mostrarRecibos == true && $ctrl.form.IN_PENDIENTES == true" style="margin-bottom: 10px">
+		<md-button ng-disabled="$ctrl.listaSeleccionados.length == 0" ng-if="$ctrl.mostrarRecibos == true && $ctrl.form.IN_PENDIENTES == true" class="md-raised md-primary medium-blue button-action-main" form="formInforme" ng-click="$ctrl.liquidarRecibos('impuestos')">
+			<i class="fa-duotone fa-check-to-slot" style="margin-right: 5px"></i>
+			LIQUIDAR RECIBOS
+		</md-button>
+		<div class="infoLiquidarRecibosInformes" layout="row" style="margin-left: 10px">
+			<div layout="row" layout-align="center center">
+				Selecciona uno o varios recibos y haz click en "<b>LIQUIDAR RECIBOS</b>" para realizar una liquidación
+			</div>
+		</div>
+	</div> -->
+	
+	<!-- <div ng-if="$ctrl.mostrarRecibos == true && $ctrl.form.IN_PENDIENTES == true" class="ui-grid" ui-grid="$ctrl.gridInformesLiq" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-grouping ui-grid-selection resize></div> -->
+
+	<div ng-if="$ctrl.cargando == true">
+		<div layout="row" layout-align="center center" >
+			<div class="cs-loader" style="height: 40px; width: 97%; position: relative">
+				<div class="cs-loader-inner">
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+				</div>
+			</div>
+		</div>
+		<div layout-gt-sm="row" layout-align="center">
+			<p style="text-align:center;font-size: 11px">¡Recibido! Estamos procesando tu solicitud...</p>
+		</div>
+	</div>
+</div>

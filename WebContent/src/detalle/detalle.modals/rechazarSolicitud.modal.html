@@ -1,0 +1,43 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog flex-gt-sm="50">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="height:44px">
+            <h4 class="modal-title" style="text-align: center centar ">Rechazar Solicitud</h4>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	            <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content style="height:50%" class="md-dialog-content formCliente formClass">
+        <div>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>{{ 'CANCELATION_CAUSE' | translate }}</label>
+                <md-select ng-model="$ctrl.datos.ID_CAUSAANULACION" required>
+                    <md-option ng-repeat="motivo in $ctrl.motivosRechazo" ng-value="motivo.ID_TIPOS">
+                        <!-- {{$ctrl.appParent.getDescriptivo(motivo, 'DS_TIPOS')}} -->
+                        {{ motivo.DS_TIPOS }}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div layout-gt-sm="column" class="md-block" flex-gt-sm>
+            <label>{{ 'REJECTION_REASON' | translate }}</label>
+            <textarea class="form-control input-sm" rows="5" ng-model="$ctrl.observaciones.TX_RECHAZO"></textarea>
+        </div>
+
+        <div flex-gt-sm="50">
+            <md-checkbox ng-model="" ng-if=""
+                ng-true-value="'01'">Enviar notificación de rechazo de la solicitud al cliente</md-checkbox>
+        </div>
+
+        <div flex="100" layout-gt-sm="row">
+            <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.rechazarSolicitud()">
+                <i class="fa-duotone fa-check-double"></i>
+                Rechazar solicitud
+            </md-button>
+        </div>
+    </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,261 @@
+<md-content>
+	<div layout="row" layout-padding layout-align="center none" class="formClass formCliente form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaResumen}})">
+<!-- 		<p ng-click="$ctrl.pre.mostrarDatos()" class="mostrarDetalles"><span ng-if="$ctrl.pre.mostrar==false">Mostrar</span><span ng-if="$ctrl.pre.mostrar==true">Ocultar</span></p> -->
+<!-- 		<div ng-if="$ctrl.pre.mostrar==true" flex="30"> -->
+<!-- 		<p ng-click="$ctrl.pre.mostrar = !$ctrl.pre.mostrar" class="mostrarDetalles"><span ng-if="$ctrl.pre.mostrar==false">Mostrar</span><span ng-if="$ctrl.pre.mostrar==true">Ocultar</span></p> -->
+		<md-button type="button" ng-click="$ctrl.pre.mostrar = !$ctrl.pre.mostrar" class="mostrarDetalles">
+			<span title="Mostrar datos del pago" ng-if="$ctrl.pre.mostrar==false">
+				<md-icon>keyboard_arrow_right</md-icon>
+			</span>
+			<span title="Ocultar datos del pago" ng-if="$ctrl.pre.mostrar==true">
+				<md-icon>keyboard_arrow_left</md-icon>		
+			</span>
+		</md-button>
+		<div ng-if="$ctrl.pre.mostrar" class="mostrarOcultar" flex="30">
+			<form name="$ctrl.formSalud" class="form-scroll" resize ng-style="resizeHeight(165)">
+				<legend>Tarificación Salud</legend>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Fecha de nacimiento {{DATOS_PAGADOR}}</label>
+						<md-datepicker ng-click="($ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO == undefined || $ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO == null) ? $ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO = null: ''" required
+							ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO"
+							ng-if="$ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO == undefined ? $ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO = $ctrl.datosPagador.FD_NACIMIENTO : $ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO"></md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Sexo</label>
+						<md-select id="sexo" required ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIFICACION_SALUD.ID_SEXO"
+							ng-if="$ctrl.datos.TARIFICACION_SALUD.ID_SEXO == undefined ? $ctrl.datos.TARIFICACION_SALUD.ID_SEXO = $ctrl.datosPagador.ID_SEXO : $ctrl.datos.TARIFICACION_SALUD.ID_SEXO">
+                             <md-option ng-repeat="sex in $ctrl.tipos.sexo" ng-value="{{sex.CO_FIELD}}">{{sex.DS_FIELD}}</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout="row">
+					<div class="md-block" flex-gt-sm>
+						<md-checkbox ng-if="$ctrl.datos.TARIFICACION_SALUD.IN_FARMACIA_REEMBOLSO==undefined ? $ctrl.datos.TARIFICACION_SALUD.IN_FARMACIA_REEMBOLSO=false : ' '" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIFICACION_SALUD.IN_FARMACIA_REEMBOLSO">Farmacia reembolso</md-checkbox>
+					</div>
+					<div class="md-block" flex-gt-sm>
+						<md-checkbox ng-if="$ctrl.datos.TARIFICACION_SALUD.IN_DENTAL_REEMBOLSO==undefined ? $ctrl.datos.TARIFICACION_SALUD.IN_DENTAL_REEMBOLSO=false : ' '" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIFICACION_SALUD.IN_DENTAL_REEMBOLSO">Dental reembolso</md-checkbox>
+					</div>
+				</div>
+				
+				<!-- BENEFICIARIOS -->
+			        <legend>Beneficiario 1</legend>
+				        <div layout-gt-sm="row" class="margenPresupuestos">
+	                        <div flex-gt-sm>
+	                            <label>Añadir beneficiario
+	                            </label>
+	                        </div>
+	                        <md-radio-group ng-if="$ctrl.datos.DATOS_BENEFICIARIO.IN_ANADIR_BENEFICIARIO_1==undefined ? $ctrl.datos.DATOS_BENEFICIARIO.IN_ANADIR_BENEFICIARIO_1='02' : ' '" ng-disabled="$ctrl.emitido!='0'" flex-gt-sm layout-gt-sm="row" required ng-model="$ctrl.datos.DATOS_BENEFICIARIO.IN_ANADIR_BENEFICIARIO_1" required>
+	                            <md-radio-button ng-value="01"> Sí </md-radio-button>
+	                            <md-radio-button ng-value="02"> No </md-radio-button>
+	                        </md-radio-group>
+	                    </div>
+	                    <div ng-if="$ctrl.datos.DATOS_BENEFICIARIO.IN_ANADIR_BENEFICIARIO_1=='1'">
+	                    	<div layout="row">
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>Fecha de nacimiento</label>
+									<md-datepicker ng-click="($ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO == undefined || $ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO == null) ? $ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO = null: ''" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO" required></md-datepicker>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>Sexo</label>
+									<md-select ng-disabled="$ctrl.emitido!='0'" id="sexo" ng-model="$ctrl.datos.DATOS_BENEFICIARIO.ID_SEXO" required>
+                          			   <md-option ng-repeat="sex in $ctrl.tipos.sexo" ng-value="{{sex.CO_FIELD}}">{{sex.DS_FIELD}}</md-option>
+									</md-select>
+								</md-input-container>
+							</div>
+							<div layout="row">
+								<div class="md-block" flex-gt-sm>
+									<md-checkbox ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO.IN_FARMACIA_REEMBOLSO">Farmacia reembolso</md-checkbox>
+								</div>
+								<div class="md-block" flex-gt-sm>
+									<md-checkbox ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO.IN_DENTAL_REEMBOLSO">Dental reembolso</md-checkbox>
+								</div>
+							</div>
+						</div>
+                       
+                       <div ng-if="$ctrl.datos.DATOS_BENEFICIARIO.IN_ANADIR_BENEFICIARIO_1=='1'">
+	                       <legend>Beneficiario 2</legend>
+					        <div layout-gt-sm="row" class="margenPresupuestos">
+		                        <div flex-gt-sm>
+		                            <label>Añadir beneficiario
+		                            </label>
+		                        </div>
+		                        <md-radio-group ng-if="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_ANADIR_BENEFICIARIO_2==undefined ? $ctrl.datos.DATOS_BENEFICIARIO_2.IN_ANADIR_BENEFICIARIO_2='02' : ' '" ng-disabled="$ctrl.emitido!='0'" flex-gt-sm layout-gt-sm="row" required ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_ANADIR_BENEFICIARIO_2" required>
+		                            <md-radio-button ng-value="01"> Sí </md-radio-button>
+		                            <md-radio-button ng-value="02"> No </md-radio-button>
+		                        </md-radio-group>
+		                    </div>
+		                    <div ng-if="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_ANADIR_BENEFICIARIO_2=='1'">
+		                    	<div layout="row">
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Fecha de nacimiento</label>
+										<md-datepicker ng-click="($ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO == undefined || $ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO == null) ? $ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO = null: ''" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO" required></md-datepicker>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Sexo</label>
+										<md-select ng-disabled="$ctrl.emitido!='0'" id="sexo" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.ID_SEXO" required>
+                          				   <md-option ng-repeat="sex in $ctrl.tipos.sexo" ng-value="{{sex.CO_FIELD}}">{{sex.DS_FIELD}}</md-option>
+										</md-select>
+									</md-input-container>
+								</div>
+								<div layout="row">
+									<div class="md-block" flex-gt-sm>
+										<md-checkbox ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_FARMACIA_REEMBOLSO">Farmacia reembolso</md-checkbox>
+									</div>
+									<div class="md-block" flex-gt-sm>
+										<md-checkbox ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_DENTAL_REEMBOLSO">Dental reembolso</md-checkbox>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div ng-if="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_ANADIR_BENEFICIARIO_2=='1'">
+							<legend>Beneficiario 3</legend>
+					        <div layout-gt-sm="row" class="margenPresupuestos">
+		                        <div flex-gt-sm>
+		                            <label>Añadir beneficiario
+		                            </label>
+		                        </div>
+		                        <md-radio-group ng-if="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_ANADIR_BENEFICIARIO_3==undefined ? $ctrl.datos.DATOS_BENEFICIARIO_3.IN_ANADIR_BENEFICIARIO_3='02' : ' '" ng-disabled="$ctrl.emitido!='0'" flex-gt-sm layout-gt-sm="row" required ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_ANADIR_BENEFICIARIO_3" required>
+		                            <md-radio-button ng-value="01"> Sí </md-radio-button>
+		                            <md-radio-button ng-value="02"> No </md-radio-button>
+		                        </md-radio-group>
+		                    </div>
+		                    <div ng-if="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_ANADIR_BENEFICIARIO_3 == '1'">
+		                    	<div layout="row">
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Fecha de nacimiento</label>
+										<md-datepicker ng-click="($ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO == undefined || $ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO == null) ? $ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO = null: ''" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO" required></md-datepicker>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Sexo</label>
+										<md-select ng-disabled="$ctrl.emitido!='0'" id="sexo" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.ID_SEXO" required>
+                          			  		 <md-option ng-repeat="sex in $ctrl.tipos.sexo" ng-value="{{sex.CO_FIELD}}">{{sex.DS_FIELD}}</md-option>
+										</md-select>
+									</md-input-container>
+								</div>
+								<div layout="row">
+									<div class="md-block" flex-gt-sm>
+										<md-checkbox ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_FARMACIA_REEMBOLSO">Farmacia reembolso</md-checkbox>
+									</div>
+									<div class="md-block" flex-gt-sm>
+										<md-checkbox ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_DENTAL_REEMBOLSO">Dental reembolso</md-checkbox>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<legend>Datos de pago</legend>
+						<div layout="row">
+							<md-input-container class="md-block" flex-gt-sm>
+                                <label>{{ 'DATE_START' | translate }}</label>
+                                <md-datepicker ng-click="($ctrl.datos.DATOS_PAGO.FD_INICIO == undefined || $ctrl.datos.DATOS_PAGO.FD_INICIO == null) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null : ''" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" required></md-datepicker>
+                            </md-input-container>
+						</div>
+			
+				<div style="text-align: center;" class="margin-top-20">
+					<md-button ng-click="$ctrl.validar($ctrl.formSalud.$invalid)" ng-disabled="$ctrl.emitido!='0'" class="dark-blue btnNuevo">
+						<md-icon>attach_money</md-icon>
+						Calcular tarificación
+					</md-button>
+				</div>
+			</form>
+		</div>
+		<div layout="column" flex="100">
+			<md-card class="form-scroll">
+				<md-card-content class="form-scroll" style="padding:0px 16px;" resize ng-style="resizeHeight(330)">
+					<div ng-if="$ctrl.pre.cargar==true" id="buscandoGif" style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 60%; height: 100%;" resize ng-style="resizeHeight(330)">
+			            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+							<div class = "blob-3"></div>
+							<div class = "blob-4"></div>
+						</div>
+			        </div>
+			        <table style="text-align: center" width="100%" ng-if="$ctrl.tarifas.length>0">
+						<thead> 
+					       <tr layout="row" layout-align="center center" style="height:50px !important; z-index: 1">
+					       	   <th flex="10"></th>
+					           <th ng-click="$ctrl.pre.ordenarTabla('aseguradora')" layout="row" layout-align="center center" flex = "10">Aseguradora</th>
+					           <th ng-click="$ctrl.pre.ordenarTabla('producto')" flex="20" layout="row" layout-align="center center">Producto</th>
+							   <th ng-click="$ctrl.pre.ordenarTabla('modalidad')" flex="20" layout="row" layout-align="center center">Modalidad</th>
+							   <th ng-click="$ctrl.pre.ordenarTabla('prima')" flex="15" layout="row" layout-align="center center">Prima anual</th>
+							   <th flex="5" layout="row" layout-align="center center"></th>
+							   <th flex="20" layout="row" layout-align="center center"></th>
+					       </tr>
+					   </thead>
+					
+					   <tbody> <!-- Cuerpo de la tabla -->
+					       <tr layout="row" layout-align="center center" style="z-index: 1" ng-repeat="tarifa in $ctrl.tarifas">
+					           <td flex="10">
+										<ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE != undefined || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE != undefined || tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE != null || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE != null)" on="tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE">
+		                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+		                                        tooltip-placement="auto right" ng-switch-when="ERROR" ng-src="src/img/aseguradoras/ERROR.png"
+		                                        width="30%" />
+		                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+		                                        tooltip-placement="auto right" ng-switch-when="INFO" ng-src="src/img/aseguradoras/INFO.png"
+		                                        width="30%" />
+		                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+		                                        tooltip-placement="auto right" ng-switch-when="WARN" ng-src="src/img/aseguradoras/WARN.png"
+		                                        width="30%" />
+		                                </ng-switch>
+		                                <ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE != undefined || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE != undefined || tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE != null || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE != null)" on="tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE">
+		                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+		                                        tooltip-placement="auto right" ng-switch-when="ERROR" ng-src="src/img/aseguradoras/ERROR.png"
+		                                        width="30%" />
+		                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+		                                        tooltip-placement="auto right" ng-switch-when="INFO" ng-src="src/img/aseguradoras/INFO.png"
+		                                        width="30%" />
+		                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+		                                        tooltip-placement="auto right" ng-switch-when="WARN" ng-src="src/img/aseguradoras/WARN.png"
+		                                        width="30%" />
+		                                </ng-switch>
+		                                <ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE == undefined && tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE == undefined && tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE == undefined && tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE == undefined)" on="tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE || tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE == undefined || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE">
+		                                    <img ng-switch-default ng-src="src/img/aseguradoras/OK.png" width="30%" />
+		                                </ng-switch>
+		                                <img ng-if="tarifa.IM_PRIMA_ANUAL_TOT== 0 || tarifa.IM_PRIMA_ANUAL_TOT== null || tarifa.IM_PRIMA_ANUAL_TOT== undefined" ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+		                                        tooltip-placement="auto right" ng-src="src/img/aseguradoras/ERROR.png"
+		                                        width="30%" />
+							   </td>
+					           <td flex = "10">
+									<img class="imgTarifa" width="60%" ng-src="src/img/aseguradoras/{{tarifa.ID_COMPANIA}}.png"/>
+							   </td>
+					           <td flex="20" layout="row" layout-align="center center">
+									{{tarifa.NO_PRODUCTO}}
+							   </td>
+							   <td flex="20" layout="row" layout-align="center center">
+									{{tarifa.NO_MODALIDAD}}
+							   </td>
+					           <td flex="15" layout="row" layout-align="center center">
+									<h4 ng-if="tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!=undefined && tarifa.IM_PRIMA_ANUAL_TOT!=0" class="color_titulo_h4">{{tarifa.IM_PRIMA_ANUAL_TOT}} €</h4>
+							   </td>
+					           <td flex="5" layout="row" layout-align="center center">
+									<md-icon md-svg-src="src/img/garantia.svg" ng-click="$ctrl.pre.verGarantias($event,tarifa)"></md-icon>
+							   </td>
+							   <td flex="20" layout="row" layout-align="center center">
+									<md-button ng-if="tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined && tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE!='ERROR'"  ng-click="$ctrl.contratarInTarificacion($index, $ctrl.pre.detalles, 'contratar', tarifa)"  ng-disabled="$ctrl.emitido!='0'" class="dark-yellow btnNuevo">
+										<md-icon>gavel</md-icon>
+										Contratar
+									</md-button>
+							   </td>
+					      </tr>
+					   </tbody>
+					</table>
+					<div layout="row" layout-align="center center" ng-if="$ctrl.pre.vista == 4">
+						<h3>No hay tarifas</h3>
+					</div>
+				</md-card-content>
+			</md-card>
+			<div layout="row" layout-align="center none">
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.pre.descargarPresupuesto()">
+					<md-icon>picture_as_pdf</md-icon>
+					Exportar a PDF
+				</md-button>
+				&nbsp;
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.pre.enviarPresupuestoPDF()">
+					<i class="fa-duotone fa-paper-plane"></i>
+					Enviar presupuestos
+				</md-button>
+			</div>
+		</div>
+		
+	</div>
+</md-content>

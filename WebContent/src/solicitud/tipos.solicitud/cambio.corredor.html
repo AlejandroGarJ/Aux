@@ -1,0 +1,51 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-suma-asegurada"></span> {{ 'MEDIATOR_CHANGE' | translate }}
+    <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+        <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+        <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+    </button>
+ </legend>
+ <div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+    <div class="separadorDesplegables"></div>
+    <div>
+        <div class="margin-top-20" layout="row">
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+                <md-select ng-model="$ctrl.mediador" ng-change="$ctrl.getColectivo()" required>
+                    <md-option ng-repeat="broker in $ctrl.lstBrokers" ng-value="broker.ID_COMPANIA">
+                        {{broker.NO_COMPANIA}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm="50" ng-if="$ctrl.mediador != null">
+                <label>Coletivo</label>
+                <md-select ng-model="$ctrl.idColectivo" ng-change="$ctrl.getMediosPago(); $ctrl.getObservaciones()" required>
+                    <md-option ng-repeat="colectivo in $ctrl.lstColectivos" ng-value="colectivo.ID_TIPO_POLIZA">
+                        {{colectivo.DS_TIPO_POLIZA}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="margin-top-20" layout="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>{{ 'CURRENT_PAYMENT_METHOD' | translate }}</label>
+                <input ng-model="$ctrl.form.OPOLIZA.DS_TIPO_MEDIO_PAGO" disabled>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>{{ 'PAYMENT_METHOD' | translate }}</label>
+                <md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].ID_TIPO_MEDIO_PAGO" required ng-disabled="$ctrl.idColectivo == undefined">
+                    <md-option ng-repeat="tipo in $ctrl.tiposMedioPago" ng-value="tipo.ID_TIPO_MEDIO_PAGO">{{tipo.DS_TIPO_MEDIO_PAGO}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.form[$ctrl.tipoSolicitud].ID_TIPO_MEDIO_PAGO == 7">
+                <label>{{ 'IBAN' | translate }}</label>
+                <input style="text-transform: none!important" ng-model="$ctrl.form[$ctrl.tipoSolicitud].CO_IBAN" minlength="24" maxlength="24" cvalidation="iban" required>
+                    <span class="error" ng-show="$ctrl.form.OPOLIZA.CO_IBAN == $ctrl.form[$ctrl.tipoSolicitud].CO_IBAN && $ctrl.cuenta == true">
+                        *{{ 'ERROR_SAME_ACCOUNT' | translate }}
+                    </span>
+            </md-input-container>
+        </div>
+    </div>
+</div>

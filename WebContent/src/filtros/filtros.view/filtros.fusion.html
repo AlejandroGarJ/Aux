@@ -1,0 +1,42 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color: #ffffff" class="margin-top-20">
+
+	<div class="md-toolbar-tools toolbar-filtro">
+		<div layout="row" layout-align="start center" flex="90">
+			<h2 style="text-transform: uppercase; color:#0066FF"><span style="color:#2b3447!important"><span style="color:#4b4b4b" ng-click="$ctrl.navTo('#!/area_privada?smovil=true')"><span><i class="fa-solid fa-caret-left"></i></span> MENÚ <span style="color:#0066FF">SEGURO MÓVIL</span> </span> <i class="fa-thin fa-chevron-right"></i> OPERATIVA <span style="font-family: TelefonicaWebBold!important">WEB CARRITO Y BANNER</span></span></h2>
+		</div>
+	</div>
+	<div style="margin-top: -20px!important;margin-left: 16px;color: #8f97af">
+		<h6 style="text-transform: uppercase">{{ 'FUSION_DESCRIPTION' | translate }}</h6>
+	</div>
+
+	<form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('tipo-fusion')">
+		<!-- <md-tabs class="estiloTabs" md-dynamic-height md-border-bottom ng-click="$ctrl.clearModel()" resize ng-style="resizeHeight(190)"> -->
+		<div class="form-scroll" resize>
+			<div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+				<md-input-container class="md-block" flex-gt-sm="10">
+					<label><i class="fa-light fa-phone" style="margin-right:5px"></i>{{ 'MSISDN' | translate }}</label>
+					<input ng-model="$ctrl.form.msisdn.value">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="10">
+					<label><i class="fa-solid fa-fingerprint" style="margin-right:5px"></i>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+					<input ng-model="$ctrl.form.documento.value">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="10">
+					<label><i class="fa-light fa-i-cursor" style="margin-right:5px"></i>{{ 'PREPOLICY' | translate }}</label>
+					<input ng-model="$ctrl.form.policyNumber.value">
+				</md-input-container>
+				<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+					<i class="fa fa-magnifying-glass"></i>
+					{{ 'SEARCH_BTN' | translate }}
+				</md-button>
+				<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+					<i class="fa fa-trash"></i>
+					{{ 'CLEAN' | translate }}
+				</md-button>
+			</div>
+		</div>
+	</form>
+</md-content>

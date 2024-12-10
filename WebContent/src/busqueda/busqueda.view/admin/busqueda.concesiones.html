@@ -1,0 +1,74 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results">
+	<md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+		<md-tab label="Resultado de la búsqueda">
+			<div layout="row" layout-align="center center" ng-if="$ctrl.vista == 1" resize ng-style="resizeHeight(149)">
+	        	<!-- <h2>Busque una concesión</h2> -->
+	        </div>
+	        <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+<!-- 			            <h2>Buscando</h2> -->
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+	        
+			<form class="formClass" ng-if="$ctrl.vista == 4" style="margin-top: 12px;" layout-gt-sm="row">
+				<form name="$ctrl.formNuevaConcesion" style="margin-top: 12px;" layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+	                    <label>Concesión</label>
+	                    <md-select ng-model="$ctrl.form.CLIENTE" required>
+			         		<md-option ng-repeat="con in $ctrl.tipos.concesiones" ng-value="con">
+			         			{{con.NO_NOMBRE}}
+			         		</md-option>
+			         	</md-select>
+	                </md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+	                    <label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+	                    <md-select ng-model="$ctrl.form.COMPANIA" required>
+			         		<md-option ng-repeat="ase in $ctrl.tipos.companias" ng-value="ase">
+			         			{{ase.NO_COMERCIAL}}
+			         		</md-option>
+			         	</md-select>
+	                </md-input-container>
+	                <md-input-container class="md-block" flex-gt-sm>
+	                    <label>Fecha de inicio</label>
+
+                   		<md-datepicker ng-model="$ctrl.form.FD_INICIO" ng-click="$ctrl.form.FD_INICIO == undefined ? $ctrl.form.FD_INICIO = null : ''" required></md-datepicker>
+	                </md-input-container>
+	                <md-input-container class="md-block" flex-gt-sm>
+	                    <label>Fecha de fin</label>
+
+                   		<md-datepicker ng-model="$ctrl.form.FD_FIN" ng-click="$ctrl.form.FD_FIN == undefined ? $ctrl.form.FD_FIN = null : ''" required></md-datepicker>
+	                </md-input-container>
+	                <md-input-container class="md-block" flex-gt-sm>
+	                    <md-button class="dark-blue btnNuevo" style="margin-top: 0;" ng-click="$ctrl.addConcesion()">
+							<md-icon>add</md-icon>
+							Añadir al listado
+						</md-button>
+	                </md-input-container>
+	            </form>
+            </form>
+			
+	        <div layout="row" layout-align="center center" resize ng-style="resizeHeight(149)" ng-if="$ctrl.vista == 3">
+	       		<h2>No se ha encontrado ninguna concesión</h2>
+	        </div>
+		
+			<div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-selection ui-grid-pagination ui-grid-resize-columns ui-grid-edit ui-grid-auto-resize resize ng-style="resizeHeight(361)"></div>
+			<div layout="row" layout-align="center center" layout-margin>
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.save()" ng-if="$ctrl.vista == 4">
+					<md-icon>save</md-icon>
+					Guardar
+				</md-button>
+				<span></span>
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.borrar()" ng-if="$ctrl.vista == 4">
+					<i class="fa fa-trash"></i>
+					Borrar
+				</md-button>
+				<span></span>
+			</div>
+		</md-tab>
+	</md-tabs>
+</div>

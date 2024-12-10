@@ -1,0 +1,171 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:50%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Añadir {{$ctrl.element}}</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form class="formClass formModal">
+			<!-- COMISION -->
+			<div ng-if="$ctrl.elemType == 'commission'">
+
+				<div layout-gt-sm="row" style="margin: 20px 0">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Compañía</label>
+						<md-select ng-model="$ctrl.selCompany">
+							<md-option ng-repeat="comp in $ctrl.lstCommissions" ng-value="comp">
+								{{comp.NO_COMPANIA}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+
+				<div layout-gt-sm="row">
+					<md-input-container class="flex" flex-gt-sm>
+                        <label>Vigente desde</label>
+
+                        <md-datepicker ng-model="$ctrl.data.FT_VIGENCIA_INI.value" ng-init="($ctrl.data.FT_VIGENCIA_INI.value == null || $ctrl.data.FT_VIGENCIA_INI.value == undefined) ? $ctrl.data.FT_VIGENCIA_INI.value = null : ' '"
+                            ng-click="($ctrl.data.FT_VIGENCIA_INI.value == null || $ctrl.data.FT_VIGENCIA_INI.value == undefined) ? $ctrl.data.FT_VIGENCIA_INI.value = null : ' '"></md-datepicker>
+                    </md-input-container>
+					<md-input-container class="flex" flex-gt-sm>
+                        <label>Vigente hasta</label>
+
+                        <md-datepicker ng-model="$ctrl.data.FT_VIGENCIA_FIN.value" ng-init="($ctrl.data.FT_VIGENCIA_FIN.value == null || $ctrl.data.FT_VIGENCIA_FIN.value == undefined) ? $ctrl.data.FT_VIGENCIA_FIN.value = null : ' '"
+                            ng-click="($ctrl.data.FT_VIGENCIA_FIN.value == null || $ctrl.data.FT_VIGENCIA_FIN.value == undefined) ? $ctrl.data.FT_VIGENCIA_FIN.value = null : ' '"></md-datepicker>
+                    </md-input-container>
+				</div>
+
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Unidad</label>
+						<md-select ng-model="$ctrl.selUnit">
+							<md-option ng-repeat="unit in $ctrl.lstUnits" ng-value="unit">
+								{{unit.DS_TIPOS}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Valor</label>
+						<input ng-model="$ctrl.data.NU_PORCENTAJE" />
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Concepto bordero</label>
+						<md-select ng-model="$ctrl.selConcept">
+							<md-option ng-repeat="concept in $ctrl.lstConcepts" ng-value="concept">
+								{{concept.DS_TIPOS}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+
+				<div layout-gt-sm="row" layout-align="center center" style="margin: 20px 0;">
+					<md-button class="dark-blue btnNuevo" ng-click="$ctrl.addElement($ctrl.elemType)">
+						<md-icon>add</md-icon>
+						Añadir comisión
+					</md-button>
+				</div>
+			</div>
+
+			<!-- GARANTIA -->
+			<div ng-if="$ctrl.elemType == 'coverage'">
+				<div layout-gt-sm="row" style="margin: 20px 0;">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Garantía</label>
+						<md-select ng-model="$ctrl.selCoverage">
+							<md-option ng-repeat="cov in $ctrl.lstCoverages" ng-value="cov">
+								{{cov.NO_GARANTIA}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row" style="margin-left: 20px;">
+					<md-checkbox ng-model="$ctrl.data.IN_PRINCIPAL" ng-true-value="true" ng-false-value="false">
+						Principal
+					</md-checkbox>
+					<md-checkbox ng-model="$ctrl.data.IN_OBLIGATORIA" ng-true-value="true" ng-false-value="false">
+						Obligatoria
+					</md-checkbox>
+				</div>
+				<div layout-gt-sm="row" layout-align="center center" style="margin: 20px 0;">
+					<md-button class="dark-blue btnNuevo" ng-click="$ctrl.addElement($ctrl.elemType)">
+						<md-icon>add</md-icon>
+						Añadir garantía
+					</md-button>
+				</div>
+			</div>
+
+			<!-- PARTNER -->
+			<div ng-if="$ctrl.elemType == 'partner'">
+
+				<div layout-gt-sm="row" style="margin: 20px 0;">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Partner</label>
+						<md-select ng-model="$ctrl.selPartner">
+							<md-option ng-repeat="comp in $ctrl.lstPartners" ng-value="comp">
+								{{comp.DS_TIPO_POLIZA}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row" style="margin: 20px 0;">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Compañía</label>
+						<md-select ng-model="$ctrl.selCompany">
+							<md-option ng-repeat="comp in $ctrl.lstCommissions" ng-value="comp">
+								{{comp.NO_COMPANIA}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row" style="margin-left: 20px;">
+					<md-checkbox ng-model="$ctrl.data.IN_TARIFICA" ng-true-value="true" ng-false-value="false">
+						Tarificar
+					</md-checkbox>
+					<md-checkbox ng-model="$ctrl.data.IN_EMITE" ng-true-value="true" ng-false-value="false">
+						Emitir
+					</md-checkbox>
+				</div>
+				<div layout-gt-sm="row" layout-align="center center" style="margin: 20px 0;">
+					<md-button class="dark-blue btnNuevo" ng-click="$ctrl.addElement($ctrl.elemType)">
+						<md-icon>add</md-icon>
+						Añadir partner
+					</md-button>
+				</div>
+			</div>
+
+			<!-- IMPUESTO -->
+			<div ng-if="$ctrl.elemType == 'tax'">
+
+				<div layout-gt-sm="row" style="margin: 20px 0;">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Tipo de impuesto</label>
+						<md-select ng-model="$ctrl.selTax">
+							<md-option ng-repeat="tax in $ctrl.lstTaxes" ng-value="tax">
+								{{tax.DS_IMPUESTO}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row" style="margin: 20px 0;">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Impuesto</label>
+						<input ng-model="$ctrl.data.NU_PORCENTAJE" />
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row" layout-align="center center" style="margin: 20px 0;">
+					<md-button class="dark-blue btnNuevo" ng-click="$ctrl.addElement($ctrl.elemType)">
+						<md-icon>add</md-icon>
+						Añadir impuesto
+					</md-button>
+				</div>
+			</div>
+
+		</form>
+	</md-dialog-content>
+</md-dialog>

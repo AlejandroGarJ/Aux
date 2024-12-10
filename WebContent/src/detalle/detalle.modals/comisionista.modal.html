@@ -1,0 +1,69 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width: 70vw; min-height: 400px;">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Comisionista</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content class="form-scroll">
+		<div class="md-dialog-content" style="padding:0px;">
+<!-- 			<form ng-if="$ctrl.permisos.IN_ESCRITURA === true" class="formClass formCliente" ng-submit="$ctrl.addComisionista()"> -->
+<!-- 				<div layout="row" style="padding:0px 24px; margin:24px 0px;"> -->
+<!-- 					<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 						<label>Nombre colaborador</label> -->
+<!-- 						<md-select ng-model="$ctrl.comisionista.ID_COMPANIA" required> -->
+<!-- 							<md-option ng-repeat="comisionista in $ctrl.tipos.comisionistas" ng-value="comisionista.ID_COMPANIA">{{comisionista.NO_COMPANIA}}</md-option> -->
+<!-- 						</md-select> -->
+<!-- 					</md-input-container> -->
+<!-- 					<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 						<label>% Comisión</label> -->
+<!-- 						<input ng-model="$ctrl.comisionista.NU_PORCENTAJE" ng-change="$ctrl.calcularComision($ctrl.comisionista)" required> -->
+<!-- 					</md-input-container> -->
+<!-- 					<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 						<label>Comisión</label> -->
+<!-- 						<input ng-model="$ctrl.comisionista.NU_COMISION" required> -->
+<!-- 					</md-input-container> -->
+<!-- 					<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 						<label>Comisión (€)</label> -->
+<!-- 						<input ng-model="$ctrl.comisionista.NU_COMISION_EURO" disabled> -->
+<!-- 					</md-input-container> -->
+<!-- 					<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 						<md-button type="submit" class="md-raised md-primary medium-blue button-action-main"> -->
+<!-- 							<md-icon>add</md-icon> -->
+<!-- 							Añadir -->
+<!-- 						</md-button> -->
+<!-- 					</md-input-container> -->
+<!-- 				</div> -->
+<!-- 			</form> -->
+			<div layout="row" layout-align="center center" ng-if="$ctrl.comisionistas.length == 0 && $ctrl.vista==3" style="color: #E2E2E2; height:30vh">
+				<h2>No se ha encontrado ningún comisionista</h2>
+			</div>
+			<div layout="row" class="formClass formCliente" layout-wrap flex style="padding:0px 24px;" ng-if="$ctrl.comisionistas.length > 0">
+				<div style="width: 100%" class="ui-grid grid-modal" ui-grid="$ctrl.gridComisionistas" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize></div>
+			</div>
+<!-- 			<div ng-if="($ctrl.cargar!=true && $ctrl.vista!=3 || $ctrl.comisionistas.length != 0) && $ctrl.permisos.IN_ESCRITURA == true" layout="row" layout-align="center center" style="margin-bottom:20px;"> -->
+<!-- 				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardarComisionista()"> -->
+<!-- 					<md-icon>save</md-icon> -->
+<!-- 					Guardar -->
+<!-- 				</md-button> -->
+<!-- 				<md-button ng-disabled="$ctrl.listaSeleccionados == null || $ctrl.listaSeleccionados.length <= 0" ng-click="$ctrl.eliminarComisionistas()" class="md-raised md-primary medium-blue button-action-erase"> -->
+<!-- 					<i class="fa fa-trash"></i> -->
+<!-- 					Eliminar -->
+<!-- 				</md-button> -->
+<!-- 			</div> -->
+			<div layout="row" layout-align="center center" style="margin-bottom:20px;">
+              	<div ng-if="$ctrl.cargar==true" id="buscandoGif" style="margin-top: 30px;padding:25px; z-index: 999999999; width: 40%; height: 100%;">
+		            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+						<div class = "blob-3"></div>
+						<div class = "blob-4"></div>
+					</div>
+		        </div>
+			</div>
+		</div>
+	</md-dialog-content>
+</md-dialog>

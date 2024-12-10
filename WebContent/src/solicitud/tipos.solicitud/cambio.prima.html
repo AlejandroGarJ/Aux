@@ -1,0 +1,64 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-lider"></span> Cambio de prima
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+<!-- <h4>Alta de asegurado</h4> -->
+	<div class="separadorDesplegables"></div>
+	<div layout="row" layout-align="start-center">
+		<h4>Actualmente, la prima neta es de <b>{{$ctrl.primaNetaActual}} €</b>. Añade el importe al que deseas cambiar la prima:</h4>
+	</div>
+	<div layout="row">
+		<div layout="row" layout-align="start-center">
+			<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		        <h6>Prima neta*</h6>
+		        <div layout="row" layout-align="center center">
+					<input ng-model="$ctrl.primasCambioPrima.IM_PRIMANETA" flex-gt-sm="80" amount required>
+					<button ng-click="$ctrl.changePrimasCambioPrima()" class="button-editar-facturacion" flex-gt-sm="20">
+						<i class="material-icons btnIcono">done</i> 
+					</button>
+				</div>
+	        </div>
+	        <div layout="column" layout-align="center center" class="primas-admin md-margin">
+		        <h6>IPS. 8% sobre P.Neta.*</h6>
+		        <div flex="70">
+					<input ng-disabled="true" ng-model="$ctrl.primasCambioPrima.IM_IMPUESTOS" amount required>
+				</div>
+	        </div>
+	        <div layout="column" layout-align="center center" class="primas-admin md-margin">
+		        <h6>LEA. 0,15% sobre P.Neta.*</h6>
+		        <div flex="70">
+					<input ng-disabled="true" ng-model="$ctrl.primasCambioPrima.IM_CLEA" amount required>
+				</div>
+	        </div>
+	        <div layout="column" layout-align="center center" class="primas-admin md-margin">
+		        <h6>Franquicia*</h6>
+		        <div flex="70">
+					<input ng-disabled="$ctrl.isCalculaCambioPrima != true" ng-model="$ctrl.primasCambioPrima.IM_FRANQUICIA" amount required>
+				</div>
+	        </div>
+	        <div layout="column" layout-align="center center" class="primas-admin md-margin">
+		        <h6>Prima total anual*</h6>
+		        <div flex="70">
+					<input ng-disabled="true" ng-model="$ctrl.primasCambioPrima.IM_RECIBO_TOTAL" required>
+				</div>
+	        </div>
+		</div>
+	</div>
+	
+	<div layout="row" class="margin-top-20">
+		<md-input-container class="md-block" flex-gt-sm="25">
+			<label>Causa del cambio de prima</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].MOTIVO_SUPLEMENTO" required>
+				<md-option ng-repeat="causa in $ctrl.listCausasPrima" ng-value="causa.CO_TIPO">
+					{{causa.CO_TIPO}}
+				</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+</div>

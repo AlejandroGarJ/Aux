@@ -1,0 +1,28 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-menu-bar layout="row" class="navBarDark" ng-if="$ctrl.isLogged == 'logueado'">
+<!-- 	<div layout="row" layout-align="space-between center"> -->
+<!-- <span> -->
+			<md-menu class="mdMenuHeader" ng-repeat="menu in $ctrl.menus">
+				<button id="{{menu.ID_MENU}}" ng-click="$ctrl.openMenu($mdMenu, $event, menu.NO_TOKEN)"><i ng-attr-class="{{menu.ICON}}"></i> {{$ctrl.parent.getDescriptivo(menu, 'NO_MENU')}}</button>
+<!-- 				<button id="{{menu.ID_MENU}}" ng-click="$ctrl.openMenu($mdMenu, $event)"><i ng-attr-class="{{menu.ICON}}"></i> {{menu.NO_MENU}}</button> -->
+				
+				<md-menu-content width="4" ng-click="$ctrl.noCerrar()">
+		
+					<md-menu-item ng-repeat="submenu in menu.SUBMENUS.SUBMENU">
+					
+						<md-menu ng-if="submenu.SUBMENUS != null">
+							<md-button ng-click="$mdMenu.open()">{{$ctrl.parent.getDescriptivo(submenu, 'NO_MENU')}}</md-button>
+							<md-menu-content>
+								<md-menu-item ng-repeat="sub in submenu.SUBMENUS.SUBMENU">
+									<md-button ng-href="#!/{{sub.NO_TOKEN}}">{{$ctrl.parent.getDescriptivo(sub, 'NO_MENU')}}</md-button>
+								</md-menu-item>
+							</md-menu-content>
+						</md-menu>
+						<md-button ng-if="submenu.SUBMENUS == null" ng-href="#!/{{submenu.NO_TOKEN}}">{{$ctrl.parent.getDescriptivo(submenu, 'NO_MENU')}}</md-button>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+	
+</md-menu-bar>

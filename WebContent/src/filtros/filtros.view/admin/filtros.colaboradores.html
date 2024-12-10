@@ -1,0 +1,48 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color:white">
+
+	<div layout-gt-sm="row" class="inputs-without-label-value" style="background-color:white; margin-top: 15px;margin-left: 13px;margin-right: 10px;border-left: 3px solid #0066ff">
+		<h3 style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="50" >
+			<span style="color:#5e5e5e!important">
+				{{ 'SEARCH' | translate }} DE</span><span style="color:#0066ff!important"> COLABORADORES
+			</span>
+			<div layout-gt-sm="row">
+				<h6 style="text-align: center;text-transform: uppercase">BÚSQUEDA Y GESTIÓN DE COLABORADORES</h6>
+			</div>
+		</h3>
+	</div>
+	<div layout-gt-sm="row" >
+		<a ng-click="$ctrl.showBasicSearch()" ng-if="$ctrl.basicSearch == true">{{ 'SHOW_SEARCH_FIELDS' | translate }}</a>
+	</div>
+	
+    <form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('tipo-comisionistas')">
+        <div class="form-scroll" resize>
+            <div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+                <md-input-container class="md-block" flex-gt-sm>
+		         	<label>Nombre colaborador</label>
+		         	<input ng-model="$ctrl.form.NO_COMPANIA.value">
+		       	</md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+		         	<label>CIF</label>
+		         	<input ng-model="$ctrl.form.NU_CIF.value">
+		       	</md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+		         	<label>{{ 'TELEPHONE' | translate }}</label>
+		         	<input ng-model="$ctrl.form.NU_TELEFONO.value">
+		       	</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm style="margin-top: 14px!important;">
+					<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+						<i class="fa fa-magnifying-glass"></i>
+						{{ 'SEARCH_BTN' | translate }}
+					</md-button>
+					<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+						<i class="fa fa-trash"></i>
+						{{ 'CLEAN' | translate }}
+					</md-button>
+				</md-input-container>
+            </div>
+        </div>
+    </form>
+</md-content>

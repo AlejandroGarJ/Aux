@@ -1,0 +1,49 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toolbar>
+    <div class="md-toolbar-tools" style="height:44px">
+        <h2>Consulta GDPR <i class="fa fa-magnifying-glass"></i></h2>
+        <md-button class="md-icon-button filtroLateral" ng-click="$ctrl.filtro.lateral()" style="right:20px; position:absolute">
+          <md-icon aria-label="Close dialog">arrow_back_ios</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+    <form class="formClass" id="form" ng-submit="$ctrl.buscar('consultagdpr')">
+        <div class="form-scroll" resize ng-style="resizeHeight(300)">
+        
+            <div layout-gt-sm="row" class="margin-top-20">
+                <md-autocomplete name="Documento" flex-gt-sm md-no-cache="$ctrl.noCache" class="md-block mr-0" flex-gt-sm
+                md-search-text="$ctrl.searchDocumento"
+	                md-items="documento in $ctrl.parent.querySearch($ctrl.searchDocumento, $ctrl.tipos.tiposDocumento, 'DS_TIPO_DOCUMENTO')"
+	                md-item-text="documento.DS_TIPO_DOCUMENTO" md-min-length="0"
+	                md-floating-label="Tipo Documento"
+	                md-selected-item="$ctrl.autocomplete.DOCUMENTO"
+	                md-selected-item-change="$ctrl.form.ID_TIPO_DOCUMENTO.value = $ctrl.autocomplete.DOCUMENTO.ID_TIPO_DOCUMENTO"
+				>
+	                <md-item-template>
+	                    <span md-highlight-text="$ctrl.searchDocumento"
+	                        md-highlight-flags="^i">{{documento.DS_TIPO_DOCUMENTO}}</span>
+	                </md-item-template>
+	                <md-not-found>
+	                    No existe el documento "{{$ctrl.searchDocumento}}".
+	                </md-not-found>
+	            </md-autocomplete>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Nº Documento</label>
+                    <input ng-model="$ctrl.form.NU_DOCUMENTO.value">
+                </md-input-container>
+            </div>
+        <div style="text-align:center;">
+            <md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				Buscar
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-trash"></i>
+				{{ 'CLEAN' | translate | uppercase }}
+			</md-button>
+        </div>
+    </form>
+</md-content>

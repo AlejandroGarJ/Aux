@@ -1,0 +1,128 @@
+
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toolbar>
+	<div class="md-toolbar-tools" style="height:44px">
+		<h2>Filtro de errores en ficheros <i class="fa fa-magnifying-glass"></i></h2>
+        <md-button class="md-icon-button filtroLateral" ng-click="$ctrl.filtro.lateral()" style="right:20px; position:absolute">
+            <md-icon aria-label="Close dialog">arrow_back_ios</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+	<form class="formClass" id="form">
+		<div>
+			<div layout-gt-sm="row" class="margin-top-20">
+		       	<!-- <md-input-container class="md-block" flex-gt-sm>
+		         	<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+		         	<md-select ng-model="$ctrl.form.ID_COMPANIA">
+		           		<md-option ng-repeat="tipo in $ctrl.tipos.compania" ng-value="tipo.ID_COMPANIA">
+			              	{{tipo.NO_COMPANIA}}
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container> -->
+				<md-autocomplete name="Aseguradora" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchAseg"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchAseg, $ctrl.tipos.companias, 'NO_COMERCIAL')"
+				   md-item-text="item.NO_COMERCIAL" md-min-length="0"
+				   md-floating-label="Aseguradora"
+				   md-selected-item="$ctrl.autocomplete.ASEG"
+				   md-selected-item-change="$ctrl.form.ID_COMPANIA.value = $ctrl.autocomplete.ASEG.ID_COMPANIA">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchAseg"
+						   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_COMERCIAL')}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe la aseguradora "{{$ctrl.searchAseg}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			</div>
+			<div layout-gt-sm="row">
+		       	<!-- <md-input-container class="md-block" flex-gt-sm>
+		         	<label>Partner</label>
+		         	<md-select ng-model="$ctrl.form.ID_COLECTIVO">
+		           		<md-option ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">
+			              	{{colectivo.DS_TIPO_POLIZA}}
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container> -->
+				<md-autocomplete name="Partner" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchColectivo"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchColectivo, $ctrl.colectivos, 'DS_TIPO_POLIZA')"
+				   md-item-text="item.DS_TIPO_POLIZA" md-min-length="0"
+				   md-floating-label="Partner"
+				   md-selected-item="$ctrl.autocomplete.COLECTIVO"
+				   md-selected-item-change="$ctrl.form.ID_COLECTIVO.value = $ctrl.autocomplete.COLECTIVO.ID_TIPO_POLIZA"
+				   ng-blur="$ctrl.autocomplete.COLECTIVO == undefined ? $ctrl.searchColectivo = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchColectivo"
+						   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'DS_TIPO_POLIZA')}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el colectivo "{{$ctrl.searchColectivo}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Vía de pago</label>
+		         	<md-select ng-model="$ctrl.form.ID_TIPO_MEDIO_PAGO.value">
+		         		<md-option ng-repeat="pago in $ctrl.tipos.pago" ng-value="pago.ID_TIPO_MEDIO_PAGO">
+							{{$ctrl.parent.parent.getDescriptivo(pago, 'DS_TIPO_MEDIO_PAGO')}}
+<!-- 			             	{{pago.DS_TIPO_MEDIO_PAGO}} -->
+			           	</md-option>
+		         	</md-select>
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Nivel error</label>
+		         	<md-select ng-model="$ctrl.form.ID_ERROR.value">
+		           		<md-option ng-repeat="error in $ctrl.tipos.errores" ng-value="error.ID_TIPOS">
+							{{$ctrl.parent.parent.getDescriptivo(error, 'DS_TIPOS')}}
+<!-- 			              	{{error.DS_TIPOS}} -->
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Tipo dato</label>
+		         	<md-select ng-model="$ctrl.form.ID_TIPO_DATO.value">
+		           		<md-option ng-repeat="error in $ctrl.tipos.tipoDato" ng-value="error.ID_TIPOS">
+							{{$ctrl.parent.parent.getDescriptivo(error, 'DS_TIPOS')}}
+<!-- 			              	{{error.DS_TIPOS}} -->
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Código</label>
+		         	<input ng-model="$ctrl.form.NO_EMPRESA.value">
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+	        	<md-input-container class="md-block" flex-gt-sm>
+	        		<label>Fecha Alta desde...</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FD_NACIMIENTO.value"></md-datepicker>
+	          	</md-input-container>
+	          	<md-input-container class="md-block" flex-gt-sm>
+	          		<label>Fecha Alta hasta...</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FD_CARNET.value"></md-datepicker>
+	          	</md-input-container>
+	    	</div>
+		</div>
+		<div style="text-align:center;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				Buscar
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-trash"></i>
+				LIMPIAR
+			</md-button>
+		</div>
+	</form>
+</md-content>

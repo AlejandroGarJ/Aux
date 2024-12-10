@@ -1,0 +1,51 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41"><span class="mov-ico ic-ciber-ico-lider"></span> {{ 'GUARANTEES_MODIFICATION' | translate }}
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+<!-- <h4>Alta de asegurado</h4> -->
+	<div class="separadorDesplegables"></div>
+	<div layout="row">
+		<div ng-if="$ctrl.showNuevaGarantia == true" layout="row" layout-align="start start">
+			<md-input-container flex-gt-sm>
+				<label>{{ 'NAME' | translate }}</label>
+				<md-select ng-model="$ctrl.garantiaSeleccionada">
+					<md-option ng-repeat="garantia in $ctrl.garantias" ng-if="garantia.ID_GARANTIA_PADRE == null" ng-value="garantia">{{garantia.NO_GARANTIA}}</md-option>
+				</md-select>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm>
+				<label>{{ 'CAPITAL' | translate }}</label>
+				<input ng-model="$ctrl.garantiaSeleccionada.NU_CAPITAL">
+			</md-input-container>
+			<md-button ng-click="$ctrl.addGarantia()" class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 0;">{{ 'ADD_TO_LIST' | translate }}</md-button>
+			<md-button ng-click="$ctrl.showNuevaGarantia = false" class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 0;">Cancelar</md-button>
+		</div>
+		<div style="visibility: hidden;">
+ 	 		<div class="md-dialog-container" id="cambioCapitales">
+    			<md-dialog>
+	    			<md-input-container class="md-block" flex-gt-sm>
+	    			    <h5>{{ 'NEW_CAPITAL_FOR' | translate }} {{$ctrl.modificado.NO_GARANTIA}}</h5>
+						<input ng-model="$ctrl.NU_CAPITALMODIFICADO" flex-gt-sm="60">
+						</md-input-container>
+						<div id="buttons">
+							<md-button class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 0px;" ng-click="$ctrl.aceptarCapMod($ctrl.NU_CAPITALMODIFICADO)">{{ 'ACCEPT' | translate }}</md-button>
+		   					<md-button ng-click="$ctrl.editarGarantia()" class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 0;">{{ 'EDIT' | translate }}</md-button>
+		   					<md-button class="md-raised md-primary medium-blue button-action-erase" style="height: 20px; margin-top: 0px;" ng-click="$ctrl.cancelarCapMod()">{{ 'CANCEL' | translate }}</md-button>
+	   					</div>
+	   			</md-dialog>
+  			</div>
+		</div>
+	</div>
+	<div layout="row" style="margin-bottom: 20px;">
+		<div class="ui-grid" style="width:100%;" ui-grid="$ctrl.gridGarantias" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection resize></div>
+	</div>
+	<div layout="row" layout-align="end center">
+		<md-button ng-click="$ctrl.showNuevaGarantiaFunction()" class="md-raised md-primary medium-blue button-action-main" style="height: 20px; margin-top: 0;">Nueva garantía</md-button>
+		<md-button ng-disabled="$ctrl.listaSeleccionados == null || $ctrl.listaSeleccionados.length == 0" ng-click="$ctrl.eliminarGarantia()" class="md-raised md-primary medium-blue button-action-erase" style="height: 20px; margin-top: 0;">Eliminar garantías seleccionadas</md-button>
+	</div>
+</div>

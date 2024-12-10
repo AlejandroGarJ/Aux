@@ -1,0 +1,210 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+
+<legend ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 51"><span class="mov-ico ic-ciber-ico-respuesta-inmediata"></span> Cambio de riesgo
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+
+<!-- CAMBIO DE RIESGO CIBEREMPRESA -->
+<form name="$ctrl.cambioRiesgoForm" ng-if="$ctrl.loadCambioRiesgo != true">
+	<div layout="row" layout-align="start start" ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 51">
+        <p class="text-right color-blue margin-bottom-20" style="margin-left: 35px;">Prima actual: <b>{{ $ctrl.datosPoliza.IM_PRIMA_TOTAL }}€</b></p>
+	</div>
+	<div ng-if="$ctrl.form.OPOLIZA.ID_PRODUCTO == 6 || $ctrl.form.OPOLIZA.ID_PRODUCTO == 5">
+    	<div class="separadorDesplegables"></div>
+        <div ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 51" layout-gt-sm="row" class="margenPresupuestos">
+        	<md-input-container class="md-block" flex-gt-sm="50">
+       	    	<label>{{ 'SECTOR' | translate }}</label>
+		      	<md-select ng-model="$ctrl.sector">
+		        	<md-option ng-repeat="sector in $ctrl.tpGroups" ng-value="sector" required>
+	                	{{$ctrl.parent.getDescriptivo(sector, 'DS_TIPOS')}}
+		            </md-option>
+                </md-select>
+            </md-input-container>   
+       		<md-input-container class="md-block" flex-gt-sm="50">
+            	<label>{{ 'ACTIVITY' | translate }}</label>
+		      	<md-select ng-change="$ctrl.changeRiesgoEmpresa()" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.ACTIVITY_CODE" required>
+		        	<md-option ng-repeat="activity in $ctrl.sector.LST_ACTIVIDADES" ng-value="activity.CO_ACTIVIDAD">
+	                	{{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+		            </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div layout-gt-sm="row" class="margenPresupuestos" ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 51">
+            <md-input-container ng-if="$ctrl.isAdhoc != true" class="md-block" flex-gt-sm="50">
+                <label>{{ 'BILLING_EUR' | translate }}</label>
+                <md-select ng-change="$ctrl.changeRiesgoEmpresa()" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.TURNOVER" required>
+                    <md-option ng-repeat="turnover in $ctrl.tpFacturacion" ng-value="turnover.CO_TIPO">
+	                    {{$ctrl.parent.getDescriptivo(turnover, 'DS_TIPOS')}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container ng-if="$ctrl.isAdhoc == true" class="md-block" flex-gt-sm="50">
+                <label>{{ 'BILLING_EUR' | translate }}</label>
+                <input ng-change="$ctrl.changeRiesgoEmpresa()" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.TURNOVER" currency-ciber amount required>
+            </md-input-container>
+            <md-input-container ng-if="$ctrl.isAdhoc == false" class="md-block" flex-gt-sm="50">
+                <label>{{ 'INSURED_AMOUNT' | translate }}</label>
+                <md-select ng-change="$ctrl.changeRiesgoEmpresa(); $ctrl.changeAmmountRiesgo($ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.AMMOUNT_OPTION)" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.AMMOUNT_OPTION" currency-ciber amount required>
+                    <md-option ng-repeat="amount in $ctrl.tpAmount" ng-value="amount.CO_TIPO">
+	                    {{$ctrl.parent.getDescriptivo(amount, 'DS_TIPOS')}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container ng-if="$ctrl.isAdhoc == true" class="md-block" flex-gt-sm="50">
+                <label>{{ 'INSURED_AMOUNT' | translate }}</label>
+                <input ng-change="$ctrl.changeRiesgoEmpresa(); $ctrl.changeAmmountRiesgo($ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.AMMOUNT)" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.AMMOUNT" currency-ciber amount required>
+            </md-input-container>
+        </div>
+        <div layout-gt-sm="row" class="margenPresupuestos" ng-if="$ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 41 || $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD == 51">
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>{{ 'BILLING_EUR' | translate }}</label>
+                <input ng-change="$ctrl.changeRiesgoEmpresa()" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.TURNOVER" currency-ciber amount required>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>{{ 'INSURED_AMOUNT' | translate }}</label>
+                <input ng-change="$ctrl.changeRiesgoEmpresa(); $ctrl.changeAmmountRiesgo($ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.AMMOUNT)" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.CIBERRIESGO.AMMOUNT" currency-ciber amount required>
+            </md-input-container>
+        </div>
+        <div class="margenPresupuestos animationIf md-padding" layout="row" layout-align="start-center" ng-if="$ctrl.isAdhoc == true && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 51">
+			<div layout="column" layout-align="center center" class="primas-admin md-margin">
+           		<h6>{{ 'NET_PREMIUM' | translate }}*</h6>
+           		<div layout="row" layout-align="center center">
+					<input ng-model="$ctrl.primasRiesgo.IM_PRIMANETA" flex-gt-sm="80" required>
+				    <button ng-click="$ctrl.changePrimasRiesgo()" class="button-editar-facturacion" flex-gt-sm="20">
+				        <i class="material-icons btnIcono">done</i> 
+				    </button>
+				</div>
+            </div>
+          	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+		    	<h6>{{ 'INSURANCE_NET_PREMIUMS' | translate }}*</h6>
+		        <div flex="70">
+					<input ng-disabled="true" ng-model="$ctrl.primasRiesgo.IM_IMPUESTOS" required>
+				</div>
+           	</div>
+		    <div layout="column" layout-align="center center" class="primas-admin md-margin">
+          		<h6>{{ 'INSURANCE_LIQUIDATION' | translate }}*</h6>
+         			<div flex="70">
+					<input ng-disabled="true" ng-model="$ctrl.primasRiesgo.IM_CLEA" required>
+				</div>
+		    </div>
+		    <div layout="column" layout-align="center center" class="primas-admin md-margin">
+        		<h6>{{ 'FRANCHISE' | translate }}*</h6>
+       			<div flex="70">
+					<input ng-disabled="$ctrl.isCalculaRiesgo != true" ng-model="$ctrl.primasRiesgo.IM_FRANQUICIA" required>
+				</div>
+		    </div>
+		    <div layout="column" layout-align="center center" class="primas-admin md-margin">
+           		<h6>{{ 'TOTAL_YEARLY_PREMIUM' | translate }}*</h6>
+           		<div flex="70">
+					<input ng-disabled="true" ng-model="$ctrl.primasRiesgo.IM_RECIBO_TOTAL" required>
+				</div>
+		    </div>
+		</div>
+		<div class="margenPresupuestos animationIf md-padding formDisabled" layout="row" layout-align="start-center" ng-if="$ctrl.showPrimasRiesgo == true && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 51">
+			<div layout="column" layout-align="center center" class="primas-admin md-margin">
+           		<h6>{{ 'NET_PREMIUM_PERIOD' | translate }}*</h6>
+           		<div layout="row" layout-align="center center">
+					<input type="number" string-to-number ng-model="$ctrl.primasRiesgo.IM_PRIMANETA_PERIODO" flex-gt-sm="80" amount required>
+				    <button ng-click="$ctrl.changePrimasRiesgo()" class="button-editar-facturacion" flex-gt-sm="20">
+				        <i class="material-icons btnIcono">done</i> 
+				    </button>
+				</div>
+           	</div>
+          	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+        		<h6>{{ 'INSURANCE_NET_PREMIUMS' | translate }}*</h6>
+       			<div flex="70">
+					<input ng-disabled="$ctrl.isCalculaRiesgo != true" ng-model="$ctrl.primasRiesgo.IM_IMPUESTOS_PERIODO" amount required>
+				</div>
+           	</div>
+           	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+            	<h6>{{ 'INSURANCE_LIQUIDATION' | translate }}*</h6>
+            	<div flex="70">
+					<input ng-disabled="$ctrl.isCalculaRiesgo != true" ng-model="$ctrl.primasRiesgo.IM_CLEA_PERIODO" amount required>
+				</div>
+          	</div>
+            <div layout="column" layout-align="center center" class="primas-admin md-margin">
+            	<h6>{{ 'FRANCHISE' | translate }}*</h6>
+            	<div flex="70">
+					<input ng-disabled="$ctrl.isCalculaRiesgo != true" ng-model="$ctrl.primasRiesgo.IM_FRANQUICIA_PERIODO" amount required>
+				</div>
+            </div>
+           	<div layout="column" layout-align="center center" class="primas-admin md-margin">
+           		<h6>{{ 'TOTAL_PREMIUM_PERIOD' | translate }}*</h6>
+           		<div flex="70">
+					<input ng-disabled="$ctrl.isCalculaRiesgo != true" ng-model="$ctrl.primasRiesgo.IM_RECIBO_TOTAL_PERIODO" amount required>
+				</div>
+           	</div>
+		</div>
+	</div>
+
+	<!-- CAMBIO DE RIESGO CIBERIDENTIDAD -->
+	<div ng-if="$ctrl.form.OPOLIZA.ID_PRODUCTO == 8">
+    	<div class="separadorDesplegables"></div>
+        <div layout-gt-sm="row" class="margenPresupuestos">
+        	<md-input-container class="md-block" flex-gt-sm="50">
+       	    	<label>{{ 'ADULT_NUMBER' | translate }}</label>
+		      	<md-select ng-change="$ctrl.changeRiesgoEmpresa()" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.HIJOSEIDENTIDAD.ASSURED_NUMBER">
+		        	<md-option ng-repeat="tpIde in $ctrl.typesIdent" ng-value="tpIde.CO_TIPO">
+	                	{{$ctrl.parent.getDescriptivo(tpIde, 'DS_TIPOS')}}
+		            </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+	</div>
+	
+	<!-- CAMBIO DE RIESGO CIBERHIJOS -->
+	<div ng-if="$ctrl.form.OPOLIZA.ID_PRODUCTO == 7">
+    	<div class="separadorDesplegables"></div>
+        <div layout-gt-sm="row" class="margenPresupuestos">
+        	<md-input-container class="md-block" flex-gt-sm="50">
+       	    	<label>{{ 'CHILDREN_NUMBER' | translate }}</label>
+		      	<md-select ng-change="$ctrl.changeRiesgoEmpresa()" ng-model="$ctrl.form.OPRESUPUESTO.PECUNIARIAS.HIJOSEIDENTIDAD.ASSURED_CHILDREN_NUMBER">
+		        	<md-option ng-repeat="tpHij in $ctrl.typesHijos" ng-value="tpHij.CO_TIPO">
+	                	{{$ctrl.parent.getDescriptivo(tpHij, 'DS_TIPOS')}}
+		            </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+	</div>
+	
+	<div class="container_TarMovil_price" ng-if="$ctrl.precioTarificacion != 0 && $ctrl.precioTarificacion != null" layout="row" layout-align="end center">
+        <div layout="row">
+            <div>
+                <span ng-hide="$ctrl.cargarTarificacion == true" class="spPrice">{{$ctrl.precioTarificacion == 0 ? '--' : $ctrl.formatPrice($ctrl.precioTarificacion) }}</span>
+                <span ng-hide="$ctrl.cargarTarificacion == true || $ctrl.precioTarificacion == 0" class="txtRegular">{{ 'TAXES_INCLUDED' | translate }}</span>
+                <p ng-if="$ctrl.bloqueRiesgo.DATOS_PAGO.ID_FORMAPAGO == 2" class="text-right color-blue">{{ 'INSURANCE_PRICE' | translate }}: <b>{{ 'YEARLY' | translate }}</b></p>
+                <p ng-if="$ctrl.bloqueRiesgo.DATOS_PAGO.ID_FORMAPAGO == 7" class="text-right color-blue" style="margin-bottom: 0px">{{ 'INSURANCE_PRICE' | translate }}: <b>{{ 'MONTHLY' | translate }}</b></p>
+            </div>
+        </div>
+    </div>
+	
+	<div layout-gt-sm="row" class="margenPresupuestos">
+		<md-button ng-if="$ctrl.isAdhoc != true && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 41 && $ctrl.form.OTIPO_SOLICITUD.ID_TIPO_SOLICITUD != 51" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.tarificarRiesgo()">
+	         Mostrar precio
+	    </md-button>
+<!-- 		<md-button ng-if="$ctrl.form.OPOLIZA.ID_PRODUCTO == 6" ng-disabled="$ctrl.showPrimasRiesgo == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.mostrarImportesManuales()"> -->
+<!-- 	         Añadir importes manuales -->
+<!-- 	    </md-button> -->
+<!-- 		<md-button ng-if="$ctrl.showPrimasRiesgo == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.showPrimasRiesgo = false; $ctrl.primasRiesgo = null"> -->
+<!-- 			<md-icon>clear</md-icon> -->
+<!-- 	         Cancelar -->
+<!-- 	    </md-button> -->
+	</div>
+</form>
+<div layout="row" layout-align="center center">
+	<div class="cs-loader" ng-if="$ctrl.loadCambioRiesgo == true" style="height: auto; width: 97%; position: relative; height: 40px;">
+		<div class="cs-loader-inner">
+			<label>●</label>
+			<label>●</label>
+			<label>●</label>
+			<label>●</label>
+			<label>●</label>
+			<label>●</label>
+		</div>
+	</div>
+</div>

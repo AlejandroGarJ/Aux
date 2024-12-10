@@ -1,0 +1,75 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div ng-if="$ctrl.url != 'movimientos_economicos' && $ctrl.url != 'polizas_tiper' && $ctrl.url != 'avisos' && $ctrl.url != 'programas' && $ctrl.url != 'proveedores' && $ctrl.url != 'cp' && $ctrl.url != 'usuarios' && $ctrl.url != 'datosAseguradora' && $ctrl.url != 'conversor' && $ctrl.url != 'maestros' && $ctrl.url != 'garantias' && $ctrl.url != 'colaboradores' && $ctrl.url != 'aseguradoras' && $ctrl.url != 'reaseguradoras' && $ctrl.url != 'ficherosProcesados' && $ctrl.url != 'ficherosGenerados' && $ctrl.url != 'ficherosErrores' && $ctrl.url != 'confirmacion_rtr' && $ctrl.url != 'solicitudes' && $ctrl.url != 'presupuestos' && $ctrl.url != 'portabilidad' && $ctrl.url != 'polizas' && $ctrl.url != 'recibos' && $ctrl.url != 'remesas' && $ctrl.url != 'ultRecibos' && $ctrl.url != 'siniestros' && $ctrl.url != 'clientes' && $ctrl.url != 'enviosMovistar' && $ctrl.url != 'dispositivos_moviles' && $ctrl.url != 'backup' && $ctrl.url != 'rgpd_clientes' && $ctrl.url != 'rgpd_polizas' && $ctrl.url != 'firma_digital' && $ctrl.url != 'recibosDevueltos' || $ctrl.url == 'broker'" layout="column">
+
+	<section layout="row" flex>
+		<md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$ctrl.lockLeft" md-whiteframe="4" ng-if="!$ctrl.isPendiente">
+            <filtros-app tipo="$ctrl.tipo"></filtros-app>
+        </md-sidenav>
+        <md-sidenav class="sideNavCerrada" md-component-id="left" md-is-locked-open="!$ctrl.lockLeft" md-whiteframe="4" ng-if="!$ctrl.isPendiente">
+			<md-button class="abrirFiltro" ng-click="$ctrl.lateral()"><md-icon>arrow_forward_ios</md-icon></md-button>
+			<div class="textoVertical">{{$ctrl.url}}</div>
+        </md-sidenav>
+		<md-content ui-i18n="{{$ctrl.lang}}" flex style="overflow: hidden;">
+			<busqueda-reclamaciones ng-if="$ctrl.url== 'reclamaciones'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-reclamaciones>
+		    <busqueda-alarmas ng-if="$ctrl.url == 'alarmas'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-alarmas>
+		    <busqueda-renting ng-if="$ctrl.url== 'renting'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-renting>
+    		<busqueda-campanas ng-if="$ctrl.url == 'campana'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-campanas>
+    		<busqueda-concesiones ng-if="$ctrl.url == 'concesiones'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-concesiones>
+    		<busqueda-tipos ng-if="$ctrl.url == 'tipos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-tipos>
+    		<!-- <busqueda-user-ws ng-if="$ctrl.url == 'userws'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-user-ws> -->
+    		<busqueda-contenido-continente ng-if="$ctrl.url == 'contenido'"></busqueda-contenido-continente>
+    		<busqueda-tarifa ng-if="$ctrl.url == 'tarifas'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-tarifa>
+    		<busqueda-distribucion ng-if="$ctrl.url == 'geografica'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-distribucion>
+			<busqueda-bajas-vehiculos ng-if="$ctrl.url == 'bajas_vehiculos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-bajas-vehiculos>
+			<busqueda-procesos ng-if="$ctrl.url == 'procesos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-procesos>					
+		</md-content>
+    </section>
+</div>
+
+<div ng-if="$ctrl.url == 'movimientos_economicos' || $ctrl.url == 'polizas_tiper' || $ctrl.url == 'avisos' || $ctrl.url == 'programas' || $ctrl.url == 'proveedores' || $ctrl.url == 'cp' || $ctrl.url == 'usuarios' || $ctrl.url == 'datosAseguradora' || $ctrl.url == 'conversor' || $ctrl.url == 'maestros' || $ctrl.url == 'garantias' || $ctrl.url == 'colaboradores' || $ctrl.url == 'aseguradoras' || $ctrl.url == 'reaseguradoras' || $ctrl.url == 'ficherosProcesados' || $ctrl.url == 'ficherosGenerados' || $ctrl.url == 'ficherosErrores' || $ctrl.url == 'confirmacion_rtr' || $ctrl.url == 'presupuestos' || $ctrl.url == 'portabilidad' || $ctrl.url == 'polizas' || $ctrl.url == 'recibos' || $ctrl.url == 'remesas' || $ctrl.url == 'ultRecibos' || $ctrl.url == 'siniestros' || $ctrl.url == 'clientes' || $ctrl.url == 'solicitudes'|| $ctrl.url == 'enviosMovistar' || $ctrl.url == 'dispositivos_moviles' || $ctrl.url == 'backup' || $ctrl.url == 'rgpd_clientes'|| $ctrl.url == 'rgpd_polizas' || $ctrl.url == 'firma_digital' || $ctrl.url == 'recibosDevueltos' || $ctrl.url == 'broker'" layout="column">
+	<section class="scroll-design" style="overflow: auto;">
+		<div style="display: flex;align-items: center;justify-content: center;">
+			<div style="margin-top: 30px;width: 85%;">
+	    		<filtros-app tipo="$ctrl.tipo"></filtros-app>
+    			<div ui-i18n="{{$ctrl.lang}}" style="margin-bottom: 30px">
+    				<busqueda-poliza-tiper ng-if="$ctrl.url == 'polizas_tiper'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-poliza-tiper>
+    				<busqueda-poliza-rgpd ng-if="$ctrl.url == 'rgpd_polizas'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-poliza-rgpd>    				
+    				<busqueda-avisos ng-if="$ctrl.url == 'avisos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-avisos>
+    				<busqueda-programas ng-if="$ctrl.url == 'programas'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-programas>
+    				<busqueda-proveedores ng-if="$ctrl.url == 'proveedores'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-proveedores>
+    				<busqueda-cp ng-if="$ctrl.url == 'cp'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-cp>
+    				<busqueda-usuarios ng-if="$ctrl.url == 'usuarios'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-usuarios>
+    				<busqueda-datos-aseguradora ng-if="$ctrl.url == 'datosAseguradora'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-datos-aseguradora>
+    				<busqueda-conversor ng-if="$ctrl.url == 'conversor'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-conversor>
+    				<busqueda-maestros ng-if="$ctrl.url == 'maestros'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-maestros>
+    				<busqueda-garantias ng-if="$ctrl.url == 'garantias'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-garantias>
+    				<busqueda-colaboradores ng-if="$ctrl.url == 'colaboradores'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-colaboradores>
+		    		<busqueda-aseguradoras ng-if="$ctrl.url == 'aseguradoras'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-aseguradoras>
+		    		<busqueda-reaseguradoras ng-if="$ctrl.url == 'reaseguradoras'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-reaseguradoras>
+		    		<busqueda-procesadoficheros ng-if="$ctrl.url == 'ficherosProcesados'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-procesadoficheros>
+		    		<busqueda-fichero-generado ng-if="$ctrl.url == 'ficherosGenerados'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-fichero-generado>
+		    		<busqueda-errorficheros ng-if="$ctrl.url == 'ficherosErrores'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-errorficheros>
+    				<busqueda-presupuesto ng-if="$ctrl.url == 'presupuestos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-presupuesto>			
+    				<busqueda-poliza ng-if="$ctrl.url == 'polizas'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-poliza>
+				    <busqueda-recibo ng-if="$ctrl.url == 'recibos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-recibo>
+				    <busqueda-remesas ng-if="$ctrl.url == 'remesas'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-remesas>
+				    <busqueda-ultrecibos ng-if="$ctrl.url == 'ultRecibos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-ultrecibos>
+		    		<busqueda-siniestro ng-if="$ctrl.url == 'siniestros'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-siniestro>
+		    		<busqueda-cliente-rgpd ng-if="$ctrl.url == 'rgpd_clientes'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-cliente-rgpd>
+		    		<busqueda-movimientos-economicos ng-if="$ctrl.url == 'movimientos_economicos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-movimientos-economicos>
+		    		<busqueda-cliente ng-if="$ctrl.url == 'clientes'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-cliente>
+		    		<busqueda-solicitudes ng-if="$ctrl.url== 'solicitudes'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-solicitudes>
+		    		<busqueda-enviomovistar ng-if="$ctrl.url == 'enviosMovistar'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-enviomovistar>
+    				<busqueda-dispositivos-moviles ng-if="$ctrl.url == 'dispositivos_moviles'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-dispositivos-moviles>
+    				<busqueda-portabilidad ng-if="$ctrl.url == 'portabilidad'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-portabilidad>
+    				<busqueda-fusion ng-if="$ctrl.url == 'confirmacion_rtr'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-fusion>
+    				<busqueda-backup ng-if="$ctrl.url == 'backup'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-backup>
+    				<busqueda-firma-digital ng-if="$ctrl.url == 'firma_digital'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-firma-digital>    			
+    				<busqueda-recibos-devueltos ng-if="$ctrl.url == 'recibosDevueltos'" list-busqueda="$ctrl.listDatos" view="$ctrl.vista" ds-active="$ctrl.active"></busqueda-recibos-devueltos>
+    			</div>
+			</div>
+		</div>
+    </section>
+</div>

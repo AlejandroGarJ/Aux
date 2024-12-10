@@ -1,0 +1,20 @@
+.title {
+  font-family: TelefonicaWebLight !important;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  color: black;
+  text-align: center;
+}
+.wrapper {
+  min-width: 30%;
+  padding: 20px !important;
+}
+
+.actions {
+  justify-content: center;
+}
+
+.button-action-04-hogar:hover {
+  margin-top: 1px !important;
+}

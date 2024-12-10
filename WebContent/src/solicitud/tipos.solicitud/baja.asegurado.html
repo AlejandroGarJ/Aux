@@ -1,0 +1,35 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-numero-trabajadores"></span> {{ 'INSURED_CANCELATION' | translate }}
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+<!-- <h4>Baja de asegurado</h4> -->
+	<div class="separadorDesplegables"></div>
+	<div layout="row">
+		<!-- <md-autocomplete flex-gt-sm="50" ng-init="$ctrl.clientes = []"
+			  md-no-cache = "true"
+	          md-selected-item="$ctrl.form[$ctrl.tipoSolicitud].XML_BAJA_ASEGURADO.XML_ASEGURADO_SELECCIONADO"
+	          md-search-text="$ctrl.searchAsegurado"
+	          md-search-text-change="$ctrl.querySearchAsync($ctrl.searchAsegurado)"
+	          md-items="cliente in $ctrl.clientes"
+	          md-item-text="cliente.NO_NOMBRE_COMPLETO"
+	          md-min-length="3"
+	          md-delay="300"
+              md-floating-label="Asegurado seleccionado" required>
+	          <md-item-template>
+	            <span md-highlight-text="$ctrl.searchAsegurado" md-highlight-flags="^i">{{cliente.NO_NOMBRE_COMPLETO}}</span>
+	          </md-item-template>
+		</md-autocomplete> -->
+		<md-input-container flex-gt-sm>
+			<label>{{ 'INSURED_SELECTED' | translate }}</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_BAJA_ASEGURADO.XML_ASEGURADO_SELECCIONADO">
+				<md-option ng-repeat="asegurado in $ctrl.form.OPOLIZA.LST_ASEGURADOS | filter:{ID_TIPO_CLIENTE:2}" ng-value="asegurado">{{asegurado.NO_NOMBRE_COMPLETO}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+</div>

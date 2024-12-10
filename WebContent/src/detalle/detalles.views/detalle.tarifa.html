@@ -1,0 +1,173 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div>
+	<md-content style="height: 100px" resize ng-style="resizeHeight(150)" class="form-scroll">
+		<div layout-xs="column" layout="row">
+			<div flex="35" layout="column" style="padding:20px 20px;">
+		   		<form ng-submit="" class="formClass formCliente" name="newTarifa" role="form">
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+			        		<label>Código de tarifa</label>
+			          		<input></input>
+			          	</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm required>
+							<label>Negocio </label>
+							<md-select ng-model="$ctrl.form.idNegocio" required>
+								<md-option ng-repeat="ejemplo in $ctrl.listaEjemplos" ng-value="ejemplo.nombre">{{ejemplo.nombre}}</md-option>
+							 </md-select>
+						</md-input-container>
+					</div>
+					<br>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm required>
+							<label>Empresa </label>
+							<md-select ng-model="$ctrl.form.idEmpresa" required>
+								<md-option ng-repeat="ejemplo in $ctrl.listaEjemplos" ng-value="ejemplo.nombre">{{ejemplo.nombre}}</md-option>
+							 </md-select>
+						</md-input-container>
+					</div>
+					<br>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+			        		<label>Modalidad</label>
+			          		<input></input>
+			          	</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm required>
+							<label>Fecha de inicio </label>
+							<md-datepicker ng-model="$ctrl.form.fecha_ini_detalle_tarifa"></md-datepicker>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm required>
+							<label>Fecha de fin </label>
+							<md-datepicker ng-model="$ctrl.form.fecha_ini_detalle_tarifa"></md-datepicker>
+						</md-input-container>
+					</div>
+				</form>
+		   	</div>
+		   	<div flex="35" layout="column" style="padding:20px 20px;">
+		   		<form ng-submit="" class="formClass formCliente" name="newTarifa" role="form">
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+			        		<label>Tipo de vehículo</label>
+			          		<md-select ng-model="$ctrl.form.idVehiculo" required ng-change="$ctrl.cambiarTipoVehiculo()">
+								<md-option ng-repeat="vehiculo in $ctrl.listaVehiculos" ng-value="vehiculo.valor">{{vehiculo.nombre}}</md-option>
+							 </md-select>
+			          	</md-input-container>
+					</div>
+					<br>
+					<div layout-gt-sm="row">
+						<md-autocomplete flex-gt-sm="100"
+					          md-no-cache="$ctrl.noCache"
+					          md-selected-item="$ctrl.form.MARCA"
+					          md-search-text="$ctrl.searchMarca"
+					          md-selected-item-change="$ctrl.getModelos()"
+					          md-items="marca in $ctrl.querySearch($ctrl.searchMarca, $ctrl.marcas, 'DS_MARCA')"
+					          md-item-text="marca.DS_MARCA"
+					          md-min-length="0"
+					          md-require-match
+				              md-floating-label="Marca"
+				              required>
+					          <md-item-template>
+					            <span md-highlight-text="$ctrl.searchMarca" md-highlight-flags="^i">{{marca.DS_MARCA}}</span>
+					          </md-item-template>
+					          <md-not-found>
+						          No existe la marca "{{$ctrl.searchMarca}}".
+						      </md-not-found>
+				        </md-autocomplete>
+					</div>
+					<div layout-gt-sm="row">
+				        <md-autocomplete flex-gt-sm="100"
+					          md-no-cache="$ctrl.noCache"
+					          md-selected-item="$ctrl.form.MODELO"
+					          md-search-text="$ctrl.searchModelo"
+					          md-selected-item-change="$ctrl.getVersiones()"
+					          md-items="modelo in $ctrl.querySearch($ctrl.searchModelo, $ctrl.modelos, 'DS_MODELO')"
+					          md-item-text="modelo.DS_MODELO"
+					          md-min-length="0"
+					          md-require-match
+				              md-floating-label="Modelo"
+				              required>
+					          <md-item-template>
+					            <span md-highlight-text="$ctrl.searchModelo" md-highlight-flags="^i">{{modelo.DS_MODELO}}</span>
+					          </md-item-template>
+					          <md-not-found>
+						          No existe el modelo "{{ctrl.searchModelo}}".
+						      </md-not-found>
+			       		</md-autocomplete>
+					</div>
+					<div layout-gt-sm="row" style="margin-top:0px !important">
+		          		<md-autocomplete flex-gt-sm
+					          md-no-cache="$ctrl.noCache"
+					          md-selected-item="$ctrl.form.VERSION"
+					          md-search-text="$ctrl.searchVersion"
+					          md-items="version in $ctrl.querySearch($ctrl.searchVersion, $ctrl.versiones, 'DS_VERSION')"
+					          md-item-text="version.DS_VERSION"
+					          md-min-length="0"
+					          md-require-match
+				              md-floating-label="Versión"
+				              required>
+					          <md-item-template>
+					            <span md-highlight-text="$ctrl.searchVersion" md-highlight-flags="i">
+					            	{{version.DS_VERSION}} - F.LANZ:{{version.FD_LANZAMIENTO}} - PUERTAS:{{version.NU_PUERTAS}} - POT:{{version.NU_POTENCIA}} - TARA:{{version.NU_CILINDRADA}} - PLAZAS:{{version.NU_PLAZAS}}
+					            </span>
+					          </md-item-template>
+					          <md-not-found>
+						          No existe la versión "{{ctrl.searchVersion}}".
+							          <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+						      </md-not-found>
+				        </md-autocomplete>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Potencia </label>
+							<input></input>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Valor total </label>
+							<input></input>
+						</md-input-container>
+					</div>
+				</form>
+		   	</div>
+		   	
+		   	
+		   	
+		   	
+		   	<div flex="30" layout="column" style="padding:0px 20px;">
+		   		<md-card class="card-detalles">
+		   			<md-toolbar flex style="min-height:44px;">
+					    <div class="md-toolbar-tools" style="height:44px">
+					      <h2 class="md-flex">Propiedades</h2>
+					    </div>
+					</md-toolbar>
+			   		<md-card-content style="height:290px; margin-top:0px" class="form-scroll">
+				   		<form ng-repeat="dato in $ctrl.listaPropiedades" class="formClass formCliente" name="newTarifa" role="form">
+							<div layout-gt-sm="row" style="margin-bottom: 20px">
+								<md-input-container flex="70" class="md-block" flex-gt-sm>
+					        		<label>{{dato.nombre}}:     {{dato.valor}} </label>
+					          	</md-input-container>
+					          	<md-input-container flex="30" class="md-block" flex-gt-sm>
+					        		<label>{{dato.valor}}</label>
+					          	</md-input-container>
+							</div>
+						</form>
+					</md-card-content>
+				</md-card>
+		   	</div>
+		   	
+		   	
+		   	
+		</div>
+		<div layout-xs="column" layout="row" style="height: 150px; padding: 0px 30px">
+			<div flex layout="row" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(550)"></div>
+		</div>
+	</md-content>	
+</div>

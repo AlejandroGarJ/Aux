@@ -1,0 +1,397 @@
+{
+    "NUMERO_ENTREGAS": 9,
+    "ENTREGAS": [
+        {
+            "ENTREGA": [
+                {
+                    "ID_ENTREGA": 9,
+                    "NU_ENTREGA": 1009,
+                    "DS_ENTREGA": "Entrega09",
+                    "FD_ENTREGA": "2022-01-17T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 2,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 9,
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                },
+                {
+                    "ID_ENTREGA": 6,
+                    "NU_ENTREGA": 1006,
+                    "DS_ENTREGA": "Entrega06",
+                    "FD_ENTREGA": "2022-01-17T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 2,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 6,
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                }
+            ],
+            "FD_ENTREGA": "2022-01-17T00:00:00.000+0100"
+        },
+        {
+            "ENTREGA": [
+                {
+                    "ID_ENTREGA": 2,
+                    "NU_ENTREGA": 1002,
+                    "DS_ENTREGA": "Entrega02",
+                    "FD_ENTREGA": "2022-01-16T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 1,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 2,
+                            "DS_CONTENIDO": "Contenido03",
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        },
+                        {
+                            "ID_ENTREGA": 2,
+                            "DS_CONTENIDO": "Contenido01",
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                }
+            ],
+            "FD_ENTREGA": "2022-01-16T00:00:00.000+0100"
+        },
+        {
+            "ENTREGA": [
+                {
+                    "ID_ENTREGA": 8,
+                    "NU_ENTREGA": 1008,
+                    "DS_ENTREGA": "Entrega08",
+                    "FD_ENTREGA": "2022-01-11T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 1,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 8,
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                },
+                {
+                    "ID_ENTREGA": 5,
+                    "NU_ENTREGA": 1005,
+                    "DS_ENTREGA": "Entrega05",
+                    "FD_ENTREGA": "2022-01-11T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 2,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 5,
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                }
+            ],
+            "FD_ENTREGA": "2022-01-11T00:00:00.000+0100"
+        },
+        {
+            "ENTREGA": [
+                {
+                    "ID_ENTREGA": 7,
+                    "NU_ENTREGA": 1007,
+                    "DS_ENTREGA": "Entrega07",
+                    "FD_ENTREGA": "2022-01-18T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 1,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 7,
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                },
+                {
+                    "ID_ENTREGA": 4,
+                    "NU_ENTREGA": 1004,
+                    "DS_ENTREGA": "Entrega04",
+                    "FD_ENTREGA": "2022-01-18T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 1,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 4,
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                }
+            ],
+            "FD_ENTREGA": "2022-01-18T00:00:00.000+0100"
+        },
+        {
+            "ENTREGA": [
+                {
+                    "ID_ENTREGA": 1,
+                    "NU_ENTREGA": 1001,
+                    "DS_ENTREGA": "Entrega01",
+                    "FD_ENTREGA": "2022-01-10T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 2,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 1,
+                            "DS_CONTENIDO": "Contenido06",
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        },
+                        {
+                            "ID_ENTREGA": 1,
+                            "DS_CONTENIDO": "Contenido05",
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                },
+                {
+                    "ID_ENTREGA": 3,
+                    "NU_ENTREGA": 1003,
+                    "DS_ENTREGA": "Entrega03",
+                    "FD_ENTREGA": "2022-01-10T00:00:00.000+0100",
+                    "ID_TIPO_ENTREGA": 2,
+                    "LIST_CONTENIDOS": [
+                        {
+                            "ID_ENTREGA": 3,
+                            "DS_CONTENIDO": "Contenido04",
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        },
+                        {
+                            "ID_ENTREGA": 3,
+                            "DS_CONTENIDO": "Contenido02",
+                            "IS_NEW": false,
+                            "IS_UPDATED": false,
+                            "IS_DELETED": false,
+                            "IS_SELECTED": false,
+                            "IS_UNIDENTIFIED": false,
+                            "IS_ERROR": false,
+                            "IS_WARN": false,
+                            "PAGINAR": false,
+                            "OFFSET": 0,
+                            "LIMIT": 0,
+                            "aseguradora": "true"
+                        }
+                    ],
+                    "IS_NEW": false,
+                    "IS_UPDATED": false,
+                    "IS_DELETED": false,
+                    "IS_SELECTED": false,
+                    "IS_UNIDENTIFIED": false,
+                    "IS_ERROR": false,
+                    "IS_WARN": false,
+                    "PAGINAR": false,
+                    "OFFSET": 0,
+                    "LIMIT": 0,
+                    "aseguradora": "true"
+                }
+            ],
+            "FD_ENTREGA": "2022-01-10T00:00:00.000+0100"
+        }
+    ],
+    "IS_NEW": false,
+    "IS_UPDATED": false,
+    "IS_DELETED": false,
+    "IS_SELECTED": false,
+    "IS_UNIDENTIFIED": false,
+    "IS_ERROR": false,
+    "IS_WARN": false,
+    "PAGINAR": false,
+    "OFFSET": 0,
+    "LIMIT": 0,
+    "DS_RESULT": "OK",
+    "ID_RESULT": 0,
+    "aseguradora": "true"
+}

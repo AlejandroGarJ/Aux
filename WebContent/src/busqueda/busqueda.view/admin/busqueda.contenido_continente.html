@@ -1,0 +1,46 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results">
+	<md-tabs class="estiloTabs" md-dynamic-height md-border-bottom>
+		<md-tab label="Resultado de la búsqueda">
+			<div layout-gt-sm="row">
+				<div align="center" layout-gt-sm="column" flex="50">
+					<h2>Continente</h2>
+					
+					<div ng-if="$ctrl.loadContinente != true" class="ui-grid" ui-grid="$ctrl.gridContinente" ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(320)"></div>
+					
+					<div ng-if="$ctrl.loadContinente == true" id="buscandoGif" style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 50%; height: 100%;" resize ng-style="resizeHeight(330)">
+			            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+							<div class = "blob-3"></div>
+							<div class = "blob-4"></div>
+						</div>
+			        </div>
+					
+					<md-button ng-if="$ctrl.loadContinente != true && $ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardar('continente')" style="width: fit-content">
+						<md-icon>save</md-icon>
+						Validar y guardar
+					</md-button>
+				</div>
+				<div align="center" layout-gt-sm="column" flex="50">
+					<h2>Contenido</h2>
+					
+					<div ng-if="$ctrl.loadContenido != true" class="ui-grid" ui-grid="$ctrl.gridContenido" ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(320)"></div>
+					
+		            <div ng-if="$ctrl.loadContenido == true" id="buscandoGif" style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 50%; height: 100%;" resize ng-style="resizeHeight(330)">
+			            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+							<div class = "blob-3"></div>
+							<div class = "blob-4"></div>
+						</div>
+			        </div>
+					
+					<md-button ng-if="$ctrl.loadContenido != true && $ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardar('contenido')" style="width: fit-content">
+						<md-icon>save</md-icon>
+						Validar y guardar
+					</md-button>
+				</div>
+			</div>
+			
+		</md-tab>
+	</md-tabs>
+</div>

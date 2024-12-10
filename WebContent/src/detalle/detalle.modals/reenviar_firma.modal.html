@@ -1,0 +1,111 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:95%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h1>Proceso de firma digital de la póliza Nº {{ $ctrl.datos.NU_POLIZA }}</h1>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+	    <div id="buscando" style="display:grid; height: 50vh;" ng-if="$ctrl.reenviando">
+	    	<div layout-gt-sm="row" layout-align="center center">
+	    	    <h4 style="color:#0066ff;">Estamos enviando el PIN al cliente...</h4>
+	    	</div>
+
+            <div style="display:table-cell; vertical-align: middle;">
+                <div class="blob-3"></div>
+                <div class="blob-4"></div>
+            </div>
+        </div>
+		<div id="data" ng-if="!$ctrl.reenviando">
+		    <div class="container_resumen" flex>
+<!--             	<legend>1. RESUMEN DE LA CONTRATACIÓN (PENDIENTE DE CONFIRMACIÓN)</legend> -->
+            	<div style="margin-top: 20px!important;"></div>
+            	
+	            <div layout-gt-sm="row" layout-align="center center">
+	                <md-input-container class="md-block" flex-gt-sm="15">
+	                    <label>Nº de Póliza</label>
+	                    <input ng-model="$ctrl.datos.NU_POLIZA" disabled>
+	                </md-input-container>
+	
+	                <md-input-container class="md-block" flex-gt-sm="20">
+	                    <label>Modalidad</label>
+	                    <input ng-model="$ctrl.datos.NO_PRODUCTO" disabled>
+	                </md-input-container>
+	
+	                <md-input-container class="md-block" flex-gt-sm="10">
+	                    <label>Prima {{$ctrl.DS_FORMAPAGO |lowercase}}</label>
+	                    <input ng-model="$ctrl.datos.IM_PRIMA_TOTAL" amount disabled>
+	                </md-input-container>
+
+	                <md-input-container class="md-block" flex-gt-sm="15">
+	                    <label>{{ 'NAME' | translate }}</label>
+	                    <input ng-model="$ctrl.datos.pagador.NO_NOMBRE" disabled>
+	                </md-input-container>
+	                
+	                <md-input-container class="md-block" flex-gt-sm="15" ng-if="$ctrl.isEmpresa != true">
+	                    <label>{{ 'SURNAME_1' | translate }}</label>
+	                    <input ng-model="$ctrl.datos.pagador.NO_APELLIDO1" disabled>
+	                </md-input-container>
+	                
+	                <md-input-container class="md-block" flex-gt-sm="15" ng-if="$ctrl.isEmpresa != true">
+	                    <label>{{ 'SURNAME_2' | translate }}</label>
+	                    <input ng-model="$ctrl.datos.pagador.NO_APELLIDO2" disabled>
+	                </md-input-container>
+	            </div>
+	            <div layout-gt-sm="row" layout-align="center center">
+	            	<md-input-container class="md-block" flex-gt-sm="10">
+	                    <label>NIF/NIE/CIF</label>
+	                    <input ng-model="$ctrl.datos.pagador.NU_DOCUMENTO" disabled uppercase>
+	                </md-input-container> 
+	                
+	                <md-input-container class="md-block" flex-gt-sm="15">
+	                    <label>Tfno. Contacto</label>
+	                    <input ng-model="$ctrl.datos.pagador.NU_TELEFONO1" disabled>
+	                </md-input-container>
+	    
+	                <md-input-container class="md-block" flex-gt-sm="25">
+	                    <label>Email</label>
+	                    <input ng-model="$ctrl.datos.pagador.NO_EMAIL" disabled>
+	                </md-input-container>
+           	 	</div>
+           	 </div>
+           	 <div class="container_action" style="margin-top: 35px!important;" flex>
+		            <legend style="font-size: 14px;">CONFIRMACIÓN DE LA CONTRATACIÓN CON PIN</legend>
+		            <div class="separadorDesplegables"></div>
+
+		           <div layout-gt-sm="row" layout-align="center center" style="color:#5eba7d;" ng-if="$ctrl.pinCodeEnviado">
+		                <span>Se ha enviado el PIN al tel&#233;fono <strong> {{ $ctrl.datos.pagador.NU_TELEFONO1 }} </strong> correctamente.</span>
+		            </div>
+		             <div layout-gt-sm="row" layout-align="center center" style="color:#e66c64;" ng-if="$ctrl.errorResult">
+		                <span>{{ $ctrl. error }}</span>
+		            </div>
+		            
+		            <div layout-gt-sm="row" layout-align="center center">
+		                <md-input-container class="md-block" flex-gt-sm="15">
+		                    <label>PIN (6 dígitos)</label>
+		                    <input ng-model="$ctrl.pinCode" maxlength="6" ng-disabled="$ctrl.errorResult">
+		                </md-input-container>
+		                <md-input-container class="md-block" flex-gt-sm="15" style="padding-top: 17px!important">
+		                    <md-button class="md-raised md-primary medium-blue button-action-main-accent" ng-click="$ctrl.validatePinCode()" ng-disabled="$ctrl.confirmando || $ctrl.reenviandoCode || ($ctrl.errorResult && !$ctrl.resendPin)">
+		                        <i class="fa-duotone fa-comments" style="margin-right: 5px;font-size: 14px"></i> Confirmar PINCODE
+		                        <div class="lds-ring" style="margin-right: 8px;" ng-if="$ctrl.confirmando">
+		                             <div></div>
+		                             <div></div>
+		                             <div></div>
+		                             <div></div>
+		                         </div>
+		                    </md-button>
+		                </md-input-container>
+		            </div>
+		            <div layout-gt-sm="row" layout-align="center center" style="margin-top: 20px!important">
+		                <span>Si el PIN es correcto confirmaremos la póliza y enviaremos toda la documentación al email del cliente que has indicado.</span>
+		            </div>
+			</div>
+		</div>
+	</md-dialog-content>
+</md-dialog>

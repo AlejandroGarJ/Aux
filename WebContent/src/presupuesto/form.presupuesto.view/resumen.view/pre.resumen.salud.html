@@ -1,0 +1,128 @@
+<uib-tabset class="tabsPasos" type="pills" justified="true" flex="none">
+    
+            <!--CONTENIDO DE RESUMEN-->
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaResumen}})">
+                <div flex>
+                
+                    <!---------------- Tarificación salud ------------------------>
+                    <legend>Tarificación salud</legend>
+		            	<div class="margenPresupuestos" layout="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Fecha de nacimiento</label>
+								<md-datepicker ng-if="($ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO == null || $ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO == undefined) ? $ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO = null : $ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO" ng-model="$ctrl.datos.TARIFICACION_SALUD.FD_NACIMIENTO" disabled></md-datepicker>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Sexo</label>
+								<md-select id="sexo" ng-model="$ctrl.datos.TARIFICACION_SALUD.ID_SEXO" disabled>
+									<md-option ng-value="1">Hombre</md-option>
+									<md-option ng-value="2">Mujer</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+						<div class="margenPresupuestos" layout="row">
+							<div class="margenPresupuestos" flex-gt-sm>
+								<md-checkbox ng-model="$ctrl.datos.TARIFICACION_SALUD.IN_FARMACIA_REEMBOLSO" disabled>Farmacia reembolso</md-checkbox>
+							</div>
+							<div class="margenPresupuestos" flex-gt-sm>
+								<md-checkbox ng-model="$ctrl.datos.TARIFICACION_SALUD.IN_DENTAL_REEMBOLSO" disabled>Dental reembolso</md-checkbox>
+							</div>
+						</div>
+		            	
+		            <!-- BENEFICIARIOS -->
+			            <div ng-if="$ctrl.datos.DATOS_BENEFICIARIO.IN_ANADIR_BENEFICIARIO_1=='1'">
+				        <legend>Beneficiario 1</legend>
+		                    <div class="margenPresupuestos" ng-if="$ctrl.datos.DATOS_BENEFICIARIO.IN_ANADIR_BENEFICIARIO_1=='1'">
+		                    	<div layout="row">
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Fecha de nacimiento</label>
+										<md-datepicker ng-if="($ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO == null || $ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO == undefined) ? $ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO = null : $ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO" ng-model="$ctrl.datos.DATOS_BENEFICIARIO.FD_NACIMIENTO" disabled></md-datepicker>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Sexo</label>
+										<md-select id="sexo" ng-model="$ctrl.datos.DATOS_BENEFICIARIO.ID_SEXO" disabled>
+											<md-option ng-value="1">Hombre</md-option>
+											<md-option ng-value="2">Mujer</md-option>
+										</md-select>
+									</md-input-container>
+								</div>
+								<div class="margenPresupuestos" layout="row">
+									<div class="margenPresupuestos" flex-gt-sm>
+										<md-checkbox ng-model="$ctrl.datos.DATOS_BENEFICIARIO.IN_FARMACIA_REEMBOLSO" disabled>Farmacia reembolso</md-checkbox>
+									</div>
+									<div class="margenPresupuestos" flex-gt-sm>
+										<md-checkbox ng-model="$ctrl.datos.DATOS_BENEFICIARIO.IN_DENTAL_REEMBOLSO" disabled>Dental reembolso</md-checkbox>
+									</div>
+								</div>
+							</div>
+                       </div>
+                       
+                       <div class="margenPresupuestos" ng-if="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_ANADIR_BENEFICIARIO_2=='1'">
+	                       <legend>Beneficiario 2</legend>
+		                    <div class="margenPresupuestos" ng-if="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_ANADIR_BENEFICIARIO_2=='1'">
+		                    	<div class="margenPresupuestos" layout="row">
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Fecha de nacimiento</label>
+										<md-datepicker ng-if="($ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO == null || $ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO == undefined) ? $ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO = null : $ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.FD_NACIMIENTO" disabled></md-datepicker>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Sexo</label>
+										<md-select id="sexo" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.ID_SEXO" disabled>
+											<md-option ng-value="1">Hombre</md-option>
+											<md-option ng-value="2">Mujer</md-option>
+										</md-select>
+									</md-input-container>
+								</div>
+								<div layout="row" class="margenPresupuestos">
+									<div  class="margenPresupuestos" flex-gt-sm>
+										<md-checkbox ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_FARMACIA_REEMBOLSO" disabled>Farmacia reembolso</md-checkbox>
+									</div>
+									<div  class="margenPresupuestos" flex-gt-sm>
+										<md-checkbox ng-model="$ctrl.datos.DATOS_BENEFICIARIO_2.IN_DENTAL_REEMBOLSO" disabled>Dental reembolso</md-checkbox>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div ng-if="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_ANADIR_BENEFICIARIO_3=='1'" class="margenPresupuestos">
+							<legend>Beneficiario 3</legend>
+		                    <div ng-if="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_ANADIR_BENEFICIARIO_3 == '1'" class="margenPresupuestos">
+		                    	<div layout="row" class="margenPresupuestos">
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Fecha de nacimiento</label>
+										<md-datepicker ng-if="($ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO == null || $ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO == undefined) ? $ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO = null : $ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO" disabled ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.FD_NACIMIENTO"></md-datepicker>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Sexo</label>
+										<md-select id="sexo" ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.ID_SEXO" disabled>
+											<md-option ng-value="1">Hombre</md-option>
+											<md-option ng-value="2">Mujer</md-option>
+										</md-select>
+									</md-input-container>
+								</div>
+								<div layout="row" class="margenPresupuestos">
+									<div class="md-block" flex-gt-sm>
+										<md-checkbox ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_FARMACIA_REEMBOLSO" disabled>Farmacia reembolso</md-checkbox>
+									</div>
+									<div class="md-block" flex-gt-sm>
+										<md-checkbox ng-model="$ctrl.datos.DATOS_BENEFICIARIO_3.IN_DENTAL_REEMBOLSO" disabled>Dental reembolso</md-checkbox>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+					<!-- Datos del pago -->
+					<legend>Datos del pago</legend>
+				        <div layout-gt-sm="row" class="margenPresupuestos">
+	                        <md-input-container class="md-block" flex-gt-sm>
+				          		<label>{{ 'DATE_START' | translate }}</label>
+				          		<md-datepicker ng-if="($ctrl.datos.DATOS_PAGO.FD_INICIO == undefined || $ctrl.datos.DATOS_PAGO.FD_INICIO == null) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null : $ctrl.datos.DATOS_PAGO.FD_INICIO" ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" disabled></md-datepicker>
+				          	</md-input-container>
+	                    </div>
+						
+						
+	    		
+	            </div>
+        	</md-content>
+	</uib-tabset>     
+</div>   

@@ -1,0 +1,54 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="formClass" id="form" ng-form="$ctrl.informeBanco">
+	<h3>Recibos Banco Pleyade sin C/C</h3>
+	<div layout-gt-sm="row">
+		<div layout-gt-sm="row" class="margin-top-20">
+        	<md-input-container class="md-block min-w-160" flex-gt-sm>
+        		<label>F.Inicio desde...</label>
+
+          		<md-datepicker ng-click="($ctrl.form.FD_CRITERIO_FROM.value == null || $ctrl.form.FD_CRITERIO_FROM.value == undefined) ? $ctrl.form.FD_CRITERIO_FROM.value = null : ''" ng-model="$ctrl.form.FD_CRITERIO_FROM.value" required></md-datepicker>
+          	</md-input-container>
+          	<md-input-container class="md-block min-w-160" flex-gt-sm>
+          		<label>F. Inicio hasta...</label>
+
+          		<md-datepicker ng-click="($ctrl.form.FD_CRITERIO_TO.value == null || $ctrl.form.FD_CRITERIO_TO.value == undefined) ? $ctrl.form.FD_CRITERIO_TO.value = null : ''" ng-model="$ctrl.form.FD_CRITERIO_TO.value" required></md-datepicker>
+          	</md-input-container>
+    	</div>
+	</div>
+	<div layout-gt-sm="row">
+	  	<md-input-container class="md-block" flex-gt-sm>
+         	<label>Medio de pago</label>
+         	<md-select ng-model="$ctrl.form.ID_TIPO_MEDIO_PAGO" required>
+         		<md-option ng-repeat="pago in $ctrl.tipos.pago" ng-value="pago.ID_TIPO_MEDIO_PAGO">
+               		{{$ctrl.parent.getDescriptivo(pago, 'DS_TIPO_MEDIO_PAGO')}}
+<!-- 	             	{{pago.DS_TIPO_MEDIO_PAGO}} -->
+	           	</md-option>
+         	</md-select>
+       	</md-input-container>
+   	</div>
+	<div style="text-align:center" class="margin-top-20" ng-if="$ctrl.cargando == false">
+		<!-- <md-button class="md-raised md-primary dark-blue" ng-click="$ctrl.exportarPDF()"> -->
+		<md-button class="md-raised md-primary dark-blue btnExportar" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informeBanco.$valid, 'pdf')">
+			<md-icon>picture_as_pdf</md-icon>
+			Descargar PDF
+		</md-button>
+		<!-- <md-button class="md-raised md-primary dark-green" ng-click ="$ctrl.exportarExcel()"> -->
+		<md-button class="md-raised md-primary dark-blue btnExportar" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informeBanco.$valid, 'xls')">
+			<i class="fa-duotone fa-download" style="margin-right: 5px"></i>
+			Descargar Excel
+		</md-button>
+		<md-button class="md-raised md-primary medium-orange btnCancelar" ng-click="$ctrl.limpiar($ctrl.form)">
+			<i class="fa fa-trash"></i>
+			LIMPIAR
+		</md-button>
+	</div>
+
+	<div id="buscandoGif" style="width: 100%; margin: 10% auto 0;" ng-if="$ctrl.cargando == true">
+		<div class="centered" style="height: 100%; margin: 0 auto;">
+			<div class="blob-3"></div>
+			<div class="blob-4"></div>
+		</div>
+	</div>
+</div>

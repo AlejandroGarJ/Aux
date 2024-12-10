@@ -1,0 +1,63 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color:white">
+
+	<div layout-gt-sm="row" class="inputs-without-label-value" style="background-color:white; margin-top: 15px;margin-left: 13px;margin-right: 10px;border-left: 3px solid #0066ff">
+		<h3 style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="50" >
+			<span style="color:#5e5e5e!important">
+				{{ 'SEARCH' | translate }} DE</span><span style="color:#0066ff!important"> CÓDIGOS POSTALES
+			</span>
+			<div layout-gt-sm="row">
+				<h6 style="text-align: center;text-transform: uppercase">BÚSQUEDA Y GESTIÓN DE CÓDIGOS POSTALES</h6>
+			</div>
+		</h3>
+	</div>
+	<div layout-gt-sm="row" >
+		<a ng-click="$ctrl.showBasicSearch()" ng-if="$ctrl.basicSearch == true">{{ 'SHOW_SEARCH_FIELDS' | translate }}</a>
+	</div>
+	
+    <form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('codpostal')">
+        <div class="form-scroll" resize>
+            <div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+				<md-autocomplete name="Provincia" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+					md-search-text="$ctrl.searchProvincia"
+					md-items="item in $ctrl.parent.querySearch($ctrl.searchProvincia, $ctrl.tipos.provincias, 'NO_PROVINCIA')"
+					md-item-text="item.NO_PROVINCIA" md-min-length="0"
+					md-floating-label="Provincia"
+					md-selected-item="$ctrl.autocomplete.PROVINCIA"
+					md-selected-item-change="$ctrl.form.CO_PROVINCIA.value = $ctrl.autocomplete.PROVINCIA.CO_PROVINCIA"
+					ng-blur="$ctrl.autocomplete.PROVINCIA == undefined ? $ctrl.searchProvincia = '' : ''">
+					<md-item-template>
+						<span md-highlight-text="$ctrl.searchProvincia"
+							md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_PROVINCIA')}}</span>
+					</md-item-template>
+					<md-not-found>
+						No existe el campo "{{$ctrl.searchProvincia}}".
+					</md-not-found>
+				</md-autocomplete>  
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Código Postal</label> <input ng-model="$ctrl.form.CO_CODIGO_POSTAL.value">
+				</md-input-container>  
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Localidad</label> <input ng-model="$ctrl.form.NO_POBLACION.value">
+				</md-input-container>           
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Localidad INE</label> 
+					<input ng-model="$ctrl.form.NO_POBLACION_INE.value">
+				</md-input-container> 
+
+				<md-input-container class="md-block" flex-gt-sm style="margin-top: 14px!important;">
+					<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+						<i class="fa fa-magnifying-glass"></i>
+						{{ 'SEARCH_BTN' | translate }}
+					</md-button>
+					<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+						<i class="fa fa-trash"></i>
+						{{ 'CLEAN' | translate }}
+					</md-button>
+			</md-input-container>
+            </div>
+        </div>
+    </form>
+</md-content>

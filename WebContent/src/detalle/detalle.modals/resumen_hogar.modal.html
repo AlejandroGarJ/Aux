@@ -1,0 +1,286 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog class="recap-home-dialog">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>SEGURO HOGAR MOVISTAR - RESUMEN PREVIO A LA CONTRATACIÓN</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()">
+	          	<md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	
+	<md-dialog-content>
+
+		<div ng-cloak>
+			<md-content>
+				<md-tabs class="mf-tabs" md-center-tabs md-dynamic-height>
+					<md-tab label="Resumen">
+						<md-content class="md-padding">
+							
+							<div class="sale-recap-container">
+								<legend style="margin: 0;text-align: left;text-transform: uppercase;font-size: 15px;font-family: 'TelefonicaWebLight';"> DATOS DEL DOMICILIO A ASEGURAR</legend>
+								<div layout-gt-sm="row" layout-align="center center">
+									<div flex="">
+										<label ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_TIPO_VIA || $ctrl.textoBusquedaVia">Tipo de vía </label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_TIPO_VIA ? $ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_TIPO_VIA : $ctrl.textoBusquedaVia}}</p>
+									</div>
+									<div flex="">
+										<label ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_DIRECCION">Dirección </label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_DIRECCION}}</p>
+									</div>
+									<div flex="">
+										<label ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NU_NUMERO">Número </label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NU_NUMERO}}</p>
+									</div>
+								</div>
+								<div layout-gt-sm="row" layout-align="center center">
+									<div flex="" ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_PORTAL">
+										<label>Bloque </label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_PORTAL}}</p>
+									</div>
+									<div flex="" ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_ESCALERA">
+										<label>Escalera </label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_ESCALERA}}</p>
+									</div>
+									<div flex="" ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NU_PLANTA">
+										<label>Planta </label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NU_PLANTA}}</p>
+									</div>
+									<div flex="" ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_PUERTA">
+										<label>Puerta </label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_PUERTA}}</p>
+									</div>
+								</div>
+								<div layout-gt-sm="row" style="margin-top: 15px;" layout-align="center center">
+									<div flex="">
+										<label>Código postal</label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.CO_POSTAL}}</p>
+									</div>
+									<div flex="">
+										<label>Localidad</label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_LOCALIDAD}}</p>
+									</div>
+									<div flex="">
+										<label>Provincia</label><p>{{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.DS__CO_PROVINCIA}}</p>
+									</div>
+								</div>
+								<legend style="margin: 0;text-align: left;text-transform: uppercase;font-size: 15px;font-family: 'TelefonicaWebLight';">INFORMACIÓN SOBRE EL SEGURO</legend>
+								<div layout-gt-sm="row" style="margin-top: 15px;">
+									<div flex="">
+										<label>MODALIDAD SELECCIONADA</label><p>{{$ctrl.modalidad.NO_MODALIDAD}}</p>
+									</div>
+									<div flex="">
+										<label>PRIMER RECIBO (€)</label><p>{{$ctrl.formatPrice($ctrl.objPresInd.PRESUPUESTO.MODALIDAD.IM_PRIMA_TOT)}}€</p>
+									</div>
+									<div flex="">
+										<label>PRIMA ANUAL TOTAL (€)</label><p>{{$ctrl.formatPrice($ctrl.objPresInd.PRESUPUESTO.MODALIDAD.IM_PRIMA_ANUAL_TOT)}}€</p>
+									</div>
+									<div flex="">
+										<label>ENTRADA EN VIGOR</label><p>{{$ctrl.parent.dateFormatView($ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.FD_INICIO)}}</p>
+									</div>
+								</div>
+								<div layout-gt-sm="row" style="margin-top: 30px" layout-align="center center">
+									<div flex>
+										<md-checkbox disabled ng-model="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" ng-true-value="2" ng-checked="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 2 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '2'">
+											Anual                                
+										</md-checkbox>
+										<md-checkbox disabled ng-model="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" ng-true-value="3" ng-checked="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 3 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '3'">
+											Semestral                                
+										</md-checkbox>
+										<md-checkbox disabled ng-model="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO" ng-true-value="5" ng-checked="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 5 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '5'">
+											Trimestral                                
+										</md-checkbox>
+									</div>
+								</div>
+								<legend ng-if="$ctrl.garantiasOpcionales.length > 0" style="margin: 0;text-align: left;text-transform: uppercase;font-size: 15px;font-family: 'TelefonicaWebLight';">Garantías opcionales</legend>
+								<div layout-gt-sm="row" ng-if="$ctrl.garantiasOpcionales.length > 0" style="margin-top: 15px;">
+									<div flex="">
+										<label>Garantía</label><p ng-repeat="garantiaOpcional in $ctrl.garantiasOpcionales">{{garantiaOpcional.NO_GARANTIA}}</p>
+									</div>
+								</div>
+								<legend style="margin: 0;text-align: left;text-transform: uppercase;font-size: 15px;font-family: 'TelefonicaWebLight';"> DATOS DE LOS CAPITALES</legend>
+								<div layout-gt-sm="row" style="margin-top: 15px;" layout-align="center center">
+									<div flex="">
+										<label>Valor del CONTENIDO (€)</label><p>{{$ctrl.formatPrice($ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTENIDO)}}€</p>
+									</div>
+									<div flex="">
+										<label>Valor del CONTINENTE (€)</label><p>{{$ctrl.formatPrice($ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_CAPITALES.IM_VALOR_CONTINENTE)}}€</p>
+									</div>
+								</div>
+
+								<legend style="margin: 0;text-align: left;text-transform: uppercase;font-size: 15px;font-family: 'TelefonicaWebLight';"> DATOS DEL TOMADOR</legend>
+								<div layout-gt-sm="row" style="margin-top: 15px; justify-content: space-between;" layout-align="center center">
+									<div>
+										<label>Nº Documento</label>
+										<p>{{$ctrl.datos.DATOS_TOMADOR.NU_DOCUMENTO}}</p>
+									</div>
+									<div>
+										<label>{{ 'NAME' | translate }}</label>
+										<p>{{$ctrl.datos.DATOS_TOMADOR.NO_NOMBRE}}</p>
+									</div>
+								
+									<div>
+										<label>Apellidos</label>
+										<p>{{$ctrl.datos.DATOS_TOMADOR.NO_APELLIDO1}}</p>
+									</div>
+									<div>
+										<label>Email</label>
+										<p>{{$ctrl.datos.DATOS_TOMADOR.NO_EMAIL}}</p>
+									</div>
+								</div>
+								<legend style="margin: 0;text-align: left;text-transform: uppercase;font-size: 15px;font-family: 'TelefonicaWebLight';"> DATOS DE PAGO</legend>
+								<div layout-gt-sm="row" layout-align="center center">
+									<div flex="">
+										<label>Titular de la cuenta</label><p>{{$ctrl.objPres.PRESUPUESTO.HOGAR.DATOS_PAGO.NO_TITULAR}}</p>
+									</div>
+
+									<div flex="">
+										<label>IBAN</label><p>{{$ctrl.objPres.PRESUPUESTO.HOGAR.DATOS_PAGO.CO_IBAN}}</p>
+									</div>
+								</div>
+								
+
+								<div flex layout-gt-sm="row" layout-align="center none">
+									<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.cancel()">
+										<i class="fa-duotone fa-backward"></i> NO CONTRATAR
+									</md-button>
+									<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.emitir()">
+										<i class="fa-duotone fa-check-double"></i> CONTRATAR
+									</md-button>
+								</div>
+								<a ng-if="$ctrl.codAseguradora == 1" href="src/documentos/CALL_CENTER_Texto_cierre_de_venta_SantaluciayTelefonicaSeguros.pdf" class="enlace_tarificador_hogar" target="_blank">
+									Ver Propuesta texto cierre de venta</a>
+								<a ng-if="$ctrl.codAseguradora == 2" href="src/documentos/CALL_CENTER_Texto_cierre_de_venta_TelefonicaSeguros.pdf" class="enlace_tarificador_hogar" target="_blank">
+									Ver Propuesta texto cierre de venta</a>
+							</div>
+						</md-content>
+					</md-tab>
+
+					<md-tab label="Texto cierre">
+						<md-content class="md-padding">
+							
+							<div class="sale-txt-container">
+
+								<h4>
+									<i><u>Texto cierre de venta para modalidades aseguradas por</u></i>
+								</h4>
+
+								<div>
+									<div>
+										<img src="src/img/logo-telefonica-50h.png">
+									</div>
+									<div ng-if="$ctrl.codAseguradora == 1">
+										<img src="src/img/1.png">
+									</div>
+								</div>
+
+								<h4>
+									<b>1. CONTRATACION Y ENVIO POLIZA POR CORREO ELECTRONICO</b>
+								</h4>
+
+								<p>
+									<i><u>Texto a leer y aceptar por el cliente y solo entonces se finalizará el proceso de contratación y se enviará la póliza contratada.</i></u>
+								</p>
+
+								<p>
+									<b>Agente:</b> <i>“¿Continúas interesado en este producto de seguro?”</i>
+								</p>
+
+								<p>
+									<b>Cliente:</b> <i>Sí.</i>
+								</p>
+
+								<p>
+									<b>Agente:</b> <i>“Muy bien.</i>
+								</p>
+
+								<p>
+									<i>Como sabes, este Seguro es ofrecido<span ng-if="$ctrl.codAseguradora == 1"> en coaseguro</span> por Telefónica Seguros y Reaseguros Compañía Aseguradora, S.A.U.<span ng-if="$ctrl.codAseguradora == 1"> y Santa Lucía, S.A.</span> Por ello, tengo que informarte de que, en caso de finalizar la contratación, tus datos serán tratados<span ng-if="$ctrl.codAseguradora == 1"> tanto</span> por Telefónica<span ng-if="$ctrl.codAseguradora == 1"> como por Santa Lucía</span>, para las mismas finalidades ya informadas. Puedes encontrar más información en el contrato de seguro y en <span ng-if="$ctrl.codAseguradora == 1">las políticas de privacidad que se encuentran en las páginas web de telefonicaseguros.es y santalucia.es</span><span ng-if="$ctrl.codAseguradora == 2"><a href="https://www.telefonicaseguros.es/politica-de-privacidad">www.telefonicaseguros.es/politica-de-privacidad</a></span>.</i>
+								</p>
+
+								<p>
+									<i>Ahora sí, finalmente, paso a recordarte resumidamente las características principales de la contratación:</i>
+								</p>
+
+								<p>
+									<i>“{{$ctrl.datos.DATOS_TOMADOR.NO_NOMBRE}} {{$ctrl.datos.DATOS_TOMADOR.NO_APELLIDO1}},</i>
+								</p>
+
+								<p>
+									<i>con nº de identificación personal {{$ctrl.datos.DATOS_TOMADOR.NU_DOCUMENTO}}</i>
+								</p>
+
+								<p>
+									<i>y correo electrónico {{$ctrl.datos.DATOS_TOMADOR.NO_EMAIL}}</i>
+								</p>
+									
+								<p>
+									<i>suscribe, como tomador, para la vivienda sita en {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_TIPO_VIA}} {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_DIRECCION}} número {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NU_NUMERO}}
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_PORTAL"> bloque  {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_PORTAL}}</span>
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_ESCALERA">escalera {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_ESCALERA}}</span>
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NU_PLANTA">planta {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NU_PLANTA}}</span>
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_PUERTA"> puerta {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_PUERTA}}</span>
+									&nbsp;de {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.NO_LOCALIDAD}} provincia de {{$ctrl.objPresInd.PRESUPUESTO.HOGAR.BLOCK_DIRECCION_VIVIENDA.DS__CO_PROVINCIA}},</i>
+								</p>
+								
+								<p>
+									<i>el Seguro de Hogar “{{$ctrl.modalidad.NO_MODALIDAD}}” con Telefónica Seguros y Reaseguros Compañía Aseguradora, S.A.U.</i>
+								</p>
+								
+								<p>
+									<i>Por el seguro que suscribe quedan amparados los daños y averías que puedan producirse en su vivienda a consecuencia de los riesgos que se describen en las condiciones del contrato, la cobertura de la defensa y de las indemnizaciones derivadas de las reclamaciones por responsabilidad civil que pueda recibir de terceros, así como la defensa jurídica, en caso de estar contratada, en los demás supuestos descritos en el seguro.</i>
+								</p>
+								
+								<p>
+									<i>El importe de la prima a abonar es de {{$ctrl.formatPrice($ctrl.objPresInd.PRESUPUESTO.MODALIDAD.IM_PRIMA_ANUAL_TOT)}} € al año, impuestos incluidos.</i>
+								</p>
+								
+								<p>
+									<i>Este importe se te cobrará en la siguiente cuenta bancaria mediante domiciliación {{$ctrl.objPres.PRESUPUESTO.HOGAR.DATOS_PAGO.CO_IBAN}}</i>
+								</p>
+								
+								<p>
+									<i>con frecuencia&nbsp;
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 2 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '2'">anual</span>
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 3 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '3'">semestral</span>
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 5 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '5'">trimestral</span></i>
+								</p>
+
+								<p ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 2 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '2'">
+									<i>efectuándose el cobro en el momento de la entrada en vigor de la póliza</i>
+								</p>
+
+								<p ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO != 2 && $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO != '2'">
+									<i>efectuándose el primer cobro de la primera fracción en el momento de la entrada en vigor de la póliza de seguro de hogar y&nbsp;
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 3 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '3'">el siguiente con una frecuencia semestral.</span>
+									<span ng-if="$ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == 5 || $ctrl.objPresInd.PRESUPUESTO.HOGAR.DATOS_PAGO.ID_FORMAPAGO == '5'">los siguientes con una frecuencia trimestral.</span></i>
+								</p>
+
+								<p>
+									<i>La cobertura contratada es anual, renovable automáticamente, y dispones de 14 días naturales siguientes a la recepción de la póliza de seguro para desistir del contrato. Podrás ejercitar este derecho dirigiendo tu petición a <span ng-if="$ctrl.codAseguradora == 1">cualquiera de las coaseguradoras</span><span ng-if="$ctrl.codAseguradora == 2">la aseguradora</span> mediante envío postal a su<span ng-if="$ctrl.codAseguradora == 1">s</span> domicilio<span ng-if="$ctrl.codAseguradora == 1">s</span> social<span ng-if="$ctrl.codAseguradora == 1">es</span> que figura<span ng-if="$ctrl.codAseguradora == 1">n</span> en la documentación que recibirás o a la dirección de correo electrónico <a href="">segurohogar@movistar.es</a>, y se te devolverá el importe abonado, salvo la parte de la prima efectivamente consumida hasta tal fecha, siempre y cuando no hayas declarado ningún siniestro y este haya sido aceptado o esté pendiente de resolución.</i>
+								</p>
+								
+								<p>
+									<i>¿Confirmas que quieres contratar el Seguro de Hogar “{{$ctrl.modalidad.NO_MODALIDAD}}” de Movistar Seguros?</i>
+								</p>
+
+								<p>
+									<b>Cliente:</b> <i>Sí.</i>
+								</p>
+
+								<p>
+									<b>Agente:</b> <i>“Agradecemos tu confianza en Movistar Seguros y en breve recibirás en tu correo electrónico los términos y condiciones de la póliza de seguro contratada y el documento de información sobre el producto de seguro. Quiero recordarte que nos tienes a tu disposición en el Servicio de Atención al Cliente 900 22 22 66”.</i>
+								</p>
+
+								<p>
+									<b>Cliente:</b> <i>No</i>
+								</p>
+
+								<p>
+									<b>Agente:</b> <i>“{{$ctrl.datos.DATOS_TOMADOR.NO_NOMBRE}} {{$ctrl.datos.DATOS_TOMADOR.NO_APELLIDO1}}, agradecemos tu atención y cancelamos la contratación del Seguro de hogar<span ng-if="$ctrl.codAseguradora == 2"> de Movistar Seguros</span>. Quiero recordarte que nos tienes a tu disposición en el Servicio de Atención al Cliente 900 22 22 66”.</i> Guardar presupuesto y finalizar proceso.
+								</p>
+
+							</div>
+
+						</md-content>
+					</md-tab>
+
+				</md-tabs>
+			</md-content>
+		  </div>
+		
+	</md-dialog-content>
+</md-dialog>

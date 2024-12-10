@@ -1,0 +1,10 @@
+@media screen and (min-width:960px) {
+    .polizas-card{
+	height: 200px;
+	}
+}
+@media screen (min-width:600px)and(max-width:959px){
+    .polizas-card{
+	height: 150px;
+	}
+} 

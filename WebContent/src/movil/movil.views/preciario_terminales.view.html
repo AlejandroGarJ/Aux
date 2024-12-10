@@ -1,0 +1,51 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+    <md-content ng-show="$ctrl.loading == true" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+        resize ng-style="resizeHeight({{$ctrl.cutMH}})">
+        <div id="buscandoGif" 
+                style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+                resize ng-style="resizeHeight(330)">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+        </div>
+    </md-content>
+
+    <!--PRECIARIO -->
+    <md-content ng-show="$ctrl.loading == false" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+        resize ng-style="resizeHeight({{$ctrl.cutMH}})">
+        <div class="" flex>
+            <h4 class="h4Tar"></span>Preciario</h4>
+            
+            <form name="$ctrl.formGenToken" id="formSubmitGenToken" flex novalidate>
+                <div layout="row" layout-align="center center">
+
+					<div class="md-padding" layout="column" layout-align="center center">
+						<p class="subtitlePreciario">Subir el informe de nuevos terminales</p>
+						<div layout="row">
+							<label for="subirInforme" class="btnEnviar md-button">
+							    {{$ctrl.NO_ARCHIVO}}
+							</label>		
+							<button class="btnEnviar md-button" ng-click="$ctrl.uploadPreciario()">
+							    <span class="fas fa-file-upload m-r_15"></span>Subir preciario
+							</button>		
+							<input type="file" id="subirInforme" name="subirInforme">
+						</div>
+					</div>
+
+					<div class="md-padding" layout="column" layout-align="center center">
+						<p class="subtitlePreciario">Descarga del informe semanal de terminales completo</p>
+						<p class="descargarPreciario" id="descargarPreciario"><span class="fas fa-file-download m-r_15" class="btnEnviar md-button"></span>Descargar</p>
+					</div>
+					
+                </div>
+            </form>
+            
+        </div>
+    </md-content>
+    
+
+</div>

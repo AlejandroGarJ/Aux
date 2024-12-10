@@ -1,0 +1,28 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:30%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>{{ 'SELECT_MEDIATOR' | translate }}</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="padding:13px 10px">
+		<div layout="row" layout-align="center center">
+			<md-input-container class="md-block" flex="70">
+                <label>{{ 'MEDIATOR' | translate }}</label>
+                <md-select ng-model="$ctrl.idMediador" required>
+					<md-option ng-repeat="med in $ctrl.mediadores" ng-value="med.ID_COMPANIA">{{med.NO_COMERCIAL}}</md-option>
+                </md-select>
+             </md-input-container>
+		</div>
+		<div layout="row" layout-align="center center" style="margin-top:6%">
+	        <md-button flex="30" ng-disabled="$ctrl.idMediador == null" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.confirmarMediador()">
+            	{{ 'NEXT' | translate }}
+	        </md-button>
+		</div>
+	</md-dialog-content>
+</md-dialog>

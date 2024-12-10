@@ -1,0 +1,205 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:85%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>{{ 'NEW_ECONOMIC_MOVEMENT' | translate }}</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form name="formNuevoMovimiento" id="formNuevoMovimiento" ng-value="$ctrl.formNuevoMovimiento=!formNuevoMovimiento.$valid" class="md-dialog-content formClass">
+			<div layout="row">
+				<md-input-container class="md-block" flex-gt-sm="30">
+					<label>{{ 'AFFECTED_COVERAGE' | translate }}</label>
+					<md-select ng-change="$ctrl.changeCobertura()" ng-model="$ctrl.coberturaAfectada" required ng-disabled="$ctrl.datos.ID_COMP_RAMO_PROD == 28">
+						<md-option ng-if="estado.ID_GARANTIA != 57" ng-repeat="estado in $ctrl.tipos.garantias" ng-value="estado.NO_GARANTIA">
+							{{$ctrl.appParent.getDescriptivo(estado, 'NO_GARANTIA')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container ng-if="$ctrl.mostrarSeccion() == true" class="md-block" flex-gt-sm>
+					<label>{{ 'SECTION' | translate }}</label>
+					<md-select ng-disabled="$ctrl.coberturaAfectada == null || $ctrl.tipos.garantiasHijoFilter == null || $ctrl.tipos.garantiasHijoFilter.length == 0" ng-model="$ctrl.seccion" ng-required="$ctrl.tipos.garantiasHijoFilter.length > 1">
+						<md-option ng-repeat="estado in $ctrl.tipos.garantiasHijoFilter" ng-value="estado.NO_GARANTIA">
+							{{$ctrl.appParent.getDescriptivo(estado, 'NO_GARANTIA')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container ng-if="$ctrl.mostrarIncidente() == true" class="md-block" flex-gt-sm>
+					<label>{{ 'INCIDENT' | translate }}</label>
+					<md-select ng-model="$ctrl.incidente" required>
+						<md-option ng-repeat="estado in $ctrl.tipos.incidentes" ng-value="estado.DS_TIPOS">
+							{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container ng-if="$ctrl.datos.ID_COMP_RAMO_PROD == 28 && $ctrl.coTipoMov == 3" class="md-block" flex-gt-sm="20">
+					<div class="toggleButton" style="margin-top: 17px;">
+						<div class="button left" ng-class="{active: ($ctrl.toggleIndemnizacion == 'I')}" ng-click="$ctrl.toggleIndemnizacion = 'I'; $ctrl.incidente = null">{{ 'COMPENSATION' | translate }}</div>
+						<div class="button right" ng-class="{active: ($ctrl.toggleIndemnizacion == 'S')}" ng-click="$ctrl.toggleIndemnizacion = 'S'; $ctrl.incidente = null">{{ 'SERVICE' | translate }}</div>
+					</div>
+				</md-input-container>
+				<md-input-container ng-if="$ctrl.datos.ID_COMP_RAMO_PROD == 28 && ($ctrl.coTipoMov == 4 || ($ctrl.coTipoMov == 3 && $ctrl.toggleIndemnizacion == 'S'))" class="md-block" flex-gt-sm="30">
+					<label>{{ 'SERVICE' | translate }}</label>
+					<md-select ng-model="$ctrl.incidente" ng-disabled="$ctrl.tipos.servicios.length == 0">
+						<md-option ng-repeat="estado in $ctrl.tipos.servicios" ng-value="estado.DS_TIPOS">
+							{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container ng-if="$ctrl.datos.ID_COMP_RAMO_PROD == 28 && $ctrl.coTipoMov == 3 && $ctrl.toggleIndemnizacion == 'I'" class="md-block" flex-gt-sm="30">
+					<label>{{ 'COMPENSATION' | translate }}</label>
+					<md-select ng-model="$ctrl.incidente" ng-disabled="$ctrl.tipos.indemnizaciones.length == 0">
+						<md-option ng-repeat="estado in $ctrl.tipos.indemnizaciones" ng-value="estado.DS_TIPOS">
+							{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+			<div ng-if="$ctrl.cargarMovimento == true" id="buscandoGif" style="margin-top: 0px;padding:0px; display:table; z-index: 999999999; position: fixed; width: 90%; height: 2%;">
+	            <div class="centered" style="display:table-cell; vertical-align: middle;">
+					<div class="blob-3"></div>
+					<div class="blob-4"></div>
+				</div>
+	        </div>
+			<div style="margin-top: 20px;" layout="row">
+				<md-input-container class="md-block" flex="25">
+					<label>{{ 'TYPE' | translate }}</label>
+					<md-select ng-change="$ctrl.coProveedor = null" ng-model="$ctrl.coTipoMov" required>
+						<md-option ng-repeat="tipo in $ctrl.tipos.movEcon" ng-if="$ctrl.datos.ID_COMP_RAMO_PROD != 28 || ($ctrl.datos.ID_COMP_RAMO_PROD == 28 && (tipo.CO_TIPO == 0 || tipo.CO_TIPO == 3 || tipo.CO_TIPO == 4))" ng-value="tipo.CO_TIPO">
+							{{$ctrl.appParent.getDescriptivo(tipo, 'DS_TIPOS')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<!-- <md-input-container ng-if="$ctrl.coTipoMov != null" class="md-block flex">
+					<label>{{ 'BASE_AMOUNT' | translate }}</label>
+					<input ng-class="{'input-importe-siniestro-error': ($ctrl.formatImporte($ctrl.imBase) > $ctrl.maxImportePago && ($ctrl.coTipoMov == 3 || $ctrl.coTipoMov == 1 || $ctrl.coTipoMov == 4))}" placeholder="10000.00" type="text" ng-model="$ctrl.imBase" required disabled />
+					<span class="text-importe-siniestro-error" ng-if="$ctrl.formatImporte($ctrl.imBase) > $ctrl.maxImportePago && ($ctrl.coTipoMov == 3 || $ctrl.coTipoMov == 1 || $ctrl.coTipoMov == 4)"><i class="fas fa-exclamation-triangle"></i>&nbsp;El importe base excede de la reserva</span>
+				</md-input-container> -->
+				<!-- <md-input-container ng-if="$ctrl.coTipoMov != null && $ctrl.datos.OPOLIZA.ID_PROGRAMA != 2" class="md-block flex">
+					<label>IVA</label>
+					<input placeholder="2100.00" type="text" ng-model="$ctrl.imIva" ng-change="$ctrl.changeImporte()" required/>
+				</md-input-container>
+				<md-input-container ng-if="$ctrl.coTipoMov != null && $ctrl.datos.OPOLIZA.ID_PROGRAMA != 2" class="md-block flex">
+					<label>IRPF</label>
+					<input placeholder="800.00" type="text" ng-model="$ctrl.imIrpf" ng-change="$ctrl.changeImporte()" required/>
+				</md-input-container> -->
+				<md-input-container ng-if="$ctrl.coTipoMov != null" class="md-block flex">
+					<label>{{ 'TOTAL' | translate }} {{ $ctrl.coTipoMov == 1 ? '(Impuestos incluidos)' :'' }}</label>
+					<input ng-class="{'input-importe-siniestro-error': ($ctrl.formatImporte($ctrl.imTotal) > $ctrl.maxImportePago && ($ctrl.coTipoMov == 3 || $ctrl.coTipoMov == 1 || $ctrl.coTipoMov == 4))}" placeholder="10000.00" type="text" ng-model="$ctrl.imTotal" required ng-change="$ctrl.changeImporte()"/>
+					<span class="text-importe-siniestro-error" ng-if="$ctrl.formatImporte($ctrl.imTotal) > $ctrl.maxImportePago && ($ctrl.coTipoMov == 3 || $ctrl.coTipoMov == 1 || $ctrl.coTipoMov == 4)"><i class="fas fa-exclamation-triangle"></i>&nbsp;{{ 'MSG_TOTAL_AMOUNT_EXCEEDS' | translate }}</span>
+				</md-input-container>
+				<div class="importes-nuevo-movimiento" ng-if="$ctrl.coTipoMov == 3 || $ctrl.coTipoMov == 1" flex-gt-sm="25" layout="row" layout-align="center center">
+					<div layout="column" layout-align="center start" style="margin-right: 10px">
+						<span>{{ 'PAYMENTS' | translate }}: <b>{{$ctrl.imPagoCobertura}}€</b></span>
+						<span>{{ 'COMPENSATION' | translate }}: <b>{{$ctrl.imIndemnizacionCobertura}}€</b></span>
+					</div>
+					<div layout="column" layout-align="center start">
+						<span>{{ 'RESERVATION' | translate }}: <b>{{$ctrl.imReservaCobertura}}€</b></span>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div layout="row" layout-align="start start" ng-class="{'margin-top-20': ($ctrl.coTipoMov != 1 && $ctrl.coTipoMov != 0 && $ctrl.coTipoMov != 2 && $ctrl.coTipoMov != 4 && $ctrl.coTipoMov != 3)}">
+					<md-input-container ng-if="$ctrl.coTipoMov == 3" class="md-block flex" flex>
+						<label>{{ 'ACCOUNT_NUMBER' | translate }}</label>
+						<!-- <label ng-if="$ctrl.datos.OPOLIZA.ID_PRODUCTO == 28">Número de cuenta (Rellenar si es diferente al de la póliza)</label> -->
+						<input ng-if="$ctrl.cuentaBancariaDisabled == true" type="text" ng-model="$ctrl.nuCuenta" ng-required="true"/>
+						<input ng-if="$ctrl.cuentaBancariaDisabled != true" type="text" ng-model="$ctrl.nuCuenta" minlength="24" maxlength="24" cvalidation="iban" ng-required="true"/>
+					</md-input-container>
+					<md-input-container ng-if="$ctrl.coTipoMov == 3" class="md-block flex" flex="10">
+						<md-list layout="row" layout-align="center center" style="padding: 0px!important;">
+							<md-list-item>
+								<span style="font-size: 12px; padding-right: 10px;">{{ 'CONFIRM_ACCOUNT' | translate }}</span>
+								<md-switch ng-model="$ctrl.isCuentaConfirmada" ng-true-value="true" class="switch-mov"></md-switch>
+							</md-list-item>
+						</md-list>
+					</md-input-container>
+
+					<md-input-container ng-if="$ctrl.coTipoMov == 1" class="md-block flex" flex>
+						<label>{{ 'BILL' | translate }}</label>
+						<input type="text" ng-model="$ctrl.nuFactura" required/>
+					</md-input-container>
+					
+					<md-input-container ng-if="$ctrl.coTipoMov == 1" class="md-block flex" flex>
+						<label>{{ 'DATE_BILL' | translate }}</label>
+						<md-datepicker ng-model="$ctrl.fechaFactura" required></md-datepicker>
+					</md-input-container>
+					
+					<md-input-container layout="column" layout-align="center center" class="md-block flex" flex>
+						<label>{{ 'DESCRIPTION' | translate }}</label>
+						<textarea ng-model="$ctrl.dsArchivo" rows="1" required></textarea>
+					</md-input-container>
+					
+					<md-input-container layout="column" ng-if="$ctrl.coTipoMov != 3 && $ctrl.mostrarSeccion()" layout-align="center center" class="md-block" flex>
+						<label>{{ 'SUPPLIER' | translate }}</label>
+						<md-select ng-model="$ctrl.coProveedor" ng-required="$ctrl.coTipoMov != 0 && $ctrl.coTipoMov != 2">
+							<md-option ng-repeat="proveedor in $ctrl.tipos.proveedores" ng-value="proveedor">
+								{{$ctrl.appParent.getDescriptivo(proveedor, 'NO_PROVEEDOR')}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+					
+					<!-- <div layout="row" layout-align="center center" flex>
+                        <input type="file" id="file_mov" name="file_mov" class="inputfile" multiple />
+                        <label ng-if="$ctrl.nombreArchivoMov == null && ($ctrl.datos.FICHEROS == null || $ctrl.datos.FICHEROS.length <= 0)" class="dark-blue md-button btnNuevo" for="file_mov">
+                            <i class="material-icons btnIconoNube">attachment</i> {{ 'SELECT_FILE' | translate }}
+                        </label>
+                        <label ng-if="$ctrl.nombreArchivoMov != null || $ctrl.listaFicherosMovimiento.length > 0" class="dark-blue md-button btnNuevo" for="file_mov">
+                            <span ng-if="$ctrl.listaFicherosMovimiento.length == 1"><i class="material-icons btnIconoNube">attachment</i> {{$ctrl.nombreArchivoMov}}</span>
+                            <span ng-if="$ctrl.listaFicherosMovimiento.length > 1"><i class="material-icons btnIconoNube">attachment</i> {{$ctrl.datos.FICHEROS.length}} archivos seleccionados</span>
+                        </label>
+                    </div> -->
+
+				</div>
+
+				<div layout="row">
+					<div flex="">
+						<div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover">
+							<span><md-icon class="icon-blue" >upload_file</md-icon></span>
+							<span>{{ 'DRAG_DROP' | translate }}</span>
+						</div>
+					</div>
+
+					<div flex="">
+						<div class="files-container">
+							<div ng-repeat="file in $ctrl.listaFicherosMovimiento track by $index" class="file-row" >
+								<div flex="90">
+									<span>
+										{{file.NO_ARCHIVO}}
+									</span>
+								</div>
+								<!-- <div flex="20">
+									<span ng-if="file.ESTADO">
+										{{file.ESTADO}}
+									</span>
+									<span ng-if="!file.ESTADO">
+										{{ 'NOT_SAVED' | translate }}
+									</span>
+								</div> -->
+								<div flex="10" class="txt-center">
+									<span>
+										<div>
+											<md-icon class="icon-blue" ng-click="$ctrl.removeFile($ctrl.listaFicherosMovimiento, $index)">delete_forever</md-icon>
+											<md-tooltip md-direction="bottom">{{ 'DELETE' | translate }}</md-tooltip>
+										</div>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="margin-bottom-20" layout="row" layout-align="center center">
+				<md-button ng-disabled="$ctrl.cargarMovimento == true" class="fade-out md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardarMovimiento()">
+					{{ 'SAVE_MOVEMENT' | translate }}
+	            </md-button>
+			</div>
+		</form>
+	</md-dialog-content>
+</md-dialog>

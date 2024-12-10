@@ -1,0 +1,260 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width: 80%">
+    <md-toolbar>
+      <div class="md-toolbar-tools" style="height:44px">
+        <h4 class="modal-title" style="text-align: center">DETALLE DE COBERTURAS - TABLA COMPARATIVA</h4>
+        <md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+          <md-icon aria-label="Close dialog">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content style="min-height:260px;">
+    <form style="margin-top: 20px;" class="formClass">
+      <div layout="row" flex="100" style="margin-top: 10px; margin-left:10px; margin-right: 10px;">
+
+        <div class="comparison comparison-bbva">
+
+          <table style="margin: 15px; padding: 15px; ">
+            <thead>
+
+              <tr class="tsm">
+                <th class="tl"></th>
+                <th class="compare-heading">
+                  <div class="ico-wrapper">
+                    <div class="ico-wrapper-lista ico-wrapper-lista-bottom" >
+                      <span class="text">Esencial</span>
+                    </div>
+                  </div>
+                </th>
+                <th class="compare-heading">
+                  <div class="ico-wrapper">
+                    <div class="ico-wrapper-lista ico-wrapper-lista-bottom" >
+                      <span class="text">Más</span>
+                    </div>
+                  </div>
+
+                </th>
+                <th class="compare-heading">
+                  <div class="ico-wrapper">
+                    <div class="ico-wrapper-lista ico-wrapper-lista-bottom" >
+                      <span class="text">Seguridad</span>
+                    </div>
+                  </div>
+                </th>
+                <th class="compare-heading">
+                  <div class="ico-wrapper">
+                    <div class="ico-wrapper-lista ico-wrapper-lista-bottom" >
+                      <span class="text">Más Seguridad</span>
+                    </div>
+                  </div>
+                </th>
+                <th class="compare-heading">
+                  <div class="ico-wrapper">
+                    <div class="ico-wrapper-lista ico-wrapper-lista-bottom" >
+                      <span class="text">Cobertura Total</span>
+                    </div>
+                  </div>
+                </th>
+
+              </tr>
+
+            </thead>
+            <tbody>
+              <tr class="tsm">
+                <td class="tsg tsg c_"></td>
+                <td class="title-mobile" colspan="5">Pretección básica: incendio, explosión, daños por líquidos, viento,
+                  restauración estética</td>
+              </tr>
+              <tr class="compare-row">
+                <td class="title">Pretección básica: incendio, explosión, daños por líquidos, viento, restauración
+                  estética</td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Roturas, daños eléctricos y bienes refrigerados</td>
+              </tr>
+              <tr class="tsm">
+                <td class="title">Roturas, daños eléctricos y bienes refrigerados</td>
+                <td class="tsg tsg c_"><span class="tickred">X</span></td>
+                </td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickred">X</span></td>
+                </td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Protección ampliada y robo</td>
+              </tr>
+              <tr class="compare-row">
+                <td class="title">Protección ampliada y robo</td>
+                <td class="tsg tsg c_"><span class="tickred">X</span></td>
+                </td>
+                <td class="tsg tsg c_"><span class="tickred">X</span></td>
+                </td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Ammpliaciones alto valor</td>
+              </tr>
+              <tr class="tsm">
+                <td class="title">Ammpliaciones alto valor</td>
+                <td class="tsg tsg c_"><span class="tickred">X</span></td>
+                </td>
+                <td class="tsg tsg c_"><span class="tickred">X</span></td>
+                </td>
+                <td class="tsg tsg c_"><span class="tickred">X</span></td>
+                </td>
+                <td class="tsg tsg c_"><span class="tickred">X</span></td>
+                </td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Servicio Asistencia en la Vivienda</td>
+              </tr>
+              <tr class="compare-row">
+                <td class="title">Servicio Asistencia en la Vivienda</td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Servicio Asistencia informática</td>
+              </tr>
+              <tr class="tsm">
+                <td class="title">Servicio Asistencia informática</td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Servicio Mantenimiento por uso y deterioro</td>
+              </tr>
+              <tr class="compare-row">
+                <td class="title">Servicio Mantenimiento por uso y deterioro</td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Servicio Defensa Jurídica</td>
+              </tr>
+              <tr class="tsm">
+                <td class="title">Servicio Defensa Jurídica</td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Servicio Manitas</td>
+              </tr>
+              <tr class="compare-row">
+                <td class="title">Servicio Manitas</td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_"></td>
+                <td class="title-mobile" colspan="5">Responsabilidad Civil</td>
+              </tr>
+              <tr class="tsm">
+                <td class="title">Responsabilidad Civil</td>
+                <td class="tsg tsg c_">250.000€</td>
+                <td class="tsg tsg c_">250.000€</td>
+                <td class="tsg tsg c_">250.000€</td>
+                <td class="tsg tsg c_">250.000€</td>
+                <td class="tsg tsg c_">500.000€</td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Servicio Reparación averías aparatos línea blanca</td>
+              </tr>
+              <tr class="compare-row">
+                <td class="title">Servicio Reparación averías aparatos línea blanca</td>
+                <td class="tsg tsg c_">Opcional</td>
+                <td class="tsg tsg c_">Opcional</td>
+                <td class="tsg tsg c_">Opcional</td>
+                <td class="tsg tsg c_">Opcional</td>
+                <td class="tsg tsg c_">Opcional</td>
+              </tr>
+              <tr class="tsm">
+                <td class="tsg tsg c_">&nbsp;</td>
+                <td class="title-mobile" colspan="5">Servicio Express</td>
+              </tr>
+              <tr class="tsm">
+                <td class="title">Servicio Express</td>
+                <td class="tsg tsg c_">Opcional</td>
+                <td class="tsg tsg c_">Opcional</td>
+                <td class="tsg tsg c_">Opcional</td>
+                <td class="tsg tsg c_">Opcional</td>
+                <td class="tsg tsg c_"><span class="tickblue ic-ciber-checkmark"></span></td>
+              </tr>
+
+            </tbody>
+            <tfoot>
+              
+              <tr class="tsm">
+                <th class="tl"></th>
+                <th class="btn-footer text-center">
+                  <div>
+                    <p><span class="link-modal" ng-click="$ctrl.verCoberturas(240)">ver todas las coberturas</span></p>
+                  </div>
+                </th>
+                <th class="btn-footer text-center">
+                  <div>
+                    <p><span class="link-modal" ng-click="$ctrl.verCoberturas(241)">ver todas las coberturas</span></p>
+                  </div>
+                </th>
+                <th class="btn-footer text-center">
+                  <div>
+                    <p><span class="link-modal" ng-click="$ctrl.verCoberturas(235)">ver todas las coberturas</span></p>
+                  </div>
+                </th>
+                <th class="btn-footer text-center">
+                  <div>
+                    <p><span class="link-modal" ng-click="$ctrl.verCoberturas(243)">ver todas las coberturas</span></p>
+                  </div>
+                </th>
+                <th class="btn-footer text-center">
+                  <div>
+                    <p><span class="link-modal" ng-click="$ctrl.verCoberturas(244)">ver todas las coberturas</span></p>
+                  </div>
+                </th>
+              </tr>
+
+            </tfoot>
+          </table>
+
+        </div>
+      </div>
+    </form>
+  </md-dialog-content>
+</md-dialog>

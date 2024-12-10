@@ -1,0 +1,186 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div style="margin-top:10px;display:inline-flex; width:100%" layout="row" layout-align="center center">
+	<form flex="90" layout="column" role="form" name="formPortabilidad" id="formPortabilidad" ng-value="$ctrl.formPortabilidad=!formPortabilidad.$valid" ng-submit="$ctrl.nuevaPortabilidad()" class="form-detalle formClass">
+		<div layout="row">
+			<div flex-gt-sm="20" style="position: relative">
+				<img ng-src="{{$ctrl.datos.imageURL}}" style="width: 100%;position: absolute;top: 25%">
+				<div clasS="col-md-12" style="top: 50%" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4">
+					<span ng-if="$ctrl.showAddThumbnail == true" style="width: 100%;position: absolute;top: 100%" ng-click="$ctrl.addThumbnail()"><i ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" class="fa-light fa-circle-plus" style="margin-left: 5px"></i> AÑADIR URL THUMBNAIL </span>
+				</div>
+			</div>
+			<div class="md-block" flex-gt-sm="80">
+				<div layout="column" style="padding: 0px 20px 0px 0px;">
+					<div layout="row" style="padding: 20px;"  layout-align="start start">
+						<div class="col-md-12" style="text-align: left;margin-left: 10px!important;padding-left: 0px!important;" >
+							<h2 style="color: #031a34; letter-spacing: 1px"><img ng-if="$ctrl.datos.onWebMobile == 'SÍ'" ng-src="src/img/logo-reduced-movistar.png" style="width: 30px;height: auto"> {{$ctrl.datos.brandName.toUpperCase()}} {{$ctrl.datos.modelName.toUpperCase()}}</h2>
+							<h4 style="color: #031a34; letter-spacing: 1px">CATEGORÍA: {{$ctrl.datos.dsTipoTerminal.toUpperCase()}}</h4>
+						</div>
+					</div>
+				</div>
+				<div style="border: 1px solid #f2f4ff;padding: 0px 20px 20px 20px;" layout-align="end end" >
+					<div layout="row" style="background-color: #f2f4ff;padding: 5px 0px;position: relative;margin-top:20px;border-radius: 5px;">
+						<h5 class="h5DispDetail"><i class="fa-light fa-laptop-mobile" style="margin-right: 10px"></i>INFORMACIÓN GENERAL DEL DISPOSITIVO </h5>
+					</div>
+					<div id="boxConfGeneral" style="margin: 25px 0px">
+						<div layout="row" style="padding: 0px 20px">
+							<div class="col-md-6">
+								<h6 style="cursor: pointer"><md-tooltip>Indica si el Dispositivo es visible en Web 'Seguro Móvil Movistar'</md-tooltip><i class="fa-regular fa-eye" style="margin-right: 5px"></i><span style="color: #031A34;font-family: TelefonicaWebBold!important;">EN WEB 'SEGURO MOVIL MOVISTAR': </span>{{$ctrl.datos.onWebMobile}}</h6>
+								<h6 style="cursor: pointer"><md-tooltip>Banda por defecto y para Web Movistar</md-tooltip><i class="fa-light fa-tag" style="margin-right: 5px"></i><span style="color: #031A34;font-family: TelefonicaWebBold!important;">BANDA POR DEFECTO: </span>0{{$ctrl.datos.idBanda}}<span ng-click="$ctrl.cambiarBanda()" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" class="bundleTextHover" style="color: #0066ff;margin-left: 10px"><i class="fa-regular fa-pen-to-square" style="margin-right: 5px"></i></span></h6>
+								</div>
+							<div class="col-md-6">
+								<h6 style="cursor: pointer"><md-tooltip>Código de identificación único de Terminal LIBRE</md-tooltip><i class="fa-regular fa-barcode" style="margin-right: 5px"></i><span style="color: #031A34;font-family: TelefonicaWebBold!important;">PRECOM LIBRE: </span>{{$ctrl.datos.codPrecom.toUpperCase()}}<span ng-click="$ctrl.cambiarPrecom('COD_PRECOM')" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" class="bundleTextHover" style="color: #0066ff;margin-left: 10px"><i class="fa-regular fa-pen-to-square" style="margin-right: 5px"></i></span></h6>
+								<h6 style="cursor: pointer"><md-tooltip>Código de identificación único de Terminal RENT-FUSIÓN</md-tooltip><i class="fa-regular fa-barcode" style="margin-right: 5px"></i><span style="color: #031A34;font-family: TelefonicaWebBold!important;">PRECOM RENT: </span>{{$ctrl.datos.codRENT.toUpperCase()}}<span ng-click="$ctrl.cambiarPrecom('COD_RENT')" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" class="bundleTextHover" style="color: #0066ff;margin-left: 10px"><i class="fa-regular fa-pen-to-square" style="margin-right: 5px"></i></span></h6>
+								<h6 style="cursor: pointer" style="margin-top: 25px"><md-tooltip>Estos códigos se utilizan para identificar el terminal en los ficheros de carga de SIM ONLY</md-tooltip><span style="color: #031A34;font-family: TelefonicaWebBold!important;">CÓDIGOS DE IDENTIFICACIÓN DE SIM ONLY: </span>{{$ctrl.datos.simOnlyCodes}}</h6>
+								<p ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" class="bundleTextHover" style="color: #0066ff" ng-click="$ctrl.editCodes()"><i class="fa-regular fa-pen-to-square" style="margin-right: 5px"></i>EDITAR CÓDIGOS</p>
+							</div>
+						</div>
+					</div>
+					<div layout="row" style="background-color: #f2f4ff;padding: 5px 0px;position: relative;border-radius: 5px;">
+						<h5 class="h5DispDetail"><i class="fa-light fa-cart-shopping" style="margin-right: 10px"></i>WEB CARRITO FUSIÓN. INFORMACIÓN Y CONFIGURACIÓN DE BUNDLES</h5>
+					</div>
+					<div id="boxWCABundleFusion" style="margin-top: 20px">
+						<div layout="row">
+							<table style="width: 100%;text-align: center">
+								<tr>
+									<th style="text-align: center;color: #031a34;"><i class="fa-sharp fa-solid fa-barcode"  style="margin-right: 5px"></i>BLOQUE PRINCIPAL (PO + CAPACIDAD)</th>
+									<th style="text-align: center;color: #031a34;"><i class="fa-solid fa-barcode-read" style="margin-right: 5px"></i>BLOQUE ADICIONAL (PO + CAPACIDAD)</th>
+									<th style="text-align: center;color: #031a34;"><i class="fa-light fa-layer-group" style="margin-right: 5px"></i>BANDA</th>
+									<th style="text-align: center;color: #031a34;"><i class="fa-light fa-calendar-circle-plus" style="margin-right: 5px"></i>INICIO DE VIGENCIA</th>
+									<th style="text-align: center;color: #031a34;"><i class="fa-light fa-calendar-circle-minus" style="margin-right: 5px"></i>FIN DE VIGENCIA</th>
+									<th style="text-align: center;color: #031a34;">OPCIONES</th>
+								</tr>
+								<tr ng-repeat="bundleFusion in $ctrl.datos.WCA_BundleFusion">
+									<td ng-style="bundleFusion.endDate === 'VIGENTE' ? {'color': '#0066ff','cursor':'pointer','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}" ng-click="$ctrl.comprobacionPo(bundleFusion.active.ids[0].pOffering, bundleFusion.active.ids[0].idCapacidad, 0)">
+										<p class="bundleTextHover"><md-tooltip>Click para comprobar respuesta del sistema para este BLOQUE PRINCIPAL: {{bundleFusion.ids[0].pOffering}} + {{bundleFusion.ids[0].idCapacidad}}</md-tooltip>{{bundleFusion.ids[0].pOffering}} + {{bundleFusion.ids[0].idCapacidad}}</p>
+										<div ng-if="bundleFusion.endDate === 'VIGENTE' && $ctrl.loadOfferingPrincipal == true" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+									</td>
+									<td ng-style="bundleFusion.endDate === 'VIGENTE' ? {'color': '#0066ff', 'cursor':'pointer','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}" ng-click="$ctrl.comprobacionPo(bundleFusion.active.ids[1].pOffering, bundleFusion.active.ids[1].idCapacidad, 1)">
+										<p class="bundleTextHover"><md-tooltip>Click para comprobar respuesta del sistema para este BLOQUE ADICIONAL: {{bundleFusion.ids[1].pOffering}} + {{bundleFusion.ids[1].idCapacidad}}</md-tooltip>{{bundleFusion.ids[1].pOffering}} + {{bundleFusion.ids[1].idCapacidad}}</p>
+										<div ng-if="bundleFusion.endDate === 'VIGENTE' && $ctrl.loadOfferingAdicional == true" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+									</td>
+									<td ng-style="bundleFusion.endDate === 'VIGENTE' ? {'color': '#0066ff','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}"><md-tooltip>Puedes editar la Banda de Tarificación de este BUNDLE a través del menú de OPCIONES</md-tooltip>BANDA 0{{bundleFusion.idBanda}}</td>
+									<td ng-style="bundleFusion.endDate === 'VIGENTE' ? {'color': '#0066ff','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}">{{bundleFusion.startDate}}</td>
+									<td ng-style="bundleFusion.endDate === 'VIGENTE' ? {'color': '#0066ff','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}"><i ng-if="bundleFusion.endDate === 'VIGENTE'" class="fa-solid fa-toggle-on" style="margin-right: 5px"></i>{{bundleFusion.endDate}}</td>
+									<td ng-if="bundleFusion.endDate === 'VIGENTE'">
+										<md-tooltip>Menú de opciones del Bundle</md-tooltip>
+										<md-menu>
+											<md-button ng-click="$mdMenu.open()" style="background-color: transparent!important;min-height: 0">
+												<i class="fa-regular fa-ellipsis-vertical" style="margin-left: 50%"></i>
+											</md-button>
+											<md-menu-content>
+												<md-menu-item>
+													<md-button style="background-color: transparent!important;" ng-click="$ctrl.comprobacionPo(bundleFusion.active.ids[0].pOffering, bundleFusion.active.ids[0].idCapacidad, 0)">
+														<p class="menuItemCheckBundlePO"><i class="fa-sharp fa-solid fa-barcode" style="margin-right: 5px"></i>COMPROBAR BLOQUE PRINCIPAL</p>
+													</md-button>
+												</md-menu-item>
+												<md-menu-item ng-if="bundleFusion.ids[1].pOffering != 'SIN ADICIONAL'">
+													<md-button style="background-color: transparent!important;" ng-click="$ctrl.comprobacionPo(bundleFusion.active.ids[1].pOffering, bundleFusion.active.ids[1].idCapacidad, 1)">
+														<p class="menuItemCheckBundlePO"><i class="fa-solid fa-barcode-read" style="margin-right: 5px"></i>COMPROBAR BLOQUE ADICIONAL</p>
+													</md-button>
+												</md-menu-item>
+												<md-menu-item>
+													<md-button style="background-color: transparent!important;">
+														<p class="menuItemEditBundlePO" ng-click=""><i class="fa-solid fa-pen" style="margin-right: 5px"></i>EDITAR BUNDLE</p>
+													</md-button>
+												</md-menu-item>
+												<md-menu-item>
+													<md-button style="background-color: transparent!important;">
+														<p class="menuItemDownBundlePO" ng-click="$ctrl.bajaPo('WEB_CARRITO')"><i class="fa-solid fa-trash-list" style="margin-right: 5px"></i>DAR DE BAJA EL BUNDLE</p>
+													</md-button>
+												</md-menu-item>
+											</md-menu-content>
+										</md-menu>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<md-tooltip>Dar de alta y configurar un nuevo Bundle de Bloques PO</md-tooltip>
+										<p class="bundleTextHover" style="color: #0066ff;font-family: TelefonicaWebBold" ng-click="$ctrl.nuevoPo('WEB_CARRITO')"><i class="fa-regular fa-square-plus" style="margin-right: 5px"></i>NUEVO BUNDLE RENT-FUSIÓN</p>
+									</td>
+									<td>
+									</td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div layout="row" style="margin-top: 25px;background-color: #f2f4ff;padding: 5px 0px;position:relative;border-radius: 5px;">
+						<h5 class="h5DispDetail"><i class="fa-light fa-lock-open" style="margin-right: 10px"></i>WEB CARRITO LIBRE. INFORMACIÓN Y CONFIGURACIÓN DE BUNDLES</h5>
+					</div>
+					<div id="boxWCABundleLibre" style="margin-top: 15px">
+						<div layout="row">
+							<table style="width: 100%;text-align: center">
+								<tr>
+									<th style="text-align: center;color: #031a34;"><i class="fa-sharp fa-solid fa-barcode"  style="margin-right: 5px"></i>BLOQUE PRINCIPAL (PO + CAPACIDAD)</th>
+									<th style="text-align: center;color: #031a34;"><i class="fa-solid fa-barcode-read" style="margin-right: 5px"></i>BLOQUE ADICIONAL (PO + CAPACIDAD)</th>
+									<th style="text-align: center;color: #031a34;"><i class="fa-light fa-layer-group" style="margin-right: 5px"></i>BANDA</th>
+									<th style="text-align: center;color: #031a34;"><i class="fa-light fa-calendar-circle-plus" style="margin-right: 5px"></i>INICIO DE VIGENCIA</th>
+									<th style="text-align: center;color: #031a34;"><i class="fa-light fa-calendar-circle-minus" style="margin-right: 5px"></i>FIN DE VIGENCIA</th>
+									<th style="text-align: center;color: #031a34;">OPCIONES</th>
+								</tr>
+								<tr ng-repeat="bundleLibre in $ctrl.datos.WCA_BundleLibre">
+									<td ng-style="bundleLibre.endDate === 'VIGENTE' ? {'color': '#0066ff','cursor':'pointer','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}" ng-click="$ctrl.comprobacionPo(bundleLibre.active.ids[0].pOffering, bundleLibre.active.ids[0].idCapacidad, 0)">
+										<p class="bundleTextHover"><md-tooltip>Click para comprobar respuesta del sistema para este BLOQUE PRINCIPAL: {{bundleLibre.ids[0].pOffering}} + {{bundleLibre.ids[0].idCapacidad}}</md-tooltip>{{bundleLibre.ids[0].pOffering}} + {{bundleLibre.ids[0].idCapacidad}}</p>
+										<div ng-if="bundleLibre.endDate === 'VIGENTE' && $ctrl.loadOfferingPrincipal == true" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+									</td>
+									<td ng-style="bundleLibre.endDate === 'VIGENTE' ? {'color': '#0066ff', 'cursor':'pointer','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}" ng-click="$ctrl.comprobacionPo(bundleFusion.active.ids[1].pOffering, bundleLibre.active.ids[1].idCapacidad, 1)">
+										<p class="bundleTextHover"><md-tooltip>Click para comprobar respuesta del sistema para este BLOQUE ADICIONAL: {{bundleLibre.ids[1].pOffering}} + {{bundleLibre.ids[1].idCapacidad}}</md-tooltip>{{bundleLibre.ids[1].pOffering}} + {{bundleLibre.ids[1].idCapacidad}}</p>
+										<div ng-if="bundleLibre.endDate === 'VIGENTE' && $ctrl.loadOfferingAdicional == true" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+									</td>
+									<td ng-style="bundleLibre.endDate === 'VIGENTE' ? {'color': '#0066ff','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}"><md-tooltip>Puedes editar la Banda de Tarificación de este BUNDLE a través del menú de OPCIONES</md-tooltip>BANDA 0{{bundleLibre.idBanda}}</td>
+									<td ng-style="bundleLibre.endDate === 'VIGENTE' ? {'color': '#0066ff','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}">{{bundleLibre.startDate}}</td>
+									<td ng-style="bundleLibre.endDate === 'VIGENTE' ? {'color': '#0066ff','font-family': 'TelefonicaWebBold'} : {'color': '#58617a'}"><i ng-if="bundleLibre.endDate === 'VIGENTE'" class="fa-solid fa-toggle-on" style="margin-right: 5px"></i>{{bundleLibre.endDate}}</td>
+									<td ng-if="bundleLibre.endDate === 'VIGENTE'">
+										<md-tooltip>Menú de opciones del Bundle</md-tooltip>
+										<md-menu>
+											<md-button ng-click="$mdMenu.open()" style="background-color: transparent!important;min-height: 0">
+												<i class="fa-regular fa-ellipsis-vertical" style="margin-left: 50%"></i>
+											</md-button>
+											<md-menu-content>
+												<md-menu-item>
+													<md-button style="background-color: transparent!important;" ng-click="$ctrl.comprobacionPo(bundleLibre.active.ids[0].pOffering, bundleLibre.active.ids[0].idCapacidad, 0)">
+														<p class="menuItemCheckBundlePO"><i class="fa-sharp fa-solid fa-barcode" style="margin-right: 5px"></i>COMPROBAR BLOQUE PRINCIPAL</p>
+													</md-button>
+												</md-menu-item>
+												<md-menu-item ng-if="bundleLibre.ids[1].pOffering != 'SIN ADICIONAL'">
+													<md-button style="background-color: transparent!important;" ng-click="$ctrl.comprobacionPo(bundleLibre.active.ids[1].pOffering, bundleLibre.active.ids[1].idCapacidad, 1)">
+														<p class="menuItemCheckBundlePO"><i class="fa-solid fa-barcode-read" style="margin-right: 5px"></i>COMPROBAR BLOQUE ADICIONAL</p>
+													</md-button>
+												</md-menu-item>
+												<md-menu-item>
+													<md-button style="background-color: transparent!important;">
+														<p class="menuItemEditBundlePO" ng-click=""><i class="fa-solid fa-pen" style="margin-right: 5px"></i>EDITAR BUNDLE</p>
+													</md-button>
+												</md-menu-item>
+												<md-menu-item>
+													<md-button style="background-color: transparent!important;">
+														<p class="menuItemDownBundlePO" ng-click="$ctrl.bajaPo('WCA_LIBRE')"><i class="fa-solid fa-trash-list" style="margin-right: 5px"></i>DAR DE BAJA EL BUNDLE</p>
+													</md-button>
+												</md-menu-item>
+											</md-menu-content>
+										</md-menu>
+									</td>
+								</tr>
+								<tr>
+								<tr>
+									<td>
+										<md-tooltip>Dar de alta y configurar un nuevo Bundle de Bloques PO</md-tooltip>
+										<p class="bundleTextHover" style="color: #0066ff;font-family: TelefonicaWebBold" ng-click="$ctrl.nuevoPo('WCA_LIBRE')"><i class="fa-regular fa-square-plus" style="margin-right: 5px"></i>NUEVO BUNDLE LIBRE</p>
+									</td>
+									<td>
+									</td>
+									<td></td>
+									<td></td>
+								</tr>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

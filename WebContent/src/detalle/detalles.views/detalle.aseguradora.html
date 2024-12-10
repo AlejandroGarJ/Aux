@@ -1,0 +1,408 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+	<uib-tabset active="$ctrl.indice" class="tabsPasos" type="pills" justified="true" flex="none">
+		
+		<!-- DATOS ASEGURADORA -->
+
+		<uib-tab index="1" heading="Aseguradora" class="btn-sm">
+			<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize>
+				<div flex>
+					<form name="$ctrl.formAseguradora" id="formSubmitAseguradora" novalidate>
+						<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos de la aseguradora
+						</legend>
+						<div class="margenPresupuestos" uib-collapse="isCollapsed">
+							<div class="separadorDesplegables"></div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'NAME' | translate }}</label>
+									<input ng-model="$ctrl.datos.NO_COMPANIA" required>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Nombre Comercial</label>
+									<input ng-model="$ctrl.datos.NO_COMERCIAL">
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>CIF</label>
+									<input ng-model="$ctrl.datos.NU_CIF" required>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Dirección</label>
+									<input ng-model="$ctrl.datos.NO_DIRECCION" required>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Localidad</label>
+									<input ng-model="$ctrl.datos.NO_LOCALIDAD" required>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Código Postal</label>
+									<input ng-model="$ctrl.datos.CO_POSTAL">
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'TELEPHONE' | translate }}</label>
+									<input ng-model="$ctrl.datos.NU_TELEFONO" required>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Fax</label>
+									<input ng-model="$ctrl.datos.NU_FAX">
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Email</label>
+									<input ng-model="$ctrl.datos.NO_EMAIL">
+								</md-input-container>
+							</div>
+						
+		
+							<!-- <div layout-gt-sm="row">
+								<md-checkbox ng-model="$ctrl.IN_EMISION_WS"> Acceso a WebService </md-checkbox>
+								<md-checkbox ng-model="$ctrl.datos.IN_PLEYADE"
+                                    ng-if="$ctrl.datos.IN_PLEYADE==undefined ? $ctrl.datos.IN_PLEYADE=false : ' '"> Aseguradora Pléyade </md-checkbox>
+							</div> -->
+		
+							<!-- <div class="formClass form-scroll" layout="column" flex="100">
+								<md-content flex style="padding:20px">
+									<md-button class="dark-blue btnNuevo" ngf-select="$ctrl.upload($file, file)">
+										<md-icon>add</md-icon> Añadir
+									</md-button>
+									<div layout="column">
+										<div layout="row" ng-repeat="file in $ctrl.listFiles track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+											<div flex="60">
+												<span>
+													{{file.NO_ARCHIVO}}
+												</span>
+											</div>
+											<div flex="20">
+												<span ng-if="file.ESTADO">
+													{{file.ESTADO}}
+												</span>
+												<span ng-if="!file.ESTADO">
+													{{ 'NOT_SAVED' | translate }}
+												</span>
+											</div>
+											<div flex="" class="txt-center">
+												<span ng-click="$ctrl.descargarArchivo(file)" ng-if="file.DESCARGAR != false">
+													<md-icon class="icon-blue">download_for_offline</md-icon>
+													<md-tooltip md-direction="bottom">Descargar</md-tooltip>
+												</span>
+											</div>
+											<div flex="" class="txt-center">
+												<span ng-click="$ctrl.eliminarArchivo(file, $index)">
+													<div ng-if="!file.ESTADO || !file.IS_DELETED">
+														<md-icon class="icon-blue">delete_forever</md-icon>
+														<md-tooltip md-direction="bottom">Eliminar</md-tooltip>
+													</div>
+													<div ng-if="file.IS_DELETED">
+														<md-icon class="icon-blue">undo</md-icon>
+														<md-tooltip md-direction="bottom">Volver a incluir</md-tooltip>
+													</div>
+												</span>
+											</div>
+										</div>
+									</div>
+								</md-content>
+							</div> -->
+
+							<div layout="row">
+								<div flex="">
+									<div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover">
+										<span><md-icon class="icon-blue" >upload_file</md-icon></span>
+										<span >Arrastre y suelte los archivos o haga click para seleccionarlos</span>
+									</div>
+								</div>
+			
+								<div flex="">
+									<div class="files-container">
+										<div ng-repeat="file in $ctrl.listFiles track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+											<div flex="60">
+												<span>
+													{{file.NO_ARCHIVO}}
+												</span>
+											</div>
+											<div flex="20">
+												<span ng-if="file.ESTADO">
+													{{file.ESTADO}}
+												</span>
+												<span ng-if="!file.ESTADO">
+													{{ 'NOT_SAVED' | translate }}
+												</span>
+											</div>
+											<div flex="" class="txt-center">
+												<span ng-if="file.DESCARGAR != false">
+													<md-icon class="icon-blue" ng-click="$ctrl.descargarArchivo(file)">download_for_offline</md-icon>
+													<md-tooltip md-direction="bottom">{{ 'DOWNLOAD' | translate }}</md-tooltip>
+												</span>
+											</div>
+											<div flex="" class="txt-center">
+												<span>
+													<div ng-if="!file.ESTADO || !file.IS_DELETED">
+														<md-icon class="icon-blue" ng-click="$ctrl.eliminarArchivo(file, $index)">delete_forever</md-icon>
+														<md-tooltip md-direction="bottom">Eliminar</md-tooltip>
+													</div>
+													<div ng-if="file.IS_DELETED">
+														<md-icon class="icon-blue" ng-click="$ctrl.eliminarArchivo(file, $index)">undo</md-icon>
+														<md-tooltip md-direction="bottom">Volver a incluir</md-tooltip>
+													</div>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</md-content>
+		</uib-tab>
+			
+		<!-- RAMOS -->
+		<uib-tab disable="$ctrl.formAseguradora.$invalid" index="2" heading="Ramos" class="btn-sm" ng-click="$ctrl.checkGrid($ctrl.gridApiRam)">
+			<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize>
+				<div ng-if="$ctrl.load == true" class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+				<div ng-if="$ctrl.load != true" flex>	
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+		                    <label>{{ 'BRANCH' | translate }}</label>
+		                    <md-select ng-model="$ctrl.form.RAMO" required>
+				         		<md-option ng-repeat="ramo in $ctrl.ramos" ng-value="ramo">
+									{{$ctrl.appParent.getDescriptivo(ramo, 'NO_RAMO')}}
+<!-- 				         			{{ramo.NO_RAMO}} -->
+				         		</md-option>
+				         	</md-select>
+		                </md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+		                    <label>Tarificable</label>
+		                    <md-select ng-model="$ctrl.form.IN_TARIFICABLE" required>
+				         		<md-option ng-value="true">
+				         			Sí
+				         		</md-option>
+				         		<md-option ng-value="false">
+				         			No
+				         		</md-option>
+				         	</md-select>
+		                </md-input-container>
+		                <md-input-container class="md-block" flex-gt-sm>
+		                    <label>Emitible</label>
+		                    <md-select ng-model="$ctrl.form.IN_EMISION_WS" required>
+				         		<md-option ng-value="'0'">
+				         			No
+				         		</md-option>
+				         		<md-option ng-value="'1'">
+				         			Web Services
+				         		</md-option>
+				         		<md-option ng-value="'2'">
+				         			Interno
+				         		</md-option>
+				         	</md-select>
+		                </md-input-container>
+		                <md-input-container class="md-block" flex-gt-sm>
+		                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.addRamo()">
+								<md-icon>add</md-icon>
+								Añadir
+							</md-button>
+		                </md-input-container>
+		            </div>
+					<div class="ui-grid" ui-grid="$ctrl.gridRamos" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection resize ng-style="resizeHeight(385)"></div>
+				</div>
+			</md-content>
+		</uib-tab>
+
+		<!--PRODUCTOS-->
+		<uib-tab disable="$ctrl.formAseguradora.$invalid" index="3" heading="Productos" class="btn-sm" ng-click="$ctrl.checkGrid($ctrl.gridApiPro)">
+			<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize>
+				<div ng-if="$ctrl.load == true" class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+				<div ng-if="$ctrl.load != true" flex>	
+					<div class="row">
+						<div layout-gt-sm="row">
+							<!-- <md-input-container class="md-block" flex-gt-sm>
+			                    <label>Producto</label>
+			                    <md-select ng-model="$ctrl.form.PRODUCTO" required>
+					         		<md-option ng-repeat="producto in $ctrl.tipos.productos" ng-value="producto">
+					         			{{producto.NO_PRODUCTO}}
+					         		</md-option>
+					         	</md-select>
+			                </md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+			                    <label>{{ 'BRANCH' | translate }}</label>
+			                    <md-select ng-model="$ctrl.form.RAMO" required>
+					         		<md-option ng-repeat="ramo in $ctrl.tipos.ramos" ng-value="ramo">
+					         			{{ramo.NO_RAMO}}
+					         		</md-option>
+					         	</md-select>
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <label>Comisión</label>
+			                    <input ng-model="$ctrl.form.NU_COMISION" />
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <label>Comisión cartera</label>
+			                    <input ng-model="$ctrl.form.NU_COMISION_CARTERA" />
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.addProducto()">
+									<md-icon>add</md-icon>
+									Añadir
+								</md-button>
+							</md-input-container> -->
+							<md-input-container class="md-block" flex-gt-sm>
+			                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.addProducto()">
+									<md-icon>add</md-icon>
+									Añadir producto
+								</md-button>
+			                </md-input-container>
+			            </div>
+					</div>
+					<div class="ui-grid" ui-grid="$ctrl.gridProductos" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection ui-grid-grouping resize ng-style="resizeHeight(385)"></div>
+				</div>
+			</md-content>
+		</uib-tab>
+
+		<!-- GARANTÍAS -->
+		<uib-tab disable="$ctrl.formAseguradora.$invalid" index="4" heading="Garantías" class="btn-sm" ng-click="$ctrl.checkGrid($ctrl.gridApiGar)">
+			<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize>
+				<div ng-if="$ctrl.load == true" class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+				<div ng-if="$ctrl.load != true" flex>	
+					<div class="row">
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+			                    <label>Garantía</label>
+			                    <md-select ng-model="$ctrl.form.GARANTIA" required>
+					         		<md-option ng-repeat="garantia in $ctrl.tipos.garantias" ng-value="garantia">
+										{{$ctrl.appParent.getDescriptivo(garantia, 'NO_GARANTIA')}}
+<!-- 					         			{{garantia.NO_GARANTIA}} -->
+					         		</md-option>
+					         	</md-select>
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <label>Producto</label>
+			                    <md-select ng-model="$ctrl.form.PRODUCTO" required>
+					         		<md-option ng-repeat="producto in $ctrl.tipos.productos" ng-value="producto">
+										{{$ctrl.appParent.getDescriptivo(producto, 'NO_PRODUCTO')}}
+<!-- 					         			{{producto.NO_PRODUCTO}} -->
+					         		</md-option>
+					         	</md-select>
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <label>{{ 'BRANCH' | translate }}</label>
+			                    <md-select ng-model="$ctrl.form.RAMO" required>
+					         		<md-option ng-repeat="ramo in $ctrl.tipos.ramos" ng-value="ramo">
+										{{$ctrl.appParent.getDescriptivo(ramo, 'NO_RAMO')}}
+<!-- 					         			{{ramo.NO_RAMO}} -->
+					         		</md-option>
+					         	</md-select>
+			                </md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+			                    <label>Opcional</label>
+			                    <md-select ng-model="$ctrl.form.IN_OPCIONAL">
+					         		<md-option ng-value="true">
+					         			Sí
+					         		</md-option>
+					         		<md-option ng-value="false">
+					         			No
+					         		</md-option>
+					         	</md-select>
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.addGarantia()">
+									<md-icon>add</md-icon>
+									Añadir
+								</md-button>
+			                </md-input-container>
+			            </div>
+					</div>
+					<div class="ui-grid" ui-grid="$ctrl.gridGarantias" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection ui-grid-grouping resize ng-style="resizeHeight(385)"></div>
+				</div>
+			</md-content>
+		</uib-tab>
+		
+		<!-- CONTACTOS -->
+		<uib-tab disable="$ctrl.formAseguradora.$invalid" index="5" heading="Contactos" class="btn-sm" ng-click="$ctrl.checkGrid($ctrl.gridApiCon)">
+			<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize>
+				<div ng-if="$ctrl.load == true" class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+				<div ng-if="$ctrl.load != true" flex>	
+					<div class="row">
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+			                    <label>{{ 'NAME' | translate }}</label>
+			                    <input ng-model="$ctrl.form.NO_PERSONA" required />
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <label>Tipo de contacto</label>
+                                <md-select ng-model="$ctrl.form.TIPOCONTACTO" required>
+                                     <md-option ng-repeat="tipo in $ctrl.listTiposContacto" ng-value="tipo">
+										{{$ctrl.appParent.getDescriptivo(tipo, 'DS_TIPOS')}}
+<!--                                          {{tipo.DS_TIPOS}} -->
+					         		</md-option>
+					         	</md-select>
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <label>{{ 'BRANCH' | translate }}</label>
+			                    <md-select ng-model="$ctrl.form.RAMO" required>
+					         		<md-option ng-repeat="ramo in $ctrl.tipos.ramos" ng-value="ramo">
+										{{$ctrl.appParent.getDescriptivo(ramo, 'NO_RAMO')}}
+<!-- 					         			{{ramo.NO_RAMO}} -->
+					         		</md-option>
+					         	</md-select>
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <label>Dirección</label>
+			                    <input ng-model="$ctrl.form.NO_DIRECCION" required />
+			                </md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+			                    <label>Email</label>
+			                    <input ng-model="$ctrl.form.NO_EMAIL" required />
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <label>{{ 'TELEPHONE' | translate }}</label>
+			                    <input type="number" ng-model="$ctrl.form.NU_TELEFONO1" required />
+			                </md-input-container>
+			                <md-input-container class="md-block" flex-gt-sm>
+			                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.addContacto()">
+									<md-icon>add</md-icon>
+									Añadir
+								</md-button>
+			                </md-input-container>
+			            </div>
+					</div>
+                   <div class="ui-grid" ui-grid="$ctrl.gridContactos" ui-grid-pagination ui-grid-resize-columns ui-grid-edit ui-grid-auto-resize ui-grid-selection ui-grid-grouping resize ng-style="resizeHeight(320)"></div>
+				</div>
+			</md-content>
+		</uib-tab>
+	</uib-tabset>
+
+	<div class="margin-top-10" layout="row" layout-align="center none">
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice > 1" ng-click="$ctrl.anterior()">
+			<md-icon>navigate_before</md-icon>
+			Anterior
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice < 5" ng-click="$ctrl.siguiente($ctrl.indice)" form="{{$ctrl.formulario}}">
+			<md-icon>navigate_next</md-icon>
+			Siguiente
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.permisos.IN_BORRADO == true && ($ctrl.indice == 2 || $ctrl.indice == 3 || $ctrl.indice == 4 || $ctrl.indice == 5 || $ctrl.indice == 6)" ng-click="$ctrl.deleteRow($ctrl.indice)" form="{{$ctrl.formulario}}">
+			<i class="fa fa-trash"></i>
+			Borrar
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.permisos.IN_ESCRITURA == true" ng-click="$ctrl.addAseguradora()" form="{{$ctrl.formulario}}">
+			<md-icon>save</md-icon>
+			Validar y guardar
+		</md-button>
+	</div>
+</div>

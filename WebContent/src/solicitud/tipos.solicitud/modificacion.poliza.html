@@ -1,0 +1,289 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="row" layout-align="center center">
+	<div layout="row" style="margin: 30px 0 20px 0;" flex="60" layout-align="center center">
+		<div class="ui-grid ui-grid-aut_h" style="width:100%;" ui-grid="$ctrl.gridCoberturasActuales"></div>
+	</div>
+</div>
+<div class="margin-top-20">
+	<div>
+		<legend><span class="mov-ico ic-ciber-ico-calendario"></span> SUPLEMENTO: PERIODO DE VIGENCIA Y DESCRIPCIÓN</legend>
+		<div uib-collapse="isCollapsed4">
+			<div layout="row" layout-align="center center">
+				<md-input-container class="md-block" flex="20">
+					<label>Fecha de Efecto*</label>
+					<md-datepicker ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_OBSERVACIONES.FD_EFECTO" ng-change="$ctrl.form[$ctrl.tipoSolicitud].XML_OBSERVACIONES.IN_FD_EFECTO = 1; $ctrl.changeFdEfecto()" required></md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex="20">
+					<label>Fecha de Vencimiento</label>
+					<md-datepicker ng-model="$ctrl.datosPoliza.FD_VENCIMIENTO" disabled></md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex="10">
+				</md-input-container>
+				<md-input-container class="md-block margin-top-20" flex="50">
+					<label>Motivo del Suplemento: describe detalladamente las modificaciones que has indicado y van a aplicarse.</label>
+					<textarea ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_OBSERVACIONES.TX_OBSERVACIONES" rows="5"></textarea>
+				</md-input-container>
+			</div>
+			<div layout="row" layout-align="center center">
+				<md-input-container class="md-block" flex="25" style="margin-top: -110px!important;">
+					<p style="color: #0066FF;font-size: 10px;">*Fecha de entrada en vigor de las modificaciones indicadas.</p>
+				</md-input-container>
+				<md-input-container class="md-block" flex="15">
+				</md-input-container>
+				<md-input-container class="md-block margin-top-20" flex="50">
+				</md-input-container>
+			</div>
+		</div>
+	</div>
+</div>
+<div>
+	<legend class="margin-top-20"><i class="fa-duotone fa-bars-progress" style="margin-right: 5px"></i> MODIFICACIONES EN PERIODO DE VIGENCIA</legend>
+	<div class="margin-top-20" layout="row" layout-align="center start">
+		<div layout="column" style="margin-right: 15px" flex>
+			<div layout="row">
+				<div flex=50 layout-align="center center" layout="row">
+					<span style="margin-right: 10px"><i class="fa-light fa-pen" style="margin-right: 10px; color: #0066ff"></i> Modificación de Garantía</span>
+					<md-switch ng-model="$ctrl.objModificacionPoliza.showModificacionGarantias" ng-change="$ctrl.changeSwitchPolizas('modificacionGarantias', 'objModificacionPoliza')"></md-switch>
+				</div>
+				<div flex=50 layout-align="center center" layout="row">
+					<span style="margin-right: 10px"><span style="margin-right: 10px; color: #0066ff" class="mov-ico ic-ciber-ico-respuesta-inmediata"></span> Modificación de Datos de Riesgo</span>
+					<md-switch ng-model="$ctrl.objModificacionPoliza.showCambioRiesgo" ng-change="$ctrl.changeSwitchPolizas('cambioRiesgo', 'objModificacionPoliza')"></md-switch>
+				</div>
+				<div flex=50 layout-align="center center" layout="row">
+					<span style="margin-right: 10px"><i style="margin-right: 10px; color: #0066ff" class="fa-light fa-user-pen"></i> Modificación de Asegurados</span>
+					<md-switch ng-model="$ctrl.objModificacionPoliza.showCambioAsegurados" ng-change="$ctrl.changeSwitchPolizas('cambioAsegurados', 'objModificacionPoliza')"></md-switch>
+				</div>
+				<div flex=50 layout-align="center center" layout="row">
+					<span style="margin-right: 10px"><i style="margin-right: 10px; color: #0066ff" class="fa-light fa-user-pen"></i> Ampliación de Periodo de vigencia</span>
+					<md-switch ng-model="$ctrl.objModificacionPoliza.showCambioVencimiento" ng-change="$ctrl.changeSwitchPolizas('cambioVencimiento', 'objModificacionPoliza')"></md-switch>
+				</div>
+			</div>
+			<div layout="row">
+				<div flex="33">
+					<!-- 	MODIFICACIÓN GARANTÍAS -->
+					<div class="margin-top-20" ng-if="$ctrl.objModificacionPoliza.showModificacionGarantias == true">
+						<!-- 						<div ng-include="$ctrl.templateModificacionGarantias"></div> -->
+						<div layout="row" layout-align="center center">
+							<div flex="70">
+								<md-checkbox ng-change="$ctrl.incluirExtensionModificacion()" ng-model="$ctrl.checkIncluirExtension"><span>Añadir a la Cobertura 4 - Ciberdelincuencia de esta póliza la Extensión de Cobertura a fecha de renovación</md-checkbox>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div flex="33">
+					<!-- 	CAMBIO DE RIESGO -->
+					<div class="margin-top-20" ng-if="$ctrl.objModificacionPoliza.showCambioRiesgo == true">
+						<div ng-include="$ctrl.templateCambioRiesgo"></div>
+					</div>
+				</div>
+				<div flex="33">
+					<!-- 	ASEGURADOS -->
+					<div class="margin-top-20" ng-if="$ctrl.objModificacionPoliza.showCambioAsegurados == true">
+						<div class="divSubsolicitudCambioAsegurados" ng-include="$ctrl.templateCambioAsegurados"></div>
+					</div>
+				</div>
+				<div flex="33">
+					<!-- 	FECHA DE VENCIMIENTO -->
+					<div class="margin-top-20" ng-if="$ctrl.objModificacionPoliza.showCambioVencimiento == true">
+						<div class="divSubsolicitudCambioVencimiento">
+							<md-input-container class="md-block">
+								<label>Nueva Fecha de Vencimiento</label>
+								<md-datepicker ng-model="$ctrl.changeVencimiento" ng-change="$ctrl.changeFdVencimiento()"></md-datepicker>
+							</md-input-container>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<legend class="margin-top-20"><i class="fa-duotone fa-piggy-bank" style="margin-right: 5px"></i> MOVIMIENTO ECONÓMICO (RECIBO ADICIONAL) Y PRIMA DE RENOVACIÓN</legend>
+	<div>
+		<div>
+			<div layout="row" >
+				<div layout-align="start center" layout="row" style="margin-right: 50px;">
+					<span style="margin-right: 10px"><span style="margin-right: 10px; color: #0066ff"
+							class="mov-ico ic-ciber-ico-respuesta-inmediata"></span> Generar Recibo Adicional</span>
+					<md-switch ng-model="$ctrl.calculaMovEcon" ng-change="$ctrl.mostrarCalculo()"></md-switch>
+				</div>
+				<div layout-align="center center" flex="15" style="text-align: center" ng-if="$ctrl.calculaMovEcon == true">
+					<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center">
+						<md-list-item layout-align="center center">
+							<md-input-container style="margin-top: 23px!important;">
+								<label>PRIMA NETA RENOVACIÓN (€)</label>
+								<input currency-ciber amount ng-model="$ctrl.primasRenovacion.IM_PRIMANETA" step="any"
+									placeholder="Importe en €" required md-no-asterisk>
+							</md-input-container>
+						</md-list-item>
+					</md-list>
+				</div>
+				<div layout-align="center center" flex="15" style="text-align: center" ng-if="$ctrl.calculaMovEcon == true">
+					<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center">
+						<md-list-item layout-align="center center">
+							<md-input-container style="margin-top: 23px!important;">
+								<label>PRIMA PAGADA EN ANUALIDAD (€)</label>
+								<input currency-ciber amount ng-model="$ctrl.datosPoliza.IM_PRIMA_NETA" step="any"
+									placeholder="Importe en €" required md-no-asterisk disabled>
+							</md-input-container>
+						</md-list-item>
+					</md-list>
+				</div>
+				<div flex="15" style="text-align: center; margin-top: 45px;" ng-if="$ctrl.calculaMovEcon == true">
+					<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.calcularRecibo()">
+						<span><i style="margin-right: 5px;" class="fa-duotone fa-check-double"></i> CALCULAR IMPORTES</span>
+					</md-button>
+				</div>
+			</div>
+			<div ng-if="$ctrl.generaMovEcon == true">
+				<div layout="row" layout-align="center center" flex="100" style="margin-top: 20px; border: 2px solid #f2f4ff;">
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100">
+									<label>PRIMA NETA RECIBO (€)</label>
+									<input amount type="number" string-to-number ng-model="$ctrl.primas.IM_PRIMANETA" step="any" placeholder="Importe en €" required md-no-asterisk ng-change="$ctrl.changePrimas()">
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center">
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100" >
+									<label>PRIMA TOTAL (€)</label>
+									<input ng-disabled="true" currency-ciber ng-model="$ctrl.primas.IM_RECIBO_TOTAL" step="any" placeholder="-" required md-no-asterisk>
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+					<div layout="row" layout-align="center center" flex="100">
+						<div flex style="text-align: center">
+							<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+								<md-list-item layout-align="center center">
+									<md-input-container style="margin-top: 23px!important;" flex="100" >
+										<label>PRIMA REASEGURO RECIBO (€)</label>
+										<input amount ng-model="$ctrl.primas.IM_OFESAUTO" step="any" placeholder="Importe en €" required md-no-asterisk>
+										<span ng-show="$ctrl.precalculadaRecibo" style="color: rgb(182 109 0);font-size: 11px;" class="text-importe-siniestro-error">Prima precalculada al 60%</span>
+									</md-input-container>
+								</md-list-item>
+							</md-list>
+						</div>
+					</div>
+					<div flex="25" style="text-align: center;margin-top: 45px;">
+						<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.changePrimas()">
+							<span><i style="margin-right: 5px;" class="fa-duotone fa-rotate-right"></i> RECALCULAR IMPORTE (RECIBO ADICIONAL)</span>
+						</md-button>
+					</div>
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100">
+									<label>IPS (8% PRIMA NETA)</label>
+									<input ng-disabled="true" ng-model="$ctrl.primas.IM_IMPUESTOS" placeholder="-">
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100">
+									<label>LEA (0,15% PRIMA NETA)</label>
+									<input ng-disabled="true"  ng-model="$ctrl.primas.IM_CLEA" placeholder="-">
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100">
+									<label style="color: #8a1a93;letter-spacing: 1px;">FRANQUICIA (€)</label>
+									<input style="border: 1px solid #b99ebb;" ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.IM_FRANQUICIA" required placeholder="-">
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+				</div>
+				<!-- <div layout="row" layout-align="center center" style="padding-top: 40px">
+					<p style="color:#031a34!important;text-align: center">
+						<i class="fa-duotone fa-piggy-bank" style="margin-right: 5px"></i>
+						Has indicado que esta solicitud generará un <span style="color: #6E7894;font-family: TelefonicaWebBold">MOVIMIENTO ECONÓMICO.</span>
+					</p>
+				</div> -->
+				<div style="padding-top: 40px; border: 2px solid #f2f4ff">
+				<div layout="row" layout-align="center center">
+					<p style="color:#031a34!important;text-align: center">
+						<i class="fa-duotone fa-piggy-bank" style="margin-right: 5px"></i>
+						Esta es la <span style="color: #6E7894;font-family: TelefonicaWebBold">PRIMA</span> que se le cobrará al cliente/empresa una vez llegue su <span style="color: #6E7894;font-family: TelefonicaWebBold">RENOVACIÓN </span> {{$ctrl.parent.dateFormatView($ctrl.datosPoliza.FD_VENCIMIENTO)}}.
+					</p>
+				</div>
+				<div layout="row" layout-align="center center" flex="100">
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center">
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100" >
+									<label>PRIMA NETA RENOVACIÓN (€)</label>
+									<input type="number" string-to-number amount ng-model="$ctrl.primasRenovacion.IM_PRIMANETA" step="any" placeholder="Importe en €" required md-no-asterisk ng-change="$ctrl.changePrimasRenovacion()">
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100">
+									<label>PRIMA TOTAL RENOVACIÓN (€)</label>
+									<input ng-disabled="true" ng-model="$ctrl.primasRenovacion.IM_RECIBO_TOTAL" step="any" placeholder="-" required md-no-asterisk>
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+						<div flex="20" style="text-align: center">
+							<md-list style="margin-top: 0px;padding: 5px" layout="row"  layout-align="center center">
+								<md-list-item layout-align="center center">
+									<md-input-container style="margin-top: 23px!important;" flex="100" >
+										<label>PRIMA REASEGURO RENOVACIÓN (€)</label>
+										<input amount ng-model="$ctrl.primasRenovacion.IM_PRIMA_REASEGURO" step="any" placeholder="Importe en €" required md-no-asterisk>
+										<span ng-show="$ctrl.precalculada" style="color: rgb(182 109 0);font-size: 11px;margin: 5px 0;" class="text-importe-siniestro-error">Prima precalculada al 60%</span>
+									</md-input-container>
+								</md-list-item>
+							</md-list>
+						</div>
+				
+					<div flex="25" style="text-align: center;margin-top: 45px;">
+						<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.changePrimasRenovacion()">
+							<span><i style="margin-right: 5px;" class="fa-duotone fa-rotate-right"></i> RECALCULAR IMPORTES</span>
+						</md-button>
+					</div>
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100">
+									<label>IPS (8% PRIMA NETA)</label>
+									<input ng-disabled="true" ng-model="$ctrl.primasRenovacion.IM_IMPUESTOS" placeholder="-">
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+					<div flex="20" style="text-align: center">
+						<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+							<md-list-item layout-align="center center">
+								<md-input-container style="margin-top: 23px!important;" flex="100">
+									<label>LEA (0,15% PRIMA NETA)</label>
+									<input ng-disabled="true"  ng-model="$ctrl.primasRenovacion.IM_CLEA" placeholder="-">
+								</md-input-container>
+							</md-list-item>
+						</md-list>
+					</div>
+					<!-- <div flex="20" style="text-align: center"> -->
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+		
+	</div>

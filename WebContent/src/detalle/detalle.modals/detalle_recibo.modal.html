@@ -1,0 +1,38 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="md-dialog-container">
+    <md-dialog flex>
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="height:44px">
+                <h2>Listado de movimiento de recibos</h2>
+                <md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+                    <md-icon aria-label="Close dialog">clear</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+<!-- 		<ng-dialog-content> -->
+        <md-dialog-content>
+            <div ng-if="$ctrl.permisos.IN_ESCRITURA === true" layout="row" style="margin-top: 8px;" layout-margin layout-align="right right">
+            	<md-button ng-click="$ctrl.bloquearRecibo()" class="md-raised md-primary medium-blue button-action-main">Bloquear</md-button>
+            	<md-button ng-click="$ctrl.desbloquearRecibo()" class="md-raised md-primary medium-blue button-action-main">Desbloquear</md-button>
+            	<md-button ng-click="$ctrl.cambiarFContRecibo()" class="md-raised md-primary medium-blue button-action-main">Cambiar F.Contabilización</md-button>
+            	<md-button ng-click="$ctrl.enviarsapRecibo()" class="md-raised md-primary medium-blue button-action-main">Enviar a SAP</md-button>
+            	<md-button ng-click="$ctrl.liquidarRecibo(0)" class="md-raised md-primary medium-blue button-action-main">Liquidar mediador</md-button>
+<!--             	<md-button ng-click="$ctrl.liquidarRecibo(1)" class="md-raised md-primary medium-blue button-action-main">Liquidar reaseguro</md-button> -->
+			</div>
+			<div ng-if="$ctrl.cargar==true" id="buscandoGif" style="margin-top: 200px;padding:0px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 20%;">
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+			<div>
+<!--                 <div class="ui-grid" ui-grid="$ctrl.gridDetalleRecibo" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(322)"></div> -->
+            	<div class="ui-grid" ui-grid="$ctrl.gridDetalleRecibo" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(386)"></div>
+            </div>
+            
+        </md-dialog-content>
+    </md-dialog>
+</div>

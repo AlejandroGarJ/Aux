@@ -1,0 +1,81 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="column">
+	<md-content flex style="padding:20px">
+		<div class="formClass" style="margin-top: 50px;" layout-gt-sm="row">
+			<form name="$ctrl.formDocumentacion" layout-gt-sm="row" layout-align="start center" flex="100">
+			 <md-input-container class="md-block" flex-gt-sm="20">
+					 <label>{{ 'PRODUCT' | translate }}</label>
+					 <md-select required ng-model="$ctrl.ID_COMP_RAMO_PROD" ng-change="$ctrl.ID_COMPANIA = null; $ctrl.autocomplete = null; $ctrl.searchAseg = ''">
+                        <md-option ng-repeat="programa in $ctrl.listProductos" ng-value="programa.ID_PRODUCTO">
+					 <!-- <md-select required ng-model="$ctrl.ID_PROGRAMA" ng-change="$ctrl.ID_COMPANIA = null; $ctrl.autocomplete = null; $ctrl.searchAseg = ''">
+						<md-option ng-repeat="programa in $ctrl.listProductos" ng-value="programa.ID_PROGRAMA"> -->
+							{{programa.DS_PROGRAMA}}
+						 </md-option>
+					</md-select>
+			  </md-input-container>
+				<md-autocomplete ng-if="$ctrl.ID_COMP_RAMO_PROD != null && ($ctrl.rol == 1 || $ctrl.rol == 4)" name="Mediador" md-no-cache="$ctrl.noCache" flex-gt-sm="30"
+								 class="autocompleteGeneral margin-select-detail"
+				   md-search-text="$ctrl.searchAseg"
+				   md-items="item in $ctrl.querySearch($ctrl.searchAseg, $ctrl.compania, 'NO_COMPANIA')"
+				   md-item-text="item.NO_COMPANIA" md-min-length="0"
+				   md-floating-label="Mediador"
+				   md-selected-item="$ctrl.autocomplete.ASEG"
+				   md-selected-item-change="$ctrl.ID_COMPANIA = $ctrl.autocomplete.ASEG.ID_COMPANIA"
+				   ng-blur="$ctrl.autocomplete.ASEG == undefined ? $ctrl.searchAseg = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchAseg"
+						   md-highlight-flags="^i">{{$ctrl.parent.getDescriptivo(item, 'NO_COMPANIA')}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe la aseguradora "{{$ctrl.searchAseg}}".
+				   </md-not-found>
+			   </md-autocomplete>
+
+			   <md-input-container class="md-block" flex-gt-sm style="margin-top: 19px!important;">
+					<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.buscarFicheros($ctrl.ID_COMP_RAMO_PROD, $ctrl.ID_COMPANIA)">
+						<i class="fa-light fa-magnifying-glass"></i>
+						MOSTRAR DOCUMENTACIÓN
+					</md-button>
+			   </md-input-container>
+			   <!-- <md-input-container class="md-block" flex-gt-sm style="margin-top: 19px!important;">
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.buscarDocumentacion($ctrl.ID_COMPANIA, $ctrl.ID_PROGRAMA)">
+					<i class="fa-light fa-magnifying-glass"></i>
+					BUSCAR DOCUMENTACIÓN
+				</md-button>
+		   </md-input-container> -->
+			</form>	
+		 </div>	
+		<md-list class="margin-top-10">
+			<div class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection resize ng-style="resizeHeight(317)"></div>
+		</md-list>
+		<!-- <div layout="row" layout-align="center center" flex style="margin-top: 20px;"> -->
+			<!-- <h1>Documentos</h1> -->
+			<!-- <md-list layout="row" layout-align="center start" flex>
+				<md-list-item class="documento" ng-repeat="documento in $ctrl.listDocuments">
+					<div layout="column">
+						<div layout="column" layout-align="center center" flex-gt-sm="30" class="doc-btn">
+							<button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-href="{{documento.NO_RUTA}}" target="_blank" style="margin: 10px;">
+								<i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>Ver Documento</button>
+							<button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.downloadFile(documento)" style="margin: 10px;">
+								<i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'BUTTON.DOWNLOAD' | translate | uppercase }}</button>
+						</div>
+						<iframe ng-src="{{documento.ruta}}" width="400" height="300" frameborder="0"></iframe>
+						<p class="doc-title">{{documento.NO_ARCHIVO}}</span> 
+					</div>
+				</md-list-item>
+			</md-list> -->
+			<!-- <md-list>
+				<md-list-item class="documento" ng-repeat="documento in $ctrl.listDocuments">
+					<div>
+						<span>{{documento.NO_ARCHIVO}}</span>
+						<ngx-doc-viewer [src]="documento.ruta"></ngx-doc-viewer>
+					</div>
+				</md-list-item>
+			</md-list> -->
+		<!-- <ngx-doc-viewer [url]="doc" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer> -->
+	<!-- </div> -->
+  </md-content>
+</div>
+	

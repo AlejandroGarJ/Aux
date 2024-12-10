@@ -1,0 +1,164 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+    <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize>
+        <div flex ="70">
+            <form name="$ctrl.formMediador" id="formSubmitMediador" novalidate>
+
+                <!-- Datos Mediador -->
+                <legend class="margin-top-20"><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos del Mediador </legend>
+                <div class="margenPresupuestos" uib-collapse="isCollapsed">
+                    <div class="separadorDesplegables"></div>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="flex" flex-gt-sm>
+                            <label>{{ 'NAME' | translate }}</label>
+                            <input ng-model="$ctrl.datos.NO_COMPANIA" required>
+                        </md-input-container>
+                        <md-input-container class="flex" flex-gt-sm>
+                            <label>Nombre Comercial</label>
+                            <input ng-model="$ctrl.datos.NO_COMERCIAL" required>
+                        </md-input-container>
+                        <md-input-container class="flex" flex-gt-sm="20">
+                            <label>CIF</label>
+                            <input ng-model="$ctrl.datos.NU_CIF" required>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="flex" flex-gt-sm="30">
+                            <label>Dirección</label>
+                            <input ng-model="$ctrl.datos.NO_DIRECCION" required>
+                        </md-input-container>
+                        <md-input-container class="flex" flex-gt-sm="10">
+                            <label>Código Postal</label>
+                            <input ng-model="$ctrl.datos.CO_POSTAL" required>
+                        </md-input-container>
+                        <md-input-container class="flex" flex-gt-sm="15">
+                            <label>Localidad</label>
+                            <input ng-model="$ctrl.datos.NO_LOCALIDAD" required>
+                        </md-input-container>
+                        <md-input-container class="flex" flex-gt-sm="15">
+                            <label>Provincia</label>
+                            <md-select ng-model="$ctrl.datos.ID_PROVINCIA" required>
+                                <md-option ng-repeat="provincia in $ctrl.tipos.provincias" ng-value="provincia.ID_PROVINCIA">
+                                    {{$ctrl.parent.getDescriptivo(provincia, 'NO_PROVINCIA')}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="flex" flex-gt-sm="30">
+                            <label>Email</label>
+                            <input ng-model="$ctrl.datos.NO_EMAIL" required>
+                        </md-input-container>
+                    </div>  
+                </div>
+                
+                <!-- Programa -->
+                <legend class="margin-top-20"><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Programa </legend>
+
+                <fieldset class="margin-top-20">
+                    <legend><span class="headerDetailSearch"><i class="fa-duotone fa-rotate"></i> Datos del producto </span></legend>
+                    <div class="margenPresupuestos" uib-collapse="isCollapsed">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>{{ 'PRODUCT' | translate }}</label>
+                                <md-select ng-model="$ctrl.datos.ID_PROGRAMA" required>
+                                    <md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+                                        {{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>{{ 'PARTNER' | translate }}</label>
+                                <input ng-model="$ctrl.datos.DS_TIPO_POLIZA" required>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Medio de pago</label>
+                                <md-select ng-model="$ctrl.datos.LST_ID_TIPO_MEDIO_PAGO" multiple required>
+                                    <md-option ng-repeat="pago in $ctrl.tipos.pago" ng-value="pago.ID_TIPO_MEDIO_PAGO">
+                                        {{$ctrl.parent.getDescriptivo(pago, 'DS_TIPO_MEDIO_PAGO')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm="15">
+                                <label>Comisión</label>
+                                <input ng-model="$ctrl.datos.PO_COMISION" required>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="margin-top-20">
+                    <legend><span class="headerDetailSearch"><i class="fa-duotone fa-contact-book"></i> Contactos </span></legend>
+                    <div class="margenPresupuestos" uib-collapse="isCollapsed">
+                        <div class="separadorDesplegables"></div>
+                        <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.anadirContacto($ctrl.contacto)">
+                            <md-icon>add</md-icon>
+                            {{ 'ADD' | translate }}
+                        </md-button>
+                        <div layout-gt-sm="row" ng-repeat="dir in $ctrl.listaContactos track by $index">
+                            <a ng-click="$ctrl.eliminarContacto()">
+                                <span id="delete" class="glyphicon glyphicon-trash"></span>
+                            </a>
+                            <md-input-container class="md-block" flex-gt-sm style="margin-left: 10px;">
+                                <label>Tipo de contacto</label>
+                                <md-select ng-model="$ctrl.datos.LISTA_CONTACTOS.ID_TIPOCONTACTO" ng-init="$ctrl.datos.LISTA_CONTACTOS.ID_TIPOCONTACTO == '14'" required>
+                                    <md-option ng-repeat="tipo in $ctrl.listTiposContacto" ng-value="tipo">
+                                        {{$ctrl.parent.getDescriptivo(tipo, 'DS_TIPOS')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="flex" flex-gt-sm>
+                                <label>{{ 'NAME' | translate }}</label>
+                                <input ng-model="$ctrl.datos.LISTA_CONTACTOS.NO_PERSONA" required>
+                            </md-input-container>
+                            <md-input-container class="flex" flex-gt-sm>
+                                <label>Email</label>
+                                <input ng-model="$ctrl.datos.LISTA_CONTACTOS.NO_EMAIL" required>
+                            </md-input-container>
+                            <!-- <md-input-container class="flex" flex-gt-sm>
+                                <label>{{ 'PRODUCT' | translate }}</label>
+                                <md-select ng-model="$ctrl.datos.LISTA_CONTACTOS.ID_PROGRAMA" required>
+                                    <md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+                                        {{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container> -->
+                            <md-input-container class="flex" flex-gt-sm>
+                                <label>Tipo de destinatario</label>
+                                <md-select ng-model="$ctrl.datos.LISTA_CONTACTOS.IN_TIPO_DESTINATARIO" class="mb_24" required>
+                                    <md-option ng-repeat="type in $ctrl.lstRecipientType" ng-value="type.CO_TIPO">
+                                        {{$ctrl.parent.getDescriptivo(type, 'DS_TIPOS')}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="margin-top-20" ng-if="$ctrl.datos.ID_PROGRAMA == 2">
+                <legend><span class="headerDetailSearch"><i class="fa-duotone fa-file-pdf"></i> Datos de Configuración Harmony </span></legend>
+                    <div class="margenPresupuestos" uib-collapse="isCollapsed">
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="column">
+                            <md-input-container class="flex" flex-gt-sm>
+                                <label>Nombre Broker</label>
+                                <input ng-model="$ctrl.datos.HARMONY_CONF.brokerName" required>
+                            </md-input-container>
+                            <md-input-container class="flex" flex-gt-sm>
+                                <label>Información de configuración</label>
+                                <textarea rows="5" ng-model="$ctrl.datos.HARMONY_CONF.brokerName" required>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </md-content>
+
+    <div class="margin-top-10" layout="row" layout-align="center none">
+        <md-button class="md-raised md-primary medium-blue button-action-main"
+            ng-click="$ctrl.validar($ctrl.formMediador.$invalid)" form="{{$ctrl.formulario}}">
+            <md-icon>save</md-icon>
+            Guardar
+        </md-button>
+    </div>
+</div>

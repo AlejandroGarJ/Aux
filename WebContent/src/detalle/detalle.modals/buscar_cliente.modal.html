@@ -1,0 +1,55 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:55%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Busca un cliente</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="height:220px;">
+		<form style="margin-top: 20px;" class="formClass" ng-submit="$ctrl.anadirAsegurado($ctrl.clienteSeleccionado)">
+			<div layout="row" flex="100" style="margin-top: 10px; margin-left:20px;">
+	        	<md-input-container class="md-block" flex="40">
+	           		<label>DNI</label>
+	           		<input ng-model="$ctrl.form.NU_DOCUMENTO">
+	           	</md-input-container>
+	           	<md-input-container class="md-block" flex="40">
+	           		<label>{{ 'NAME' | translate }}</label>
+	           		<input ng-model="$ctrl.form.NO_NOMBRE_COMPLETO">
+	           	</md-input-container>
+	           	<md-input-container class="md-block" flex="20">
+	           		<md-button class="md-raised md-primary medium-blue button-action-main" type="button" ng-click="$ctrl.buscarCliente({'NU_DOCUMENTO':$ctrl.form.NU_DOCUMENTO,'NO_NOMBRE_COMPLETO': $ctrl.form.NO_NOMBRE_COMPLETO})">
+		           		<i class="fa-light fa-magnifying-glass"></i>
+		           	</md-button>
+	           	</md-input-container>
+        	</div>
+        	<div ng-if="$ctrl.cargar==true" id="buscandoGif" style="margin-top: 0px;padding:0px; display:table; z-index: 999999999; position: fixed; width: 75%; height: 2%;">
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+        	<div ng-if="$ctrl.cargar!=true && $ctrl.clientes!=undefined && $ctrl.clientes.length>0" layout="row" flex="100" style="margin-top: 10px; margin-left:20px">
+	        	<md-input-container class="md-block" flex-gt-sm>
+					<label>Seleccione cliente: </label>
+					<md-select required ng-model="$ctrl.clienteSeleccionado">
+						<md-option ng-value="cliente" ng-repeat="cliente in $ctrl.clientes">{{cliente.NU_DOCUMENTO}} - {{cliente.NO_NOMBRE_COMPLETO}}</md-option>
+						<md-option disabled ng-if="$ctrl.clientes==undefined || $ctrl.clientes==null || $ctrl.clientes==0">No existe ningún cliente</md-option>
+					</md-select>
+				</md-input-container>
+        	</div>
+        	<div ng-if="$ctrl.vista==3" layout="row" flex="100" style="margin-top: 10px; margin-left:20px">
+	        	<h3>No se ha encontrado ningún cliente</h3>
+        	</div>
+        	<div ng-if="$ctrl.cargar!=true && $ctrl.clientes!=undefined && $ctrl.clientes.length>0" layout="row" flex="100" style="margin-top: 10px; margin-left:20px">
+	        	<md-input-container class="md-block" flex-gt-sm>
+					<md-button type="submit" class="dark-blue btnNuevo">Añadir cliente</md-button>
+				</md-input-container>
+        	</div>
+		</form>
+	</md-dialog-content>
+</md-dialog>

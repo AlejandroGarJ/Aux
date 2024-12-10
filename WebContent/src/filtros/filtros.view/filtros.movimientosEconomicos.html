@@ -1,0 +1,240 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color: #ffffff" ng-init="$ctrl.form.LST_MOVS_ECONOMICOS = []">
+	<form class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('movimientoSiniestros')">
+		<div class="form-scroll" resize>
+			<div style="position: relative;height: auto;width: 100%;border-top: 1px solid #d5d5d5;margin-top: 10px;margin-bottom: 10px;" layout-align="center center">
+				<div style="position: absolute;top: -10px;left: 20px;height: auto;width: auto;background-color: white;text-align: center;padding: 0 20px">
+					<p style="text-transform:uppercase;color: #0066FF;font-size: 20px;letter-spacing: 1px;"><span style="color: #031a34;font-family: TelefonicaWebRegular"><i class="fa-regular fa-magnifying-glass"></i> {{ 'ECONOMIC_MOVEMENTS' | translate }}</p>
+					</div>
+				</div>
+				<div layout="row" layout-align="center center" style="width: 100%" class="layout-row">
+		<!-- <md-input-container flex-gt-sm="15" class="md-block" flex-gt-sm ng-hide="$ctrl.desplegado == true">
+			<label>{{ 'CLAIM_NUMBER' | translate }}</label> 
+			<input ng-model="$ctrl.form.NU_SINIESTRO.value">
+       	</md-input-container> -->
+       	<div flex="100" class="flex-100">
+			<div layout="row" layout-align="center center" class="layout-align-center-center layout-row" style="padding-top: 10px;">
+				<md-input-container class="md-block ic-margin" flex-gt-sm="25" layout-align="center center" style="max-width: 20%;">
+					<label><i class="fa-duotone fa-grid-2" style="margin-right: 5px"></i> {{ 'PRODUCT' | translate }}</label>
+					<md-select ng-change="$ctrl.changePrograma()" ng-model="$ctrl.ID_PROGRAMA" multiple>
+						<md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+							{{$ctrl.parentApp.getDescriptivo(programa, 'DS_PROGRAMA')}}
+		<!-- 							   {{programa.DS_PROGRAMA}} -->
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block ic-margin dropdownMulti" flex-gt-sm="60">
+					<label>{{ 'BYPRODUCTS' | translate }}</label>
+				  <md-select ng-disabled="$ctrl.ID_PROGRAMA == null || $ctrl.ID_PROGRAMA.length == 0" ng-model="$ctrl.form.OPOLIZA.LST_ID_COMP_RAMO_PROD.value" multiple ng-change="$ctrl.changeSubproducto()">
+					 <md-option ng-repeat="subproducto in $ctrl.productosMulti" ng-value="subproducto.id">
+						{{subproducto.label}}
+					  </md-option>
+				 </md-select>
+<!-- 					<div events="$ctrl.eventsDropdown" ng-dropdown-multiselect="" options="$ctrl.productosMulti" selected-model="$ctrl.selectedmodelProductos" extra-settings="$ctrl.settingsDropdown" translation-texts="$ctrl.settingsDropdownText"></div> -->
+			 </md-input-container>
+			<md-input-container class="md-block ic-margin" flex-gt-sm="25">
+				<label><i class="fa-duotone fa-grid-2" style="margin-right: 5px"></i> {{ 'PARTNER' | translate }}</label>
+				<md-select ng-model="$ctrl.form.OPOLIZA.LST_ID_TIPO_POLIZA.value" multiple>
+					<md-option ng-class="{'optionPadre': colectivo.IS_PADRE == true, 'optionHijo': colectivo.IS_PADRE != true}" ng-click="$ctrl.changeColectivos(colectivo)" ng-repeat="colectivo in $ctrl.tipos.colectivosProducto" ng-value="colectivo.ID_TIPO_POLIZA">
+						<span>{{$ctrl.parentApp.getDescriptivo(colectivo, 'DS_TIPO_POLIZA')}}</span>
+	<!-- 								<span>{{colectivo.DS_TIPO_POLIZA}}</span> -->
+					</md-option>
+				</md-select>
+			</md-input-container>
+		<md-input-container class="md-block ic-margin" flex-gt-sm="25">
+			<label><i class="fa-duotone fa-grid-2" style="margin-right: 5px"></i> {{ 'CHANNEL' | translate }}</label>
+			<md-select ng-model="$ctrl.form.OPOLIZA.LST_CO_CANAL.value" multiple>
+				<md-option ng-repeat="canal in $ctrl.canales" ng-value="canal.CO_TIPO">
+					{{$ctrl.parentApp.getDescriptivo(canal, 'DS_TIPOS')}}
+<!-- 							   {{canal.DS_TIPOS}} -->
+			 	</md-option>
+			</md-select>
+		</md-input-container>
+		<!-- <md-input-container class="md-block ic-margin" flex-gt-sm="5" ng-hide="$ctrl.desplegado == true" style="margin-left: 15px">
+			<div class="row">
+				<div class="col-md-6" style="text-align: right; padding-right: 0px!important;">
+					<md-button class="btnNuevo-Reduced" ng-click="$ctrl.buscar('movimientoSiniestros')" ng-disabled="$ctrl.parent.busqueda.vista == 2" style="margin-top:-1px">
+						<i class="fa fa-magnifying-glass"></i>
+					</md-button>
+				</div>
+				<div class="col-md-6" style="text-align: left; padding-right: 0px!important;">
+					<md-button class="btnNuevo-clean-Reduced" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2" style="margin-top:-1px">
+						<i class="fa fa-trash"></i>
+					</md-button>
+				</div>
+			</div>
+		</md-input-container> -->
+		</div>
+		</div>
+	</div>
+	<!-- <div layout-gt-sm="row">
+		<a ng-click="$ctrl.showBasicSearch()" ng-if="$ctrl.basicSearch == true">Mostrar campos de búsqueda</a>
+	</div> -->
+	
+	<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="100" class="inputs-without-label-value">
+			<!-- <div layout-gt-sm="row" class="margin-top-20"> -->
+				<md-input-container class="md-block" flex-gt-sm="20">
+					<label>{{ 'CLAIM_NUMBER' | translate }}</label> 
+					<input ng-model="$ctrl.form.NU_SINIESTRO.value">
+		       	</md-input-container>
+<!-- 	       		<md-input-container class="md-block" flex-gt-sm="20"> -->
+<!-- 		         	<label><i class="far fa-id-card" style="margin-right:5px"></i>{{ 'DOCUMENT_NUMBER' | translate }}</label> -->
+<!--  			        <input ng-model="$ctrl.form.NU_DOCUMENTO.value"> -->
+<!-- 		       	</md-input-container> -->
+		       	<md-input-container class="md-block" flex-gt-sm="20">
+		         	<label>{{ 'POLICY_NU' | translate }}</label>
+		         	<input ng-model="$ctrl.form.NU_POLIZA.value">
+		       	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_MOVEMENT_FROM' | translate }}</label>
+	          		<md-datepicker ng-model="$ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_FROM.value" ng-init="$ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_FROM.value = null"
+						ng-click="($ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_FROM.value == null || $ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_FROM.value == undefined) ? $ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_FROM.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_MOVEMENT_TO' | translate }}</label>
+	          		<md-datepicker ng-model="$ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_TO.value" ng-init="$ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_TO.value = null"
+						ng-click="($ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_TO.value == null || $ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_TO.value == undefined) ? $ctrl.form.LST_MOVS_ECONOMICOS[0].FT_MOV_TO.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+				<md-input-container class="md-block ic-margin" flex-gt-sm>
+					<label>{{ 'MOVEMENT_TYPE' | translate }}</label>
+					<md-select ng-model="$ctrl.form.LST_MOVS_ECONOMICOS[0].CO_TIPOMOV.value">
+						<md-option ng-repeat="tipoMov in $ctrl.movEcon" ng-value="tipoMov.CO_TIPO">
+							{{$ctrl.parentApp.getDescriptivo(tipoMov, 'DS_TIPOS')}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-top: -10px">
+				<md-input-container class="md-block ic-margin" flex-gt-sm="20">
+					<label>{{ 'STATUS' | translate }}</label>
+					<md-select ng-model="$ctrl.form.LST_ESTADO_SINIESTRO.value" multiple>
+						<md-option ng-repeat="estado in $ctrl.tipos.estados" ng-value="estado.ID_ESTADO_SINIESTRO">
+							{{$ctrl.parentApp.getDescriptivo(estado, 'DS_ESTADO_SINIESTRO')}}
+<!-- 							{{estado.DS_ESTADO_SINIESTRO}} -->
+						</md-option>
+					</md-select>
+				</md-input-container>
+				   <md-input-container class="md-block ic-margin" flex-gt-sm="20">
+					<label>{{ 'LIABILITY' | translate }}</label>
+					<md-select ng-model="$ctrl.form.LST_RESPONSABILIDAD.value" multiple>
+						<md-option ng-repeat="responsabilidad in $ctrl.tipos.responsabilidades" ng-value="responsabilidad.ID_TIPOS">
+							{{$ctrl.parentApp.getDescriptivo(responsabilidad, 'DS_TIPOS')}}
+	<!-- 							{{responsabilidad.DS_TIPOS}} -->
+						 </md-option>
+					</md-select>
+				</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>Fecha Pago desde</label>
+	          		<md-datepicker ng-model="$ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_FROM.value" ng-init="$ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_FROM.value = null"
+						ng-click="($ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_FROM.value == null || $ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_FROM.value == undefined) ? $ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_FROM.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>Fecha Pago hasta</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_TO.value" ng-init="$ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_TO.value = null"
+						ng-click="($ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_TO.value == null || $ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_TO.value == undefined) ? $ctrl.form.LST_MOVS_ECONOMICOS[0].FT_SITUACION_TO.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+				  <div layout-gt-sm="row" layout-align="center center"  flex-gt-sm="20" style="max-width: 18%;margin-top: 20px!important;text-align: center" ng-show="$ctrl.busquedaAvanazda == false">
+					<div>
+						<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+							<i class="fa fa-magnifying-glass"></i>
+							{{ 'SEARCH_BTN' | translate }}
+						</md-button>
+						<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+							<i class="fa fa-trash"></i>
+							{{ 'CLEAN' | translate }}
+						</md-button>
+					</div>
+				</div>
+				<div layout-gt-sm="row" layout-align="center center"  flex-gt-sm="20" style="max-width: 18%" ng-show="$ctrl.busquedaAvanazda == true">
+					<a ng-click="$ctrl.cambiarBusquedaAvanzada()" ng-if="$ctrl.busquedaAvanazda == true" style="font-size:0.8em; text-transform:uppercase;text-align:center;letter-spacing: 0.5px"><i class="fa-light fa-magnifying-glass-minus"></i> {{ 'HIDE_ADVANCED_SEARCH' | translate }}</a>
+				</div>
+			</div>
+			<div layout-gt-sm="row" flex-gt-sm="100" ng-show="$ctrl.busquedaAvanazda == false" style="text-align: left">
+				<a ng-click="$ctrl.cambiarBusquedaAvanzada()" ng-if="$ctrl.busquedaAvanazda == false" style="font-size:0.8em;text-transform:uppercase;text-align:center;letter-spacing: 0.5px"><i class="fa-light fa-magnifying-glass-plus"></i> {{ 'SHOW_ADVANCED_SEARCH' | translate }}</a>
+			</div>			
+			
+			<div layout-gt-sm="row" class="inputs-without-label-value" flex-gt-sm="100">
+				<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="80" ng-show="$ctrl.busquedaAvanazda == true" class="fade-out">
+<!-- 				<div layout-gt-sm="row"> -->
+<!-- 					<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 						<label><i class="fa-duotone fa-grid-2" style="margin-right: 5px"></i> {{ 'PRODUCT' | translate }}</label> -->
+<!-- 						<md-select ng-model="$ctrl.form.ID_PRODUCTO.value"> -->
+<!-- 							<md-option ng-repeat="producto in $ctrl.productos" ng-value="producto.ID_PRODUCTO"> -->
+<!-- 								{{producto.NO_PRODUCTO}} -->
+<!-- 							</md-option> -->
+<!-- 						</md-select> -->
+<!-- 					</md-input-container> -->
+<!-- 				</div> -->
+				<!-- <div layout-gt-sm="row" style="margin-top: -10px"> -->
+			       	<md-input-container class="md-block" flex-gt-sm>
+		        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_CLOSING_FROM' | translate }}</label>
+
+		          		<md-datepicker ng-model="$ctrl.form.FD_TERMINACION_FROM.value" ng-init="$ctrl.form.FD_TERMINACION_FROM.value = null"
+							ng-click="($ctrl.form.FD_TERMINACION_FROM.value == null || $ctrl.form.FD_TERMINACION_FROM.value == undefined) ? $ctrl.form.FD_TERMINACION_FROM.value = null : ' '">
+		          		</md-datepicker>
+		          	</md-input-container>
+			       	<md-input-container class="md-block" flex-gt-sm>
+		        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_CLOSING_TO' | translate }}</label>
+
+		          		<md-datepicker ng-model="$ctrl.form.FD_TERMINACION_TO.value" ng-init="$ctrl.form.FD_TERMINACION_TO.value = null"
+							ng-click="($ctrl.form.FD_TERMINACION_TO.value == null || $ctrl.form.FD_TERMINACION_TO.value == undefined) ? $ctrl.form.FD_TERMINACION_TO.value = null : ' '">
+		          		</md-datepicker>
+		          	</md-input-container>
+			       	<md-input-container class="md-block" flex-gt-sm>
+		        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_INCIDENCE_FROM' | translate }}</label>
+
+		          		<md-datepicker ng-model="$ctrl.form.FD_OCURRENCIA_FROM.value" ng-init="$ctrl.form.FD_OCURRENCIA_FROM.value = null"
+							ng-click="($ctrl.form.FD_OCURRENCIA_FROM.value == null || $ctrl.form.FD_OCURRENCIA_FROM.value == undefined) ? $ctrl.form.FD_OCURRENCIA_FROM.value = null : ' '">
+		          		</md-datepicker>
+		          	</md-input-container>
+			       	<md-input-container class="md-block" flex-gt-sm>
+		        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_INCIDENCE_TO' | translate }}</label>
+
+		          		<md-datepicker ng-model="$ctrl.form.FD_OCURRENCIA_TO.value" ng-init="$ctrl.form.FD_OCURRENCIA_TO.value = null"
+							ng-click="($ctrl.form.FD_OCURRENCIA_TO.value == null || $ctrl.form.FD_OCURRENCIA_TO.value == undefined) ? $ctrl.form.FD_OCURRENCIA_TO.value = null : ' '">
+		          		</md-datepicker>
+		          	</md-input-container>
+				<!-- </div>
+				
+				<div layout-gt-sm="row" style="margin-top: -10px"> -->
+			       	<md-input-container class="md-block" flex-gt-sm="20" style="margin-top: -25px;">
+		        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_OPENING_FROM' | translate }}</label>
+
+		          		<md-datepicker ng-model="$ctrl.form.FD_APERTURA_FROM.value" ng-init="$ctrl.form.FD_APERTURA_FROM.value = null"
+							ng-click="($ctrl.form.FD_APERTURA_FROM.value == null || $ctrl.form.FD_APERTURA_FROM.value == undefined) ? $ctrl.form.FD_APERTURA_FROM.value = null : ' '">
+		          		</md-datepicker>
+		          	</md-input-container>
+			       	<md-input-container class="md-block" flex-gt-sm="20" style="margin-top: -25px;">
+		        		<label><i class="far fa-calendar-minus" style="margin-right:5px"></i>{{ 'DATE_OPENING_TO' | translate }}</label>
+
+		          		<md-datepicker ng-model="$ctrl.form.FD_APERTURA_TO.value" ng-init="$ctrl.form.FD_APERTURA_TO.value = null"
+							ng-click="($ctrl.form.FD_APERTURA_TO.value == null || $ctrl.form.FD_APERTURA_TO.value == undefined) ? $ctrl.form.FD_APERTURA_TO.value = null : ' '">
+		          		</md-datepicker>
+		          	</md-input-container>
+					
+				</div>
+				<div layout-gt-sm="row" layout-align="center center" flex-gt-sm="20" style="max-width: 20%;margin-top: 20px!important;text-align: center" ng-style="{'display' :$ctrl.busquedaAvanazda == true ? 'block' : 'none'}">
+					<div>
+						<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+							<i class="fa fa-magnifying-glass"></i>
+							{{ 'SEARCH_BTN' | translate }}
+						</md-button>
+						<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+							<i class="fa fa-trash"></i>
+							{{ 'CLEAN' | translate }}
+						</md-button>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+	</form>
+</md-content>

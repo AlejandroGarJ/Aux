@@ -1,0 +1,270 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+	<uib-tabset active="$ctrl.indice" class="tabsPasos" type="pills" justified="true" flex="none">
+
+<!-- Datos del Usuario -->		
+		<uib-tab index="1" heading="Datos del Usuario" class="btn-sm">
+			<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll">
+				<div flex>
+					<form ng-submit="$ctrl.guardarUsuarioWs()" name="$ctrl.formUsuarioWs" id="formSubmitUsuarioWs">
+						<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos del Usuario</legend>
+						<div class="margenPresupuestos" uib-collapse="isCollapsed">
+							<div class="separadorDesplegables"></div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'USER' | translate }}</label>
+									<input ng-model="$ctrl.datos.NO_USUARIO" ng-disabled="!$ctrl.busqUsuario.isNew" ng-required="$ctrl.busqUsuario.isNew">
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>Grupo</label>
+							         	<md-select ng-model="$ctrl.datos.ID_ROL" ng-required="$ctrl.busqUsuario.isNew"  ng-disabled="true">
+							         		<md-option ng-click="$ctrl.changeGrupo(rol)" ng-repeat="rol in $ctrl.roles" ng-value="rol.ID_ROL">
+												{{rol.DS_ROL}}
+											</md-option>
+							         	</md-select>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>{{ 'CHANNEL_2' | translate }}</label>
+							         	<md-select ng-model="$ctrl.datos.ID_TIPO" required>
+							         		<md-option ng-repeat="canal in $ctrl.canales" ng-value="canal.ID_TIPOS">
+												{{canal.DS_TIPOS}}
+											</md-option>
+							         	</md-select>
+								</md-input-container>
+								<md-autocomplete name="Mediador" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+									md-search-text="$ctrl.searchMediador"
+									md-items="item in $ctrl.parent.querySearch($ctrl.searchMediador, $ctrl.companiaUsuario, 'NO_COMPANIA')"
+									md-item-text="item.NO_COMPANIA" md-min-length="0"
+									md-floating-label="Colaborador / Mediador"
+									md-selected-item="$ctrl.autocomplete.MEDIADOR"
+									md-selected-item-change="$ctrl.datos.ID_COMPANIA = $ctrl.autocomplete.MEDIADOR.ID_COMPANIA"
+									ng-blur="$ctrl.autocomplete.MEDIADOR == undefined ? $ctrl.searchMediador = '' : ''">
+									<md-item-template>
+										<span md-highlight-text="$ctrl.searchMediador"
+											md-highlight-flags="^i">{{$ctrl.parent.pre.getDescriptivo(item, 'NO_COMPANIA')}}</span>
+									</md-item-template>
+									<md-not-found>
+										No existe el campo "{{$ctrl.searchMediador}}".
+									</md-not-found>
+								</md-autocomplete>
+								<md-autocomplete name="Partner" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+									md-search-text="$ctrl.searchPartner"
+									md-items="item in $ctrl.parent.querySearch($ctrl.searchPartner, $ctrl.colectivos, 'DS_TIPO_POLIZA')"
+									md-item-text="item.DS_TIPO_POLIZA" md-min-length="0"
+									md-floating-label="Partner"
+									md-selected-item="$ctrl.autocomplete.PARTNER"
+									md-selected-item-change="$ctrl.datos.ID_TIPOCOLECTIVO = $ctrl.autocomplete.PARTNER.ID_TIPO_POLIZA"
+									ng-blur="$ctrl.autocomplete.PARTNER == undefined ? $ctrl.searchPartner = '' : ''">
+									<md-item-template>
+										<span md-highlight-text="$ctrl.searchPartner"
+											md-highlight-flags="^i">{{$ctrl.parent.pre.getDescriptivo(item, 'DS_TIPO_POLIZA')}}</span>
+									</md-item-template>
+									<md-not-found>
+										No existe el campo "{{$ctrl.searchPartner}}".
+									</md-not-found>
+								</md-autocomplete>
+							 </div>
+							<div layout="row" class="margin-top-10">
+								<md-input-container class="md-block" flex-gt-sm="25">
+									<label>{{ 'NAME' | translate }}</label>
+									<input ng-model="$ctrl.datos.NO_NOMBRE">
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm="25">
+							        <label>{{ 'SURNAME_1' | translate }}</label>
+									<input ng-model="$ctrl.datos.NO_APELLIDO1">
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm="33">
+							        <label>{{ 'EMAIL' | translate }}</label>
+									<input type="email" ng-model="$ctrl.datos.NO_EMAIL" ng-change="$ctrl.chEmail()">
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm="16">
+									<label>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+									<input ng-model="$ctrl.datos.NU_DOCUMENTO" ng-disabled="!$ctrl.busqUsuario.isNew" ng-required="$ctrl.busqUsuario.isNew">
+								</md-input-container>
+                        	</div>
+							<div layout="row" class="margin-top-10" layout-align="center center">
+								<!-- <md-list layout="row" layout-align="center start" flex>
+									<md-list-item>
+										<span style="font-size: 14px;" flex> Usuario Activo &nbsp;</span>
+										<md-switch aria-label="switch.status" ng-disabled="true" ng-model="$ctrl.datos.IN_CUENTA_ACTIVA" ng-true-value="'1'" ng-change="$ctrl.reactivarUser()" class="switch-mov"></md-switch>
+									</md-list-item>
+									<md-list-item>
+										<span style="font-size: 14px;" flex> Usuario Bloqueado Temporalmente &nbsp;</span>
+										<md-switch aria-label="switch.status" ng-disabled="true" ng-model="$ctrl.datos.IN_BLOQUEADO_TEMPORALMENTE" ng-true-value="'1'" ng-change="$ctrl.desbloquearUser()" class="switch-mov"></md-switch>
+									</md-list-item>
+								</md-list> -->
+								<div layout-gt-sm="row" layout-align="end end">
+									<md-checkbox > Multisesión </md-checkbox>
+									<md-checkbox ng-model="$ctrl.IN_USUARIO_WS"> Usuario WS </md-checkbox>
+								</div>
+							</div>
+                        </div>
+                        <legend ng-if="!$ctrl.busqUsuario.isNew"><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Información</legend>
+						<div class="margenPresupuestos" uib-collapse="isCollapsed1" ng-if="!$ctrl.busqUsuario.isNew">
+							<div class="separadorDesplegables"></div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'CREATED_BY' | translate }}</label>
+									<input ng-model="$ctrl.datos.NO_USU_ALTA" disabled>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'CREATED_ON' | translate }}</label>
+									<input ng-model="$ctrl.datos.FT_USU_ALTA" disabled>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'EDITED_BY' | translate }}</label>
+									<input ng-model="$ctrl.datos.NO_USU_MOD" disabled>
+                                </md-input-container>
+                                <md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'EDITED_ON' | translate }}</label>
+									<input ng-model="$ctrl.datos.FT_USU_MOD" disabled>
+								</md-input-container>
+							</div>
+						</div>
+					</form>
+				</div>
+			</md-content>
+		</uib-tab>
+		
+<!-- Permisos de consulta -->
+		<uib-tab index="2" heading="Permisos de consulta" class="btn-sm formPermisoUsuarios" ng-show="$ctrl.datos.ID_ROL != 7">
+			<div flex-gt-sm="100" class="formPermisoUsuarios formClass">
+				<div flex layout="row" layout-align="center center">
+					<div flex="50">
+						<div class="formClass filtroContainer" layout="row" layout-align="end center">
+							<p layout="row" layout-align="start center">
+								<span class="material-icons">filter_list</span>
+								&nbsp;Utiliza este campo para &nbsp;<b>FILTRAR</b>&nbsp; los colectivos
+							</p>
+                            <md-input-container class="flex hide-validation-error" flex-gt-sm>
+								<label>Busca un colectivo</label>
+								<input ng-model="$ctrl.filtroColectivo">
+							</md-input-container>
+						</div>
+					</div>
+					<div flex="50">
+						<div class="filtroContainer" layout="row" layout-align="end center">
+							<p layout="row" layout-align="start center" flex="90">
+								<span class="material-icons">select_all</span>
+								&nbsp;Haz click para &nbsp;<b><span ng-if="$ctrl.switchAll == false">SELECCIONAR</span> <span ng-if="$ctrl.switchAll == true">DESELECCIONAR</span> TODOS</b>&nbsp; los colectivos
+							</p>
+							<md-switch style="margin: 0px" ng-model="$ctrl.switchAll" aria-label="Switch 1" ng-change="$ctrl.selectSwitchAll()"></md-switch>
+						</div>
+					</div>
+				</div>
+			</div>
+			<md-content layout="row" layout-align="center center" layout-padding class="formCliente formClass form-scroll">
+				<div class="formPermisoUsuarios" flex-gt-sm="60">
+					<md-card-content style="padding:0px; font-size:12px" class="form-scroll formClass">
+						<md-list flex>
+							<div ng-repeat="(key, col) in $ctrl.colectivos | groupBy: 'DS_TIPO_POLIZA_PADRE'" ng-if="$ctrl.mostrarColectivoPadre(col)">
+								<div class="colectivoContainer" layout="column" flex="100">
+									<div class="titleColectivo">
+										<h4 ng-if="key != 'undefined'">{{key}}</h4>
+										<h4 ng-if="key == 'undefined'">Sin colectivos</h4>
+									</div>
+									<div class="wrapContainer">
+										<div layout="row" layout-align="center center" ng-repeat="i in col" ng-if="$ctrl.mostrarColectivo(i.DS_TIPO_POLIZA)" style="padding: 10px">
+											<span style="font-size: 14px;">{{i.DS_TIPO_POLIZA}}</span>&nbsp;
+											<md-switch style="margin: 0px" ng-model="i.isActivo" aria-label="Switch 1" ng-change="$ctrl.addColectivo(i)"></md-switch>
+										</div>
+									</div>
+								</div>
+							</div>
+<!-- 							<md-list-item class="md-3-line" ng-repeat="(key, col) in $ctrl.colectivos | groupBy: 'DS_TIPO_POLIZA_PADRE'" ng-if="$ctrl.mostrarColectivoPadre(col)"> -->
+<!-- 								<div layout="column" flex="100" style="position: relative;height: auto;width: 100%;border: 2px solid #e3e5ea;margin-bottom:40px;padding-top: 10px;"> -->
+<!-- 									<div style="position: absolute;top: -22px;left: 20px;height: auto;width: auto;background-color: white;text-align: center;padding: 0px 20px;"> -->
+<!-- 										<h4 style="color: #0066FF;font-size: 22px;" ng-if="key != 'undefined'">{{key}}</h4> -->
+<!-- 										<h4 style="color: #0066FF;font-size: 22px;" ng-if="key == 'undefined'">Sin colectivos</h4> -->
+<!-- 									</div> -->
+<!-- 									<md-list flex> -->
+<!-- 										<md-list-item ng-repeat="i in col" ng-if="$ctrl.mostrarColectivo(i.DS_TIPO_POLIZA)"> -->
+<!-- 											<span flex="90" style="font-size: 14px;">{{i.DS_TIPO_POLIZA}}</span> -->
+<!-- 											<md-switch style="margin: 0px" ng-model="i.isActivo" aria-label="Switch 1" ng-change="$ctrl.addColectivo(i)"></md-switch> -->
+<!-- 										</md-list-item> -->
+<!-- 									</md-list> -->
+<!-- 								</div> -->
+<!-- 							</md-list-item> -->
+						</md-list>
+					</md-card-content>
+				</div>
+			</md-content>
+		</uib-tab>	
+		
+<!-- Permisos del tarificador -->
+		<uib-tab disable="$ctrl.formUsuarioWs.$invalid" index="3" heading="Permisos del tarificador" class="btn-sm" ng-click="$ctrl.checkGrid($ctrl.gridApi)" 
+		ng-if="$ctrl.datos.ID_ROL == 10 || ($ctrl.datos.ID_ROL == null || $ctrl.datos.ID_ROL == undefined)">
+			<md-content layout="column" layout-align="center none" layout-padding class="formCliente formClass form-scroll">
+				
+				<div class="formClass" layout-gt-sm="row">
+                    <form style="margin-top: 12px;" layout-gt-sm="row">
+                    
+                        <md-input-container class="md-block" flex-gt-sm layout-gt-sm="column">
+                            <label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+                            <md-select ng-model="$ctrl.form.ID_COMPANIA" ng-change="$ctrl.changeCompania($ctrl.form.ID_COMPANIA, true)" required>
+                                <md-option ng-repeat="compania in $ctrl.companiaTarificador" ng-value="compania.ID_COMPANIA">
+                                      {{compania.NO_COMERCIAL || compania.NO_COMPANIA}}
+                                </md-option>
+                               </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block" flex-gt-sm layout-gt-sm="column">
+                            <label>{{ 'BRANCH' | translate }}</label>
+                            <md-select ng-model="$ctrl.form.ID_RAMO" ng-change="$ctrl.changeRamo()" required  ng-disabled="!$ctrl.tipos.ramos">
+                                   <md-option ng-repeat="ramo in $ctrl.tipos.ramos" ng-value="ramo.ID_RAMO">
+									{{$ctrl.appParent.getDescriptivo(ramo, 'NO_RAMO')}}
+                                </md-option>
+                               </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block" flex-gt-sm layout-gt-sm="column">
+                            <label>Contratable</label>
+                            <md-select ng-model="$ctrl.form.IN_EMITIBLE">
+                                   <md-option checked ng-value="true">
+									{{ 'YES' | translate }}
+                                </md-option>
+                                <md-option ng-value="false">
+									{{ 'NO' | translate }}
+                                </md-option>
+                               </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block" flex-gt-sm style="margin-top: 20px!important">
+                            <md-button class="dark-blue btnNuevo" style="margin-top: 0;" ng-click="$ctrl.addPermiso()">
+                                <md-icon>add</md-icon>
+                                {{ 'ADD' | translate }}
+                            </md-button>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm style="margin-top: 20px!important">
+                            <md-button class="md-raised md-primary medium-blue button-action-erase md-button md-ink-ripple" style="margin-top: 0;" ng-click="$ctrl.borrarPermiso()">
+                                <md-icon>delete</md-icon>
+                                Borrar
+                            </md-button>
+                        </md-input-container>
+                    </form>
+                </div>
+				
+				<div class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(410)"></div>			
+			</md-content>
+		</uib-tab>
+
+			
+	</uib-tabset>
+
+	<div layout="row" layout-align="center none">
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice > 1" ng-click="$ctrl.anterior()">
+			<md-icon>navigate_before</md-icon>
+			Anterior
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice < $ctrl.last" ng-click="$ctrl.siguiente($ctrl.indice)" form="{{$ctrl.formulario}}">
+			<md-icon>navigate_next</md-icon>
+			{{ 'NEXT' | translate }}
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-main" form="formSubmitUsuarioWs" ng-click="$ctrl.guardarUsuarioWs()" ng-if="$ctrl.permisos.IN_ESCRITURA == true">
+			<md-icon>save</md-icon>
+			Validar y guardar
+		</md-button>
+	</div>
+</div>

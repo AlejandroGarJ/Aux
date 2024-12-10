@@ -1,0 +1,60 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div style="display:inline-flex; width:100%" layout="row" layout-align="center center">
+		<form flex="70" layout="column" role="form" name="formPortabilidad" id="formPortabilidad" ng-value="$ctrl.formPortabilidad=!formPortabilidad.$valid" ng-submit="$ctrl.nuevaPortabilidad()" class="form-detalle formClass margin-top-20">
+			<div layout="row">
+        	     <md-input-container class="md-block" flex-gt-sm>
+        			<label>Número de póliza</label>
+        			<input ng-model="$ctrl.datos.policy.policyNumber" disabled>
+        		</md-input-container>
+        		<md-input-container class="md-block" flex-gt-sm>
+           			<label>Fecha de vencimiento</label>          		
+           			<md-datepicker ng-model="$ctrl.datos.policy.expirationDate" disabled></md-datepicker>
+        		</md-input-container>
+        		<md-input-container class="md-block" flex-gt-sm="30">
+					<label>Terminal Asegurado</label>
+					<input ng-model="$ctrl.datos.device.modelName" disabled>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Tipo de línea</label>
+					<input ng-model="$ctrl.tipoLinea" disabled>
+				</md-input-container>
+           	</div>
+           	<div layout="row" class="margin-top-20">	            	
+                 <md-input-container class="md-block" flex-gt-sm="30">
+                     <label>Opción de contratación</label>
+                     <md-select ng-model="$ctrl.form.opcion" required>
+                         <md-option ng-value="'OPT1'">Consentimiento. Pago DB</md-option>
+                         <md-option ng-value="'OPT2'">Nueva póliza 2 meses gratis</md-option>
+                         <md-option ng-value="'OPT3'">Nueva póliza 1 mes gratis</md-option>
+                         <md-option ng-value="'OPT4'">Nueva póliza cob. robo</md-option>
+                     </md-select>
+                 </md-input-container>
+            	 <md-input-container class="md-block" flex-gt-sm="60">		            	 	
+           			<label>IBAN</label>
+           			<input minlength="24" maxlength="24" cvalidation="iban" ng-model="$ctrl.form.iban" ng-required="$ctrl.tipoLinea == 'TELCO'">
+       			</md-input-container>		
+       		</div>
+       		<div layout="row" layout-align="center center">
+       			<h5 ng-if="$ctrl.form.opcion == 'OPT1'">Continuidad de la actual póliza vigente del cliente hasta finalización. El cobro de las cuotas una vez realizada la portabilidad se realizará por domiciliación bancaria.</h5>
+       			<h5 ng-if="$ctrl.form.opcion == 'OPT2'">Nueva póliza. Se regalará al cliente las dos primeras cuotas de la primera anualidad de la nueva póliza de Seguro Móvil. La nueva póliza entrará en vigor cuando finalice la actual póliza vigente del cliente.</h5>
+       			<h5 ng-if="$ctrl.form.opcion == 'OPT3'">Nueva póliza. Se regalará al cliente la última mensualidad de la póliza en vigor y la primera mensualidad de la nueva póliza de Seguro Móvil. La nueva póliza entrará en vigor cuando finalice la actual póliza vigente del cliente.</h5>
+       			<h5 ng-if="$ctrl.form.opcion == 'OPT4'">Nueva póliza con cobertura Robo/Hurto que entrará en vigor cuando finalice la actual póliza vigente del cliente.</h5>
+       		</div>
+           	<div ng-if="$ctrl.load != true" layout="row" layout-align="center center" class="margin-top-20">	      
+		   		 <md-button class="md-raised md-primary medium-blue button-action-main" type="submit">
+		       		 <md-icon style="margin-right: 5px">add_task</md-icon> Realizar portabilidad
+		    	</md-button>	
+       		</div>
+       		
+			<div layout="row" layout-align="center center" class="fullWidth fullHeight margin-top-20">
+                <div id="buscandoGif" style="display:table;" ng-if="$ctrl.load == true">
+                    <div class="centered" style="display:table-cell; vertical-align: middle;">
+                        <div class="blob-3"></div>
+                        <div class="blob-4"></div>
+                    </div>
+                </div>
+			</div>
+	 </form>
+</div>

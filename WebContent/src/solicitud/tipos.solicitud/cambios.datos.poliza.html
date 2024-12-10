@@ -1,0 +1,141 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'POLICY_CHANGE_DATA' | translate }}
+   <button id="btnDesplegarPoliza" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+	<div class="separadorDesplegables"></div>
+	<div layout="row" style="margin-bottom: 20px">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'REQUESTY_TYPE' | translate }}</label>
+		    <md-select ng-model="$ctrl.subTipoSolicitud" required ng-click="$ctrl.revig()" ng-change="$ctrl.changeSubtipoSolicitud()">
+                <md-option ng-repeat="tipo in $ctrl.solCambios" ng-value="tipo">{{tipo.DS_TIPO_SOLICITUD}}</md-option>
+			</md-select>
+		</md-input-container>	
+	</div>
+	
+	<!-- Cambio de modalidad -->
+	<div layout="row" ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 13">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'CURRENT_MODALITY' | translate }}</label>
+			<input ng-model="$ctrl.form.OPOLIZA.NO_MODALIDAD" disabled>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'REQUESTED_MODALITY' | translate }}</label>
+			<md-select ng-model="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.NO_MODALIDAD_ACTUAL" ng-change="$ctrl.getData()" required>
+				<md-option ng-repeat="tipo in $ctrl.tipos.modalidades" ng-value="tipo.DS_TIPOS">{{tipo.DS_TIPOS}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	
+	<!-- Cambios de productos -->
+	<div layout="row" ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 17">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'CURRENT_PRODUCT' | translate }}</label>
+			<input ng-model="$ctrl.form.OPOLIZA.NO_PRODUCTO" disabled>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'REQUESTED_PRODUCT' | translate }}</label>
+			<md-select ng-model="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.NO_PRODUCTO_ACTUAL" ng-disabled="$ctrl.tipos.productos == undefined"  ng-change="$ctrl.getData()" required>
+				<md-option ng-repeat="tipo in $ctrl.tipos.productos" ng-value="tipo.NO_PRODUCTO">{{tipo.NO_PRODUCTO}}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'PREMIUM_TOTAL' | translate }}</label>
+			<input ng-model="$ctrl.form.OPOLIZA.IM_PRIMA_TOTAL" amount required>
+		</md-input-container>
+	</div>
+	
+	<!-- Cambio de vía de pago -->
+	<div layout="row" ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 19">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'CURRENT_PAYMENT_METHOD' | translate }}</label>
+			<input ng-model="$ctrl.form.OPOLIZA.DS_TIPO_MEDIO_PAGO" disabled>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'PAYMENT_METHOD' | translate }}</label>
+			<md-select ng-model="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.DS_TIPO_MEDIO_PAGO_ACTUAL" ng-change="$ctrl.getData()" required>
+				<md-option ng-repeat="tipo in $ctrl.tipos.mediosPago" ng-value="tipo.DS_TIPO_MEDIO_PAGO">{{tipo.DS_TIPO_MEDIO_PAGO}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	
+	<!-- Cambio de negocio -->
+	<div layout="row" ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 26">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'CURRENT_BUSINESS' | translate }}</label>
+			<input ng-model="$ctrl.form.OPOLIZA.NO_NEGOCIO" disabled>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'BUSINESS' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_POLIZA.NO_NEGOCIO">
+		</md-input-container>
+	</div>
+	
+	<!-- Cambio de forma de pago -->
+	<div layout="row" ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 27">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'CURRENT_PERIODICITY' | translate }}</label>
+			<input ng-model="$ctrl.form.OPOLIZA.DS_FORMAPAGO" disabled>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'PERIODICITY' | translate }}</label>
+			<md-select ng-model="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.DS_FORMAPAGO_ACTUAL" ng-change="$ctrl.getData()" required>
+				<md-option ng-repeat="tipo in $ctrl.tipos.formasPago" ng-value="tipo.DS_FORMAPAGO">{{tipo.DS_FORMAPAGO}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	
+	<!-- Incluir cesión -->
+	<div layout="row" ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 12 && $ctrl.msgCesion == false">
+		<md-input-container class="md-block" flex-gt-sm="20">
+			<label>{{ 'LOAN_NUMBER' | translate }}</label>
+			<input ng-model="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.NO_PRESTAMO" required>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm="40">
+			<label>{{ 'DATE_LOAN_EXPIRATION' | translate }}</label>
+
+			<md-datepicker ng-model="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.FD_VENCIMIENTO" required></md-datepicker>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm="40">
+			<label>{{ 'ENTITY' | translate }}</label>
+			<md-select ng-model="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.NO_ENTIDAD" ng-change="$ctrl.getData()" required>
+				<md-option ng-repeat="tipo in $ctrl.tipos.bancos" ng-value="tipo.DS_FIELD">{{tipo.DS_FIELD}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	<div layout="row" layout-align="center center" ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 12 && $ctrl.msgCesion != false">
+		<h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> {{ $ctrl.msgCesionKO }}</h4>
+	</div>
+	
+	<!-- Excluir cesión -->
+	<div layout="row" ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 7 && $ctrl.msgCesion == false">
+		<md-input-container class="md-block" flex-gt-sm="20">
+			<md-checkbox ng-model="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.IN_PRESTAMO" ng-init="$ctrl.form.CAMBIO_OTROS_DATOS_POLIZA.XML_CAMBIO_POLIZA.IN_PRESTAMO = false" ng-true-value="false" ng-false-value="true" disabled> 
+				Excluir cesión de derechos
+			</md-checkbox>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm="20">
+			<label>{{ 'LOAN_NUMBER' | translate }}</label>
+			<input ng-model="$ctrl.jsEnviado.DATOS_PRESTAMO.NU_PRESTAMO" disabled>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm="40">
+			<label>{{ 'DATE_LOAN_EXPIRATION' | translate }}</label>
+			<md-datepicker ng-model="$ctrl.jsEnviado.DATOS_PRESTAMO.FD_VENCIMIENTO" disabled></md-datepicker>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm="40">
+			<label>{{ 'ENTITY' | translate }}</label>
+			<md-select ng-model="$ctrl.jsEnviado.DATOS_PRESTAMO.CO_BANCO" ng-change="$ctrl.getData()" disabled>
+				<md-option ng-repeat="tipo in $ctrl.tipos.bancos" ng-value="tipo.CO_FIELD">{{tipo.DS_FIELD}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>	
+</div>
+<div layout="row" layout-align="center center"ng-if="$ctrl.subTipoSolicitud.ID_TIPO_SOLICITUD == 7 && $ctrl.msgCesion != false">
+	<h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> {{ $ctrl.msgCesionKO }}</h4>
+</div>
+<!-- <h4>Cambio de datos de la póliza</h4> -->

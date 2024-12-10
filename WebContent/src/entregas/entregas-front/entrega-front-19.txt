@@ -1,0 +1,21 @@
+En esta entrega front 19, se han realizado los siguientes cambios:
+- Hogar (Petición 5152):
+	+ En el aviso de importe a reembolsar, calcular importe sobre la prima neta anual.
+- Fix:
+	- Recibos:
+		+ En recibos devueltos, cuando te metes en uno de los menús (ej. recibos gestionados) que el filtro sea solo de ese estado.
+		+ Cambio en el modal de colaboradores, mostrando ahora una tabla en la que solo podremos visualizar los datos.
+	- Póliza:
+		+ Arreglo al mostrar asegurados en el detalle.
+	- Solicitudes:
+		+ Añadir modal de carga al entrar en la creación de una solicitud.
+		+ Arreglo al mostrar asegurados.
+		+ Arreglo al añadir CIF en gestión de asegurados.
+	- Seguro móvil:
+		+ En búsqueda fusión, recargar listado al confirmar/suspender
+	- Ciberseguro Empresas Alemania:
+		+ Enlazar nuevo servicio del formulario.
+	- Añadir nuevo menú de entregas.
+	- Modal de aviso para las exportaciones de pólizas y recibos si en los resultados de la búsqueda hay productos no exportables.
+	- Mostrar iframe para restablecer la contraseña si el login devuelve id_result 31, correciones en los estilos de ambos iframes de contraseñas
+		

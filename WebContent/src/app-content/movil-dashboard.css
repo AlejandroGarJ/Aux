@@ -1,0 +1,145 @@
+.movil-dashboard {
+	margin-bottom: 30px;
+}
+
+.containerMovilDashboard {
+    height: 350px;
+    width: 270px;
+    border: 1px solid #0066ff;
+    margin: 20px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    justify-content: start;
+    align-items: center;
+    transition: 0.4s;
+    padding: 0px 40px;
+    cursor: pointer;
+    padding-top: 30px;
+}
+
+.containerMovilDashboard2 {
+    height:47%;
+    width: 66%;
+    border: 1px solid #00a9e0;
+    border-radius: 20px;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.3);
+    justify-content: start;
+    align-items: center;
+    transition: 0.4s;
+    padding: 0px 40px;
+    cursor: pointer;
+    margin-top: 10%;
+    padding-top: 13px;
+}
+
+.containerMovilDashboard:focus, .containerMovilDashboard2:focus{
+	outline: none;
+}
+
+.containerMovilDashboard:hover, .containerMovilDashboard2:hover{
+	transition: 0.4s;
+	background-color: #0066ff;
+	-webkit-box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	-moz-box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+	box-shadow: 0px 0px 44px 1px rgba(0,0,0,0.42);
+}
+
+.containerMovilDashboard:hover .pMovilDashboard, .containerMovilDashboard:hover .subtitleMovilDashboard ,.containerMovilDashboard2:hover .pMovilDashboard2, .containerMovilDashboard2:hover .subtitleMovilDashboard2 {
+	color: #ffffff;
+}
+
+.containerMovilDashboard:hover .imgContainerMovil, .containerMovilDashboard2:hover .imgContainerMovil{
+    margin-bottom: 10px;
+    max-width: 90%;
+    transition: 0.3s;
+/*     -webkit-transform:rotate(180deg); */
+/*     -moz-transform:rotate(180deg);  */
+/*     -o-transform:rotate(180deg); */
+}
+
+
+.pMovilDashboard {
+    color: #0066ff;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+.pMovilDashboard2 {
+    color: #00a9e0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.subtitleMovilDashboard {
+    color: #0066ff;
+    font-size: 15px;
+    text-align: center;
+}
+
+.imgContainerMovil {
+    margin-bottom: 40px;
+    max-width: 80%;
+    transition: 0.3s;
+}
+
+.imgContainerMovil2 {
+    margin-bottom: 9px;
+    max-width: 80%;
+    transition: 0.3s;
+    width:73%;
+}
+
+.btnEnviar {
+    background-color: #0066ff !important;
+    border: #0066ff 1px solid !important;
+    border-radius: 0px !important;
+    padding: 0px 25px !important;
+    color: white !important;
+    transition: 0.3s !important;
+    text-transform: none !important;
+    font-size: 15px !important;
+    height: 30px;
+    min-height: 0px !important;
+    font-weight: 300;
+}
+
+.btnEnviar:hover {
+    background-color: white !important;
+    border: #0066ff 1px solid !important;
+    color: #0066ff !important;
+    transition: 0.3s !important;
+}
+
+.subtitlePreciario {
+    color: #002d44;
+    font-size: 14px;
+    text-align: center;
+}
+
+.descargarPreciario {
+    color: #0066ff;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+
+.descargarPreciario:hover {
+    color: #002d44;
+    transition: 0.3s;
+}
+
+#subirInforme {
+	display: none;
+}

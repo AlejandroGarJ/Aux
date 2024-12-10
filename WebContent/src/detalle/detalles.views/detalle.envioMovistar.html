@@ -1,0 +1,384 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+--> 
+<div style="display:inline-flex; width:100%">
+	<div layout="row"  style="width:77%">
+		<form role="form" name="formRecibo" id="formNuevoRecibo" ng-value="$ctrl.formRecibo=!formRecibo.$valid" ng-submit="$ctrl.nuevoRecibo()" 
+		class="form-detalle formClass" flex novalidate   ng-if="$ctrl.busquedaMovistar.isNew == false">
+			<legend><span class="mov-ico ic-ciber-mobile"></span> {{ 'GENERAL_DATA' | translate }}
+	        	<button id="btnDesplegarPoliza1" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+		            <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos generales"></span>
+		            <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos generales"></span>
+		        </button>
+			</legend>	
+			<div id="divPoliza" uib-collapse="isCollapsed">
+				<div class="separadorDesplegables"></div>
+	        	<div layout="row">
+	        	     <md-input-container class="md-block" flex-gt-sm>
+	        			<label>{{ 'IMEI' | translate }}</label>
+	        			<input ng-model="$ctrl.datos.imei" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" ng-required="$ctrl.nuForm == 0">
+	        		</md-input-container>
+	        		<md-input-container class="md-block" flex-gt-sm>
+	        			<label>{{ 'MSISDN' | translate }}</label>
+	        			<input ng-model="$ctrl.datos.msisdn" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" ng-required="$ctrl.nuForm == 0">
+	        		</md-input-container>
+	        		<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'BRAND' | translate }}</label>
+						<input ng-model="$ctrl.datos.brandName" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'MODEL' | translate }}</label>
+						<input ng-model="$ctrl.datos.modelName" disabled>
+					</md-input-container>
+	            	</div>
+	            	<div layout="row">	            	
+		            	 <md-input-container class="md-block"payaralex-gt-sm="15">		            	 	
+		           			<label>{{ 'COD_PRECOM' | translate }} </label>
+		           			<input ng-model="$ctrl.datos.codPrecom" disabled>
+	           			</md-input-container>	  
+	           			<div ng-if="$ctrl.datos.policyNumber == null" class="bottonEdit" ng-click="$ctrl.show = !$ctrl.show">
+	           				<span ng-if="!$ctrl.show" class="material-icons" ng-click="$ctrl.getListCodPreCom()" aria-hidden="true">edit</span>
+	           				<span ng-if="$ctrl.show" class="material-icons" ng-click="$ctrl.getListCodPreCom()" aria-hidden="true">close</span>
+	           			</div>       	
+	            		<md-input-container class="md-block" flex-gt-sm="20">
+	            			<label>{{ 'TERMINAL_SALE_DATE' | translate }}</label>          		
+	            			<md-datepicker ng-click="($ctrl.datos.feVentaTerminal == undefined || $ctrl.datos.feVentaTerminal == null) ? $ctrl.datos.feVentaTerminal = null : ''"
+							ng-model="$ctrl.datos.feVentaTerminal" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false"></md-datepicker>
+	            		</md-input-container>
+	            		<md-input-container class="md-block" flex-gt-sm="15">
+	            			<label>{{ 'OP_COMERCIAL' | translate }}</label>
+							<input  ng-model="$ctrl.datos.opComercial" ng-change="$ctrl.datos.opComercial != 1 ? $ctrl.datos.opComercial : 'ONE_CLICK'" disabled>
+	            		</md-input-container>  
+	            		<md-input-container class="md-block" flex-gt-sm="50">
+	            			<label>{{ 'TOKEN' | translate }}</label>
+							<input ng-model="$ctrl.datos.token" disabled id="token">
+	            		</md-input-container>  
+	            		<div class="bottonEdit">
+	           				<span class="material-icons" ng-click="$ctrl.copyToken($ctrl.datos.token)" aria-hidden="true">content_copy</span>   
+	           				<div class="divCopiado"><span ng-if="$ctrl.copiado == true">&#161;Token copiado!</span></div>
+	           			</div>         		
+	           		</div>
+	           </div>
+	           
+	           
+<!--  Modificar CodPreCom -->                 
+ 	    <md-content layout="row" layout-align="center center"  ng-if="$ctrl.busquedaMovistar.isNew == false && $ctrl.show == true" style="width:80%; margin-left:10%;"> 
+	        <div class="container_adminMobile" flex>     
+	                <div layout="row" layout-sm="column" layout-xs="column" style="margin-top: 4%;">	                
+	                    <div flex="">
+							<md-input-container class="md-block" >
+	                            <label>{{ 'BRAND' | translate }}</label>
+	                            <input ng-model="$ctrl.datos.brandName" disabled />
+	                        </md-input-container>
+	                    </div>
+	                    <div flex="">
+	                        <md-autocomplete name="Model"  flex-gt-sm md-no-cache="$ctrl.noCache" required
+	                            md-search-text="$ctrl.codModel"
+	                            md-items="model in $ctrl.querySearch($ctrl.codModel, $ctrl.sortedModels, 'modelName')"
+	                            md-item-text="model.modelName" md-min-length="0" md-require-match
+	                            md-selected-item="model" 
+	                            md-floating-label="{{ 'MODEL' | translate }}"
+	                            md-selected-item-change="$ctrl.getModelNew(model)">
+	                            <md-item-template>
+	                                <span md-highlight-text="$ctrl.codModel"
+	                                    md-highlight-flags="^i">{{model.modelName}}</span>
+	                            </md-item-template>
+	                            <md-not-found>
+	                                No existe el modelo "{{$ctrl.codModel}}".
+	                            </md-not-found>
+	                        </md-autocomplete>
+	                    </div>
+	                </div>                        
+		               <md-input-container class="md-block" flex-gt-sm>
+		                   <md-button  class="dark-blue btnNuevo" style="margin-top: 0; margin-left: 79%;" ng-click="$ctrl.editCodpreCom()">
+							<md-icon>save </md-icon> 
+							 {{ 'UPDATE' | translate }}
+							</md-button>
+		               </md-input-container>
+		</div>
+ 	</md-content> 
+
+
+	   			<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'CONTRACTING_DATA' | translate }}
+					<button id="btnDesplegarPoliza6" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+						<span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos de contratación"></span>
+						<span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos de contratación"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed2">
+					<div class="separadorDesplegables"></div>
+					<div layout="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'POLICY_NUMBER' | translate }}</label>
+							<input ng-class="{inputPrepoliza: $ctrl.isPrepoliza == true}" ng-if="$ctrl.datos.policyNumber == undefined" ng-model="$ctrl.prePoliza" disabled>
+							<input ng-class="{inputPrepoliza: $ctrl.isPrepoliza == true}" ng-if="$ctrl.datos.policyNumber != undefined" ng-model="$ctrl.datos.policyNumber" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label> {{ 'POLICY_ID' | translate }}</label>
+							<input ng-class="{inputPrepoliza: $ctrl.isPrepoliza == true}" ng-model="$ctrl.datos.policyId" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'SENT_MOVISTAR' | translate }}</label>
+							<input ng-class="{inputPrepoliza: $ctrl.isPrepoliza == true}" ng-model="$ctrl.isEmited" disabled>
+						</md-input-container>
+					</div>
+				</div>
+				 
+			  <legend><span class="mov-ico ic-ciber-ico_persona_contacto"></span> {{ 'CLIENT_DATA' | translate }}
+	              <button id="btnDesplegarPoliza2" type="button" class="btn btn-link" ng-click="isCollapsed1 = !isCollapsed1">
+	                  <span ng-if="isCollapsed1" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos del cliente"></span>
+	                  <span ng-if="!isCollapsed1" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos del cliente"></span>
+	              </button>
+	          </legend>
+	          <div id="divPoliza" uib-collapse="isCollapsed1">
+				<div class="separadorDesplegables"></div>
+	          	<div layout="row">
+	          		<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'DOCUMENT_TYPE' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.tipo_identificacion"  ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+	          		<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.num_identificacion" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+	          		<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'NAME' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.nombre" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+	          		<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'SURNAME' | translate }}</label>
+	          			<input ng-model="$ctrl.apellidosCliente " ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+	          	</div>
+				<div layout="row">
+				    <md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'ROAD_TYPE' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.tipo_via" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'ADDRESS' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.des_calle" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+	          		<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'NUMBER' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.num_calle" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+				</div>
+				<div layout="row">
+				    <md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'LOCALITY' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.nom_poblacion" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'PROVINCE' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.des_prov" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+	          		<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'POSTAL_CODE' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.cod_postal" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+	          		<md-input-container class="md-block" flex-gt-sm>
+	          			<label>{{ 'EMAIL' | translate }}</label>
+	          			<input ng-model="$ctrl.datos.email" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+	          		</md-input-container>
+				</div>
+	        </div>
+	        
+	        	<legend><span class="mov-ico ic-ciber-ico-info"></span> {{ 'ADDITIONAL_INFORMATION' | translate }}
+					<button id="btnDesplegarPoliza4" type="button" class="btn btn-link" ng-click="isCollapsed3 = !isCollapsed3">
+						<span ng-if="!isCollapsed3" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar información"></span>
+						<span ng-if="isCollapsed3" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar información"></span>
+					</button>
+				</legend>
+				<div id="divPoliza" uib-collapse="isCollapsed3">
+					<div class="separadorDesplegables"></div>
+					<div layout="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'FILE_NAME' | translate }}</label>
+							<input ng-model="$ctrl.datos.noFichero" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'TERMINAL_DETECTION_DATE' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.feCambioImei" disabled></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'DELIO_REPORT_DATE' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.smsSentDate" disabled></md-datepicker>
+						</md-input-container>						
+					</div>
+					<div layout="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'SMS_URL' | translate }}</label>
+							<input ng-model="$ctrl.datos.shortUrl" disabled>
+						</md-input-container>
+						<div class="bottonEdit" ng-if="$ctrl.datos.shortUrl != null && $ctrl.datos.shortUrl != ''">
+	           				<span class="material-icons" ng-click="$ctrl.sendLinkApp()" aria-hidden="true">message</span>
+	           			</div>   
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'PIN' | translate }}</label>
+							<input ng-model="$ctrl.datos.pinCode" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'PRIORITY' | translate }}</label>
+							<input ng-model="$ctrl.datos.priority" disabled>
+						</md-input-container>	
+					</div>
+					<div layout="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'CREATED_BY' | translate }}</label>
+							<input ng-model="$ctrl.datos.creationUser" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'CREATED_ON' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.creationDate" disabled></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'EDITED_BY' | translate }}</label>
+							<input ng-model="$ctrl.datos.modificationUser" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'EDITED_ON' | translate }}</label>
+							<md-datepicker ng-model="$ctrl.datos.modificationDate" disabled></md-datepicker>
+						</md-input-container>
+					</div>
+				</div>
+		 </form>
+	</div>	
+
+	<div layout="column" style="width: 25%; height: 50%;"  ng-if="$ctrl.busquedaMovistar.isNew == false">	
+<!-- 		<div flex="100" layout="row" layout-align="center"> -->
+<!-- 			<div ng-click="$ctrl.recuperarPin()" layout="column" class="containerMovilDashboard2"> -->
+<!-- 				<img class="imgContainerMovil2" alt="" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSItMTUgMCA1MTIgNTEyLjAwMDAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im00ODIuMTQ0NTMxIDI3MC45Mjk2ODhjMCAxMzMuMTQwNjI0LTEwNy45MzM1OTMgMjQxLjA3MDMxMi0yNDEuMDc0MjE5IDI0MS4wNzAzMTItMTMzLjE0MDYyNCAwLTI0MS4wNzAzMTItMTA3LjkyOTY4OC0yNDEuMDcwMzEyLTI0MS4wNzAzMTIgMC0xMzMuMTQwNjI2IDEwNy45Mjk2ODgtMjQxLjA3NDIxOSAyNDEuMDcwMzEyLTI0MS4wNzQyMTkgMTMzLjE0MDYyNiAwIDI0MS4wNzQyMTkgMTA3LjkzMzU5MyAyNDEuMDc0MjE5IDI0MS4wNzQyMTl6bTAgMCIgZmlsbD0iI2ZmYjQ1NiIvPjxwYXRoIGQ9Im0xOTIuNDE0MDYyIDBjLTU0LjA1NDY4NyAwLTk4LjAyNzM0MyA0My45NzY1NjItOTguMDI3MzQzIDk4LjAyNzM0NHYxMzcuMTQ0NTMxaDQwLjA0Mjk2OXYtMTM3LjE0NDUzMWMwLTMxLjk3MjY1NiAyNi4wMTE3MTgtNTcuOTgwNDY5IDU3Ljk4NDM3NC01Ny45ODA0NjkgMzEuOTY4NzUgMCA1Ny45ODA0NjkgMjYuMDA3ODEzIDU3Ljk4MDQ2OSA1Ny45ODA0Njl2MjAuMTM2NzE4YzAgMTEuMDYyNSA4Ljk2NDg0NCAyMC4wMjM0MzggMjAuMDIzNDM4IDIwLjAyMzQzOCAxMS4wNTg1OTMgMCAyMC4wMjM0MzctOC45NjA5MzggMjAuMDIzNDM3LTIwLjAyMzQzOHYtMjAuMTM2NzE4YzAtNTQuMDUwNzgyLTQzLjk3NjU2Mi05OC4wMjczNDQtOTguMDI3MzQ0LTk4LjAyNzM0NHptMCAwIiBmaWxsPSIjZWNlYmVkIi8+PHBhdGggZD0ibTIwMC43NzczNDQuMzU5Mzc1Yy01Ny41NTQ2ODgtNC44ODY3MTktMTA2LjM5MDYyNSA0MC42Nzk2ODctMTA2LjM5MDYyNSA5Ny42Njc5Njl2MTM3LjE0NDUzMWg0MC4wNDI5Njl2LTEzNy4xNDQ1MzFjMC0zMi4zMjgxMjUgMjYuNjc1NzgxLTU4LjgxNjQwNiA1OS41MzkwNjItNTcuOTQxNDA2LTE3LjMyODEyNS05LjkyMTg3Ni0xMi45MTQwNjItMzYuMTY0MDYzIDYuODA4NTk0LTM5LjcyNjU2M3ptMCAwIiBmaWxsPSIjZDRkMWRhIi8+PHBhdGggZD0ibTMyMi4wNjI1IDIxNy41MTk1MzFoLTI1OS4zMDA3ODFjLTE2LjY4MzU5NCAwLTMwLjMzMjAzMSAxMy42NTIzNDQtMzAuMzMyMDMxIDMwLjMzMjAzMXYxNDMuOTAyMzQ0YzIxLjM5ODQzNyAzNi44NzUgNTIuMjkyOTY4IDY3LjU1MDc4MiA4OS4zMzU5MzcgODguNjkxNDA2aDIwMC4yOTY4NzVjMTYuNjgzNTk0IDAgMzAuMzM1OTM4LTEzLjY0ODQzNyAzMC4zMzU5MzgtMzAuMzMyMDMxdi0yMDIuMjU3ODEyYzAtMTYuNjgzNTk0LTEzLjY1MjM0NC0zMC4zMzU5MzgtMzAuMzM1OTM4LTMwLjMzNTkzOHptMCAwIiBmaWxsPSIjZmY1ODU2Ii8+PHBhdGggZD0ibTk0LjM4NjcxOSA0NTAuMTEzMjgxdi0yMDIuMjU3ODEyYzAtMTYuNjgzNTk0IDEzLjY0ODQzNy0zMC4zMzU5MzggMzAuMzMyMDMxLTMwLjMzNTkzOGgtNjEuOTU3MDMxYy0xNi42ODM1OTQgMC0zMC4zMzIwMzEgMTMuNjUyMzQ0LTMwLjMzMjAzMSAzMC4zMzIwMzF2MTQzLjkwMjM0NGMxNi43MzgyODEgMjguODM5ODQ0IDM5LjMwNDY4NyA1My44NjcxODggNjYuMDU4NTkzIDczLjUyNzM0NC0yLjYwMTU2Mi00LjQ2ODc1LTQuMTAxNTYyLTkuNjQ4NDM4LTQuMTAxNTYyLTE1LjE2Nzk2OXptMCAwIiBmaWxsPSIjZGI0MDQwIi8+PHBhdGggZD0ibTIyNC40ODgyODEgMzExLjc4NTE1NmMwLTE4LjQ2ODc1LTE1LjYwOTM3NS0zMy4yOTI5NjgtMzQuMzUxNTYyLTMxLjk5NjA5NC0xNS45OTIxODggMS4xMDU0NjktMjguODcxMDk0IDE0LjE4MzU5NC0yOS43NSAzMC4xOTE0MDctLjU1ODU5NCAxMC4yMTQ4NDMgMy42NjQwNjIgMTkuNDU3MDMxIDEwLjYzNjcxOSAyNS42OTkyMTkgMS45ODQzNzQgMS43NzczNDMgMy4xNjQwNjIgNC4yNzczNDMgMy4xNjQwNjIgNi45Mzc1djE4Ljg1NTQ2OGMwIDkuODgyODEzIDcuNjgzNTk0IDE4LjMwMDc4MiAxNy41NjI1IDE4LjY1MjM0NCAxMC4zNjcxODguMzY3MTg4IDE4Ljg5MDYyNS03LjkyNTc4MSAxOC44OTA2MjUtMTguMjE0ODQ0di0xOS4xNjQwNjJjMC0yLjcyMjY1NiAxLjE5MTQwNi01LjI5Mjk2OSAzLjIxNDg0NC03LjExMzI4MiA2LjUyNzM0My01Ljg2NzE4NyAxMC42MzI4MTItMTQuMzc1IDEwLjYzMjgxMi0yMy44NDc2NTZ6bTAgMCIgZmlsbD0iI2RiNDA0MCIvPjxwYXRoIGQ9Im0xOTAuMTM2NzE5IDI3OS43ODkwNjJjLTIuNS4xNzE4NzYtNC45MjE4NzUuNjM2NzE5LTcuMjM4MjgxIDEuMzU5Mzc2IDEzLjA2NjQwNiA0LjA1ODU5MyAyMi41NTQ2ODcgMTYuMjM4MjgxIDIyLjU1NDY4NyAzMC42MzY3MTggMCA5LjQ3MjY1Ni00LjEwOTM3NSAxNy45ODA0NjktMTAuNjM2NzE5IDIzLjg0NzY1Ni0yLjAyMzQzNyAxLjgyMDMxMy0zLjIxNDg0NCA0LjM5MDYyNi0zLjIxNDg0NCA3LjExMzI4MnYxOS4xNjQwNjJjMCA2LjU1MDc4Mi0zLjQ2MDkzNyAxMi4yODEyNS04LjY0ODQzNyAxNS40OTIxODggMi41NzAzMTMgMS42MTMyODEgNS41NjI1IDIuNjA1NDY4IDguNzkyOTY5IDIuNzIyNjU2IDEwLjM3MTA5NC4zNjcxODggMTguODk0NTMxLTcuOTI1NzgxIDE4Ljg5NDUzMS0xOC4yMTQ4NDR2LTE5LjE2NDA2MmMwLTIuNzIyNjU2IDEuMTg3NS01LjI4OTA2MyAzLjIxNDg0NC03LjExMzI4MiA2LjUyNzM0My01Ljg3MTA5MyAxMC42MzI4MTItMTQuMzc1IDEwLjYzMjgxMi0yMy44NDc2NTYgMC0xOC40Njg3NS0xNS42MDkzNzUtMzMuMjkyOTY4LTM0LjM1MTU2Mi0zMS45OTYwOTR6bTAgMCIgZmlsbD0iI2NjMzYzNiIvPjxwYXRoIGQ9Im00MzguOTc2NTYyIDM1NS4xNzE4NzVoLTI1NC44MDA3ODFjLTIuMjg5MDYyIDAtNC4xNDg0MzcgMS44NTU0NjktNC4xNDg0MzcgNC4xNDQ1MzF2NTQuODE2NDA2YzAgMi4yODkwNjMgMS44NTkzNzUgNC4xNDQ1MzIgNC4xNDg0MzcgNC4xNDQ1MzJoMjQ3LjY5MTQwN2M0LjkzNzUtNi4zODI4MTMgOS41MzkwNjItMTMuMDM1MTU2IDEzLjgyODEyNC0xOS45MDIzNDR2LTM2LjQ4NDM3NWMwLTMuNzEwOTM3LTMuMDA3ODEyLTYuNzE4NzUtNi43MTg3NS02LjcxODc1em0wIDAiIGZpbGw9IiNlY2ViZWQiLz48cGF0aCBkPSJtMjYyLjcyMjY1NiA0MTQuMTMyODEydi01NC44MTY0MDZjMC0yLjI4OTA2MiAxLjg1NTQ2OS00LjE0NDUzMSA0LjE0NDUzMi00LjE0NDUzMWgtODIuNjkxNDA3Yy0yLjI4OTA2MiAwLTQuMTQ4NDM3IDEuODU1NDY5LTQuMTQ4NDM3IDQuMTQ0NTMxdjU0LjgxNjQwNmMwIDIuMjg5MDYzIDEuODU5Mzc1IDQuMTQ0NTMyIDQuMTQ4NDM3IDQuMTQ0NTMyaDgyLjY5MTQwN2MtMi4yODkwNjMgMC00LjE0NDUzMi0xLjg1NTQ2OS00LjE0NDUzMi00LjE0NDUzMnptMCAwIiBmaWxsPSIjZDRkMWRhIi8+PHBhdGggZD0ibTIyNi44NjMyODEgMzk4LjQxMDE1NmMtNi40NTMxMjUgMC0xMS42OTE0MDYtNS4yMzA0NjgtMTEuNjkxNDA2LTExLjY4NzUgMC02LjQ1MzEyNSA1LjIyNjU2My0xMS42ODc1IDExLjY4MzU5NC0xMS42ODc1aC4wMDc4MTJjNi40NTcwMzEgMCAxMS42ODc1IDUuMjM0Mzc1IDExLjY4NzUgMTEuNjg3NSAwIDYuNDU3MDMyLTUuMjMwNDY5IDExLjY4NzUtMTEuNjg3NSAxMS42ODc1em0wIDAiIGZpbGw9IiNiY2I3YzYiLz48cGF0aCBkPSJtMjYyLjcyNjU2MiAzOTguNDEwMTU2Yy02LjQ1NzAzMSAwLTExLjY5NTMxMi01LjIzMDQ2OC0xMS42OTUzMTItMTEuNjg3NSAwLTYuNDUzMTI1IDUuMjI2NTYyLTExLjY4NzUgMTEuNjgzNTk0LTExLjY4NzVoLjAxMTcxOGM2LjQ1MzEyNiAwIDExLjY4MzU5NCA1LjIzNDM3NSAxMS42ODM1OTQgMTEuNjg3NSAwIDYuNDU3MDMyLTUuMjMwNDY4IDExLjY4NzUtMTEuNjgzNTk0IDExLjY4NzV6bTAgMCIgZmlsbD0iI2Q0ZDFkYSIvPjxwYXRoIGQ9Im0yNjIuNzIyNjU2IDM5OC40MTAxNTZ2LTIzLjM3NWgtLjAwNzgxMmMtNi40NTMxMjUgMC0xMS42ODM1OTQgNS4yMzQzNzUtMTEuNjgzNTk0IDExLjY4NzVzNS4yMzgyODEgMTEuNjg3NSAxMS42OTE0MDYgMTEuNjg3NXptMCAwIiBmaWxsPSIjYmNiN2M2Ii8+PGcgZmlsbD0iI2Q0ZDFkYSI+PHBhdGggZD0ibTI5OC41ODU5MzggMzk4LjQxMDE1NmMtNi40NTMxMjYgMC0xMS42OTE0MDctNS4yMzA0NjgtMTEuNjkxNDA3LTExLjY4NzUgMC02LjQ1MzEyNSA1LjIyNjU2My0xMS42ODc1IDExLjY3OTY4OC0xMS42ODc1aC4wMTE3MTljNi40NTMxMjQgMCAxMS42ODc1IDUuMjM0Mzc1IDExLjY4NzUgMTEuNjg3NSAwIDYuNDU3MDMyLTUuMjM0Mzc2IDExLjY4NzUtMTEuNjg3NSAxMS42ODc1em0wIDAiLz48cGF0aCBkPSJtMzM0LjQ0NTMxMiAzOTguNDEwMTU2Yy02LjQ1MzEyNCAwLTExLjY5MTQwNi01LjIzMDQ2OC0xMS42OTE0MDYtMTEuNjg3NSAwLTYuNDUzMTI1IDUuMjI2NTYzLTExLjY4NzUgMTEuNjc5Njg4LTExLjY4NzVoLjAxMTcxOGM2LjQ1NzAzMiAwIDExLjY4NzUgNS4yMzQzNzUgMTEuNjg3NSAxMS42ODc1IDAgNi40NTcwMzItNS4yMzQzNzQgMTEuNjg3NS0xMS42ODc1IDExLjY4NzV6bTAgMCIvPjxwYXRoIGQ9Im0zNzAuMzA0Njg4IDM5OC40MTAxNTZjLTYuNDUzMTI2IDAtMTEuNjkxNDA3LTUuMjMwNDY4LTExLjY5MTQwNy0xMS42ODc1IDAtNi40NTMxMjUgNS4yMjY1NjMtMTEuNjg3NSAxMS42ODM1OTQtMTEuNjg3NWguMDExNzE5YzYuNDUzMTI1IDAgMTEuNjgzNTk0IDUuMjM0Mzc1IDExLjY4MzU5NCAxMS42ODc1IDAgNi40NTcwMzItNS4yMzA0NjkgMTEuNjg3NS0xMS42ODc1IDExLjY4NzV6bTAgMCIvPjxwYXRoIGQ9Im00MDYuMTY3OTY5IDM5OC40MTAxNTZjLTYuNDUzMTI1IDAtMTEuNjkxNDA3LTUuMjMwNDY4LTExLjY5MTQwNy0xMS42ODc1IDAtNi40NTMxMjUgNS4yMjY1NjMtMTEuNjg3NSAxMS42Nzk2ODgtMTEuNjg3NWguMDExNzE5YzYuNDUzMTI1IDAgMTEuNjg3NSA1LjIzNDM3NSAxMS42ODc1IDExLjY4NzUtLjAwMzkwNyA2LjQ1NzAzMi01LjIzNDM3NSAxMS42ODc1LTExLjY4NzUgMTEuNjg3NXptMCAwIi8+PC9nPjxwYXRoIGQ9Im0zNzMuMjk2ODc1IDIwNy45NDE0MDYtMjAuNDkyMTg3LTguNDkyMTg3Yy00LjQ3MjY1Ny0xLjg1MTU2My02LjU5NzY1Ny02Ljk3NjU2My00Ljc0NjA5NC0xMS40NDkyMTkgMS44NTE1NjItNC40NzI2NTYgNi45ODA0NjgtNi41OTM3NSAxMS40NTMxMjUtNC43NDIxODhsMjAuNDk2MDkzIDguNDg4MjgyYzQuNDY4NzUgMS44NTE1NjIgNi41OTM3NSA2Ljk4MDQ2OCA0Ljc0MjE4OCAxMS40NTMxMjUtMS44NDM3NSA0LjQ0OTIxOS02Ljk1NzAzMSA2LjYwMTU2Mi0xMS40NTMxMjUgNC43NDIxODd6bTAgMCIgZmlsbD0iI2Y5ZDRhZiIvPjxwYXRoIGQ9Im0zNDguMDU4NTk0IDE0OC43NzM0MzhjLTEuODUxNTYzLTQuNDcyNjU3LjI3MzQzNy05LjU5NzY1NyA0Ljc0NjA5NC0xMS40NTMxMjZsMjAuNDkyMTg3LTguNDg4MjgxYzQuNDcyNjU2LTEuODQ3NjU2IDkuNjAxNTYzLjI2OTUzMSAxMS40NTMxMjUgNC43NDIxODggMS44NTE1NjIgNC40NzY1NjItLjI3MzQzOCA5LjYwMTU2Mi00Ljc0MjE4OCAxMS40NTMxMjVsLTIwLjQ5NjA5MyA4LjQ4ODI4MWMtNC41IDEuODYzMjgxLTkuNjA5Mzc1LS4yOTI5NjktMTEuNDUzMTI1LTQuNzQyMTg3em0wIDAiIGZpbGw9IiNmOWQ0YWYiLz48cGF0aCBkPSJtMzIwLjMyNDIxOSAxMjEuMDM1MTU2Yy00LjQ3MjY1Ny0xLjg1MTU2Mi02LjU5NzY1Ny02Ljk3NjU2Mi00Ljc0NjA5NC0xMS40NDkyMThsOC40ODgyODEtMjAuNDk2MDk0YzEuODU1NDY5LTQuNDY4NzUgNi45ODA0NjktNi41OTc2NTYgMTEuNDUzMTI1LTQuNzQyMTg4IDQuNDcyNjU3IDEuODUxNTYzIDYuNTk3NjU3IDYuOTgwNDY5IDQuNzQ2MDk0IDExLjQ1MzEyNWwtOC40OTIxODcgMjAuNDkyMTg4Yy0xLjg1MTU2MyA0LjQ3MjY1Ni02Ljk4MDQ2OSA2LjU5NzY1Ni0xMS40NDkyMTkgNC43NDIxODd6bTAgMCIgZmlsbD0iI2Y5ZDRhZiIvPjxwYXRoIGQ9Im0yNDEuMDY2NDA2IDUxMmguMDExNzE5YzYyLjY2MDE1NiAwIDExOS43MzQzNzUtMjMuOTE0MDYyIDE2Mi42MDE1NjMtNjMuMTA5Mzc1aC0yMTkuNTAzOTA3Yy0yLjI4OTA2MiAwLTQuMTQ4NDM3IDEuODU1NDY5LTQuMTQ4NDM3IDQuMTQ0NTMxdjUxLjE2MDE1NmMxOS40OTYwOTQgNS4wODU5MzggMzkuOTQ5MjE4IDcuODA0Njg4IDYxLjAzOTA2MiA3LjgwNDY4OHptMCAwIiBmaWxsPSIjZWNlYmVkIi8+PHBhdGggZD0ibTI2Ni44NjcxODggNDQ4Ljg5MDYyNWgtODIuNjkxNDA3Yy0yLjI4OTA2MiAwLTQuMTQ0NTMxIDEuODU1NDY5LTQuMTQ0NTMxIDQuMTQ0NTMxdjUxLjE2MDE1NmMxOS40OTYwOTQgNS4wODU5MzggMzkuOTQ5MjE5IDcuODA0Njg4IDYxLjAzNTE1NiA3LjgwNDY4OGguMDExNzE5YzcuNzU3ODEzIDAgMTUuNDI5Njg3LS4zODI4MTIgMjMtMS4wOTc2NTYtLjgyODEyNS0uNzU3ODEzLTEuMzU1NDY5LTEuODM5ODQ0LTEuMzU1NDY5LTMuMDQ2ODc1di01NC44MjAzMTNjMC0yLjI4OTA2MiAxLjg1NTQ2OS00LjE0NDUzMSA0LjE0NDUzMi00LjE0NDUzMXptMCAwIiBmaWxsPSIjZDRkMWRhIi8+PHBhdGggZD0ibTIyNi44NjMyODEgNDkyLjEzMjgxMmMtNi40NTMxMjUgMC0xMS42OTE0MDYtNS4yMzQzNzQtMTEuNjkxNDA2LTExLjY4NzUgMC02LjQ1MzEyNCA1LjIyNjU2My0xMS42ODM1OTMgMTEuNjgzNTk0LTExLjY4MzU5M2guMDA3ODEyYzYuNDU3MDMxIDAgMTEuNjg3NSA1LjIzMDQ2OSAxMS42ODc1IDExLjY4MzU5MyAwIDYuNDU3MDMyLTUuMjMwNDY5IDExLjY4NzUtMTEuNjg3NSAxMS42ODc1em0wIDAiIGZpbGw9IiNiY2I3YzYiLz48cGF0aCBkPSJtMjYyLjcyNjU2MiA0OTIuMTMyODEyYy02LjQ1NzAzMSAwLTExLjY5NTMxMi01LjIzNDM3NC0xMS42OTUzMTItMTEuNjg3NSAwLTYuNDUzMTI0IDUuMjI2NTYyLTExLjY4MzU5MyAxMS42ODM1OTQtMTEuNjgzNTkzaC4wMTE3MThjNi40NTMxMjYgMCAxMS42ODM1OTQgNS4yMzA0NjkgMTEuNjgzNTk0IDExLjY4MzU5MyAwIDYuNDU3MDMyLTUuMjMwNDY4IDExLjY4NzUtMTEuNjgzNTk0IDExLjY4NzV6bTAgMCIgZmlsbD0iI2Q0ZDFkYSIvPjxwYXRoIGQ9Im0yNjIuNzIyNjU2IDQ5Mi4xMzI4MTJ2LTIzLjM3MTA5M2gtLjAwNzgxMmMtNi40NTMxMjUgMC0xMS42ODM1OTQgNS4yMzA0NjktMTEuNjgzNTk0IDExLjY4MzU5MyAwIDYuNDUzMTI2IDUuMjM4MjgxIDExLjY4NzUgMTEuNjkxNDA2IDExLjY4NzV6bTAgMCIgZmlsbD0iI2JjYjdjNiIvPjxwYXRoIGQ9Im0yOTguNTg1OTM4IDQ5Mi4xMzI4MTJjLTYuNDUzMTI2IDAtMTEuNjkxNDA3LTUuMjM0Mzc0LTExLjY5MTQwNy0xMS42ODc1IDAtNi40NTMxMjQgNS4yMjY1NjMtMTEuNjgzNTkzIDExLjY3OTY4OC0xMS42ODM1OTNoLjAxMTcxOWM2LjQ1MzEyNCAwIDExLjY4NzUgNS4yMzA0NjkgMTEuNjg3NSAxMS42ODM1OTMgMCA2LjQ1NzAzMi01LjIzNDM3NiAxMS42ODc1LTExLjY4NzUgMTEuNjg3NXptMCAwIiBmaWxsPSIjZDRkMWRhIi8+PHBhdGggZD0ibTMzNC40NDUzMTIgNDkyLjEzMjgxMmMtNi40NTMxMjQgMC0xMS42OTE0MDYtNS4yMzQzNzQtMTEuNjkxNDA2LTExLjY4NzUgMC02LjQ1MzEyNCA1LjIyNjU2My0xMS42ODM1OTMgMTEuNjc5Njg4LTExLjY4MzU5M2guMDExNzE4YzYuNDU3MDMyIDAgMTEuNjg3NSA1LjIzMDQ2OSAxMS42ODc1IDExLjY4MzU5MyAwIDYuNDU3MDMyLTUuMjM0Mzc0IDExLjY4NzUtMTEuNjg3NSAxMS42ODc1em0wIDAiIGZpbGw9IiNkNGQxZGEiLz48L3N2Zz4=" /> -->
+<!-- 				<p class="pMovilDashboard2">{{ 'RECOVER_PIN' | translate }}</p> -->
+<!-- 				</div> -->
+<!-- 		</div> -->
+		<div flex="100" layout="row" layout-align="center">
+			<div ng-click="$ctrl.cambiarFecha()" layout="column" class="containerMovilDashboard2">
+				<img class="imgContainerMovil2" alt="" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6c3ZnanM9Imh0dHA6Ly9zdmdqcy5jb20vc3ZnanMiIHZlcnNpb249IjEuMSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCA1MDEgNTAxIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIiBjbGFzcz0iIj48Zz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxwYXRoIHN0eWxlPSIiIGQ9Ik00OTAsMjQ1YzAsMTM1LjMxLTEwOS42OSwyNDUtMjQ1LDI0NVMwLDM4MC4zMSwwLDI0NVMxMDkuNjksMCwyNDUsMFM0OTAsMTA5LjY5LDQ5MCwyNDV6IiBmaWxsPSIjZmZiMjNjIiBkYXRhLW9yaWdpbmFsPSIjZmZiMjNjIiBjbGFzcz0iIi8+Cgk8cGF0aCBzdHlsZT0iIiBkPSJNMzM5LDM0OUg0OWMtNS41MjMsMC0xMC00LjQ3Ny0xMC0xMFY4OGMwLTUuNTIzLDQuNDc3LTEwLDEwLTEwaDI5MGM1LjUyMywwLDEwLDQuNDc3LDEwLDEwdjI1MSAgIEMzNDksMzQ0LjUyMywzNDQuNTIzLDM0OSwzMzksMzQ5eiIgZmlsbD0iI2I1ZjNmYiIgZGF0YS1vcmlnaW5hbD0iI2I1ZjNmYiIgY2xhc3M9IiIvPgoJPHBhdGggc3R5bGU9IiIgZD0iTTMzOSwzNDlINzhjLTUuNTIzLDAtMTAtNC40NzctMTAtMTBWODhjMC01LjUyMyw0LjQ3Ny0xMCwxMC0xMGgyNjFjNS41MjMsMCwxMCw0LjQ3NywxMCwxMHYyNTEgICBDMzQ5LDM0NC41MjMsMzQ0LjUyMywzNDksMzM5LDM0OXoiIGZpbGw9IiNkY2ZiZmYiIGRhdGEtb3JpZ2luYWw9IiNkY2ZiZmYiIGNsYXNzPSIiLz4KCTxwYXRoIHN0eWxlPSIiIGQ9Ik0yMjksMTgzdjIwYzAsMi43NjEtMi4yMzksNS01LDVoLTYwYy0yLjc2MSwwLTUtMi4yMzktNS01di0yMGMwLTIuNzYxLDIuMjM5LTUsNS01aDYwICAgQzIyNi43NjEsMTc4LDIyOSwxODAuMjM5LDIyOSwxODN6IE0yMjQsMjI4aC02MGMtMi43NjEsMC01LDIuMjM5LTUsNXYyMGMwLDIuNzYxLDIuMjM5LDUsNSw1aDYwYzIuNzYxLDAsNS0yLjIzOSw1LTV2LTIwICAgQzIyOSwyMzAuMjM5LDIyNi43NjEsMjI4LDIyNCwyMjh6IE0yMjQsMjc4aC02MGMtMi43NjEsMC01LDIuMjM5LTUsNXYyMGMwLDIuNzYxLDIuMjM5LDUsNSw1aDYwYzIuNzYxLDAsNS0yLjIzOSw1LTV2LTIwICAgQzIyOSwyODAuMjM5LDIyNi43NjEsMjc4LDIyNCwyNzh6IE0zMTksMTI4aC02MGMtMi43NjEsMC01LDIuMjM5LTUsNXYyMGMwLDIuNzYxLDIuMjM5LDUsNSw1aDYwYzIuNzYxLDAsNS0yLjIzOSw1LTV2LTIwICAgQzMyNCwxMzAuMjM5LDMyMS43NjEsMTI4LDMxOSwxMjh6IiBmaWxsPSIjODFkNGFlIiBkYXRhLW9yaWdpbmFsPSIjODFkNGFlIiBjbGFzcz0iIi8+Cgk8cGF0aCBzdHlsZT0iIiBkPSJNMTM0LDEzM3YyMGMwLDIuNzYxLTIuMjM5LDUtNSw1SDY5Yy0yLjc2MSwwLTUtMi4yMzktNS01di0yMGMwLTIuNzYxLDIuMjM5LTUsNS01aDYwICAgQzEzMS43NjEsMTI4LDEzNCwxMzAuMjM5LDEzNCwxMzN6IE0xMjksMTc4SDY5Yy0yLjc2MSwwLTUsMi4yMzktNSw1djIwYzAsMi43NjEsMi4yMzksNSw1LDVoNjBjMi43NjEsMCw1LTIuMjM5LDUtNXYtMjAgICBDMTM0LDE4MC4yMzksMTMxLjc2MSwxNzgsMTI5LDE3OHogTTEyOSwyMjhINjljLTIuNzYxLDAtNSwyLjIzOS01LDV2MjBjMCwyLjc2MSwyLjIzOSw1LDUsNWg2MGMyLjc2MSwwLDUtMi4yMzksNS01di0yMCAgIEMxMzQsMjMwLjIzOSwxMzEuNzYxLDIyOCwxMjksMjI4eiBNMTI5LDI3OEg2OWMtMi43NjEsMC01LDIuMjM5LTUsNXYyMGMwLDIuNzYxLDIuMjM5LDUsNSw1aDYwYzIuNzYxLDAsNS0yLjIzOSw1LTV2LTIwICAgQzEzNCwyODAuMjM5LDEzMS43NjEsMjc4LDEyOSwyNzh6IE0yMjQsMTI4aC02MGMtMi43NjEsMC01LDIuMjM5LTUsNXYyMGMwLDIuNzYxLDIuMjM5LDUsNSw1aDYwYzIuNzYxLDAsNS0yLjIzOSw1LTV2LTIwICAgQzIyOSwxMzAuMjM5LDIyNi43NjEsMTI4LDIyNCwxMjh6IE0zMTksMTc4aC02MGMtMi43NjEsMC01LDIuMjM5LTUsNXYyMGMwLDIuNzYxLDIuMjM5LDUsNSw1aDYwYzIuNzYxLDAsNS0yLjIzOSw1LTV2LTIwICAgQzMyNCwxODAuMjM5LDMyMS43NjEsMTc4LDMxOSwxNzh6IE0zMTksMjI4aC02MGMtMi43NjEsMC01LDIuMjM5LTUsNXYyMGMwLDIuNzYxLDIuMjM5LDUsNSw1aDYwYzIuNzYxLDAsNS0yLjIzOSw1LTV2LTIwICAgQzMyNCwyMzAuMjM5LDMyMS43NjEsMjI4LDMxOSwyMjh6IiBmaWxsPSIjOGFlOGY1IiBkYXRhLW9yaWdpbmFsPSIjOGFlOGY1IiBjbGFzcz0iIi8+Cgk8cGF0aCBzdHlsZT0iIiBkPSJNMzQ5LDk4SDM5VjU5YzAtMTEuMDQ2LDguOTU0LTIwLDIwLTIwaDI3MGMxMS4wNDYsMCwyMCw4Ljk1NCwyMCwyMFY5OHoiIGZpbGw9IiM3ZDBhYjEiIGRhdGEtb3JpZ2luYWw9IiNlZjNjNTQiIGNsYXNzPSIiLz4KCTxwYXRoIHN0eWxlPSIiIGQ9Ik0zNDksOThINjhWNTljMC0xMS4wNDYsOC45NTQtMjAsMjAtMjBoMjQxYzExLjA0NiwwLDIwLDguOTU0LDIwLDIwVjk4eiIgZmlsbD0iIzlmMTFkZiIgZGF0YS1vcmlnaW5hbD0iI2Y1NTk2ZSIgY2xhc3M9IiIvPgoJPHBhdGggc3R5bGU9IiIgZD0iTTE4MiwzNDEuNWMwLTg4LjA4OSw3MS40MTEtMTU5LjUsMTU5LjUtMTU5LjVTNTAxLDI1My40MTEsNTAxLDM0MS41UzQyOS41ODksNTAxLDM0MS41LDUwMSAgIFMxODIsNDI5LjU4OSwxODIsMzQxLjV6IiBmaWxsPSIjOWYxMWRmIiBkYXRhLW9yaWdpbmFsPSIjMGFiMTc0IiBjbGFzcz0iIi8+Cgk8cGF0aCBzdHlsZT0iIiBkPSJNMjEyLDM0MS41YzAtNzEuNTIxLDU3Ljk3OS0xMjkuNSwxMjkuNS0xMjkuNVM0NzEsMjY5Ljk3OSw0NzEsMzQxLjVTNDEzLjAyMSw0NzEsMzQxLjUsNDcxICAgUzIxMiw0MTMuMDIxLDIxMiwzNDEuNXoiIGZpbGw9IiNmZmQ2OWUiIGRhdGEtb3JpZ2luYWw9IiNmZmQ2OWUiIGNsYXNzPSIiLz4KCTxwYXRoIHN0eWxlPSIiIGQ9Ik00NzEsMzQxLjVjMCw2Ni43OS01MC41NjUsMTIxLjc2My0xMTUuNSwxMjguNzQ1QzI5MC41NjUsNDYzLjI2MywyNDAsNDA4LjI5LDI0MCwzNDEuNSAgIHM1MC41NjUtMTIxLjc2MywxMTUuNS0xMjguNzQ1QzQyMC40MzUsMjE5LjczNyw0NzEsMjc0LjcxLDQ3MSwzNDEuNXoiIGZpbGw9IiNmZmUyYmQiIGRhdGEtb3JpZ2luYWw9IiNmZmUyYmQiIGNsYXNzPSIiLz4KCTxwYXRoIHN0eWxlPSIiIGQ9Ik00NDAuOTY4LDMzOUgzMzl2LTk2Ljk2OGMwLjgzMS0wLjAyMSwxLjY2NC0wLjAzMiwyLjUtMC4wMzIgICBDMzk1LjYxNiwyNDIsNDM5LjY0MiwyODUuMjAzLDQ0MC45NjgsMzM5eiIgZmlsbD0iI2RjYjFlZiIgZGF0YS1vcmlnaW5hbD0iIzlmZGZjMiIgY2xhc3M9IiIvPgoJPHBhdGggc3R5bGU9IiIgZD0iTTM1Ni41LDMzOWgtMzBWMjM0LjM1MmMwLTMuMzQ0LDEuNjcxLTYuNDY2LDQuNDUzLTguMzJsOS40MzgtNi4yOTIgICBjMC42NzItMC40NDgsMS41NDctMC40NDgsMi4yMTksMGw5LjQzOCw2LjI5MmMyLjc4MiwxLjg1NSw0LjQ1Myw0Ljk3Nyw0LjQ1Myw4LjMyVjMzOXoiIGZpbGw9IiM5ZjExZGYiIGRhdGEtb3JpZ2luYWw9IiMwMjczNDgiIGNsYXNzPSIiLz4KCTxwYXRoIHN0eWxlPSIiIGQ9Ik0zMjksMzU2LjV2LTMwaDEwNC42NDhjMy4zNDQsMCw2LjQ2NiwxLjY3MSw4LjMyLDQuNDUzbDYuMjkyLDkuNDM4ICAgYzAuNDQ4LDAuNjcyLDAuNDQ4LDEuNTQ3LDAsMi4yMTlsLTYuMjkyLDkuNDM4Yy0xLjg1NSwyLjc4Mi00Ljk3Nyw0LjQ1My04LjMyLDQuNDUzSDMyOXoiIGZpbGw9IiM5ZjExZGYiIGRhdGEtb3JpZ2luYWw9IiMwYWIxNzQiIGNsYXNzPSIiLz4KCTxwYXRoIHN0eWxlPSIiIGQ9Ik0zMTIsMzQxLjVjMC0xNi4yOTIsMTMuMjA4LTI5LjUsMjkuNS0yOS41czI5LjUsMTMuMjA4LDI5LjUsMjkuNVMzNTcuNzkyLDM3MSwzNDEuNSwzNzEgICBTMzEyLDM1Ny43OTIsMzEyLDM0MS41eiBNMjQ5LjUsMzYxYzEwLjc3LDAsMTkuNS04LjczLDE5LjUtMTkuNXMtOC43My0xOS41LTE5LjUtMTkuNWMtMTAuNzcsMC0xOS41LDguNzMtMTkuNSwxOS41ICAgUzIzOC43MywzNjEsMjQ5LjUsMzYxeiBNMzQxLjUsNDU5YzEwLjc3LDAsMTkuNS04LjczLDE5LjUtMTkuNXMtOC43My0xOS41LTE5LjUtMTkuNXMtMTkuNSw4LjczLTE5LjUsMTkuNVMzMzAuNzMsNDU5LDM0MS41LDQ1OXoiIGZpbGw9IiNmZmM5ODEiIGRhdGEtb3JpZ2luYWw9IiNmZmM5ODEiIGNsYXNzPSIiLz4KPC9nPgoKCgoKCgoKCgoKCgoKCgo8L2c+PC9zdmc+Cg==" />
+				<p class="pMovilDashboard2">{{ 'EXTEND_DATE' | translate }}</p>
+				</div>
+		</div>	
+<!-- 		<div flex="100" layout="row" layout-align="center"> -->
+<!-- 			<div ng-click="$ctrl.getListCodPreCom()" layout="column" class="containerMovilDashboard2"> -->
+<!-- 				<img class="imgContainerMovil2" alt="" src="data:image/png;base64,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" /> -->
+<!-- 				<p class="pMovilDashboard2">{{ 'EDIT' | translate }} {{'COD_PRECOM' | translate }}</p> -->
+<!-- 			</div> -->
+<!-- 		</div>	 -->
+	</div>
+</div>
+
+
+
+
+<!-- GENERADOR TOKENS -->
+	<div  ng-if="$ctrl.busquedaMovistar.isNew == true">
+	    <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+	        resize ng-style="resizeHeight({{$ctrl.cutMH}})">
+	        <div flex>
+	            <form name="$ctrl.formGenToken" id="formSubmitGenToken" flex novalidate>
+					 <div layout-gt-sm="row" layout-sm="column" flex-gt-sm="100" style="margin-top: 30px;">
+	                    <div  flex-gt-sm="15">
+	                        <md-input-container class="md-block">
+	                            <label>OPERATIVA</label>
+	                            <md-select ng-model="$ctrl.opOption" required>
+	                                <md-option ng-value="1">One click -15</md-option>
+									<md-option ng-value="4">One click +15</md-option>
+	                                <md-option ng-value="2">Sim only +15</md-option>
+	                                <md-option ng-value="3">Sim only -15</md-option>
+	                            </md-select>
+	                        </md-input-container>
+
+	                    </div>
+	                    <div flex-gt-sm="10">
+	                        <md-input-container class="md-block">
+	                            <label>{{ 'MSISDN' | translate }}</label>
+	                            <input ng-model="$ctrl.msisdn" ng-pattern="/^[0-9]{9}$/" md-maxlength="9" required />
+	                        </md-input-container>
+	                    </div>
+	                    <div flex-gt-sm="15">
+	                        <md-input-container class="md-block" >
+	                            <label>CÓDIGO {{ 'IMEI' | translate }}</label>
+	                            <input ng-model="$ctrl.imei" md-maxlength="20" required />
+	                        </md-input-container>
+	                    </div>
+						<div flex-gt-sm="15">
+							<md-autocomplete name="Brand" md-no-cache="$ctrl.noCache" required
+											 md-selected-item="$ctrl.selBrand" md-search-text="$ctrl.searchBrand"
+											 md-selected-item-change="$ctrl.getModels()"
+											 md-items="brand in $ctrl.querySearch($ctrl.searchBrand, $ctrl.lstBrands, 'brandName')"
+											 md-item-text="brand.brandName" md-min-length="0" md-require-match
+											 md-floating-label="{{ 'BRAND' | translate }}" flex-gt-sm="100">
+								<md-item-template>
+										<span md-highlight-text="$ctrl.searchBrand"
+											  md-highlight-flags="^i">{{brand.brandName}}</span>
+								</md-item-template>
+								<md-not-found>
+									No existe la marca "{{$ctrl.searchBrand}}".
+								</md-not-found>
+							</md-autocomplete>
+						</div>
+						<div flex-gt-sm="30">
+							<md-autocomplete name="Model" ng-disabled="$ctrl.selBrand == null || $ctrl.selBrand == undefined" md-no-cache="$ctrl.noCache" required
+											 md-selected-item="$ctrl.selModel" md-search-text="$ctrl.searchModel"
+											 md-items="model in $ctrl.querySearch($ctrl.searchModel, $ctrl.lstModels, 'modelName')"
+											 md-item-text="model.modelName" md-min-length="0" md-require-match
+											 md-floating-label="{{ 'MODEL' | translate }}" flex-gt-sm="100">
+								<md-item-template>
+	                                <span md-highlight-text="$ctrl.searchModel"
+										  md-highlight-flags="^i">{{model.modelName}}</span>
+								</md-item-template>
+								<md-not-found>
+									No existe el modelo "{{$ctrl.searchModel}}".
+								</md-not-found>
+							</md-autocomplete>
+						</div>
+						<div flex-gt-sm="15">
+							<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.generateToken()">
+								<i class="fa-light fa-floppy-disk"></i>{{ 'INSERT_NEW_TOKEN' | translate }}
+							</md-button>
+						</div>
+					</div>
+					<div layout-gt-sm="row" layout-sm="column" flex-gt-sm="100" style="margin-top: 30px;margin-bottom: 0">
+						<div  flex-gt-sm="15">
+							<p style="text-align: center;text-transform: uppercase;font-size: 0.8em"><i class="fa-light fa-code-branch"></i>Operativa Digital a asignar</p>
+						</div>
+						<div flex-gt-sm="10">
+							<p style="text-align: center;text-transform: uppercase;font-size: 0.8em"><i class="fa-light fa-phone"></i>Número de teléfono</p>
+						</div>
+						<div flex-gt-sm="15">
+							<p style="text-align: center;text-transform: uppercase;font-size: 0.8em"><i class="fa-light fa-barcode-read"></i>IMEI del terminal</p>
+						</div>
+						<div flex-gt-sm="15">
+							<p style="text-align: center;text-transform: uppercase;font-size: 0.8em"><i class="fa-light fa-puzzle"></i>Marca del terminal</p>
+						</div>
+						<div flex-gt-sm="30">
+							<p style="text-align: center;text-transform: uppercase;font-size: 0.8em"><i class="fa-light fa-mobile"></i>Modelo exacto del terminal a asegurar</p>
+						</div>
+						<div flex-gt-sm="15"></div>
+					</div>
+
+					<div layout-gt-sm="row" layout-sm="column" flex-gt-sm="100" style="margin-top: 0;margin-bottom: 30px">
+						<div  flex-gt-sm="40"></div>
+							<md-list flex="35" layout-gt-sm="row">
+								<md-list-item>
+								<span><i class="fa-light fa-mobile" style="color: #0066ff;  margin-right: 3px"></i> ¿Es reacondicionado? </span>
+								<md-switch ng-change="$ctrl.isReacondicicionado()" ng-model="$ctrl.checkReacondicionado"></md-switch>
+								</md-list-item>
+							</md-list>
+
+
+
+						<div flex-gt-sm="25"></div>
+						</div>
+
+					<div style="margin: 30px 5px">
+						<p style="font-size: 0.8em;text-align: center"><i class="fa-regular fa-question"></i>Un Token es un identificador único que encapsula la información necesaria para la contratación del seguro de un cliente.</p>
+					</div>
+
+	            </form>           
+	        </div>       
+	    </md-content>
+	</div>
+
+
+     

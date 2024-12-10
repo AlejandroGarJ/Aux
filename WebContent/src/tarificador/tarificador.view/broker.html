@@ -1,0 +1,535 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div>
+    <div layout="column" layout-align="center center">
+        <div layout-align="center center" flex style="margin-top: 20px; margin-bottom: 20px; max-width: 100%;">
+           <!-- <div layout="column" layout-align="center center"> -->
+            <!-- <p style="font-size: 13px; padding: 7px 35px; background-color: #cbe0ff; border-radius: 20px; letter-spacing: 0.05em; color: #3b3b3b;">Hemos publicado un video, si quieres verlo puedes <a style="font-weight: bold; text-decoration: underline; font-size: 13px!important;" ng-click="$ctrl.cargarVideo()">pinchar aquí.</a></p> -->
+            <div layout="row" layout-align="center center">
+				<div layout="row" layout-align="center center" ng-click="$ctrl.navTo('#!/area_privada?emp=true')">
+					<md-icon>keyboard_backspace</md-icon>
+					{{ 'RETURN' | translate }}
+				</div>
+				<h4 style="color: #0066FF; text-transform: uppercase; margin-left: 10px;font-family: TelefonicaWebBold;">Espacio Broker </h4>
+                <md-input-container class="md-block" style="margin-left: 10px;">
+                    <!-- <label>{{ 'PRODUCT' | translate }}</label> -->
+                    <md-select ng-model="$ctrl.ID_PROGRAMA" required disabled>
+                       <md-option ng-repeat="programa in $ctrl.listProgramas" ng-value="programa.ID_PROGRAMA">
+                           {{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+                        </md-option>
+                   </md-select>
+                </md-input-container>
+			</div>
+            <legend></legend>
+            <div layout="row" layout-align="center center" class="nav" ng-if="$ctrl.showCibernovedades">
+                <div layout="row" class="nav-item">
+                    <md-input-container class="input-span">                    
+                        <span class="menuBroker" ng-click="$ctrl.changeMenu('documentacion')"><md-icon md-svg-icon="ico-documentacion"></md-icon>{{ 'DOCUMENTATION' | translate}}</span>
+                    </md-input-container>
+                    <md-input-container class="input-select" ng-show="$ctrl.showMenu == 'documentacion'">
+                        <md-select placeholder="Selecciona" ng-model="$ctrl.ID_TIPO_ARCHIVO">
+                            <md-option ng-repeat="tipo in $ctrl.tipos.documentacion" ng-value="tipo.ID_TIPOS" ng-click="$ctrl.changeSubMenu(tipo.DS_TIPOS)">
+                                <!-- {{$ctrl.parent.getDescriptivo(tipo, 'DS_TIPOS.replace("EB_", "")')}} -->
+                                {{ tipo.DS_TIPOS.replace('EB_', '') }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" class="nav-item">
+                    <md-input-container class="input-span"> 
+                        <span class="menuBroker" ng-click="$ctrl.changeMenu('formacion')"><md-icon md-svg-icon="ico-formacion"></md-icon>{{ 'TRAINING' | translate }}</span>
+                    </md-input-container>
+                    <md-input-container class="input-select" ng-show="$ctrl.showMenu == 'formacion'">
+                        <md-select placeholder="Selecciona" ng-model="$ctrl.ID_TIPO_ARCHIVO">
+                            <md-option ng-repeat="tipo in $ctrl.tipos.formacion" ng-value="tipo.ID_TIPOS" ng-click="$ctrl.changeSubMenu(tipo.DS_TIPOS)">
+                                <!-- {{$ctrl.parent.getDescriptivo(tipo, 'DS_TIPOS')}} -->
+                                {{ tipo.DS_TIPOS.replace('EB_', '') }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" class="nav-item">
+                    <md-input-container class="input-span">
+                        <span class="menuBroker" ng-click="$ctrl.changeMenu('noticias')"><md-icon md-svg-icon="ico-noticias"></md-icon>{{ 'NEWS' | translate }}</span>
+                    </md-input-container>
+                    <md-input-container class="input-select" ng-show="$ctrl.showMenu == 'noticias'">
+                        <md-select placeholder="Selecciona" ng-model="$ctrl.ID_SUBTIPO_CAMPAIGN">
+                            <md-option ng-repeat="tipo in $ctrl.tipos.noticias" ng-value="tipo.CO_TIPO" ng-click="$ctrl.changeSubMenu(tipo.DS_TIPOS)">
+                                {{$ctrl.parent.getDescriptivo(tipo, 'DS_TIPOS')}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" class="nav-item">
+                    <md-input-container class="input-span">
+                     <span class="menuBroker" ng-click="$ctrl.changeMenu('emailing')"><md-icon md-svg-icon="ico-emailing"></md-icon>Emailing cliente</span>
+                    </md-input-container>
+                </div>
+                <!-- <div>
+                    <button class="md-raised md-primary medium-blue button-action-main md-button md-ink-ripple" ng-click="$ctrl.changeMenu('siniestros')">Estado Siniestros</button>
+                </div> -->
+            </div>
+		    <!-- <legend ng-if="$ctrl.showCibernovedades"></legend> -->
+            <div class="espacio-broker" ng-if="$ctrl.showCibernovedades">
+            <div ng-show="$ctrl.showMenu == '' && $ctrl.showCibernovedades" style="background-color: #F2F4FF; border-bottom: 0.5px solid #0065FF;">
+                <!-- background-image: url('src/img/broker/ima_broker.jpg'); -->
+                <div layout="row" class="novedades"> 
+                    <img src="src/img/broker/ima_broker.jpg">
+                    <div layout="column" layout-align="center start" flex class="novedades_container">
+                        <span class="novedades_title"><i>Bienvenido </i></span>
+                        <span class="novedades_subtitle">al Espacio Broker</span>
+                        <br>
+                        <span class="novedades_text">Encuentra toda la documentación necesaria sobre la póliza y todos los recursos que necesitas para mantenerte al día, complementar tus conocimientos y reforzar la labor comercial con tus clientes.</span>
+                    </div>
+                </div>
+                <div layout="column" layout-align="center center" style="float: left; width: 100%; padding-bottom: 10px;">
+                    <h4 class="title-broker">Últimas novedades</h4>
+                </div>
+                <legend style=" border-bottom: 1px solid #0065FF;"></legend>
+
+                <div layout="row" flex style="margin-top: 20px;" class="documents-container">
+
+                    <!-- <div layout="row" layout-align="center center" flex style="margin-top: 20px;"> -->
+                        <!-- <div layout="row" layout-wrap layout-align="center center" flex style="margin-top: 20px;" class="documents-container_flex"> -->
+                            <div ng-repeat="video in $ctrl.listaVideos | filter : {title : 'contratación'}" style="box-sizing: border-box; padding: 0 20px; margin-top: 20px;">
+                                <div layout="column" flex class="video">
+                                    <input type="image" class="video-img" ng-src="{{video.thumbnailsUrl}}">
+                                    <div class="img-play"  ng-click="$ctrl.cargarVideo(video)">
+                                        <img src="src/img/Ico_play.svg">
+                                    </div>
+                                </div>
+                                <p class="doc-title">{{video.title}}</p>
+                            </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
+                    
+                    <div layout="column" ng-repeat="documento in $ctrl.listDocuments  | filter: {DS_ARCHIVO : 'Infografía Ciberseguro' }" flex="25" style="margin: 40px; max-width: 180px;">
+                        <div class="documento">
+                            <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                            <div layout="column" layout-align="center center" class="doc-btn">
+                                <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                            </div>
+                            <div class="hover-overlay"></div>
+                        </div>
+                        <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                    </div>
+                    
+                    <div layout="column" ng-repeat="documento in $ctrl.listDocuments  | filter: {DS_ARCHIVO : 'Garantías Ciberseguro' }" flex="25" style="margin: 40px; max-width: 180px;">
+                        <div class="documento">
+                            <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                            <div layout="column" layout-align="center center" class="doc-btn">
+                                <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                            </div>
+                            <div class="hover-overlay"></div>
+                        </div>
+                        <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                    </div>
+
+                    <div layout="column" ng-repeat="documento in $ctrl.listDocuments  | filter: {DS_ARCHIVO : 'IPID Ciberseguro' }" flex="25" style="margin: 40px; max-width: 180px;">
+                        <div class="documento">
+                            <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                            <div layout="column" layout-align="center center" class="doc-btn">
+                                <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                            </div>
+                            <div class="hover-overlay"></div>
+                        </div>
+                        <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                    </div>
+                    <div layout="column" ng-repeat="documento in $ctrl.listDocuments  | filter: {DS_ARCHIVO : 'Tipologías de Siniestros' }" flex="25" style="margin: 40px; max-width: 180px;">
+                        <div class="documento">
+                            <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                            <div layout="column" layout-align="center center" class="doc-btn">
+                                <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                            </div>
+                            <div class="hover-overlay"></div>
+                        </div>
+                        <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                    </div>
+
+                    <div ng-repeat="emailing in $ctrl.listaEmailing" layout="column" flex="25" style="margin: 40px; max-width: 200px;">
+                        <div class="documento">
+                            <input type="image" ng-src="{{emailing.DS_LONG_DESC}}" class="doc-img"></input>
+                            <div layout="column" layout-align="center center" class="doc-btn">
+                                <button ng-click="$ctrl.getEmailing(emailing.DS_LONG)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                            </div>
+                            <div class="hover-overlay"></div>
+                        </div>
+                        <p class="doc-title">{{emailing.DS_SHORT}}</span> 
+                    </div>
+                </div>
+                <!-- <div layout="row" layout-align="center center" ng-if="$ctrl.listDocuments == null || $ctrl.listDocuments.length == 0">
+                    <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado documentos asociados</h4>
+                </div> -->
+                <legend></legend>
+            </div>
+
+            <div ng-show="$ctrl.showMenu == 'documentacion'" style="margin-top: 20px;">
+                <!-- <div layout="column" layout-align="start start" style="float: left; width: 80%;">
+                    <h4 class="title-broker">{{ 'DOCUMENTATION' | translate}}</h4>
+                </div>
+                <legend></legend> -->
+                <!-- <div ng-if="$ctrl.showMenu == 'documentacion'"> -->
+                    <!-- <div layout="row" layout-align="start start"> -->
+                    <!-- <h5 class="subtitle-broker" ng-if="$ctrl.showSubMenu != ''">{{$ctrl.showSubMenu}}</h5>
+                <div layout="row" layout-align="center center" flex style="margin-top: 40px;" class="documents-container">
+                        
+                    <div layout="column" ng-repeat="documento in $ctrl.listDocumentacion  | filter: {ID_TIPO_ARCHIVO : $ctrl.ID_TIPO_ARCHIVO}" flex="25" style="margin: 40px; max-width: 180px;" ng-if="$ctrl.listDocumentacion != null || $ctrl.listDocumentacion.length != 0">
+                        <div class="documento">
+                            <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                            <div layout="column" layout-align="center center" class="doc-btn">
+                                <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                            </div>
+                            <div class="hover-overlay"></div>
+                        </div>
+                        <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                    </div>
+                    <legend></legend>
+                    </div>
+                    <div layout="row" layout-align="center center" ng-if="$ctrl.listDocumentacion == null || $ctrl.listDocumentacion.length == 0">
+                        <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado documentos asociados</h4>
+                    </div>
+                </div> -->
+                <div ng-if="$ctrl.showMenu == 'documentacion'" ng-hide="$ctrl.showSubMenu == 'presupuestos' || $ctrl.showSubMenu == 'formularios' || $ctrl.showSubMenu == 'comercial cliente'">
+                        <h5 class="subtitle-broker">Pólizas</h5>
+
+                    <div layout="row" flex style="margin-top: 40px;" class="documents-container">
+                        <div layout="column" ng-repeat="documento in $ctrl.listDocuments | filter: {ID_TIPO_ARCHIVO : 21012}" flex="25" style="margin: 40px; max-width: 180px;">
+                            <div class="documento">
+                                <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                    <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                        </div>
+                        <div layout="row" layout-align="center center" ng-if="$ctrl.getDocuments(21012).length === null || $ctrl.getDocuments(21012) === 0">
+                            <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado documentos en esta sección</h4>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+
+                <div ng-if="$ctrl.showMenu == 'documentacion'" ng-hide="$ctrl.showSubMenu == 'polizas' || $ctrl.showSubMenu == 'formularios' || $ctrl.showSubMenu == 'comercial cliente'">
+                        <h5 class="subtitle-broker">Presupuestos</h5>
+
+                    <div layout="row" flex style="margin-top: 40px;" class="documents-container">
+                        <div layout="column" ng-repeat="documento in $ctrl.listDocuments | filter: {ID_TIPO_ARCHIVO : 21013}" flex="25" style="margin: 40px; max-width: 180px;">
+                            <div class="documento">
+                                <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                    <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                        </div>
+                        <div layout="row" layout-align="center center" ng-if="$ctrl.getDocuments(21013).length === null || $ctrl.getDocuments(21013) === 0">
+                            <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado documentos en esta sección</h4>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+
+                <div ng-if="$ctrl.showMenu == 'documentacion'" ng-hide="$ctrl.showSubMenu == 'polizas' || $ctrl.showSubMenu == 'presupuestos' || $ctrl.showSubMenu == 'comercial cliente'">
+                        <h5 class="subtitle-broker">Formularios</h5>
+
+                    <div layout="row" flex style="margin-top: 40px;" class="documents-container">
+                        <div layout="column" ng-repeat="documento in $ctrl.listDocuments | filter: {ID_TIPO_ARCHIVO : 21014}" flex="25" style="margin: 40px; max-width: 180px;">
+                            <div class="documento">
+                                <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                    <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                        </div>
+                        <div layout="row" layout-align="center center" ng-if="$ctrl.getDocuments(21014).length === null || $ctrl.getDocuments(21014) === 0">
+                            <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado documentos en esta sección</h4>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+                
+                <div ng-if="$ctrl.showMenu == 'documentacion'" ng-hide="$ctrl.showSubMenu == 'polizas' || $ctrl.showSubMenu == 'presupuestos' || $ctrl.showSubMenu == 'formularios'">
+                        <h5 class="subtitle-broker">Comercial cliente</h5>
+
+                    <div layout="row" flex style="margin-top: 40px;" class="documents-container">
+                        <div layout="column" ng-repeat="documento in $ctrl.listDocuments | filter: {ID_TIPO_ARCHIVO : 21015}" flex="25" style="margin: 40px; max-width: 180px;">
+                            <div class="documento">
+                                <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                    <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                        </div>
+                        <div layout="row" layout-align="center center" ng-if="$ctrl.getDocuments(21015).length === null || $ctrl.getDocuments(21015) === 0">
+                            <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado documentos en esta sección</h4>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+            </div>
+
+            <div ng-show="$ctrl.showMenu == 'formacion'" style="margin-top: 20px"> 
+                <!-- <div layout="column" layout-align="start start" style="float: left; width: 100%;">
+                    <h4 class="title-broker">{{ 'TRAINING' | translate }}</h4>
+                
+                <legend></legend>
+                </div> -->
+                <div ng-if="$ctrl.showMenu == 'formacion'" ng-hide="$ctrl.showSubMenu == 'guias' || $ctrl.showSubMenu == 'infografias'">
+                <!-- <div layout="row" layout-align="start start"> -->
+                    <h5 class="subtitle-broker">Vídeos</h5>
+                <!-- </div> -->
+                <!-- <legend></legend> -->
+
+                <!-- <div layout="column" layout-align="center center" flex style="margin-top: 20px;">
+                    <div flex-gt-sm="33" class="video">
+                        <input type="image" class="video-img" ng-model="$ctrl.videoComercial" ng-src="{{$ctrl.videoComercial.thumbnailsUrl}}" ng-value="$ctrl.videoComercial">
+                        <div class="img-play" ng-click="$ctrl.cargarVideo($ctrl.videoComercial)">
+                            <img src="src/img/Ico_play.svg">
+                        </div>
+                    </div>
+                    <p class="doc-title">{{$ctrl.videoComercial.title}}</p>
+                </div> -->
+
+                <div layout="row" layout-align="start center" flex style="margin-top: 40px;" class="documents-container">
+                <!-- <div layout="row" layout-wrap layout-align="center center" flex style="margin-top: 20px;" class="documents-container_flex"> -->
+                    <div layout="column" ng-repeat="video in $ctrl.listaVideos" style="box-sizing: border-box; padding: 0 20px;  max-width: 400px; margin-top: 40px;">
+                        <div flex class="video">
+                            <input type="image" class="video-img" ng-src="{{video.thumbnailsUrl}}">
+                            <div class="img-play"  ng-click="$ctrl.cargarVideo(video)">
+                                <img src="src/img/Ico_play.svg">
+                            </div>
+                        </div>
+                        <p class="doc-title">{{video.title}}</p>
+                    </div>
+                    <!-- </div> -->
+                </div>
+                <legend></legend>
+                </div>
+                
+                <div ng-if="$ctrl.showMenu == 'formacion'" ng-hide="$ctrl.showSubMenu == 'videos' || $ctrl.showSubMenu == 'infografias'">
+                    <!-- <div layout="row" layout-align="start start"> -->
+                        <h5 class="subtitle-broker">Guías</h5>
+                    <!-- </div> -->
+                    <!-- <legend></legend> -->
+
+                    <div layout="row" flex style="margin-top: 20px;" class="documents-container">
+                        <div layout="column" ng-repeat="documento in $ctrl.listDocuments  | filter: {ID_TIPO_ARCHIVO : 21017}" flex="25" style="margin: 40px; max-width: 180px;">
+                            <div class="documento">
+                                <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                    <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                        </div>
+                        <div layout="row" layout-align="center center" ng-if="$ctrl.getDocuments(21017).length === null || $ctrl.getDocuments(21017) === 0">
+                            <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado documentos en esta sección</h4>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+                
+                <div ng-if="$ctrl.showMenu == 'formacion'" ng-hide="$ctrl.showSubMenu == 'videos' || $ctrl.showSubMenu == 'guias'">
+                    <!-- <div layout="row" layout-align="start start"> -->
+                        <h5 class="subtitle-broker">Infografías</h5>
+                    <!-- </div> -->
+                    <!-- <legend></legend> -->
+
+                    <div layout="row" flex style="margin-top: 20px;" class="documents-container">
+                        <div layout="column" ng-repeat="documento in $ctrl.listDocuments | filter: {ID_TIPO_ARCHIVO : 21018}" flex="25" style="margin: 40px; max-width: 180px;">
+                            <div class="documento">
+                                <input type="image" ng-src="{{$ctrl.getResourceUrl(documento.ARCHIVO64)}}" class="doc-img"></input>
+                                <div layout="column" layout-align="center center" class="doc-btn">
+                                    <button ng-click="$ctrl.downloadFile(documento, true)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-eye" style="margin-right: 5px;font-size: 14px"></i>{{ 'SEE' | translate }}</button>
+                                    <button ng-click="$ctrl.downloadFile(documento, false)" style="margin: 10px;">
+                                        <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                                </div>
+                                <div class="hover-overlay"></div>
+                            </div>
+                            <p class="doc-title">{{documento.DS_ARCHIVO}}</span> 
+                        </div>
+                        <div layout="row" layout-align="center center" ng-if="$ctrl.getDocuments(21018).length === null || $ctrl.getDocuments(21018) === 0">
+                            <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se han encontrado documentos en esta sección</h4>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+            </div>
+
+            <div ng-show="$ctrl.showMenu == 'noticias'" style="margin-top: 20px;">
+                <!-- <div layout="column" layout-align="start start" style="float: left; width: 100%;">
+                    <h4 class="title-broker">Últimas Noticias</h4>
+                </div>
+                <legend></legend> -->
+                <!-- <h5 class="subtitle-broker" ng-if="$ctrl.showSubMenu != ''">{{$ctrl.showSubMenu}}</h5>
+                <div layout="row" flex style="margin-top: 40px;" class="documents-container">
+                    <div ng-repeat="noticia in $ctrl.listaNoticias | filter: {ID_SUBTIPO_CAMPAIGN : $ctrl.ID_SUBTIPO_CAMPAIGN}" flex="33" style="box-sizing: border-box;padding: 20px;">
+                        <div layout="column" ng-click="$ctrl.openUrl(noticia)" style="cursor: pointer; max-width: 400px;">
+                            <input type="image" class="notice-img" ng-src="{{ noticia.DS_LONG_DESC | trusted }}">
+                            <h4 style="font-family: TelefonicaWebBold; font-size: 14px!important;" change-color="noticia.ID_SUBTIPO_CAMPAIGN">{{ $ctrl.showDsCampaign(noticia.ID_SUBTIPO_CAMPAIGN) }}</h4>
+                            <p class="doc-title">{{noticia.DS_SHORT}}</p>
+                            <span style="margin-top: 20px; word-break: break-all;">{{noticia.DS_LONG}}</span>
+                        </div>
+                    </div>
+                </div> -->
+                <div ng-if="$ctrl.showMenu == 'noticias'" ng-hide="$ctrl.showSubMenu == 'ciberseguros' || $ctrl.showSubMenu == 'incidentes y delitos'">
+                    <h5 class="subtitle-broker">Ciberseguridad</h5>
+                    <div layout="row" flex style="margin-top: 40px;" class="documents-container">
+                        <div ng-repeat="noticia in $ctrl.listaNoticias | filter: {ID_SUBTIPO_CAMPAIGN : 21}" flex="33" style="box-sizing: border-box;padding: 20px;">
+                            <div layout="column" ng-click="$ctrl.openUrl(noticia)" style="cursor: pointer; max-width: 400px;">
+                                <input type="image" class="notice-img" ng-src="{{ noticia.DS_LONG_DESC | trusted }}">
+                                <h4 style="font-family: TelefonicaWebBold; font-size: 14px!important;" change-color="noticia.ID_SUBTIPO_CAMPAIGN">{{ $ctrl.showDsCampaign(noticia.ID_SUBTIPO_CAMPAIGN) }}</h4>
+                                <p class="doc-title">{{noticia.DS_SHORT}}</p>
+                                <!-- <span style="margin-top: 20px; word-break: break-all;">{{noticia.DS_LONG}}</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+                <div ng-if="$ctrl.showMenu == 'noticias'" ng-hide="$ctrl.showSubMenu == 'ciberseguridad' || $ctrl.showSubMenu == 'incidentes y delitos'">
+                    <h5 class="subtitle-broker">Ciberseguros</h5>
+                    <div layout="row" flex style="margin-top: 40px;" class="documents-container">
+                        <div ng-repeat="noticia in $ctrl.listaNoticias | filter: {ID_SUBTIPO_CAMPAIGN : 22}" flex="33" style="box-sizing: border-box;padding: 20px;">
+                            <div layout="column" ng-click="$ctrl.openUrl(noticia)" style="cursor: pointer; max-width: 400px;">
+                                <input type="image" class="notice-img" ng-src="{{ noticia.DS_LONG_DESC | trusted }}">
+                                <h4 style="font-family: TelefonicaWebBold; font-size: 14px!important;" change-color="noticia.ID_SUBTIPO_CAMPAIGN">{{ $ctrl.showDsCampaign(noticia.ID_SUBTIPO_CAMPAIGN) }}</h4>
+                                <p class="doc-title">{{noticia.DS_SHORT}}</p>
+                                <!-- <span style="margin-top: 20px; word-break: break-all;">{{noticia.DS_LONG}}</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+                <div ng-if="$ctrl.showMenu == 'noticias'" ng-hide="$ctrl.showSubMenu == 'ciberseguridad' || $ctrl.showSubMenu == 'ciberseguros'">
+                    <h5 class="subtitle-broker">Incidentes y delitos</h5>
+                    <div layout="row" flex style="margin-top: 40px;" class="documents-container">
+                        <div ng-repeat="noticia in $ctrl.listaNoticias | filter: {ID_SUBTIPO_CAMPAIGN : 23}" flex="33" style="box-sizing: border-box;padding: 20px;">
+                            <div layout="column" ng-click="$ctrl.openUrl(noticia)" style="cursor: pointer; max-width: 400px;">
+                                <input type="image" class="notice-img" ng-src="{{ noticia.DS_LONG_DESC | trusted }}">
+                                <h4 style="font-family: TelefonicaWebBold; font-size: 14px!important;" change-color="noticia.ID_SUBTIPO_CAMPAIGN">{{ $ctrl.showDsCampaign(noticia.ID_SUBTIPO_CAMPAIGN) }}</h4>
+                                <p class="doc-title">{{noticia.DS_SHORT}}</p>
+                                <!-- <span style="margin-top: 20px; word-break: break-all;">{{noticia.DS_LONG}}</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <legend></legend>
+                </div>
+            </div>
+
+            <div ng-show="$ctrl.showMenu == 'emailing'" style="margin-top: 20px;">
+                <!-- <div layout="column" layout-align="start start" style="float: left; width: 100%;">
+                    <h4 class="title-broker">Emailing</h4>
+                </div>
+                <legend></legend> -->
+
+                <div layout="row" layout-align="center center" flex style="margin-top: 20px;" class="documents-container">
+                    <div ng-repeat="emailing in $ctrl.listaEmailing" layout="column" flex="25" style="margin: 40px; max-width: 200px;">
+                        <div class="documento">
+                            <input type="image" ng-src="{{emailing.DS_LONG_DESC}}" class="doc-img"></input>
+                            <div layout="column" layout-align="center center" class="doc-btn">
+                                
+                                <button ng-click="$ctrl.getEmailing(emailing.DS_LONG)" style="margin: 10px;">
+                                    <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i>{{ 'DOWNLOAD' | translate }}</button>
+                            </div>
+                            <div class="hover-overlay"></div>
+                        </div>
+                        <p class="doc-title">{{emailing.DS_SHORT}}</span> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div ng-show="$ctrl.showMenu == 'siniestros'">
+                <div layout="column" layout-align="start start" style="float: left; width: 100%;">
+                    <h4 style="color: #0066FF; text-transform: uppercase; margin-left: 10px; font-family: TelefonicaWebBold;">Estado Siniestros</h4>
+                </div>
+                <legend></legend>
+
+                <div layout="row" layout-align="center center" flex style="margin-top: 20px;">
+                    <filtros-siniestro-app></filtros-siniestro-app>                    
+                </div>
+                
+            </div> -->
+            </div>
+        </div>
+        
+        <!-- <div ng-hide="$ctrl.showMenu != ''" layout="row" layout-align="center center" flex style="margin-top: 20px;" ng-if="$ctrl.showCibernovedades == true">
+            <div ng-click="$ctrl.changeMenu('documentacion')" class="feeCalc_btn_ciber" style="margin: 10px; max-width: 180px; max-height: 280px;">
+                <img src="src/img/Ico_documentacion.svg"/> 
+                <span class="title_tarific" style="font-family: TelefonicaWebBold!important">{{ 'DOCUMENTATION' | translate}}</span>
+            </div>
+            <div ng-click="$ctrl.changeMenu('formacion')" class="feeCalc_btn_ciber" style="margin: 10px; max-width: 180px; max-height: 280px;">
+                <img src="src/img/Ico_formacion.svg"/> 
+                <span class="title_tarific" style="font-family: TelefonicaWebBold!important">{{ 'TRAINING' | translate }}</span>
+            </div>
+            <div ng-click="$ctrl.changeMenu('noticias')" class="feeCalc_btn_ciber" style="margin: 10px; max-width: 180px; max-height: 280px;">
+                <img src="src/img/Ico_noticias.svg"/> 
+                <span class="title_tarific" style="font-family: TelefonicaWebBold!important">{{ 'NEWS' | translate }}</span>
+            </div>
+            <div ng-click="$ctrl.changeMenu('emailing')" class="feeCalc_btn_ciber" style="margin: 10px; max-width: 180px; max-height: 280px;">
+                <img src="src/img/Ico_mailing.svg"/> 
+                <span class="title_tarific" style="font-family: TelefonicaWebBold!important">Emailing</span>
+            </div>
+            <div ng-click="$ctrl.changeMenu('siniestros')" class="feeCalc_btn_ciber" style="margin: 10px; max-width: 180px; max-height: 280px;">
+                <img src="src/img/Ico_siniestros.svg"/> 
+                <span class="title_tarific" style="font-family: TelefonicaWebBold!important">Siniestros</span>
+            </div>
+        </div> -->
+    </div>
+    <div ng-if="$ctrl.showCibernovedades == false && $ctrl.loading == true">
+        <div layout="row" layout-align="center center" >
+            <div class="cs-loader" style="height: 40px; width: 97%; position: relative">
+                <div class="cs-loader-inner">
+                    <label>●</label>
+                    <label>●</label>
+                    <label>●</label>
+                    <label>●</label>
+                    <label>●</label>
+                    <label>●</label>
+                </div>
+            </div>
+        </div>
+        <div layout-gt-sm="row" layout-align="center">
+            <p style="text-align:center;font-size: 13px">Estamos recuperando toda la información de tu Espacio Broker</p>
+        </div>
+    </div>
+</div>

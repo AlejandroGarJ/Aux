@@ -1,0 +1,39 @@
+<!-- Tabla de envio Movistar -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>      
+        
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se ha encontrado ningún dato</h4>
+            </div>
+            <div layout="row" layout-align="center center" resize ng-if="$ctrl.vista == 1">
+<!--                 <h2>Busque un Presupuesto</h2> -->
+            </div>
+            <div id="buscandoGif" style="display:table; height: 50vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+			
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="$ctrl.screenHeight < 620 ? $ctrl.getTableHeight() : $ctrl.gridOptions.totalItems < 30 ? resizeHeight(377) : $ctrl.getTableHeight()"></div>
+		</md-tab>
+        
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index"  label="{{ 'MSISDN' | translate }} : {{detalles.msisdn}}">
+        
+            <md-tab-label ng-if="detalles != null">
+				<span ng-if="detalles.imei != undefined && detalles.imei != null">{{ 'IMEI' | translate }} : {{detalles.imei}}<span  class="close"ng-click="$ctrl.cerrarTab(detalles)" aria-hidden="true">×</span></span>
+            </md-tab-label>
+            
+            <md-tab-body>                       	
+            	<detalle-portabilidad detalles="detalles" tipo="'portabilidad'"></detalle-portabilidad>
+            </md-tab-body>
+
+        </md-tab>
+
+    </md-tabs>
+
+</div>

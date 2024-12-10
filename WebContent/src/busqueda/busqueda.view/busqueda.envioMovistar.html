@@ -1,0 +1,54 @@
+<!-- Tabla de envio Movistar -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+	
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>      
+
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+        	<div layout="row" layout-align="start center" class="md-padding" style="padding-left: 0px!important;">
+        		 <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4  && ($ctrl.parent.url == 'enviosMovistar') && $ctrl.permisos.IN_EXPORTAR == true" 
+		    		class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.exportarExcel()" style="margin-top:2%">
+		          <span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+		     	 </md-button> 
+		   		 <md-button  class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.newToken()">
+                     <i class="fa-regular fa-plus"></i> {{ 'GENERATE_TOKEN' | translate }}
+		    	</md-button>
+
+	        </div>
+	        <div layout="row" layout-align="center center"  ng-if="$ctrl.vista == 3">
+	        	<h4> <span class="material-icons">report_problem</span> {{ 'NOT_FOUND_RECORD' | translate }}</h4>
+	        </div>
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+            </div>
+            <div id="buscandoGif" style="display:table; height: 50vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>         
+    
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="$ctrl.screenHeight < 620 ? $ctrl.getTableHeight() : $ctrl.gridOptions.totalItems < 30 ? resizeHeight(377) : $ctrl.getTableHeight()"></div>                
+        </md-tab>
+        
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+        
+            <md-tab-label ng-if="detalles != null">
+				<span ng-if="$ctrl.nomDetalles[$index]=='dispositivo' && detalles.imei">{{ 'IMEI' | translate }}: {{detalles.imei}}
+                    <span  class="close"ng-click="$ctrl.cerrarTab(detalles)" aria-hidden="true">×</span>
+                </span>
+                <span ng-if="$ctrl.isNew == true && detalles.idDevice == undefined && detalles.idDevice == null">{{ 'NEW_SM_TOKEN' | translate }}
+                    <span class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)" aria-hidden="true">×</span>
+                </span>
+            </md-tab-label>
+            
+            <md-tab-body>                       	
+            	<detalle-movistar detalles="detalles-dispositivos" tipo="'dispositivo'"></detalle-movistar>
+            </md-tab-body>
+
+        </md-tab>
+
+    </md-tabs>
+
+</div>

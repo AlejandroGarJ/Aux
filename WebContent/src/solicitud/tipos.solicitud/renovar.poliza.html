@@ -1,0 +1,263 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="row" layout-align="center center">
+	<div layout="row" style="margin-bottom: 20px;" flex="60" layout-align="center center">
+		<div class="coversResume ui-grid" style="width:100%;" ui-grid="$ctrl.gridCoberturasActuales" style="height: auto!important"></div>
+	</div>
+</div>
+<div layout="row" layout-align="center center">
+	<p style="color:#474a59!important;font-size: 0.9em">
+		<i class="fa-light fa-message-check" style="margin-right: 3px;color: #00b0bd"></i>Esta tabla se actualiza en base a la configuración de la solicitud
+	</p>
+</div>
+<legend class="margin-top-20" style="letter-spacing: 1px;"><i class="fa-light fa-puzzle" style="margin-right: 3px"></i> MODIFICACIONES ADICIONALES A FECHA DE RENOVACIÓN {{ $ctrl.datosPoliza.FD_VENCIMIENTO | date:"dd/MM/yyyy"}}</legend>
+<div class="margin-top-20" layout="row" layout-align="center start">
+	<div layout="column" style="margin-right: 15px" flex>
+		<div layout="row">
+			<!-- <div flex=50 layout-align="center center" layout="row">
+				<span style="margin-right: 10px;text-transform: uppercase"><i class="fa-regular fa-grid-2-plus" style="margin-right: 10px; color: #0066ff"></i> Incluir 'Extensión de Cobertura 4 - Ciberdelincuencia'</span>
+				<md-switch ng-model="$ctrl.objRenovarPolizas.showModificacionGarantias" ng-change="$ctrl.changeSwitchPolizas('modificacionGarantias', 'objRenovarPolizas')"></md-switch>
+			</div>
+			<div flex=50 layout-align="center center" layout="row">
+				<span style="margin-right: 10px;text-transform: uppercase"><i class="fa-light fa-gears" style="margin-right: 10px; color: #0066ff"></i> Modificación de Datos de Riesgo</span>
+				<md-switch ng-model="$ctrl.objRenovarPolizas.showCambioRiesgo" ng-change="$ctrl.changeSwitchPolizas('cambioRiesgo', 'objRenovarPolizas')"></md-switch>
+			</div> -->
+
+			<div flex=33 layout-align="center center" layout="row">
+				<span style="margin-right: 10px;text-transform: uppercase">
+					<i class="fa-regular fa-grid-2-plus" style="margin-right: 10px; color: #0066ff"></i> Incluir 'Extensión de Cobertura 4 - Ciberdelincuencia'
+				</span>
+				<md-switch ng-model="$ctrl.objRenovarPolizas.showModificacionGarantias" ng-change="$ctrl.changeSwitchPolizas('modificacionGarantias', 'objRenovarPolizas')"></md-switch>
+			</div>
+			<div flex=33 layout-align="center center" layout="row">
+				<span style="margin-right: 10px;text-transform: uppercase">
+					<i class="fa-light fa-gears" style="margin-right: 10px; color: #0066ff"></i> Modificación de Datos de Riesgo
+				</span>
+				<md-switch ng-model="$ctrl.objRenovarPolizas.showCambioRiesgo" ng-change="$ctrl.changeSwitchPolizas('cambioRiesgo', 'objRenovarPolizas')"></md-switch>
+			</div>
+			<!-- <div flex=33 layout-align="center center" layout="row">
+				<span style="margin-right: 10px;text-transform: uppercase">
+					<i class="fa-light fa-gears" style="margin-right: 10px; color: #0066ff"></i> Cambio de corredor
+				</span>
+				<md-switch ng-model="$ctrl.objRenovarPolizas.showCambioCorredor" ng-change="$ctrl.changeSwitchPolizas('cambioCorredor', 'objRenovarPolizas')"></md-switch>
+			</div> -->
+			<div flex=33 layout-align="center center" layout="row">
+				<span style="margin-right: 10px;text-transform: uppercase">
+					<i class="fa-light fa-gears" style="margin-right: 10px; color: #0066ff"></i> Siniestralidad
+				</span>
+				<md-switch ng-model="$ctrl.siniestralidad" ng-change="$ctrl.incluirSiniestralidad()"></md-switch>
+			</div>
+		</div>
+		<div layout="row">
+			<div flex="33" layout-align="center center">
+				<!-- 	MODIFICACIÓN GARANTÍAS -->
+				<div class="margin-top-20" ng-if="$ctrl.objRenovarPolizas.showModificacionGarantias == true" layout-align="center center">
+					<div layout="row" layout-align="center center">
+						<div flex="100">
+							<md-checkbox style="margin-left: 17%" ng-change="$ctrl.incluirExtensionModificacion()" ng-model="$ctrl.checkIncluirExtension"><span style="text-transform: uppercase;color: #8a1a93">Añadir Extensión de Cobertura 4 (Ciberdelincuencia) a fecha de renovación</md-checkbox>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div flex="33" layout-align="center center">
+				<!-- 	CAMBIO DE RIESGO -->
+				<div class="margin-top-20" ng-if="$ctrl.objRenovarPolizas.showCambioRiesgo == true">
+					<div ng-include="$ctrl.templateCambioRiesgo"></div>
+				</div>
+			</div>
+			<div flex="33" layout-align="center center">
+				<!-- MODIFICACIÓN DE CORREDOR -->
+				<!-- <div class="margin-top-20" ng-if="$ctrl.objRenovarPolizas.showCambioCorredor == true" layout-align="center center">
+					<div class="separadorDesplegables"></div>
+					<md-input-container class="md-block">
+						<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+						<md-select ng-model="$ctrl.mediador" ng-change="$ctrl.getColectivo()" required>
+							<md-option ng-repeat="broker in $ctrl.lstBrokers" ng-value="broker.ID_COMPANIA">
+								{{broker.NO_COMPANIA}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" ng-if="$ctrl.mediador != null">
+						<label>Coletivo</label>
+						<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].ID_TIPO_POLIZA" ng-change="$ctrl.getObservacionesRenovacion()" required>
+							<md-option ng-repeat="colectivo in $ctrl.lstColectivos" ng-value="colectivo.ID_TIPO_POLIZA">
+								{{colectivo.DS_TIPO_POLIZA}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</div> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div style="text-align: center;padding: 10px;margin: 5px 15% 0px 15%;">
+	<p style="color:#474a59!important">
+		<i class="fa-light fa-check-double" style="margin-right: 3px;color: #00b0bd"></i>
+		Estas modificaciones serán visibles sobre la póliza una vez <span style="color: #6E7894;font-family: TelefonicaWebBold">confirmes la solicitud</span>
+	</p>
+</div>
+<legend class="margin-top-20" style="letter-spacing: 1px;"><i class="fa-light fa-coins"></i> CONFIGURACIÓN DE LA PRIMA DE RENOVACIÓN</legend>
+<div layout="row" layout-align="center center" style="margin-top: 10px;">
+	<md-checkbox ng-change="$ctrl.changePrimaRenovacionDiferente()" class="checkPrimasOK" ng-model="$ctrl.primaRenovacionDiferente"><i class="fa-solid fa-not-equal" style="color: #0066ff;margin-right: 3px"></i>La prima de renovación es diferente a la actual {{ $ctrl.beautifyImporte($ctrl.datosPoliza.IM_PRIMA_TOTAL) }}€</md-checkbox>
+</div>
+<div ng-if="$ctrl.primaRenovacionDiferente == true" layout="row" layout-align="center center" style="margin-top: 10px;padding: 20px;">
+	<p style="color:#474a59!important">
+		<i class="fa-light fa-calculator-simple" style="margin-right: 3px"></i>
+		Introduce la <span style="color: #6E7894;font-family: TelefonicaWebBold">PRIMA NETA</span> y el sistema calculará la <span style="color: #6E7894;font-family: TelefonicaWebBold">PRIMA BRUTA ANUAL</span> y los <span style="color: #6E7894;font-family: TelefonicaWebBold">IMPUESTOS. </span>No olvides configurar la <span style="color: #6E7894;font-family: TelefonicaWebBold">FRANQUICIA</span>.
+	</p>
+</div>
+<div id="boxInfoPrimas" layout="row" layout-align="center center" flex="100">
+	<div flex="15" style="text-align: center">
+		<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+			<md-list-item layout-align="center center">
+				<md-input-container style="margin-top: 23px!important;" flex="100">
+					<!--								{{ $ctrl.toFixed(modalidad.IM_PRIMA_ANUAL_TOT) }}-->
+					<label><i class="fa-light fa-euro-sign"></i> PRIMA NETA ANUAL</label>
+					<input ng-disabled="$ctrl.primaRenovacionDiferente != true" ng-model="$ctrl.primas.IM_PRIMANETA" placeholder="Introducir importe en €" ng-required="$ctrl.primaRenovacionDiferente == true" md-no-asterisk>
+				</md-input-container>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div flex="15" style="text-align: center">
+		<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center">
+			<md-list-item layout-align="center center">
+				<md-input-container style="margin-top: 23px!important;" flex="100">
+					<label>PRIMA REASEGURO (€)</label>
+					<input amount ng-disabled="$ctrl.primaRenovacionDiferente != true" ng-model="$ctrl.primas.IM_OFESAUTO" step="any" placeholder="Importe en €" ng-required="$ctrl.primaRenovacionDiferente == true" md-no-asterisk>
+					<span ng-show="$ctrl.precalculadaRecibo" style="color: rgb(182 109 0);font-size: 11px;" class="text-importe-siniestro-error">Prima precalculada al 60%</span>
+				</md-input-container>
+			</md-list-item>
+		</md-list>
+	</div>
+
+	<div flex="20" style="text-align: center;margin-top: 45px;" ng-if="$ctrl.primaRenovacionDiferente == true">
+		<md-button class="btnNextCiber" ng-click="$ctrl.changePrimas()">
+			<span><i class="fa-solid fa-calculator-simple"></i> Calcular primas e impuestos</span>
+		</md-button>
+	</div>
+	<div flex="15" style="text-align: center">
+		<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+			<md-list-item layout-align="center center">
+				<md-input-container style="margin-top: 23px!important;" flex="100">
+					<label>IPS 8% SOBRE PRIMA NETA ANUAL</label>
+					<input ng-disabled="true" ng-model="$ctrl.primas.IM_IMPUESTOS" ng-required="$ctrl.primaRenovacionDiferente == true" placeholder="-">
+				</md-input-container>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div flex="15" style="text-align: center">
+		<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+			<md-list-item layout-align="center center">
+				<md-input-container style="margin-top: 23px!important;" flex="100">
+					<label>LEA 0,15% SOBRE PRIMA NETA ANUAL</label>
+					<input ng-disabled="true" ng-model="$ctrl.primas.IM_CLEA" ng-required="$ctrl.primaRenovacionDiferente == true" placeholder="-">
+				</md-input-container>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div flex="15" style="text-align: center">
+		<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+			<md-list-item layout-align="center center">
+				<md-input-container style="margin-top: 23px!important;" flex="100">
+					<label>FRANQUICIA EN CASO DE SINIESTRO</label>
+					<input style="border: 1px dotted #8a1a93!important;" ng-change="$ctrl.getObservacionesRenovacion()" ng-disabled="$ctrl.isCalcula != true || $ctrl.primaRenovacionDiferente != true" ng-model="$ctrl.primas.IM_FRANQUICIA" ng-required="$ctrl.primaRenovacionDiferente == true" placeholder="-">
+				</md-input-container>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div flex="15" style="text-align: center">
+		<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+			<md-list-item layout-align="center center">
+				<md-input-container style="margin-top: 23px!important;" flex="100">
+					<label><i class="fa-light fa-euro-sign"></i> PRIMA BRUTA ANUAL</label>
+					<input ng-disabled="true" ng-model="$ctrl.primas.IM_RECIBO_TOTAL" placeholder="Cálculo automático" ng-required="$ctrl.primaRenovacionDiferente == true" md-no-asterisk>
+				</md-input-container>
+			</md-list-item>
+		</md-list>
+	</div>
+</div>
+<!-- <div ng-if="$ctrl.primaRenovacionDiferente == true" layout="row" layout-align="center center">
+	<div flex="100" style="text-align: center">
+		<md-button class="btnNextCiber" ng-click="$ctrl.changePrimas()">
+			<span><i class="fa-solid fa-calculator-simple"></i> Calcular primas e impuestos</span>
+		</md-button>
+	</div>
+</div> -->
+<legend class="margin-top-20" style="letter-spacing: 1px;"><i class="fa-light fa-message"></i> DOCUMENTACIÓN Y DESCRIPCIÓN DEL SUPLEMENTO</legend>
+
+<div layout="row" layout="center center">
+	<div layout="column" id="divPoliza" class="flex-gt-sm-50" style="margin-top: 20px!important;">
+		<div style="padding: 10px;margin: 5px 15% 0px 0px;">
+			<p>&#201;stos archivos se guardar&#225;n en el sistema al generar la solicitud.</p>
+		</div>
+		<div layout="row" class="md-block margin-top-20">
+			<div flex class="flex-gt-sm-50" layout="column">
+				<div ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover">
+					<span><md-icon class="icon-blue" >upload_file</md-icon></span>
+					<span >Arrastre y suelte los archivos aqu&#237;.</span>
+				</div>
+			</div>
+
+			<div flex class="flex-gt-sm-50" style="margin-left: 15px">
+				<div class="files-container" layout="column">
+					<div ng-repeat="file in $ctrl.listaArchivos track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+						<div flex="60">
+							<span>
+								{{file.NO_ARCHIVO}}
+							</span>
+						</div>
+						<div flex="" class="txt-center">
+							<md-icon class="trash-blue" ng-click="$ctrl.deleteFile(file)">delete_forever</md-icon>
+							<md-tooltip md-direction="bottom">{{ 'DELETE' | translate }}</md-tooltip>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div layout="column" ng-if="$ctrl.isSolicitudHogar != true" class="margin-top-20 flex-gt-sm-50">
+		<div style="text-align: center;padding: 10px;margin: 5px 15% 0px 15%;">
+			<p style="color:#474a59!important">
+				<i class="fa-light fa-file-pdf" style="margin-right: 5px;color: #00b0bd"></i>Se generará el Suplemento <span style="color: #6E7894;font-family: TelefonicaWebBold"> para su descarga con esta información</span>
+			</p>
+		</div>
+		<md-input-container class="md-block margin-top-20" flex>
+			<label>{{ 'REASON_SUPPLEMENT' | translate }}</label>
+			<textarea placeholder="Incluye toda la información necesaria que verá el cliente en la sección 'Motivo del Suplemento'" ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_OBSERVACIONES.TX_OBSERVACIONES" rows="5"></textarea>
+		</md-input-container>
+	</div>
+</div>
+
+<!-- <legend class="margin-top-20" style="letter-spacing: 1px;"><i class="fa-light fa-sitemap"></i> DOMINIOS</legend>
+<div style="text-align: center;padding: 10px;margin: 5px 15% 0px 15%;">
+	<div layout-gt-sm="row" layout-align="center start" class="domain-form-container">
+		<div flex="50">
+			<md-input-container flex="100">
+				<label>NÚMERO DE DOMINIOS</label>
+				<md-select ng-model="$ctrl.nuDomains" ng-change="$ctrl.chkDomains($ctrl.nuDomains)" required>
+					<md-option ng-value=1>1 DOMINIO</md-option>
+					<md-option ng-value=2>2 DOMINIOS</md-option>
+					<md-option ng-value=3>3 DOMINIOS</md-option>
+					<md-option ng-value=4>4 DOMINIOS</md-option>
+					<md-option ng-value=5>5 DOMINIOS</md-option>
+					<md-option ng-value=6>6 DOMINIOS</md-option>
+					<md-option ng-value=7>7 DOMINIOS</md-option>
+					<md-option ng-value=8>8 DOMINIOS</md-option>
+					<md-option ng-value=9>9 DOMINIOS</md-option>
+					<md-option ng-value=10>10 DOMINIOS</md-option>
+				</md-select>
+			</md-input-container>
+		</div>
+		<div flex="50">
+			<div ng-repeat="domain in $ctrl.lstDomains track by $index">
+				<md-input-container flex="100">
+					<label>
+						Dominio {{$index + 1}}
+					</label>
+					<input ng-model="$ctrl.lstDomains[$index]" domain required>
+				</md-input-container>
+			</div>
+		</div>
+	</div>
+</div> -->

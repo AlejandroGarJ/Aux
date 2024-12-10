@@ -1,0 +1,43 @@
+<md-dialog style="width:45%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Nuevo impuesto</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<ng-dialog-content>
+		<div class="md-dialog-content">
+			<form ng-submit="" class="formClass formCliente" name="newImpuesto" role="form">
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+		        		<label>{{ 'DATE_START' | translate }}</label>
+
+		          		<md-datepicker ng-model="$ctrl.form.FD_NACIMIENTO.value"></md-datepicker>
+		          	</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Tipo de veh&iacute;culo: </label>
+						<input type="text">
+						<!-- <md-select name="vehiculo" required>
+							<md-option ng-repeat="vehiculo in $ctrl.lista" ng-value="vehiculo.ano">{{vehiculo.ano}}</md-option>
+						</md-select> -->
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Importe (&#8364;): </label>
+						<input type="text">
+					</md-input-container>
+				</div>
+				<div class="margin-top-20" style="text-align: center">
+					<md-button type="submit" class="medium-green btnAceptar">Guardar</md-button>
+					<md-button ng-click="$ctrl.cancel()" class="medium-orange btnCancelar">Cancelar</md-button>
+				</div>
+			</form>
+<!-- 			<div class="ui-grid grid-modal" ui-grid="$ctrl.gridClienteHistoricos" ui-grid-pagination></div> -->
+		</div>
+	</ng-dialog-content>
+</md-dialog>

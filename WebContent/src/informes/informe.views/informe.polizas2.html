@@ -1,0 +1,72 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div ng-init="$ctrl.form = { LST_ID_COMP_RAMO_PROD: undefined }" class="formClass" id="form" ng-form="$ctrl.informePolizas2">
+	<div class="filtroInformesContainer">
+		<div class="tituloFiltroInformes">
+			<h3>INFORME DETALLE PÓLIZAS</h3>
+		</div>
+		<div layout-gt-sm="row" class="margin-top-20">
+			<md-input-container class="md-block ic-margin" flex-gt-sm="25">
+				<label>{{ 'PRODUCT' | translate }}</label>
+				<md-select ng-model="$ctrl.form.ID_PROGRAMA" required style="margin-top: 2px">
+					<md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+						{{$ctrl.parent.getDescriptivo(programa, 'DS_PROGRAMA')}}
+						<!-- 	              {{programa.DS_PROGRAMA}} -->
+					</md-option>
+				</md-select>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm="20">
+				<label>Efecto desde</label>
+
+				<md-datepicker ng-required="($ctrl.form.FD_EMISION_FROM == null && $ctrl.form.FD_EMISION_TO == null) || $ctrl.form.FD_INICIO_TO != null" ng-click="($ctrl.form.FD_INICIO_FROM == null || $ctrl.form.FD_INICIO_FROM == undefined) ? $ctrl.form.FD_INICIO_FROM = null : ''" ng-model="$ctrl.form.FD_INICIO_FROM"></md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm="20">
+				<label>Efecto hasta...</label>
+
+				<md-datepicker ng-required="($ctrl.form.FD_EMISION_FROM == null && $ctrl.form.FD_EMISION_TO == null) || $ctrl.form.FD_INICIO_FROM != null" ng-click="($ctrl.form.FD_INICIO_TO == null || $ctrl.form.FD_INICIO_TO == undefined) ? $ctrl.form.FD_INICIO_TO = null : ''" ng-model="$ctrl.form.FD_INICIO_TO"></md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm="20">
+				<label>Emisión desde...</label>
+
+				<md-datepicker ng-required="($ctrl.form.FD_INICIO_FROM == null && $ctrl.form.FD_INICIO_TO == null) || $ctrl.form.FD_EMISION_TO != null" ng-click="($ctrl.form.FD_EMISION_FROM == null || $ctrl.form.FD_EMISION_FROM == undefined) ? $ctrl.form.FD_EMISION_FROM = null : ''" ng-model="$ctrl.form.FD_EMISION_FROM"></md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-sm="20">
+				<label>Emisión hasta...</label>
+
+				<md-datepicker ng-required="($ctrl.form.FD_INICIO_FROM == null && $ctrl.form.FD_INICIO_TO == null) || $ctrl.form.FD_EMISION_FROM != null" ng-click="($ctrl.form.FD_EMISION_TO == null || $ctrl.form.FD_EMISION_TO == undefined) ? $ctrl.form.FD_EMISION_TO = null : ''" ng-model="$ctrl.form.FD_EMISION_TO"></md-datepicker>
+			</md-input-container>
+		</div>
+		<div layout-gt-sm="row">
+			<span style="margin-top: 10px;font-size: 15px; color:#0066ff;">
+				<i class="fa-solid fa-info" style="margin-right: 5px;font-size: 14px"></i>La extracción se realiza con datos del día anterior</span>
+		</div>
+		<div layout="row" layout-align="start center" ng-if="$ctrl.cargando == false" style="margin-top: 20px!important;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informePolizas2.$valid, 'informe', 'excelPolizas')">
+				<i class="fa-duotone fa-download" style="margin-right: 5px"></i>
+				{{ 'GENERATE_REPORT' | translate | uppercase}}
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar($ctrl.form)">
+				<i class="fa fa-trash" style="margin-right: 5px"></i>
+				{{ 'CLEAN' | translate | uppercase }}
+			</md-button>
+		</div>
+	</div>
+	<div ng-if="$ctrl.cargando == true">
+		<div layout="row" layout-align="center center" >
+			<div class="cs-loader" style="height: 40px; width: 97%; position: relative">
+				<div class="cs-loader-inner">
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+				</div>
+			</div>
+		</div>
+		<div layout-gt-sm="row" layout-align="center">
+			<p style="text-align:center;font-size: 11px">¡Recibido! Estamos procesando tu solicitud...</p>
+		</div>
+	</div>
+</div>

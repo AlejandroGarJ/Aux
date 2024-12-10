@@ -1,0 +1,477 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="container-fluid" layout="row">
+    <section class="formClass">
+        <div class="tabsVertical form-scroll">
+                <div class="cinta">
+                    <div tooltip-placement="right" uib-tooltip="{{ 'PERSONAL_DATA' | translate }}">
+                        <div class="tabs" ng-click="$ctrl.changeTabs(0)" ng-class="{active:$ctrl.showTable == 0}">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACFUlEQVRIiaWUzUtVURTFf/tlgyKTCkOzIoww+hoEhWUQRJPKgQ2DatSs+icaBUEQDaJBQUZNUiKkQQ0Co2ZBaOCgsA8IEulDe0oF4a+BR7g977uv3ttw4O691lnr3HP2OVAj1KVqn3pV/ah+VcfVC2pLrfm1xNvVl+pr9bLarXaqh9TH6qi6uhGDYfWO2pSDldTb6kC94t3qpNpcwGlRv6nbq3FKBR4HgSfAGrWsHq0kRMQ08Ag4XE1k0a9nYhXwBTgLvAPuVhzqb+AN8BlYW4/BJ+A40A7sBt4D2e1qAk4AV4B7BTr5oe5S59STBZyOxNlWjVP1DCJiFBgDpgrWsRUYiYix/zZIMQwcKcCPAU9raFQPdaf6Q92cg21ILdpVt0ESuqi+UNdlah3qiHqpIfEkVlJvqTPqA/V+uhc31ag1v6hNAYiIOXUWGASep3IZmIkIG1s+oO5Tp9QtmVpX2v+99QiGukc9r/arv9RTObzTCetXz6U5i7asVDGpBXgIDAD7gbfMt2pPzlp6EjaevgeBIXVl0eqvp4Nclqm1pVe1N1PrTbW2TG25OqReqybepM6q63OwPnVCbU1jQu3L4W1M3bZkoRYZcBPwKiJy33/1BtCa0smIOFOFVwZ2RMSHSqBTnc79vXm8WX2WxooC3rTauZDXvAcLERFl4MC/8qsZlLLudcZfnZk1KKd8vEGDn8D3heQPVlW3Arg4tKYAAAAASUVORK5CYII=" />
+                        </div>
+                    </div>
+                    <div ng-if="$ctrl.appParent.getPermissions('polizas_list').EXISTE == true" tooltip-placement="right" uib-tooltip="{{ 'POLICIES' | translate }}" ng-click="$ctrl.cargarTabla('polizas')">
+                        <div class="tabs" ng-click="$ctrl.changeTabs(3)" ng-class="{active:$ctrl.showTable == 3}">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAB40lEQVRIiaWWPWhUQRRGz6yLP40IgQhREARRsAjYLEjAIghBkGAK0xm0ERJQI0giCCZdbKytgoVYW/oLilY2IoigNoLKKhaixa5i5FhkFl/e5s1O1g9eM3Pv+Wbe3HfnQUHqiNo2Xy31sbqXXorwL6o9g//lbFPn1Ec58M/qaMpAXSg8bXVJ3aL+TMFH1aZ6WB1IBq/NG+zEJnetflOPxFX9VpdyDGLuXI5B9jvvh1H7X3gvdRmo0xnlOd23ATAILIYKAYsxJkv13EB1E7AjN35DBhF+E2gBzYz4g8BQCOFB5SGrO9Wrah1YBoaA2Qz4MPAQuKVOpnbwAxgB3gDvgeMhhFaPkh8G7gLngH3AtcodhBDawDhwowNPLGZebQD3gTPAADADjHV9JOpF9a16Uq0VxmvqZJybLeU0YqM8pp5VP6kHOpNlg6COq8/VV+qUelp9rb5QJ9RQAZ9SP6r7i8BU9zyq3lHvRdNQmm+oX9UTEf5hDbyXQUoF+EQlPMcgdtmFdca/q5fjWTVjBXUp50N7B1xSt3YGQgjzwHbgCqvlPBZCeNmvwW3gD7CnND4DHAKuA6eAdQ1Qf6mbM4yq8pNXZg14BpyPLWGj8DpwAXiaCtqtPlFXMu6BslZc/W3ZVcX/C59CRlBdQrVZAAAAAElFTkSuQmCC" />
+                        </div>
+                    </div>
+                    <div ng-if="$ctrl.appParent.getPermissions('recibos_movimientos_list').EXISTE == true || $ctrl.appParent.getPermissions('recibos_list').EXISTE == true" tooltip-placement="right" uib-tooltip="{{ 'RECEIPTS' | translate }}" ng-click="$ctrl.cargarTabla('recibos')">
+                        <div class="tabs" ng-click="$ctrl.changeTabs(4)" ng-class="{active:$ctrl.showTable == 4}">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACOElEQVRIia2VS4iOYRTHf4eZxmJMQ5pJLoMFSrk0TdQUG+xkZuESWzQbYmEll9goG02USTMs7GiMEotZUbJQNmQ3DEWS5BZTM+Zn8T5f3j7zfd/LzNk8p3P7n//znvc8wT+IuhyYDYxEhP+SW6vwOvWZf2RE7Zyp4nPVUfWpulXdoj5QP6qtMwHQnbpekbPNV8fUnlr5swpgtALjwJuSISI+AZ+Tb3qibkgMDuRsO5Nt+7QBUsEr6qQ6rN5TJ9TBIrlRECCA/cAOsjEdBq5GxKS6FJiIiHf/S6ASaJN6Pze6N9U5MwlwMY1ql7pb/a6eKo+rU7uBlWRTcicifhTE6ASGImIoAe5Jtr86Gc/RfKQWGV3UG+pLdZm6Wn2v9k4VqNqj7vNveav2q4umyFuWAEryQm0pj6vL6S/SeR54lfQ24BDQrR6JiBul4IgYVdcC24AJYDgixqoxWJ/0TWX+ljQhqoPqRrU9/YDNNW6yNkAubpf6oewKx9S9ZXGr1AvqObWpMEBKbk7dt6sd6l11NPna1AGzv/yd2dgO1VUqlis6D+gC6qdwLwCa1UvAQbIFeAzoA04Ax4p8g11me6iafFFPqo1qvXo8MbiVB2hPer+6sBazCmw3q8/VX+pltbEE8FB9rP5Uv6WzV11csHCLej0xfaJ2lHyh3gaWAGPAWeApcBQ4DDQAA8BN4GuF+p3AGbLNfALoi4hfRbpqVk+bLbRqMq5es8L7XPM9UBuANVViX0fEx0r5vwHpmcBie5lDvwAAAABJRU5ErkJggg==" />
+                        </div>
+                    </div>
+                    <div ng-if="$ctrl.appParent.getPermissions('siniestros_list').EXISTE == true" tooltip-placement="right" uib-tooltip="{{ 'CLAIMS' | translate }}" ng-click="$ctrl.cargarTabla('siniestros')">
+                        <div class="tabs" ng-click="$ctrl.changeTabs(5)" ng-class="{active:$ctrl.showTable == 5}">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAB8klEQVRIia3Vu2sUURQG8LMxJBqJVipC8P3uxMoiMSQutrHSFFaKhdgoCjZGqxgE/wAxChZWaqGVROMTrQRRFBNRlMRHoYIEi8UHPwuvMAy7s0vcqe455/vOd2fud89EzOLBAF6hdTb8es334z2+YXmzm/fhAzbgGgab2bwzNd+R4t2400yBU7iQiVvxAjub0bwDX7Esl9+CaSz5X4FduF6jNoQbKFWrtzSo0R0RYzVqwxGxMCIONdQJ83ATxzK5cZQLOGvxBV2NCFzCQzzO5Kaxog5vCBfrNd+crDgfbzOWnMGCOtzOZITaB44zGE7rMt6hBz/RXri7v5zzOFIEeITeTLwNT/C5lkty/EFcLgJ8zHs9V2/D1awBcvVNmCwS+IG2gvoIXuNujXo7KkUC3zG3Rm1xmqBLMYGBKpgOzBQJTGJ9lV3tTbf5Ssr1YQqdOexGvMzm8jf5QUT053LHI2I0IvZExERERKlUup2wh3PY/oi4X/QGZTxFSyY3gRPJqkcz+a14lonn4Dn6agok4D0cyMSV5J6u7GVL37uSiQ9ivLB5Aq5Ldu1O8TRWVsGtxlRa9ybOmroCidCTDnEfzmGkCuY0zvr7j576t6GGH6zCLXzCrzTMFiW7nsTvVBurNwjrCZXTjHmTzqOS1qPYXo//B59kW8k0dDKwAAAAAElFTkSuQmCC" />
+                        </div>
+                    </div>
+                    <div ng-if="$ctrl.appParent.getPermissions('solicitudes_list').EXISTE == true" tooltip-placement="right" uib-tooltip="{{ 'REQUESTS' | translate }}" ng-click="$ctrl.cargarTabla('solicitud')">
+                        <div class="tabs" ng-click="$ctrl.changeTabs(6)" ng-class="{active:$ctrl.showTable == 6}">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACH0lEQVRIia3VP4hVVxDH8c/srq5hwcLGP6vEPyBY2CkWotglgYQkTcTKZkFLiRCws4lYCIYgCGKTiAtCUEiRIuoK20QLbRRxMRFERVIoNkbBzf4s7nv63Dzdty87cOHeOXPme35nzplbkGQYp/AZhvRvL3Csqo63He1kBzCIVVU13W/2JMswmeRqVf0BA62xLRjvljzJkiSDvQCq6il+xda2rw0YxL9dku/GMzxKsqlHIdM6tnngA4GwF8NYjq96BLxjcwF+71jV5QUFJBnCR7iOP7FmQQH4CUdwBrfxS5J9CwJIsgSftj6vtx74er6Arpeqql4mWY11rZgr2Ii/FgSQZDG+09Rg9lj7dQYTmKiqmXkBNKfmpuZ+vM/u4AkOJlmnUXcB57FhLsAQNndTgOf4HmOamvyISazXHIzxqjr5fxQ8xE7NIfi8qtod4FqSc/g5yVRVTfSr4DecxbcdyUFVzSQ5iNOa+vSl4B+sqKp73SZW1d9JlnautFvQjKZYbyzJAA615rx8z8L+k3euXjQbeguLMZVkW7e4JNtxd7bzfJJPeoUl+TjJ1SSjs/wrk0y2ji36/D1W1f0k+zGe5J6mGY5qbvtlPO4bkGQX9uABvtR02eV4iqM4jFeaRvmmBtNY1CPjIS5hCjvwoKouVdUNXGvFHHpn+5IcSHIhych8FXVakpEkt5P8kOQb3m7RCazF3Var7tfG8AUuahR6DX1m3lUYtsLHAAAAAElFTkSuQmCC" />
+                        </div>
+                    </div>
+	                <div tooltip-placement="right" ng-class="{active:$ctrl.showTable == 8}" uib-tooltip="Histórico" ng-click="$ctrl.changeTabs(8)">
+	                    <div class="tabs" ng-class="{active:$ctrl.showTable == 8}">
+	                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABrUlEQVRIidWVv0tWYRTHP0eUEMWGBocQqYigxvAPaIoaXIQGwZaaHXIIojVJsCHcgloFcwkcHBRsaAgXoWxQMkTQhvelX0RQ6KfhPtrt5iv3fV8l/MLlcu45z/me5/y6QYLaApzkcPAlInYAWnMfe4D3wNcmnXcB54D1IgHASkRcbMa7+i4vtzTjrAyOnKCYoj2ofcBoST/3ImKxLgJgDRgrSbBWS1GTICKqwFxJgpo4/kX+r110BrgBLEfEjDoMtNcwn4qID/spjvwGe1B7i2PeoJ/bateufFCKLgHDwOuIeKY+AjpzJlNk2/fqPsf7VIBPBw3a7hysJ/klcCKn3wC2gLvJbqlw/ikwlI+4oRSp0+o19bx6OT2takVtL7OL5iPioTrNvz+kyRR5P/AWmABeASNANSJ+lNlFH5M8AbQVbCqJZBbYBs4CF4DnZC3+V8QNd5F6S91UT6nj6oLacSgE6nX1jXo6yaGOqpMAkScAVsm6oyzuAAPAC7I0PQEeA4tkXdidr8EG0F3nBb4DN9P7ATAIXAF6yWpSrFl9UO+rP9Vv6i//4LO6oy79Bp1/5FiNsH3tAAAAAElFTkSuQmCC" />
+	                    </div>
+	                </div>
+                </div>
+            </div>
+    </section>
+    <div class="col-md-12 padding-1">
+        <div ng-show="$ctrl.showTable == 0" class="formClass form-scroll" flex>
+            <form role="form" class="formClass margin-1-1_5" name="$ctrl.formCliente" ng-submit="$ctrl.editarCliente()">
+                <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'CLIENT_DATA' | translate }}
+                    <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+                        <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                        <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                    </button>
+                </legend>
+                
+                
+                <div class="collapsedDetalle" uib-collapse="isCollapsed">
+                    <div class="separadorDesplegables"></div>
+                 
+                    <div ng-if="$ctrl.form.ID_TIPO_DOCUMENTO.value != 2 && $ctrl.form.ID_TIPO_DOCUMENTO.value != 6">
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'NAME' | translate }}</label>
+                            <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_NOMBRE.value">
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm >
+                            <label>{{ 'SURNAME' | translate }}</label>
+                            <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_APELLIDO1.value">
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm="20">
+                            <label>{{ 'DOCUMENT_TYPE' | translate }}</label>
+                            <md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_TIPO_DOCUMENTO.value" ng-blur="$ctrl.checkDocument()" ng-change="$ctrl.changeTipoDocumento()">
+                                <md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">
+									{{$ctrl.appParent.getDescriptivo(tipo, 'DS_TIPO_DOCUMENTO')}}
+<!--                                     {{tipo.DS_TIPO_DOCUMENTO}} -->
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+                            <input name="documentNumber" ng-blur="$ctrl.checkDocument()" ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_DOCUMENTO.value">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'NATIONALITY' | translate }}</label>
+                            <md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.form.ID_TIPO_DOCUMENTO.value == 1" ng-model="$ctrl.form.CO_NACIONALIDAD.value">
+                                <md-option ng-repeat="pais in $ctrl.tipos.paises" ng-value="pais.CO_ISO_A3" ng-disabled="$ctrl.form.ID_TIPO_DOCUMENTO.value == '4' && pais.CO_ISO_A3 == 'ESP'">
+                                	{{$ctrl.appParent.getDescriptivo(pais, 'NO_PAIS')}}
+<!--                                     {{pais.NO_PAIS}} -->
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    
+                    <div layout-gt-sm="row" ng-if="$ctrl.mostrarResumen == false">
+                    	<md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'GENDER' | translate }}</label>
+                            <md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_SEXO.value">
+                                <md-option ng-value="1">
+                                    Hombre
+                                </md-option>
+                                <md-option ng-value="2">
+                                    Mujer
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'BIRTH_DATE' | translate }}</label>
+
+                            <md-datepicker ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.FD_NACIMIENTO.value" md-max-date="$ctrl.date" ng-init="($ctrl.form.FD_NACIMIENTO.value == null || $ctrl.form.FD_NACIMIENTO.value == undefined) ? $ctrl.form.FD_NACIMIENTO.value = null : ' '"
+                                ng-click="($ctrl.form.FD_NACIMIENTO.value == null || $ctrl.form.FD_NACIMIENTO.value == undefined) ? $ctrl.form.FD_NACIMIENTO.value = null : ' '"></md-datepicker>
+                        </md-input-container>
+						<md-input-container class="md-block" flex-gt-sm="25" >
+                            <label>{{ 'CIVIL_STATUS' | translate }}</label>
+                            <md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_ESTADO_CIVIL.value">
+                                <md-option ng-repeat="estado in $ctrl.tipos.civiles" ng-value="estado.ID_TIPOS">
+                                	{{$ctrl.appParent.getDescriptivo(estado, 'DS_TIPOS')}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+					</div>
+			</div>		
+			
+				<div ng-if="$ctrl.form.ID_TIPO_DOCUMENTO.value == 2 || $ctrl.form.ID_TIPO_DOCUMENTO.value == 6">
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.form.ID_TIPO_DOCUMENTO.value == 2 || $ctrl.form.ID_TIPO_DOCUMENTO.value == 6">
+                            <label>{{ 'TRADE_NAME' | translate }}</label>
+                            <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_NOMBRE.value">
+                        </md-input-container>
+                    </div>                  
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm="20">
+                            <label>{{ 'DOCUMENT_TYPE' | translate }}</label>
+                            <md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_TIPO_DOCUMENTO.value" ng-required="true" ng-change="$ctrl.changeForm()">
+                                <md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">
+                                	{{$ctrl.appParent.getDescriptivo(tipo, 'DS_TIPO_DOCUMENTO')}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+                            <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_DOCUMENTO.value">
+                        </md-input-container>
+                    </div> 					 
+			   </div>	
+					
+				<div ng-if="$ctrl.mostrarResumen == true && $ctrl.form.ID_TIPO_DOCUMENTO.value == 5">  
+                   <div layout-gt-sm="row">
+                       <md-input-container class="md-block" flex-gt-sm>
+                           <label>{{ 'TELEPHONE_1' | translate }}</label>
+                           <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_TELEFONO1.value" ng-minlength="$ctrl.minLengthTelefono" ng-maxlength="$ctrl.maxLengthTelefono">
+                       </md-input-container>
+                       <md-input-container class="md-block" flex-gt-sm>
+                           <label>{{ 'TELEPHONE_2' | translate }}</label>
+                           <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_TELEFONO2.value" ng-minlength="$ctrl.minLengthTelefono" ng-maxlength="$ctrl.maxLengthTelefono">
+                       </md-input-container>
+                       <md-input-container class="md-block" flex-gt-sm>
+                           <label>{{ 'MOBILE_TELEPHONE' | translate }}</label>
+                           <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_FAX.value" ng-minlength="$ctrl.minLengthTelefono" ng-maxlength="$ctrl.maxLengthTelefono">
+                       </md-input-container>
+                   </div> 
+               </div>
+				<!-- comun -->
+                  <div ng-if="$ctrl.mostrarResumen == false">  
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>{{ 'EMAIL' | translate }}</label>
+                            <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_EMAIL.value" type="email">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'TELEPHONE_1' | translate }}</label>
+                            <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_TELEFONO1.value" ng-minlength="$ctrl.minLengthTelefono" ng-maxlength="$ctrl.maxLengthTelefono">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'TELEPHONE_2' | translate }}</label>
+                            <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_TELEFONO2.value" ng-minlength="$ctrl.minLengthTelefono" ng-maxlength="$ctrl.maxLengthTelefono">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'MOBILE_TELEPHONE' | translate }}</label>
+                            <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_FAX.value" ng-minlength="$ctrl.minLengthTelefono" ng-maxlength="$ctrl.maxLengthTelefono">
+                        </md-input-container>
+                    </div> 
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Usuario de alta</label>
+                            <input disabled ng-model="$ctrl.form.NO_USU_ALTA.value">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Fecha de alta</label>
+
+                            <md-datepicker disabled ng-model="$ctrl.form.FT_USU_ALTA.value" ng-init="($ctrl.form.FT_USU_ALTA.value == null || $ctrl.form.FT_USU_ALTA.value == undefined) ? $ctrl.form.FT_USU_ALTA.value = null : ' '"
+                                ng-click="($ctrl.form.FT_USU_ALTA.value == null || $ctrl.form.FT_USU_ALTA.value == undefined) ? $ctrl.form.FT_USU_ALTA.value = null : ' '"></md-datepicker>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Usuario de modificación</label>
+                            <input disabled ng-model="$ctrl.form.NO_USU_MOD.value">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Fecha de modificación</label>
+
+                            <md-datepicker disabled ng-model="$ctrl.form.FT_USU_MOD.value" ng-init="($ctrl.form.FT_USU_MOD.value == null || $ctrl.form.FT_USU_MOD.value == undefined) ? $ctrl.form.FT_USU_MOD.value = null : ' '"
+                                ng-click="($ctrl.form.FT_USU_MOD.value == null || $ctrl.form.FT_USU_MOD.value == undefined) ? $ctrl.form.FT_USU_MOD.value = null : ' '"></md-datepicker>
+                        </md-input-container>
+                    </div>
+                     <div layout-gt-sm="row">
+                     	 <div flex-gt-sm>
+                            <md-checkbox ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.IN_PUBLICIDAD.value">
+                                {{ 'ADVERTISING' | translate }}
+                            </md-checkbox>
+                        </div>
+                        <div flex-gt-sm>
+                            <md-checkbox ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.IN_LOPD.value">
+                                {{ 'BLOCKING' | translate }}
+                            </md-checkbox>
+                        </div>
+                        <div flex-gt-sm>
+                            <md-checkbox ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.IN_NO_DEC_AUTO.value">
+                                {{ 'AUTOMATED' | translate }}
+                            </md-checkbox>
+                        </div>
+                    </div>
+				</div>
+                </div>
+                
+                
+                
+                <div layout-gt-sm="row" ng-if="$ctrl.mostrarResumen == true" class="margin-top-20">
+                        <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>{{ 'CREATED_BY' | translate }}</label>
+                            <input ng-model="$ctrl.form.NO_USU_ALTA.value" disabled>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>{{ 'CREATED_ON' | translate }}</label>
+
+                            <md-datepicker ng-model="$ctrl.form.FT_USU_ALTA.value" disabled></md-datepicker>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>{{ 'EDITED_BY' | translate }}</label>
+                            <input ng-model="$ctrl.form.NO_USU_MOD.value" disabled>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>{{ 'EDITED_ON' | translate }}</label>
+
+                            <md-datepicker ng-model="$ctrl.form.FT_USU_MOD.value" disabled></md-datepicker>
+                        </md-input-container>
+                    </div>
+                    
+                                                         
+                <div ng-if="$ctrl.mostrarResumen == false">
+                    <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'ADDRESS_DATA' | translate }}
+                        <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed1 = !isCollapsed1">
+                            <span ng-if="!isCollapsed1" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                            <span ng-if="isCollapsed1" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                        </button>
+                    </legend>
+                    <div class="collapsedDetalle" uib-collapse="!isCollapsed1">
+                        <md-button ng-if="$ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.anadirDir()">
+                            <md-icon>add</md-icon>
+                            {{ 'ADD' | translate }}
+                        </md-button>
+                        <div class="margin-top-20">
+                            <div layout-gt-sm="row" ng-repeat="dir in $ctrl.domicilios track by $index">
+                            	<md-input-container ng-click="$ctrl.eliminarDeLista($ctrl.domicilios, dir)" class="md-block" flex="4">
+                            		 <span id="eliminarIcono" class="glyphicon glyphicon-trash"></span>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>{{ 'ROAD_TYPE' | translate }}</label>
+                                    <md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.domicilios[$index]['ID_TIPO_VIA']">
+                                        <md-option ng-repeat="tipo in $ctrl.tipos.tiposVia" ng-value="tipo.ID_TIPO_VIA">
+                                		{{$ctrl.appParent.getDescriptivo(tipo, 'DS_TIPO_VIA')}}
+<!--                                             {{tipo.DS_TIPO_VIA}} -->
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>{{ 'ADDRESS' | translate }}</label>
+                                    <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.domicilios[$index]['NO_DIRECCION']">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>{{ 'NUMBER' | translate }}</label>
+                                    <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.domicilios[$index]['NU_NUMERO']">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>{{ 'POSTAL_CODE' | translate }}</label>
+                                    <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.domicilios[$index]['CO_POSTAL']" maxlength="5" ng-change="$ctrl.updateDir($ctrl.domicilios[$index]['CO_POSTAL'], $index)">
+                                </md-input-container>
+                                <md-input-container ng-if="$ctrl.datos.CO_NACIONALIDAD == 'DEU'" class="md-block" flex-gt-sm>
+                                    <label>{{ 'LOCALITY' | translate }}</label>
+                                    <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.domicilios[$index]['NO_LOCALIDAD']">
+                                </md-input-container>
+                                <md-input-container ng-if="$ctrl.datos.CO_NACIONALIDAD != 'DEU'" class="md-block" flex-gt-sm>
+                                    <label>{{ 'LOCALITY' | translate }}</label>
+                                    <md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.domicilios[$index]['ID_LOCALIDAD']">
+                                        <md-option ng-value="$ctrl.domicilios[$index]['ID_LOCALIDAD']" required>{{$ctrl.domicilios[$index]['NO_LOCALIDAD']}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container ng-if="$ctrl.datos.CO_NACIONALIDAD != 'DEU'" class="md-block" flex-gt-sm>
+                                    <label>{{ 'PROVINCE' | translate }}</label>
+                                    <input disabled ng-value="$ctrl.domicilios[$index].NO_PROVINCIA" ng-model="$ctrl.domicilios[$index]['NO_PROVINCIA']">
+                                </md-input-container>
+                                <div flex-gt-sm>
+                                    <md-checkbox ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.domicilios[$index]['IN_CORRESPONDENCIA']">
+                                        {{ 'CORRESPONDENCE' | translate }}
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="$ctrl.mostrarResumen == false">
+                    <legend><span class="mov-ico ic-ciber-ico-suma-asegurada"></span> {{ 'BANK_DATA' | translate }}
+                        <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+                            <span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                            <span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                        </button>
+                    </legend>
+                    <div class="collapsedDetalle" ng-if="$ctrl.mostrarResumen == false" uib-collapse="!isCollapsed2">
+                        <md-button ng-if="$ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.anadirBanco($ctrl.bancos)">
+                            <md-icon>add</md-icon>
+                            {{ 'ADD' | translate }}
+                        </md-button>
+                        <div class="margin-top-20">
+                            <div layout-gt-sm="row" ng-repeat="banco in $ctrl.bancos track by $index">
+                            	<md-input-container ng-click="$ctrl.eliminarDeLista($ctrl.bancos, banco)" class="md-block" flex="4">
+                            		 <span id="eliminarIcono" class="glyphicon glyphicon-trash"></span>
+                                </md-input-container>
+                                
+                                <md-input-container class="md-block" flex="50">
+                                    <label>{{ 'IBAN' | translate }}</label>
+                                    <input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.bancos[$index]['CO_IBAN']" maxlength="24" pattern="[a-zA-Z]{2}[0-9]{22}" required>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                    <legend><span class="mov-ico ic-ciber-ico-doc-pdf"></span> {{ 'DOCUMENTATION' | translate }}
+			            <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed4 = !isCollapsed4">
+			                <span ng-if="!isCollapsed4" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+			                <span ng-if="isCollapsed4" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+			            </button>
+      			    </legend>
+                    <div id="divPoliza" uib-collapse="!isCollapsed4">
+						<div class="separadorDesplegables"></div>
+                        <div layout="row">
+                            <div flex="">
+                                <div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover">
+                                    <span><md-icon class="icon-blue">upload_file</md-icon></span>
+                                    <span >Arrastre y suelte los archivos o haga click para seleccionarlos</span>
+                                </div>
+                            </div>
+        
+                            <div flex="">
+                                <div class="files-container">
+                                    <div ng-repeat="file in $ctrl.listaArchivos track by $index" class="file-row" >
+                                        <div flex="60">
+                                            <span>
+                                                {{file.NO_ARCHIVO}}
+                                            </span>
+                                        </div>
+                                        <div flex="20">
+                                            <span ng-if="file.ESTADO">
+                                                {{file.ESTADO}}
+                                            </span>
+                                            <span ng-if="!file.ESTADO">
+                                                {{ 'NOT_SAVED' | translate }}
+                                            </span>
+                                        </div>
+                                        <div flex="" class="txt-center">
+                                            <span ng-if="file.DESCARGAR != false">
+                                                <md-icon class="icon-blue" ng-click="$ctrl.descargarArchivo(file)">download_for_offline</md-icon>
+                                                <md-tooltip md-direction="bottom">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip>
+                                            </span>
+                                        </div>
+                                        <div flex="" class="txt-center">
+                                            <span>
+                                                <md-icon class="icon-blue" ng-click="$ctrl.deleteFile(file)">delete_forever</md-icon>
+                                                <md-tooltip md-direction="bottom">{{ 'DELETE' | translate | uppercase }}</md-tooltip>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+        		    </div>
+                </div>
+            </form>
+        </div>
+
+        <div ng-if="$ctrl.showTable == 0">
+            <div layout="row" layout-align="center" layout-margin class="">
+                <md-button ng-if="($ctrl.navegador != 'internet explorer') && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.formCliente.$valid" ng-click="$ctrl.editarCliente()">
+                    <md-icon>save</md-icon> {{ 'SAVE' | translate }}
+                </md-button>
+                 <md-button ng-if="($ctrl.navegador == 'internet explorer') && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.editarCliente()">
+                    <md-icon>save</md-icon> {{ 'SAVE' | translate }}
+                </md-button>
+                <md-button ng-if="$ctrl.permisos.IN_BORRADO === true" class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.deshacer()">
+                    <i class="fa-light fa-trash"></i> {{ 'DISCARD' | translate }}
+                </md-button>
+            </div>
+        </div>
+
+        
+
+        <div class="formClass form-scroll" ng-show="$ctrl.showTable == 1" layout-align="center start" layout="row" style="height:100%">   
+             <div id="resumenCliente">
+                 <div layout="column"  style="width:33%">
+                     <div layout="column" layout-align="center center">
+                        <div layout="column" id="dashValor">
+                            <h4>{{ 'CLIENT_VALUE' | translate }}</h4>
+                            <h2><span class="numeroResumen">{{$ctrl.resumen.NU_VALOR_CLIENTE}}</span> </h2>
+                        </div>
+                        <div layout="column" class="dashResumen" ng-click="$ctrl.redirectUrl(5,'siniestros' )">
+                            <h4>{{ 'CLAIMS_NUMBER' | translate }}</h4>
+                            <h2><span class="numeroResumen">{{$ctrl.resumen.NU_SINIESTROS}}</span></h2>
+                        </div>
+                    </div> 
+                </div>
+                <div layout="column" style="width:66%; margin-left:2%">
+                    <div layout="row" layout-align="center center">
+                        <div flex="50" layout="column" class="dashResumen" ng-click="$ctrl.redirectUrl(3, 'polizas')">
+                            <h4>{{ 'POLICIES_IN_FORCE' | translate }}</h4>
+                            <h2><span class="numeroResumen">{{$ctrl.resumen.NU_POLIZAS_VIGOR}}</span></h2>
+                        </div>
+                        <div flex="50" layout="column" class="dashResumen" ng-click="$ctrl.redirectUrl(3, 'polizas')">
+                            <h4>{{ 'POLICIES_CONTRACTED' | translate }}</h4>
+                            <h2><span class="numeroResumen">{{$ctrl.resumen.NU_POLIZAS_CONTRATADAS}}</span></h2>
+                        </div>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <div flex="50" layout="column" class="dashResumen" ng-click="$ctrl.redirectUrl(4, 'recibos')">
+                            <h4>{{ 'RECEIPT_UNPAID' | translate }} <span class="nRecibosResumen">{{$ctrl.resumen.NU_RECIBOS_PENDIENTES}}</span></h4>
+                            <canvas id="chartRecibos" width="50" height="50"></canvas>
+                            <h4 padding-bottom="2%">{{ 'RECEIPT_RETURNED' | translate }}  <span class="nRecibosResumen">{{$ctrl.resumen.NU_RECIBOS_DEVUELTOS}}</span></h4>    
+                        </div>
+                        <div flex="50" layout="column" class="dashResumen" ng-click="$ctrl.redirectUrl(2,'presupuestos')">
+                            <h4>{{ 'BUDGET_MADE' | translate }}</h4>
+                            <h2><span class="numeroResumen">{{$ctrl.resumen.NU_PRESUPUESTOS}}</span> </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="$ctrl.showTable == 8">
+            <fieldset class="datos_poliza">
+                <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Histórico del cliente
+                    <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+                        <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-up btnMostrar" title="Mostrar histórico del cliente"></span>
+                        <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-down btnOcultar" title="Ocultar histórico del cliente"></span>
+                    </button>
+                </legend>
+                <div id="divPoliza" uib-collapse="isCollapsed">
+                	<div class="ui-grid" ui-grid="$ctrl.gridOptionsHistorico" ui-grid-exporter ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(511)"></div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div ng-show="$ctrl.showTable == 2">
+            <busqueda-presupuesto detalles-cliente="$ctrl.datos" is-consultagdpr="$ctrl.isConsultagdpr" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista" ds-active="$ctrl.parent.active"></busqueda-presupuesto>
+        </div>
+        <div ng-show="$ctrl.showTable == 3">
+            <busqueda-poliza is-consultagdpr="$ctrl.isConsultagdpr" datos-cliente="$ctrl.datos" is-client="true" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista" ds-active="$ctrl.parent.active"></busqueda-poliza>
+        </div>
+        <div ng-show="$ctrl.showTable == 4">
+            <busqueda-recibo detalles-cliente="$ctrl.datos" is-consultagdpr="$ctrl.isConsultagdpr" is-client="true" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista" ds-active="$ctrl.parent.active"></busqueda-recibo>
+        </div>
+        <div ng-show="$ctrl.showTable == 5">
+            <input type="hidden" id="idCliente" ng-value="$ctrl.datos.ID_CLIENTE">
+            <busqueda-siniestro is-consultagdpr="$ctrl.isConsultagdpr" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista" ds-active="$ctrl.parent.active"></busqueda-siniestro>
+        </div>
+        <div ng-show="$ctrl.showTable == 6">
+            <busqueda-solicitudes is-consultagdpr="$ctrl.isConsultagdpr" datos-cliente="$ctrl.datos" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista" ds-active="$ctrl.parent.active"></busqueda-solicitudes>
+        </div>
+        <div ng-show="$ctrl.showTable == 7">
+            <busqueda-riesgos is-consultagdpr="$ctrl.isConsultagdpr" list-busqueda="$ctrl.parent.listDatos" view="$ctrl.parent.vista" ds-active="$ctrl.parent.active"></busqueda-riesgos>
+        </div>
+    </div>
+
+</div>

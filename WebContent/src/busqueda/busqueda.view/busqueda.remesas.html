@@ -1,0 +1,60 @@
+<!-- Tabla de remesas -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        
+        <md-tab label="Resultado de la búsqueda">
+
+	        <div layout="row" layout-align="start center" class="md-padding">
+		        <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.openNewRemesa()" ng-if="$ctrl.permisos.IN_ESCRITURA === true">
+		            Nueva Remesa
+		        </md-button>
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.parent.url == 'remesas' && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+		            <md-icon>file_copy</md-icon>Exportar a excel
+		        </md-button>
+	        </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> No se ha encontrado ninguna remesa</h4>
+            </div>
+            
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+<!--                 <h2>Busque una remesa</h2> -->
+            </div>
+            <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4" layout="row" layout-margin layout-align="right right">
+<!--             	<md-button ng-click="$ctrl.bloquearRecibo()" class="md-raised md-primary medium-blue button-action-main">Bloquear</md-button> -->
+<!--                 <md-button ng-click="$ctrl.desbloquearRecibo()" class="md-raised md-primary medium-blue button-action-main">Desbloquear</md-button> -->
+<!--                 <md-button ng-click="$ctrl.cambiarFContRecibo()" class="md-raised md-primary medium-blue button-action-main">Cambiar F.Contabilización</md-button> -->
+            	<md-button ng-click="$ctrl.enviarsapRecibo()" class="md-raised md-primary medium-blue button-action-main">Enviar a SAP</md-button>
+			</div>
+
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection
+                resize ng-style="resizeHeight(270)"></div>
+           
+        </md-tab>
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+            <md-tab-label ng-if="detalles != null">
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index] != 'detalleRemesaList'">Remesa: {{detalles.ID_RECIBO_REMESA}}</span>
+                <span ng-if="detalles == null && $ctrl.nomDetalles[$index] != 'detalleRemesaList'">Nueva remesa</span>
+                <span ng-if="$ctrl.nomDetalles[$index] == 'detalleRemesaList'">Remesa: {{detalles.ID_RECIBO_REMESA}}</span>
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </md-tab-label>
+            <md-tab-body>
+                <detalle-sd ng-if="$ctrl.nomDetalles[$index] == 'remesa'" id-detalle="detalles" tipo="'remesa'"></detalle-sd>
+                <div ng-if="$ctrl.nomDetalles[$index] == 'detalleRemesaList'">
+		            <div class="ui-grid" ui-grid="$ctrl.gridRecibos" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-auto-resize resize ng-style="resizeHeight(138)"></div>
+                </div>
+            </md-tab-body>
+        </md-tab>
+    </md-tabs>
+</div>

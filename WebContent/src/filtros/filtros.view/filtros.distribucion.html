@@ -1,0 +1,83 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toolbar>
+	<div class="md-toolbar-tools" style="height:44px">
+        <h2>Búsqueda de Distribución <i class="fa fa-magnifying-glass"></i></h2>
+        <md-button class="md-icon-button filtroLateral" ng-click="$ctrl.filtro.lateral()" style="right:20px; position:absolute">
+            <md-icon aria-label="Close dialog">arrow_back_ios</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+	<form class="formClass" id="form" ng-submit="$ctrl.buscar('clientes')">
+		<div class="form-scroll" resize ng-style="resizeHeight(261)">
+			<div layout-gt-sm="row" class="margin-top-20" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm="100">
+			       	<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+		           	<md-select ng-model="$ctrl.form.ID_COMPANIA.value">
+		           		<md-option ng-repeat="compania in $ctrl.tipos.compania" ng-value="compania.ID_COMPANIA">
+			              	{{compania.NO_COMERCIAL}}
+			            </md-option>
+		           	</md-select>
+	           	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Provincia</label>
+		         	<md-select ng-model="$ctrl.form.ID_PROVINCIA.value">
+		           		<md-option ng-repeat="tipo in $ctrl.tipos.provincias" ng-value="tipo.ID_PROVINCIA">
+			              	{{tipo.NO_PROVINCIA}}
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Flota</label>
+		         	<md-select ng-model="$ctrl.form.ID_TIPO_DOCUMENTO.value">
+		           		<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">
+			              	{{tipo.DS_TIPO_DOCUMENTO}}
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+				<md-input-container class="md-block" flex-gt-sm>
+			       	<label>Empresa</label>
+		           	<md-select ng-model="$ctrl.form.ID_COLECTIVO">
+		           		<md-option ng-repeat="col in $ctrl.colectivos" ng-value="col.id">
+			              	{{col.text}}
+			            </md-option>
+		           	</md-select>
+	           	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label>Fecha desde...</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FD_EMISION_FROM.value" ng-init="$ctrl.form.FD_EMISION_FROM.value = null"
+	          					ng-click="($ctrl.form.FD_EMISION_FROM.value == null || $ctrl.form.FD_EMISION_FROM.value == undefined) ? $ctrl.form.FD_EMISION_FROM.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label>Fecha hasta...</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FD_EMISION_TO.value" ng-init="$ctrl.form.FD_EMISION_TO.value = null"
+	          					ng-click="($ctrl.form.FD_EMISION_TO.value == null || $ctrl.form.FD_EMISION_TO.value == undefined) ? $ctrl.form.FD_EMISION_TO.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+			</div>
+		</div>
+		<div style="text-align:center;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				Buscar
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-trash"></i>
+				{{ 'CLEAN' | translate | uppercase }}
+			</md-button>
+		</div>
+	</form>
+</md-content>

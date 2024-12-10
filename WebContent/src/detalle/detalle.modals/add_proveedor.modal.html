@@ -1,0 +1,104 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width: 80%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Añadir proveedor</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form style="margin-top: 20px;" class="formClass" id="formNuevoContrato" name="formNuevoContrato" ng-value="$ctrl.formNuevoContrato=!formNuevoContrato.$valid">
+        	<div ng-if="$ctrl.loadProveedores != true" layout="row" flex="100" style="margin-top: 10px;">
+        		<md-input-container class="md-block" flex="25">
+                     <label>Programa</label>
+                     <md-select ng-model="$ctrl.idPrograma" required>
+                        <md-option ng-repeat="programa in $ctrl.listProductos" ng-value="programa.ID_PROGRAMA">
+                            {{programa.NO_PROGRAMA}} 
+                         </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-autocomplete name="proveedores" md-no-cache="$ctrl.noCache" flex-gt-sm="35" class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchProveedor"
+				   md-items="item in $ctrl.querySearch($ctrl.searchProveedor, $ctrl.listProveedores, 'NO_EMPRESA')"
+				   md-item-text="item.NO_EMPRESA" md-min-length="0"
+				   md-floating-label="Nombre proveedor"
+				   md-selected-item="$ctrl.PROVEEDOR"
+				   md-selected-item-change="$ctrl.form.NO_EMPRESA.value = $ctrl.PROVEEDOR.NO_EMPRESA;"
+				   ng-blur="$ctrl.PROVEEDOR == undefined ? $ctrl.searchProveedor = '' : ''" ng-disabled="$ctrl.idPrograma == null" required
+			    >
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchComisionista"
+					  	 	md-highlight-flags="^i">{{item.NO_EMPRESA}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el campo "{{$ctrl.searchProveedor}}".
+				   </md-not-found>
+			    </md-autocomplete>
+				<md-input-container class="md-block" flex="40">
+					<label>{{ 'DESCRIPTION' | translate }}</label>
+					<input ng-model="$ctrl.form.DS_ARCHIVO" required>
+				</md-input-container>
+        		<md-progress-circular ng-if="$ctrl.loadProveedores === true" class="md-hue-2" md-diameter="20px"></md-progress-circular>
+        	</div>
+        	<div layout="row" flex="100" ng-if="$ctrl.PROVEEDOR.ID_EMPRESA != null">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Fecha vencimiento</label>
+
+					<md-datepicker md-min-date="$ctrl.minDate" ng-model="$ctrl.form.FD_VENCIMIENTO" ng-change="$ctrl.changeFechaVencimiento()" required></md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Días de preaviso</label>
+					<input ng-change="$ctrl.changeDiasPreaviso()" ng-model="$ctrl.diaPreavisoContrato" required>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Fecha de preaviso</label>
+
+					<md-datepicker md-min-date="$ctrl.minDate" ng-model="$ctrl.form.FECHA_PREAVISO" disabled></md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Preaviso 1</label>
+					<input ng-model="$ctrl.form.PREAVISO_1" required>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Preaviso 2</label>
+					<input ng-model="$ctrl.form.PREAVISO_2">
+				</md-input-container>
+<!-- 				<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 					<label>Días de aviso (separado por comas)</label> -->
+<!-- 					<input ng-model="$ctrl.form.NU_DIAS_PREAVISO" required> -->
+<!-- 				</md-input-container> -->
+				
+				<div layout="row" layout-align="start start" flex="25">
+	                <input type="file" id="file_contrato_modal_proveedor" name="file_contrato_modal_proveedor" class="inputfile" required />
+	                <label ng-if="$ctrl.nombreArchivoContrato == null" class="dark-blue md-button btnNuevo" for="file_contrato_modal_proveedor">
+	                    <i class="material-icons btnIconoNube">attachment</i> {{ 'SELECT_FILE' | translate }}
+	                </label>
+	                <label ng-if="$ctrl.nombreArchivoContrato != null" class="dark-blue md-button btnNuevo" for="file_contrato_modal_proveedor">
+	                    <i class="material-icons btnIconoNube">attachment</i> {{$ctrl.nombreArchivoContrato}}
+	                </label>
+	            </div>
+            </div>
+            <div layout="row" flex="100" ng-if="$ctrl.form.FECHA_PREAVISO != null">
+	            <div class="avisoProveedoresContainer">
+	            	<div ng-if="$ctrl.form.FECHA_PREAVISO != null && $ctrl.form.NU_DIAS_PREAVISO" class="avisoProveedores">
+	            		<div><md-icon>info</md-icon></div>
+	            		Los avisos se realizarán el {{ $ctrl.getDsAvisos() }}
+	            	</div>
+	            </div>
+            </div>
+            <div ng-if="$ctrl.load == true" id="buscandoGif" style="margin-top: 15px; margin-bottom: 15px;">
+	            <div class = "centered">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+        	<div layout="row" layout-align="center center" flex="100" class="md-padding" ng-if="$ctrl.load != true">
+				<md-button ng-disabled="$ctrl.PROVEEDOR.ID_EMPRESA == null || $ctrl.formNuevoContrato == true || $ctrl.archivo == null" ng-click="$ctrl.guardar()" class="dark-blue btnNuevo">Guardar proveedor</md-button>
+        	</div>
+		</form>
+	</md-dialog-content>
+</md-dialog>

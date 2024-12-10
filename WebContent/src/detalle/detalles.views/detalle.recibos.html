@@ -1,0 +1,486 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="row" ng-init="$ctrl.calcular()">
+
+<!-- 	<form role="form" id="formRecibo" name="reciboForm" ng-submit="$ctrl.editarRecibo()" class="form-detalle formClass" resize ng-style="resizeHeight(205)" novalidate> -->
+<!-- 	<form ng-if="$ctrl.parent.parent.url == 'clientes'" role="form" id="formRecibo" name="reciboForm" ng-submit="$ctrl.editarRecibo()" class="form-detalle formClass" resize ng-style="resizeHeight(245)" novalidate> -->
+<!-- 	<form role="form" id="formRecibo" name="reciboForm" ng-submit="$ctrl.editarRecibo()" class="form-detalle formClass" resize ng-style="resizeHeight({{$ctrl.medida}})" novalidate> -->
+	<form role="form" name="formRecibo" id="formNuevoRecibo" ng-value="$ctrl.formRecibo=!formRecibo.$valid" ng-submit="$ctrl.nuevoRecibo()" class="form-detalle formClass" flex novalidate>
+	
+		<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'GENERAL_DATA' | translate }}
+        	<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+	            <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+	            <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+	        </button>
+            <!-- <md-button class="md-raised md-primary dark-blue btnSuperiorDetalle btnOpcion" ng-click="$ctrl.openComisionista($event)" ng-if="$ctrl.nuForm > 0 && ($ctrl.rol == 1 || $ctrl.rol == 4)">
+				{{ 'SEE_COMMISSION_AGENTS' | translate }}
+			</md-button> -->
+		</legend>	
+		<div id="divPoliza" uib-collapse="isCollapsed">
+			<div class="separadorDesplegables"></div>
+        	<div layout="row">
+        		<md-input-container class="md-block" flex-gt-sm="33">
+        			<label>{{ 'RECEIPT' | translate }}</label>
+        			<input ng-model="$ctrl.datos.NU_RECIBO" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" ng-required="$ctrl.nuForm == 0">
+        		</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>{{ 'RECEIPT_TYPE' | translate }}</label>
+					<md-select ng-model="$ctrl.datos.ID_TIPORECIBO" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false">
+						<md-option ng-repeat="situa in $ctrl.tipos.tiposRecibo" ng-value="situa.ID_TIPORECIBO" ng-if="((situa.ID_TIPORECIBO == 1 || situa.ID_TIPORECIBO == 2) && $ctrl.isNuevo == true) || $ctrl.isNuevo == false">
+							{{$ctrl.appParent.getDescriptivo(situa, 'DS_TIPORECIBO')}}
+							<!-- {{situa.DS_TIPORECIBO}} -->
+						</md-option>
+					</md-select>
+				</md-input-container>
+        		<md-input-container class="md-block" flex-gt-sm="33">
+        			<label>{{ 'POLICY_NU' | translate }}</label>
+                 			<!-- <input ng-model="$ctrl.datos.OPOLIZA.NU_POLIZA" required ng-disabled="$ctrl.nuForm > 0"> -->
+        			<md-select ng-model="$ctrl.datos.OPOLIZA" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false || $ctrl.datos.OPOLIZA != null" ng-change="$ctrl.addData()">
+        				<md-option ng-repeat="poliza in $ctrl.tipos.polizas" ng-value="poliza">
+        					{{poliza.NU_POLIZA}}
+        					<small style="color:gray">{{poliza.NO_RAMO}}</small>
+        				</md-option>
+        			</md-select>
+        		</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>{{ 'PAYER' | translate }}</label>
+					<input ng-model="$ctrl.datos.OPAGADOR.NO_NOMBRE_COMPLETO" disabled>
+				</md-input-container>
+        		<!-- <md-input-container class="md-block" flex-gt-sm="25">
+        			<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+                 			<input ng-model="$ctrl.datos.ID_COMPANIA" required ng-disabled="$ctrl.nuForm > 0">
+            			<md-select ng-model="$ctrl.datos.ID_COMPANIA" disabled>
+            				<md-option ng-repeat="com in $ctrl.tipos.compania" ng-value="com.ID_COMPANIA">
+            					{{com.NO_COMPANIA}}
+            				</md-option>
+            			</md-select>
+            	</md-input-container> -->
+            	</div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'DATE_ISSUANCE' | translate }}</label>
+            			<md-datepicker ng-click="($ctrl.datos.FD_EMISION == undefined || $ctrl.datos.FD_EMISION == null) ? $ctrl.datos.FD_EMISION = null : ''"
+						ng-model="$ctrl.datos.FD_EMISION" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false"></md-datepicker>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'DATE_START' | translate }}</label>
+            			<md-datepicker ng-click="($ctrl.datos.FD_INICIO_REC == undefined || $ctrl.datos.FD_INICIO_REC == null) ? $ctrl.datos.FD_INICIO_REC = null : ''"
+						ng-model="$ctrl.datos.FD_INICIO_REC" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false"></md-datepicker>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'DATE_EXPIRATION' | translate }}</label>
+            			<md-datepicker ng-click="($ctrl.datos.FD_VCTO_REC == undefined || $ctrl.datos.FD_VCTO_REC == null) ? $ctrl.datos.FD_VCTO_REC = null : ''"
+						ng-model="$ctrl.datos.FD_VCTO_REC" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false"></md-datepicker>
+            		</md-input-container>
+            	</div>
+				<div layout="row" style="margin-bottom: 20px">
+
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'STATUS' | translate }}</label>
+						<md-select ng-change="$ctrl.changeEstadoViaPago()" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.datos.ID_SITUARECIBO" required>
+							<md-option ng-repeat="situa in $ctrl.tipos.fsituaRecibo" ng-value="situa.ID_SITUARECIBO" ng-if="(situa.ID_SITUARECIBO == 4 && $ctrl.isNuevo == true) || $ctrl.isNuevo == false">
+								{{$ctrl.appParent.getDescriptivo(situa, 'DS_SITUARECIBO')}}
+								<!-- {{situa.DS_SITUARECIBO}} -->
+							</md-option>
+						</md-select>
+					</md-input-container>
+
+					<!-- COBRADO -->
+					<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.datos.ID_SITUARECIBO == 2">
+						<label>{{ 'DATE_CHARGE' | translate }}</label>
+						<md-datepicker ng-click="($ctrl.datos.FD_COBRO == undefined || $ctrl.datos.FD_COBRO == null) ? $ctrl.datos.FD_COBRO = null : ''"
+						ng-model="$ctrl.datos.FD_COBRO" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false"></md-datepicker>
+					</md-input-container>
+
+					<!-- DEVUELTO -->
+					<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.datos.ID_SITUARECIBO == 6">
+						<label>{{ 'DATE_RETURN' | translate }}</label>
+						<md-datepicker ng-click="($ctrl.datos.FD_DEVOLUCION == undefined || $ctrl.datos.FD_DEVOLUCION == null) ? $ctrl.datos.FD_DEVOLUCION = null : ''"
+						ng-model="$ctrl.datos.FD_DEVOLUCION" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false"></md-datepicker>
+					</md-input-container>
+
+					<!-- ANULADO -->
+					<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.datos.ID_SITUARECIBO == 3">
+						<label>{{ 'DATE_CANCELLATION' | translate }}</label>
+						<md-datepicker ng-click="($ctrl.datos.FD_ANULACION == undefined || $ctrl.datos.FD_ANULACION == null) ? $ctrl.datos.FD_ANULACION = null : ''"
+						ng-model="$ctrl.datos.FD_ANULACION" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false"></md-datepicker>
+					</md-input-container>
+
+					<!-- DEVUELTO -->
+					<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.datos.ID_SITUARECIBO == 6">
+						<label>{{ 'CAUSE_RETURN' | translate }}</label>
+						<input ng-model="$ctrl.datos.DS_DEVUELTO" disabled>
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-sm>
+           				<label>{{ 'PAYMENT_METHOD' | translate }}</label>
+	           			<md-select ng-model="$ctrl.datos.ID_TIPO_MEDIO_PAGO" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" required ng-change="$ctrl.filterSitua(); $ctrl.changeEstadoViaPago();">
+	           				<md-option ng-repeat="pago in $ctrl.tipos.pago" ng-value="pago.ID_TIPO_MEDIO_PAGO" ng-if="(pago.ID_TIPO_MEDIO_PAGO == 7 && $ctrl.isNuevo == true) || $ctrl.isNuevo == false">
+	                            {{$ctrl.appParent.getDescriptivo(pago, 'DS_TIPO_MEDIO_PAGO')}}
+<!-- 	                            {{pago.DS_TIPO_MEDIO_PAGO}} -->
+                            </md-option>
+	           			</md-select>
+           			</md-input-container>
+	           		
+	           		
+	           		<md-input-container class="md-block" flex-gt-sm>
+	           			<label>{{ 'PERIODICITY' | translate }}</label>
+	           			<md-select ng-model="$ctrl.datos.ID_FORMAPAGO" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false || $ctrl.datos.OPOLIZA.ID_FORMAPAGO != null">
+	           				<md-option ng-repeat="pago in $ctrl.tipos.formasPago" ng-value="pago.ID_FORMAPAGO">
+	                            {{$ctrl.appParent.getDescriptivo(pago, 'DS_FORMAPAGO')}}
+<!-- 	                            {{pago.DS_FORMAPAGO}} -->
+	                        </md-option>
+	           			</md-select>
+	           		</md-input-container>
+           		
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Número Operación</label>
+						<input ng-model="$ctrl.datos.NU_OPERACION" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{'NUMBER' | translate}} SIA</label>
+						<input ng-model="$ctrl.datos.NU_SIA" disabled>
+					</md-input-container>
+				</div>
+           </div>
+		  <legend><span class="mov-ico ic-ciber-ico-perdidas"></span> {{ 'ECONOMIC_DATA' | translate }}
+              <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed1 = !isCollapsed1">
+                  <span ng-if="isCollapsed1" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                  <span ng-if="!isCollapsed1" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+              </button>
+          </legend>
+          <div id="divPoliza" uib-collapse="isCollapsed1">
+			<div class="separadorDesplegables"></div>
+<!--           	<div layout="row"> -->
+<!--           		<md-input-container class="md-block" flex-gt-sm> -->
+<!--           			<label>Moneda</label> -->
+<!--           			<md-select ng-model="$ctrl.datos.ID_MONEDA" ng-if="$ctrl.datos.ID_MONEDA==null ? pago.CO_TIPO='1956' : ' '" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false"> -->
+<!--           				<md-option ng-repeat="pago in $ctrl.tipos.monedas" value="{{pago.CO_TIPO}}">{{pago.DS_TIPOS}}</md-option> -->
+<!--           			</md-select> -->
+<!--           		</md-input-container> -->
+<!--           		<md-input-container class="md-block" flex-gt-sm> -->
+<!--           			<label>Tipo de cambio</label> -->
+<!--           			<input ng-model="$ctrl.datos.IM_TIPO_CAMBIO" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" ng-keyup="$ctrl.calcular()"> -->
+<!--           		</md-input-container> -->
+<!--           		<md-input-container class="md-block" flex-gt-sm> -->
+<!--           			<label>Importe neto (€)</label> -->
+<!--           			<input ng-model="$ctrl.datos.IM_PRIMANETA_EURO" disabled ng-keyup="$ctrl.calcular()"> -->
+<!--           		</md-input-container> -->
+<!--           		<md-input-container class="md-block" flex-gt-sm> -->
+<!--           			<label>Importe total (€)</label> -->
+<!--           			<input ng-model="$ctrl.datos.IM_RECIBO_TOTAL_EURO" disabled ng-keyup="$ctrl.calcular()"> -->
+<!--           		</md-input-container> -->
+<!--           	</div> -->
+          	<div layout="row">
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'PREMIUM_RATE' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_PRIMA_TARIFA" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'BONUS' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_BONIFICACION" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'SURCHARGES' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_RECARGO" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'NET_PREMIUM' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_PRIMANETA" type="number" disabled ng-keyup="vm.calcular()">
+          		</md-input-container>
+          	</div>
+			<div layout="row">
+				<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'INSURANCE_PREMIUMS' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_IMPUESTOS" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'CONSORTIUM' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_CONSORCIO" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'CONSORTIUM_SURCHARGE' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_REC_CONSORCIO" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'TOTAL' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_RECIBO_TOTAL" disabled type="number" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+			</div>
+			<div layout="row">
+			 	<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'INSURANCE_ENTITIES_LIQUIDATION' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_CLEA" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'EXTRA_RISKS' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_RIESGOS_EXTRA" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'EXTRA_RISKS_SURCHARGES' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_REC_RIESGO_EXTRA" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+          		<md-input-container class="md-block" flex-gt-sm>
+          			<label>{{ 'TOTAL_TAXES' | translate }}</label>
+          			<input ng-model="$ctrl.datos.IM_IMPUESTOS_TOTAL" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01" ng-keyup="$ctrl.calcular()">
+          		</md-input-container>
+			</div>
+<!-- 			<div layout="row" ng-if="$ctrl.datos.ID_RAMO == 20"> -->
+<!-- 			 	<md-input-container class="md-block" flex-gt-sm="25"> -->
+<!--           			<label>Arbitrio de bomberos</label> -->
+<!--           			<input ng-model="$ctrl.datos.IM_ARBITRIO_BOMBEROS" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" type="number" step=".01"> -->
+<!--           		</md-input-container> -->
+<!-- 			</div> -->
+        </div>
+
+		<div ng-if="$ctrl.url.includes('recibos_movimientos_list')">
+			<legend>
+				<span class="mov-ico ic-ciber-ico_datos_bancarios"></span> {{ 'ACCOUNTING_DATA' | translate }}
+				<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+					<span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de contabilización"></span>
+					<span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de contabilización"></span>
+				</button>
+			</legend>
+			<div id="divPoliza" uib-collapse="isCollapsed2">
+				<div class="separadorDesplegables"></div>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'DATE_ACCOUNTING' | translate }}</label>
+						<md-datepicker ng-model="$ctrl.datos.FD_SAP" disabled></md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'SAP_SHIPPING_NUMBER' | translate }}</label>
+						<input ng-model="$ctrl.datos.NU_SAP" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'REMITTANCE' | translate }}</label>
+						<input ng-model="$ctrl.datos.ID_RECIBO_REMESA" disabled>
+					</md-input-container>
+				</div>
+				<div layout="row" style="padding-left:1.5%">
+					<md-input-container class="md-block" flex-gt-sm>
+						<md-checkbox ng-model="$ctrl.datos.IN_BLOQUEADO" ng-disabled="$ctrl.nuForm > 0">{{ 'SAP_SHIPPING_LOCKED' | translate }}</md-checkbox>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'DATE_SETTLEMENT' | translate }}</label>
+						<md-datepicker ng-model="$ctrl.datos.FD_LIQUIDADO" disabled></md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'SETTLED_IPS' | translate }}</label>
+						<md-datepicker ng-model="$ctrl.datos.FD_LIQ_IPS" disabled></md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'SETTLED_TIREA' | translate }}</label>
+						<md-datepicker ng-model="$ctrl.datos.FD_LIQ_TIREA" disabled></md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'SETTLED_REA' | translate }}</label>
+						<md-datepicker ng-model="$ctrl.datos.FD_LIQ_REA" disabled></md-datepicker>
+					</md-input-container>
+				</div>
+			</div>
+		</div>
+		
+<!-- 		<legend>Datos comisiones -->
+<!--             <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2"> -->
+<!--                 <span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span> -->
+<!--                 <span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span> -->
+<!--             </button> -->
+<!--         </legend> -->
+<!--         <div id="divPoliza" uib-collapse="isCollapsed2"> -->
+<!-- 			<div class="separadorDesplegables"></div> -->
+<!--         	<div layout-gt-sm="row"> -->
+<!--         		<md-input-container class="md-block" flex-gt-sm> -->
+<!--         			<label>Comisión</label> -->
+<!--         			<input ng-model="$ctrl.datos.IM_COMISION" required ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" ng-change="$ctrl.datos.IM_COMISION_EURO = $ctrl.datos.IM_COMISION"> -->
+<!--         		</md-input-container> -->
+<!--         		<md-input-container class="md-block" flex-gt-sm> -->
+<!--         			<label>% Comisión</label> -->
+<!--         			<input ng-model="$ctrl.datos.NU_PORCENTAJE_COMI" ng-disabled="$ctrl.nuForm > 0 || $ctrl.permisos.IN_ESCRITURA === false" ng-keyup="$ctrl.calcular()"> -->
+<!--         		</md-input-container> -->
+<!--         		<md-input-container class="md-block" flex-gt-sm> -->
+<!--         			<label>Comisión calculada</label> -->
+<!--         			<input ng-model="$ctrl.datos.IM_COMISION_CALC" disabled> -->
+<!--         		</md-input-container> -->
+<!--         	</div> -->
+<!--         	<div layout-gt-sm="row"> -->
+<!--         		<md-input-container class="md-block" flex-gt-sm> -->
+<!--         			<label>Comisión (€)</label> -->
+<!--         			<input ng-model="$ctrl.datos.IM_COMISION_EURO" disabled> -->
+<!--         		</md-input-container> -->
+<!--         		<md-input-container class="md-block" flex-gt-sm> -->
+<!--         			<label>Comisión calculada (€)</label> -->
+<!--         			<input ng-model="$ctrl.datos.IM_COMISION_CALC_EURO" disabled> -->
+<!--         		</md-input-container> -->
+<!--         	</div> -->
+<!--         </div> -->
+        
+        <div ng-if="!$ctrl.isNuevo">
+			<legend><span class="mov-ico ic-ciber-ico-info"></span> {{ 'INFORMATION' | translate }}
+				<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed3 = !isCollapsed3">
+					<span ng-if="!isCollapsed3" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+					<span ng-if="isCollapsed3" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+				</button>
+			</legend>
+			<div id="divPoliza" uib-collapse="!isCollapsed3">
+				<div class="separadorDesplegables"></div>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'CREATED_BY' | translate }}</label>
+						<input ng-model="$ctrl.datos.NO_USU_ALTA" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'CREATED_ON' | translate }}</label>
+						<md-datepicker ng-model="$ctrl.datos.FT_USU_ALTA" disabled></md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'EDITED_BY' | translate }}</label>
+						<input ng-model="$ctrl.datos.NO_USU_MOD" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'EDITED_ON' | translate }}</label>
+						<md-datepicker ng-model="$ctrl.datos.FT_USU_MOD" disabled></md-datepicker>
+					</md-input-container>
+				</div>
+			</div>
+		</div>
+		
+		<legend><span class="mov-ico ic-ciber-ico-doc-pdf"></span> {{ 'DOCUMENTATION' | translate }}
+            <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed4 = !isCollapsed4">
+                <span ng-if="!isCollapsed4" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                <span ng-if="isCollapsed4" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+            </button>
+        </legend>
+        <div id="divPoliza" uib-collapse="!isCollapsed4">
+			<div class="separadorDesplegables"></div>
+        	<!-- <div layout="row">
+				<div layout="column">
+	                <div layout="row" >
+	                    <div style="display: inline-block; width: fit-content; margin-bottom: 10%;">
+	                        <input type="file" id="file_pol" name="file_pol" class="inputfile" />
+	                        <label class="dark-blue md-button btnNuevo" for="file_pol">
+	                            <i class="material-icons btnIconoNube">attachment</i> {{ 'SELECT_FILE' | translate }}
+	                        </label>
+	                    </div>
+	                </div>
+	                <div ng-repeat="archivo in $ctrl.listaArchivos" layout-gt-sm="row" layout-margin>
+						<md-input-container class="md-block" flex-gt-sm flex="33" >
+	                        <label>{{ 'FILE' | translate }}</label>
+	                        <input ng-model="archivo.NO_ARCHIVO" disabled>
+	                    </md-input-container>
+						<md-input-container class="md-block" flex-gt-sm flex="33">
+	                        <label>{{ 'STATUS' | translate }}</label>
+	                        <input type="text" ng-model="archivo.ESTADO" disabled>
+	                    </md-input-container>
+						<i ng-if="archivo.DESCARGAR != false" class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(archivo)">
+	                        cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip>
+	                    </i>
+	                    <i class="material-icons btnIcono" ng-click="$ctrl.deleteFile(archivo)">
+	                        delete_outline <md-tooltip md-direction="top">{{ 'DELETE' | translate | uppercase }}</md-tooltip>
+						</i>
+					</div>
+					<md-button ng-if="$ctrl.listaArchivos.length > 0" class="md-raised md-primary medium-blue button-action-main" style="width: fit-content; margin-left: 118%;" ng-click="$ctrl.appParent.uploadFiles($ctrl.listaArchivos, 'recibos', $ctrl.idRecibo, $ctrl.idPoliza)">
+						<md-icon>backup</md-icon>&nbsp;{{ 'UPLOAD_FILES' | translate }}
+					</md-button>				 
+            	</div>
+        	</div> -->
+
+			<div layout="row">
+				<div flex="">
+					<div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover">
+						<span><md-icon class="icon-blue">upload_file</md-icon></span>
+						<span >Arrastre y suelte los archivos o haga click para seleccionarlos</span>
+					</div>
+				</div>
+
+				<div flex="">
+					<div class="files-container">
+						<div ng-repeat="file in $ctrl.listaArchivos track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+							<div flex="60">
+								<span>
+									{{file.NO_ARCHIVO}}
+								</span>
+							</div>
+							<div flex="20">
+								<span ng-if="file.ESTADO">
+									{{file.ESTADO}}
+								</span>
+								<span ng-if="!file.ESTADO">
+									{{ 'NOT_SAVED' | translate }}
+								</span>
+							</div>
+							<div flex="" class="txt-center">
+								<span ng-if="file.DESCARGAR != false">
+									<md-icon class="icon-blue" ng-click="$ctrl.descargarArchivo(file)">download_for_offline</md-icon>
+									<md-tooltip md-direction="bottom">{{ 'DOWNLOAD' | translate }}</md-tooltip>
+								</span>
+							</div>
+							<div flex="" class="txt-center">
+								<span>
+									<div ng-if="!file.ESTADO || !file.IS_DELETED">
+										<md-icon class="icon-blue" ng-click="$ctrl.deleteFile(file, $index)">delete_forever</md-icon>
+										<md-tooltip md-direction="bottom">{{ 'DELETE' | translate }}</md-tooltip>
+									</div>
+									<div ng-if="file.IS_DELETED">
+										<md-icon class="icon-blue" ng-click="$ctrl.deleteFile(file, $index)">undo</md-icon>
+										<md-tooltip md-direction="bottom">Volver a incluir</md-tooltip>
+									</div>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="flex-end-container" ng-if="$ctrl.filesToUpload && $ctrl.listaArchivos.length > 0">
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.uploadFiles($ctrl.listaArchivos, 'recibos', $ctrl.datos.ID_RECIBO, $ctrl.datos.OPOLIZA.ID_POLIZA)">
+					<md-icon>backup</md-icon>&nbsp;{{ 'UPLOAD_FILES' | translate }}
+				</md-button>
+			</div>
+        </div>
+        
+        <legend><span class="mov-ico ic-ciber-ico-ayuda-psicologica"></span> {{ 'OBSERVATIONS' | translate }}
+            <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed5 = !isCollapsed5">
+                <span ng-if="!isCollapsed5" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                <span ng-if="isCollapsed5" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+            </button>
+        </legend>
+        <div id="divPoliza" uib-collapse="!isCollapsed5">
+			<div class="separadorDesplegables"></div>
+        	<div layout="row">
+        		<md-input-container class="md-block" flex-gt-sm>
+        			<label>{{ 'OBSERVATION' | translate }}</label>
+        			<input ng-disabled="$ctrl.datos.ID_RECIBO != undefined && $ctrl.disabledTxt === true || $ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.datos.TX_OBSERVACIONES">
+        		</md-input-container>
+        	</div>
+        </div>
+		
+<!-- 		<div class="col-sm-12" style="text-align:center"> -->
+<!-- 			<md-button type="submit" class="md-raised md-primary medium-green"> -->
+<!-- 				<md-icon>save</md-icon> -->
+<!-- 				Guardar -->
+<!-- 			</md-button> -->
+<!-- 			<md-button class="md-raised md-primary medium-orange"> -->
+<!-- 				<i class="fa fa-trash"></i> -->
+<!-- 				Deshacer -->
+<!-- 			</md-button> -->
+<!-- 		</div> -->
+	</form>
+		
+</div>
+
+<div layout="row" layout-align="center" layout-margin>
+	<md-button ng-if="$ctrl.navegador != 'internet explorer' && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" type="submit" form="formNuevoRecibo">
+		<md-icon>save</md-icon>
+		{{ 'SAVE' | translate }}
+	</md-button>
+	<md-button ng-if="$ctrl.navegador == 'internet explorer' && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.nuevoRecibo()" form="formNuevoRecibo">
+		<md-icon>save</md-icon>
+		{{ 'SAVE' | translate }}
+	</md-button>
+	<md-button ng-if="$ctrl.permisos.IN_BORRADO === true" class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.deshacer()">
+		<i class="fa fa-trash"></i>
+		{{ 'UNDO' | translate }}
+	</md-button>
+</div>	

@@ -1,0 +1,34 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>{{ 'SEND_INFO' | translate }}</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="container_modal_pdf formClass" flex>
+			<form name="$ctrl.formDownloadBudgetTiper">
+				<div layout-gt-sm="row" layout-align="center center">
+					<md-input-container class="md-block" flex-gt-sm="50">
+						<label>{{ 'EMAIL' | translate }}</label>
+						<input ng-model="$ctrl.obj.EMAIL" type="email" required>
+					</md-input-container>
+				</div>
+
+				<div class="container_TarMovil_btn" layout-gt-sm="row" layout-align="center" layout-margin="">
+					<md-button ng-if="$ctrl.loading != true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.sendInfo()">
+						<i class="fa-duotone fa-paper-plane"></i>
+						{{ 'SEND_INFO' | translate }}
+					</md-button>
+					<md-progress-circular md-mode="indeterminate" ng-show="$ctrl.loading == true" style="margin: 0 auto;"></md-progress-circular>
+				</div>
+
+			</form>
+		</div>
+	</md-dialog-content>
+</md-dialog>

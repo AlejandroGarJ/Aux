@@ -1,0 +1,93 @@
+<!-- Tabla de SINIESTROS -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+<!--         <md-button class="dark-blue btnSuperior" ng-click="$ctrl.openNewSiniestro()" ng-if="$ctrl.intoCliente"> -->
+<!--             <md-icon>add</md-icon>Nuevo siniestro</md-button> -->
+		<md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+        
+	        <div layout="row" layout-align="start center" class="md-padding">
+		        
+		        <md-menu ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && ($ctrl.parent.url == 'siniestros' || $ctrl.parent.url == 'clientes') && $ctrl.permisos.IN_EXPORTAR == true">
+                    <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$mdMenu.open()">
+                        <span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+                    </md-button>
+                    <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
+                        <md-menu-item>
+                            <md-button ng-click="$ctrl.exportarExcel(false)">
+                                Detalle siniestros
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="$ctrl.exportarExcel(true)">
+                                Movimiento siniestro
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                
+<!-- 		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && ($ctrl.parent.url == 'siniestros' || $ctrl.parent.url == 'clientes') && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.exportarExcel()"> -->
+<!-- 		            <span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }} -->
+<!-- 		        </md-button> -->
+		
+		        <!-- Botones de consulta GDPR -->
+		        <md-button class="dark-blue btnSuperior btnNuevo" ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true">
+		            <md-icon>lock_open</md-icon> {{ 'UNLOCK_CLIENT' | translate }}
+		        </md-button>
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+		            <md-icon>file_copy</md-icon> {{ 'EXPORT_CLIENT' | translate }}
+		        </md-button>
+		
+		        <!-- <md-button class="dark-blue btnSuperior btnNuevo" ng-if="$ctrl.permisos.IN_ESCRITURA == true" ng-click="$ctrl.openNewSiniestro()"> -->
+
+                <md-button ng-if="$ctrl.permisos.IN_ESCRITURA === true && $ctrl.poliza != null ? (($ctrl.poliza.ID_PRODUCTO == 3 || $ctrl.poliza.ID_PRODUCTO == 4 || $ctrl.poliza.ID_PRODUCTO == 5 || $ctrl.poliza.ID_PRODUCTO == 6 || $ctrl.poliza.ID_PRODUCTO == 25 || $ctrl.poliza.ID_PRODUCTO == 29 || $ctrl.poliza.ID_PRODUCTO == 19) && $ctrl.poliza.ID_SITUAPOLIZA == 1) : true
+                	&& ($ctrl.parent.url != 'rgpd_polizas' && $ctrl.parent.url != 'rgpd_clientes') " ng-click="$ctrl.verDetalle(undefined, 'siniestro')" class="md-raised md-primary medium-blue button-action-main">
+                    <i class="fa-light fa-plus"></i> {{ 'NEW_CLAIM' | translate }}
+                </md-button>
+
+<!--                <md-button ng-if="$ctrl.poliza != null ? (($ctrl.poliza.ID_PRODUCTO == 3 || $ctrl.poliza.ID_PRODUCTO == 4 || $ctrl.poliza.ID_PRODUCTO == 5 || $ctrl.poliza.ID_PRODUCTO == 6 || $ctrl.poliza.ID_PRODUCTO == 25) && $ctrl.poliza.ID_SITUAPOLIZA == 1) : true" class="dark-blue btnSuperior btnNuevo" ng-click="$ctrl.verDetalle(undefined, 'siniestro')">-->
+<!--		            <i class="fa-light fa-plus"></i> {{ 'NEW_CLAIM' | translate }}-->
+<!--		        </md-button>-->
+	        </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> {{ 'NOT_FOUND_CLAIM' | translate }}</h4>
+            </div>
+            
+            <div layout="row" layout-align="center center" resize ng-if="$ctrl.vista == 1">
+<!--                 <h2>Busque un siniestro</h2> -->
+            </div>
+            <div id="buscandoGif" style="display:table; height: 50vh;" ng-if="$ctrl.vista == 2">
+                <!-- 			            <h2>Buscando</h2> -->
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4 && $ctrl.tipo == 'siniestros'" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="$ctrl.screenHeight < 620 ? $ctrl.getTableHeight() : $ctrl.gridOptions.totalItems < 30 ? resizeHeight(377) : $ctrl.getTableHeight()"></div>
+			<div ng-if="$ctrl.vista == 4 && $ctrl.tipo == 'siniestrosBy'" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(248)"></div>
+			
+        </md-tab>
+
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+
+            <md-tab-label ng-if="detalles != null">
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='siniestro' ">{{ 'CLAIM_NUMBER' | translate }}: {{detalles.NU_SINIESTRO}}</span>
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='poliza' ">{{ 'POLICY_NU' | translate }}:{{detalles.OPOLIZA.NU_POLIZA}}</span>
+                <span ng-if="detalles == null"><i class="fa-light fa-plus"></i> {{ 'NEW_CLAIM' | translate }}</span>
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </md-tab-label>
+            <md-tab-body>
+                <detalle-sd id-detalle="detalles" ng-if="$ctrl.nomDetalles[$index]=='siniestro'" tipo="'siniestro'"></detalle-sd>
+                <detalle-sd llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='poliza'" id-detalle="$ctrl.detallesPoliza" tipo="'poliza'"></detalle-sd>
+            </md-tab-body>
+
+        </md-tab>
+
+    </md-tabs>
+
+</div>

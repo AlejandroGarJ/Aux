@@ -1,0 +1,1122 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex xmlns="http://www.w3.org/1999/html">
+    <md-content ng-show="$ctrl.loading == true" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize ng-style="resizeHeight(469)">
+        <div id="buscandoGif" 
+                style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+                resize ng-style="resizeHeight(330)">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+        </div>
+    </md-content>
+
+    <!-- CIBERSEGURO TELEFONICA SECCION DE TARIFICACIÓN -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 1" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll" resize>
+
+		<!--ADMINISTRATION VIEW CIBERSEGURO TELEFONICA -->
+		<div  flex-gt-sm="80">
+			<div style="margin-bottom: 10px;">
+				<div layout="row" layout-align="start center" flex="100" style="margin: 10px 0px 10px 0px">
+					<div class="md-toolbar-tools toolbar-filtro">
+						<div layout="row" layout-align="start center" flex="100">
+<!--							<span ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" style="margin-right:15px;background-color: #5eba7d;border-radius: 3px;padding: 1px 15px 5px 15px;color: white">-->
+<!--								<i class="fa-regular fa-chess" style="font-size: 0.9em"></i> <span style="font-size: 0.6em">ADMINISTRADOR</span>-->
+<!--							</span>-->
+							<h2 style="text-transform: uppercase; color:#0066FF">
+								<span style="color:#2b3447!important">
+									<i class="fa-light fa-arrow-up-right-from-square" style="margin-right: 3px"></i>
+									ACCESOS DIRECTOS
+									<span style="font-family: TelefonicaWebBold!important; color: #0066ff">CIBERSEGURO TELEFÓNICA</span>
+								</span>
+							</h2>
+						</div>
+					</div>
+				</div>
+				<div layout="row" layout-align="center start">
+					<md-list flex="20" style="margin-top: 0px;padding: 5px" ng-if="$ctrl.showMenusRedirect.polizas == true" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.redirect('#!/polizas_list?idPrograma=2')">
+						<md-list-item>
+							<span flex="100"><i class="fa-light fa-books" style="color: #0066ff; margin-right: 3px"></i> BUSCADOR DE PÓLIZAS</span>
+						</md-list-item>
+					</md-list>
+					<md-list flex="20" style="margin-top: 0px;padding: 5px" ng-if="$ctrl.showMenusRedirect.presupuestos == true" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.redirect('#!/presupuestos_list?idPrograma=2')">
+						<md-list-item>
+							<span flex="100"><i class="fa-light fa-hand-holding-dollar" style="color: #0066ff; margin-right: 3px"></i> BUSCADOR DE PRESUPUESTOS</span>
+						</md-list-item>
+					</md-list>
+					<md-list flex="20" style="margin-top: 0px;padding: 5px" ng-if="$ctrl.showMenusRedirect.recibos == true" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.redirect($ctrl.urlRecibos)">
+						<md-list-item>
+							<span flex="100"><i class="fa-light fa-file-invoice" style="color: #0066ff; margin-right: 3px"></i> BUSCADOR DE RECIBOS</span>
+						</md-list-item>
+					</md-list>
+					<md-list flex="20" style="margin-top: 0px;padding: 5px" ng-if="$ctrl.showMenusRedirect.siniestros == true" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.redirect('#!/siniestros_list?idPrograma=2')">
+						<md-list-item>
+							<span flex="100"><i class="fa-light fa-bell-exclamation" style="color: #0066ff; margin-right: 3px"></i> BUSCADOR DE SINIESTROS</span>
+						</md-list-item>
+					</md-list>
+					<md-list flex="20" style="margin-top: 0px;padding: 5px;background-color: #f1f1f1" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.changeSuperAdmin()">
+						<md-list-item>
+							<span style="font-family: TelefonicaWebBold" flex="100"><i class="fa-light fa-arrows-repeat" style="color: #0066ff; margin-right: 3px"></i> VISTA DE GESTOR</span>
+						</md-list-item>
+					</md-list>
+				</div>
+			</div>
+			<div style="border: 1px solid #f1f1f1;text-align: center;padding: 10px;">
+				<p style="color:#2b3447!important">
+					<i class="fa-light fa-location-exclamation" style="margin-right: 3px"></i>
+					Estás en la vista de <span style="color: #5eba7d;font-family: TelefonicaWebBold">'ADMINISTRACIÓN'</span> donde puedes generar una nueva emisión con importes y fechas personalizados, así como asignarla a un gestor existente.
+				</p>
+				<p style="color:#2b3447!important">
+					<i class="fa-light fa-arrows-repeat" style="margin-right: 3px"></i>
+					Utiliza la vista de <span style="color: #6E7894;font-family: TelefonicaWebBold">'GESTOR'</span> si deseas ver el tarificador disponible para Gestores. Puedes generar presupuestos en esta vista pero <span style="color: #6E7894;font-family: TelefonicaWebBold">NO</span> emitir.
+				</p>
+			</div>
+			<!--FIRST ROW ADMINISTRATION VIEW-->
+			<div layout="row" layout-align="start start">
+				<div ng-if="$ctrl.mostrarPaso(1) == true" ng-class="{formDisabled: $ctrl.pasoAnadido(1) == true}" flex="50" style="text-align: center" class="boxCustomCiber">
+					<h5 class="h5HeaderCiber">
+						<span>
+							<i class="fa-light fa-circle-1" style="margin-right: 3px"></i>
+							¿COMENZAMOS? INDÍCAME EL
+							<span style="font-family: TelefonicaWebBold!important"> TIPO DE LÍMITES ASOCIADO</span>
+						</span>
+					</h4>
+					<div id="adminBox1Child">
+						<md-list style="margin-top: 0px;padding: 54px 0px 54px 0px;" layout="row" layout-align="center center" >
+							<md-list-item>
+								<span flex="80"><i class="fa-light fa-objects-column" style="color: #0066ff; margin-right: 8px"></i> LÍMITES INDEPENDIENTES&nbsp;</span>
+								<md-switch ng-model="$ctrl.productoSeleccionado" ng-true-value="6" ng-change="$ctrl.changeProductoAdhoc()"></md-switch>
+							</md-list-item>
+							<md-list-item>
+								<span flex="80"><i class="fa-light fa-grid-2" style="color: #0066ff; margin-right: 8px"></i> LÍMITES AGREGADOS&nbsp;</span>
+								<md-switch ng-model="$ctrl.productoSeleccionado" ng-true-value="5" ng-change="$ctrl.changeProductoAdhoc()"></md-switch>
+							</md-list-item>
+						</md-list>
+						<md-button  class="btnNextCiber" ng-click="$ctrl.siguientePaso(1)">
+							<span><i class="fa-light fa-check"></i> SIGUIENTE: VALIDACIÓN BÁSICA Y ASIGNACIÓN</span>
+						</md-button>
+					</div>
+				</div>
+				<div ng-if="$ctrl.mostrarPaso(2) == true" ng-class="{formDisabled: $ctrl.pasoAnadido(2) == true}" flex="50" style="text-align: center" class="boxCustomCiber">
+					<form name="$ctrl.formPaso2" id="formPaso2">
+						<h5 class="h5HeaderCiber">
+							<span>
+								<i class="fa-light fa-circle-2" style="margin-right: 3px"></i>
+								ANOTADO, VALIDEMOS LOS
+								<span style="font-family: TelefonicaWebBold!important"> ASEGURADOS ADICIONALES</span>
+								Y ASIGNEMOS
+								<span style="font-family: TelefonicaWebBold!important"> LA EMISIÓN</span>
+							</span>
+						</h5>
+						<div class="margin-top-20">
+							<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center start" >
+	<!-- 							<md-list-item flex="50"> -->
+	<!-- 								<md-input-container style="margin-top: 23px!important;" flex="100"> -->
+	<!-- 									<label><i class="fa-light fa-fingerprint"></i> NIF A ASEGURAR</label> -->
+	<!-- 									<input ng-keypress="$ctrl.validarDocumento($event)" ng-blur="$ctrl.validarDocumento()" ng-disabled="$ctrl.disabledDocumento == true" ng-model="$ctrl.nuDocumento" cvalidation="document_a" id="documento" required> -->
+	<!-- 								</md-input-container> -->
+	<!-- 							</md-list-item> -->
+								<md-list-item flex="50">
+									<md-input-container class="selectBoxCiber" flex="100">
+										<md-select placeholder="NÚMERO DE ASEGURADOS" ng-model="$ctrl.nuAseguradosAdhoc" required>
+											<md-option ng-value=0>SELECCIONA</md-option>
+											<md-option ng-value=1>1 SOLO ASEGURADO (PRINCIPAL)</md-option>
+											<md-option ng-value=2>PRINCIPAL + 1 ADICIONAL</md-option>
+											<md-option ng-value=3>PRINCIPAL + 2 ADICIONALES</md-option>
+											<md-option ng-value=4>PRINCIPAL + 3 ADICIONALES</md-option>
+											<md-option ng-value=5>PRINCIPAL + 4 ADICIONALES</md-option>
+										</md-select>
+									</md-input-container>
+								</md-list-item>
+							</md-list>
+							<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+								<md-list-item flex="50">
+									<md-autocomplete required name="comisionistas" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+													 md-search-text="$ctrl.searchComisionista"
+													 md-items="item in $ctrl.querySearch($ctrl.searchComisionista, $ctrl.listComisionistas, 'NO_COMPANIA')"
+													 md-item-text="$ctrl.getDescriptivoCompania(item)" md-min-length="0"
+													 md-floating-label="Selecciona empresa"
+													 md-selected-item="$ctrl.autocomplete.COMISIONISTA"
+													 md-selected-item-change="$ctrl.idComisionista = $ctrl.autocomplete.COMISIONISTA.ID_COMPANIA; $ctrl.changeComisionista()"
+													 ng-blur="$ctrl.autocomplete.COMISIONISTA == undefined ? $ctrl.searchComisionista = '' : ''">
+										<md-item-template>
+									   <span md-highlight-text="$ctrl.searchComisionista"
+											 md-highlight-flags="^i">{{$ctrl.getDescriptivoCompania(item)}}</span>
+										</md-item-template>
+										<md-not-found>
+											No existe el campo "{{$ctrl.searchComisionista}}".
+										</md-not-found>
+									</md-autocomplete>
+								</md-list-item>
+								<md-list-item flex=50">
+									<md-autocomplete required ng-disabled="!($ctrl.idComisionista != null && $ctrl.loadGestores != true && $ctrl.listUsers.length > 0)" name="gestor" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+													 md-search-text="$ctrl.searchGestor"
+													 md-items="item in $ctrl.querySearch($ctrl.searchGestor, $ctrl.listUsers, 'NO_SELECT')"
+													 md-item-text="$ctrl.getUsuario(item)" md-min-length="0"
+													 md-floating-label="Selecciona gestor"
+													 md-selected-item="$ctrl.autocomplete.GESTOR"
+													 md-selected-item-change="$ctrl.idUsuario = $ctrl.autocomplete.GESTOR.NO_USUARIO; $ctrl.reset(); $ctrl.changeGestor()"
+													 ng-blur="$ctrl.autocomplete.GESTOR == undefined ? $ctrl.searchGestor = '' : ''">
+									<md-item-template>
+									   <span md-highlight-text="$ctrl.searchGestor"	 md-highlight-flags="^i">{{item.NO_SELECT}}
+									   </span>
+									</md-item-template>
+									<md-not-found>
+										No existe el campo "{{$ctrl.searchGestor}}".
+									</md-not-found>
+									</md-autocomplete>
+									<p ng-if="$ctrl.loadGestores == true">Cargando...</p>
+									<p ng-if="$ctrl.idComisionista != null && $ctrl.loadGestores != true && ($ctrl.listUsers == null || $ctrl.listUsers.length == 0)">No se ha encontrado ningún gestor asociado</p>
+								</md-list-item>
+							</md-list>
+							<md-button  class="btnBackCiber" ng-click="$ctrl.anteriorPaso(2)">
+								<span><i class="fa-light fa-backward-step"></i> ANTERIOR</span>
+							</md-button>
+							<md-button  class="btnNextCiber" ng-click="$ctrl.siguientePaso(2)">
+								<span><i class="fa-light fa-check"></i> SIGUIENTE</span>
+							</md-button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div layout="row" layout-align="start start">
+				<div ng-if="$ctrl.mostrarPaso(3) == true" ng-class="{formDisabled: $ctrl.pasoAnadido(3) == true}" flex="50" style="text-align: center" class="boxCustomCiber">
+					<form name="$ctrl.formPaso3" id="formPaso3">
+						<h5 class="h5HeaderCiber">
+							<span>
+								<i class="fa-light fa-circle-3" style="margin-right: 3px"></i>
+								COTIZACIÓN. ESTABLEZCAMOS LAS
+								<span style="font-family: TelefonicaWebBold!important"> PRIMAS, IMPUESTOS Y LA FRANQUICIA</span>
+							</span>
+						</h5>
+						<div layout="row" layout-align="center center" style="padding: 10px">
+							<div flex="100" style="text-align: center">
+								<p style="color:#2b3447!important">
+									<i class="fa-light fa-calculator-simple" style="margin-right: 3px"></i>
+									Introduce la <span style="color: #6E7894;font-family: TelefonicaWebBold">PRIMA BRUTA ANUAL</span> y el sistema calculará la <span style="color: #6E7894;font-family: TelefonicaWebBold">PRIMA NETA</span> y los <span style="color: #6E7894;font-family: TelefonicaWebBold">IMPUESTOS</span>.
+								</p>
+								<p>Los importes calculados por el sistema tienen un redondeo al alza de 2 decimales y son <span style="color: #5eba7d;font-family: TelefonicaWebBold">editables</span></p>
+							</div>
+						</div>
+						<div layout="row" layout-align="center center" style="margin-top: 15px">
+							<div flex="50" style="text-align: center">
+								<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+									<md-list-item layout-align="center center">
+										<md-input-container style="margin-top: 23px!important;" flex="100">
+											<label><i class="fa-light fa-euro-sign"></i> PRIMA BRUTA ANUAL</label>
+											<input required md-no-asterisk ng-model="$ctrl.primas.PRIMA_TOTAL" step="any" placeholder="Introducir importe en €">
+										</md-input-container>
+									</md-list-item>
+								</md-list>
+							</div>
+							<div flex="50" style="text-align: center">
+								<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+									<md-list-item layout-align="center center">
+										<md-input-container style="margin-top: 23px!important;" flex="100">
+											<label><i class="fa-light fa-euro-sign"></i> PRIMA NETA ANUAL</label>
+											<input required md-no-asterisk ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.PRIMA_NETA" step="any" placeholder="Cálculo automático">
+										</md-input-container>
+									</md-list-item>
+								</md-list>
+							</div>
+						</div>
+						<div layout="row" layout-align="center center" class="accentBox">
+							<div flex="100">
+								<div layout="row" layout-align="center center" style="margin-top: 10px;">
+									<p style="font-family: TelefonicaWebBold;color: #0066ff;font-size: 0.9em;"><span style="color: #6E7894;font-family: TelefonicaWebBold">IMPUESTOS</span> ASOCIADOS</p>
+								</div>
+								<div layout="row" layout-align="center center" flex="100">
+									<div flex="50" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container flex="100">
+													<label>IPS 8%</label>
+													<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.IPS">
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+									<div flex="50" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container flex="100">
+													<label>LEA 0,15%</label>
+													<input ng-disabled="$ctrl.isCalcula != true"  ng-model="$ctrl.primas.LEA">
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div layout="row" layout-align="center center" class="accentBox" style="margin-top: 10px">
+							<div flex="100">
+								<div layout="row" layout-align="center center" style="margin-top: 10px;">
+									<p style="font-family: TelefonicaWebBold;color: #0066ff;font-size: 0.9em;"><span style="color: #6E7894;font-family: TelefonicaWebBold">IMPORTE DE LA </span> FRANQUICIA</p>
+								</div>
+								<div layout="row" layout-align="center center" flex="100">
+									<div flex="100" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container flex="100">
+													<label>FRANQUICIA EN CASO DE SINIESTRO</label>
+													<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.FRANQUICIA">
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+								</div>
+							</div>
+	
+						</div>
+						<div layout="row" layout-align="center center">
+							<div flex="100" style="text-align: center">
+								<md-button class="btnNextCiber" ng-click="$ctrl.changePrimasAdmin()">
+									<span><i class="fa-light fa-check"></i> CONFIRMAR PRIMAS, IMPUESTOS y FRANQUICIA</span>
+								</md-button>
+							</div>
+						</div>
+						<div layout="row" layout-align="center center">
+							<md-button  class="btnBackCiber" ng-click="$ctrl.anteriorPaso(3)">
+								<span><i class="fa-light fa-backward-step"></i> ANTERIOR</span>
+							</md-button>
+							<md-button  class="btnNextCiber" ng-click="$ctrl.siguientePaso(3)">
+								<span><i class="fa-light fa-check"></i> SIGUIENTE</span>
+							</md-button>
+						</div>
+					</form>
+				</div>
+				<div ng-if="$ctrl.mostrarPaso(4) == true" flex="50" style="text-align: center" class="boxCustomCiber">
+					<h4 class="h5HeaderCiber">
+						<span>
+							<i class="fa-light fa-circle-3" style="margin-right: 3px"></i>
+							INFORMACIÓN SOBRE LA EMPRESA
+							<span style="font-family: TelefonicaWebBold!important">A ASEGURAR Y SUS FILIALES*</span>
+						</span>
+					</h4>
+					<div id="adminBox3Child">
+						<div id="boxSectorActividad" layout="row" layout-align="center center" style="margin-top: 15px">
+							<div flex="50" class="accentBox">
+								<span style="color: #6E7894;font-family: TelefonicaWebBold; font-size: 0.9em"><i class="fa-thin fa-industry-windows" style="color: #0066ff;font-size: 20px"></i> SECTOR Y ACTIVIDAD DE LA <span style="color: #0066ff;">EMPRESA A ASEGURAR</span></span>
+								<div layout="row" layout-align="center center" style="margin-top: 10px;padding: 20px;">
+									<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+										<md-list-item flex="50">
+											<md-input-container style="margin-top: 23px!important;" flex="100">
+												<md-select ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.sector" required>
+													<label>SECTOR DE LA EMPRESA A ASEGURAR</label>
+													<md-option ng-repeat="sector in $ctrl.tpGroups" ng-value="sector">
+														{{$ctrl.parent.getDescriptivo(sector, 'DS_TIPOS')}}
+													</md-option>
+												</md-select>
+											</md-input-container>
+										</md-list-item>
+										<md-list-item flex="50">
+											<md-input-container style="margin-top: 23px!important;" flex="100">
+												<label>ACTIVIDAD DE LA EMPRESA A ASEGURAR</label>
+												<md-select ng-model="$ctrl.activity" ng-change="$ctrl.check_risk('activity', $ctrl.activity)" required>
+													<md-option ng-repeat="activity in $ctrl.sector.LST_ACTIVIDADES" ng-value="activity">
+														{{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+													</md-option>
+												</md-select>
+											</md-input-container>
+										</md-list-item>
+									</md-list>
+								</div>
+							</div>
+							<div flex="50" class="accentBox">
+								<span style="color: #6E7894;font-family: TelefonicaWebBold; font-size: 0.9em"><i class="fa-thin fa-buildings" style="color: #0066ff;font-size: 20px"></i> SECTOR Y ACTIVIDAD DE SUS <span style="color: #0066ff;">FILIALES ESPAÑOLAS</span></span>
+								<div layout="row" layout-align="center center" style="margin-top: 10px;padding: 20px;">
+									<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+										<md-list-item flex="50">
+											<md-input-container style="margin-top: 23px!important;" flex="100">
+												<label>SECTOR DE SUS FILIALES ESPAÑOLAS</label>
+												<md-select ng-model="$ctrl.affiSector" multiple>
+													<md-option ng-repeat="afSector in $ctrl.tpGroups" ng-value="afSector">{{afSector.DS_TIPOS}}</md-option>
+												</md-select>
+											</md-input-container>
+										</md-list-item>
+										<md-list-item flex="50">
+											<md-input-container style="margin-top: 23px!important;" flex="100">
+												<label>ACTIVIDAD DE SUS FILIALES ESPAÑOLAS</label>
+												<md-select ng-model="$ctrl.selActivities" ng-change="$ctrl.check_risk('selActivities', $ctrl.selActivities)" multiple>
+													<md-optgroup label="{{afSector.DS_TIPOS}}" ng-repeat="afSector in $ctrl.affiSector">
+														<md-option ng-repeat="activity in afSector.LST_ACTIVIDADES" ng-value="activity.DS_ACTIVIDAD">
+															{{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+														</md-option>
+													</md-optgroup>
+												</md-select>
+											</md-input-container>
+										</md-list-item>
+									</md-list>
+								</div>
+							</div>
+						</div>
+						<div id="boxCiberAtaques" layout="row" layout-align="center center" style="margin-top: 15px">
+							<div flex="60" class="accentBox">
+								<span style="color: #6E7894;font-family: TelefonicaWebBold; font-size: 0.9em"><i class="fa-thin fa-light-emergency-on" style="color: #0066ff;font-size: 20px"></i> INFORMACIÓN SOBRE <span style="color: #0066ff;">CIBERATAQUES EN LOS 3 ÚLTIMOS AÑOS</span></span>
+								<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+									<md-list-item flex="50">
+										<md-input-container style="margin-top: 23px!important;" flex="100">
+											<label>¿SUFRIÓ ALGÚN CIBERATAQUE?</label>
+											<md-select ng-model="$ctrl.objPri.lossAttackAmountOption" ng-change="$ctrl.check_risk('atksOpt', $ctrl.objPri.lossAttackAmountOption)" ng-disabled="$ctrl.amount.DS_TIPOS == 0" required>
+												<md-option ng-repeat="lost in $ctrl.tpLosses" ng-value="lost.CO_TIPO">
+													{{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+												</md-option>
+											</md-select>
+										</md-input-container>
+									</md-list-item>
+									<md-list-item flex="50">
+										<md-input-container style="margin-top: 23px!important;" flex="100">
+											<label>¿DE QUÉ TIPO?</label>
+											<md-select ng-change="$ctrl.check_risk('selAtks', $ctrl.selAtks)" ng-model="$ctrl.selAtks" required multiple>
+												<md-option ng-repeat="lost in $ctrl.tpCbatk" ng-value="lost.CO_TIPO">
+													{{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+												</md-option>
+											</md-select>
+										</md-input-container>
+									</md-list-item>
+								</md-list>
+							</div>
+						</div>
+						<div id="buttonsRow2" layout="row" layout-align="center center">
+							<div flex="100" style="text-align: center">
+								<md-button  class="btnBackCiber">
+									<span><i class="fa-light fa-backward-step"></i> ANTERIOR: VALIDACION Y ASIGNACIÓN</span>
+								</md-button>
+								<md-button class="btnNextCiber">
+									<span><i class="fa-light fa-check"></i> SIGUIENTE: TIPO DE TARIFICACIÓN Y EXTENSIÓN C4</span>
+								</md-button>
+							</div>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center">
+						<div flex="50" style="text-align: center">
+							<md-list style="margin-top: 0px;padding: 5px" layout="colum" layout-align="start center" >
+								<md-list-item>
+									<md-input-container flex="100">
+
+										<md-datepicker ng-change="$ctrl.changeFechaVigor()" ng-model="$ctrl.opciones.fechaEfecto" ng-disabled="$ctrl.checkFecha!=true" md-min-date="$ctrl.date" md-max-date="$ctrl.opciones.fechaVencimiento">
+										</md-datepicker>
+									</md-input-container>
+								</md-list-item>
+							</md-list>
+						</div>
+						<div flex="50" style="text-align: center">
+							<md-list style="margin-top: 0px;padding: 5px" layout="colum" layout-align="start center" >
+								<md-list-item>
+									<md-input-container flex="100">
+
+										<md-datepicker ng-change="$ctrl.calcularPrimasPeriodo()" ng-model="$ctrl.opciones.fechaVencimiento" ng-disabled="$ctrl.checkFechaVencimiento!=true" md-min-date="$ctrl.opciones.fechaEfecto">
+										</md-datepicker>
+									</md-input-container>
+								</md-list-item>
+							</md-list>
+						</div>
+					</div>
+					<md-button  class="btnBackCiber" ng-click="$ctrl.anteriorPaso(4)">
+						<span><i class="fa-light fa-backward-step"></i> ANTERIOR</span>
+					</md-button>
+					<md-button  class="btnNextCiber" ng-click="$ctrl.siguientePaso(4)">
+						<span><i class="fa-light fa-check"></i> SIGUIENTE</span>
+					</md-button>
+				</div>
+			</div>
+			<div id="adminRow3" layout="row" layout-align="center start">
+				<div id="adminBox4" class="boxCustomCiber" flex="100" style="text-align: center">
+					<h4 id="headerBox4" class="h5HeaderCiber">
+						<span>
+							<i class="fa-light fa-circle-4" style="margin-right: 3px"></i>
+							TIPO DE
+							<span style="font-family: TelefonicaWebBold!important">TARIFICACIÓN Y EXTENSIÓN C4</span>
+						</span>
+					</h5>
+
+					<div id="adminBox4Child" class="margin-top-20">
+						<span style="color: #6E7894"><i class="fa-light fa-bell" style="color: #0066ff;margin-right: 5px;"></i> Indícanos de qué forma vas a <span style="color: #0066ff;">COTIZAR/TARIFICAR </span> esta emisión</span>
+						<div id="boxAdhoc" class="accentBox">
+							<md-list style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" flex="100">
+								<md-list-item>
+									<span flex="80" style="margin-right: 8px"><i class="fa-light fa-wand-sparkles" style="color: #0066ff; margin-right: 8px"></i> TARIFA AUTOMÁTICA </span>
+									<md-switch aria-label="switch.adhoc"></md-switch>
+								</md-list-item>
+							</md-list>
+							<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" flex="100">
+								<md-list-item>
+									<span flex="80"  style="margin-right: 8px"><i class="fa-light fa-handshake" style="color: #0066ff; margin-right: 8px"></i> TARIFA AD-HOC </span>
+									<md-switch aria-label="switch.adhoc"></md-switch>
+								</md-list-item>
+							</md-list>
+						</div>
+						<div id="boxAutoFactSA" class="accentBox">
+							<div id="boxAutoPrice" class="row" layout-align="center center">
+								<div class="col-sm-7" layout-align="center center">
+									<md-list style="margin-top: 0px;padding: 5px" layout="colum" layout-align="center center" >
+										<md-list-item flex="50">
+											<md-input-container style="margin-top: 23px!important;" flex="100">
+												<label>{{ 'BILLING_EUR' | translate | uppercase }}</label>
+												<md-select ng-model="$ctrl.objPri.turnover" ng-change="$ctrl.check_risk('billing', $ctrl.objPri.turnover)" required>
+													<md-option ng-repeat="fact in $ctrl.tpFacturacion" ng-value="fact.CO_TIPO" ng-if="fact.CO_TIPO < $ctrl.maxFacturacion">{{$ctrl.parent.getDescriptivo(fact, 'DS_TIPOS')}}</md-option>
+												</md-select>
+											</md-input-container>
+										</md-list-item>
+									</md-list>
+									<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+										<md-list-item flex="50">
+											<md-input-container style="margin-top: 23px!important;" flex="100">
+												<label>{{ 'INSURED_AMOUNT' | translate | uppercase }}</label>
+												<!-- <md-select ng-model="$ctrl.amount" ng-change="$ctrl.checkAmounts()"> -->
+												<md-select ng-model="$ctrl.amount" ng-change="$ctrl.check_risk('amount', $ctrl.amount)" ng-disabled="$ctrl.objPri.turnover == undefined" required>
+													<md-option ng-repeat="amount in $ctrl.tpAmount" ng-value="amount">
+														{{$ctrl.parent.getDescriptivo(amount, 'DS_TIPOS')}}
+													</md-option>
+												</md-select>
+											</md-input-container>
+										</md-list-item>
+									</md-list>
+									<p style="font-size: 0.8em;margin-top: 15px;">Incluir la facturación total de la matriz y las  <span style="font-family: TelefonicaWebBold;color: #6E7894">filiales españolas a asegurar.</span></p>
+								</div>
+								<div class="col-sm-3" layout-align="center center">
+									<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+										<md-list-item flex="100">
+											<div class="container_TarMovil_price">
+												<md-progress-circular md-mode="indeterminate" ng-show="$ctrl.calc == true" style="margin: 0 auto;"></md-progress-circular>
+												<span ng-class="{txtDesenfocado: ($ctrl.hidePrice == true)}" ng-hide="$ctrl.calc == true" class="spPrice">{{$ctrl.price == 0 ? '--' : $ctrl.formatPrice($ctrl.price) }}</span>
+												<span ng-hide="$ctrl.calc == true || $ctrl.price == 0 || $ctrl.hidePrice == true" class="txtRegular">Importe ANUAL. Impuestos incluidos</span>
+												<p ng-if="$ctrl.formaPago == 7 && $ctrl.anualPrice != null" class="text-right">IMPORTE ANUAL: <b>{{$ctrl.formatPrice($ctrl.anualPrice)}} €</b></p>
+											</div>
+										</md-list-item>
+									</md-list>
+								</div>
+								</div>
+						</div>
+						<div id="boxAdditionalConf" class="row accentBox" layout-align="center center" style="border: 1px dotted #8a1a93;">
+							<div id="boxExtension" class="col-sm-6" layout-align="center center" >
+								<span class="labelAccent" ><i class="fa-light fa-layer-plus"></i> EXTENSIÓN DE COBERTURA 4. CIBERDELINCUENCIA</span>
+								<md-list style="margin-top: 0px;padding-top: 40px;" layout="row" layout-align="center center" >
+									<md-list-item>
+										<span flex="80">AGREGAR EXTENSIÓN </span>
+										<md-switch id="extension" aria-label="switch.extension"></md-switch>
+									</md-list-item>
+								</md-list>
+							</div>
+							<div id="boxTuEmpresaSegura" class="col-sm-6" layout-align="center center" style="border-left: 1px dotted #8a1a93;">
+								<span class="labelAccent" ><i class="fa-light fa-badge-percent"></i> DESCUENTO TU EMPRESA SEGURA</span>
+								<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+									<md-list-item flex="30">
+										<md-input-container flex="100">
+											<md-select ng-model="$ctrl.codigoDescuento">
+												<md-option ng-value="7.50">BÁSICO</md-option>
+												<md-option ng-value="10">AVANZADO</md-option>
+												<md-option ng-value="15">PREMIUM</md-option>
+											</md-select>
+										</md-input-container>
+									</md-list-item>
+									<md-list-item flex="30">
+										<md-input-container flex="100">
+											<input style="margin-top: 25px" type="text" ng-model="$ctrl.objPri.turnover" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.activity == undefined" required/>
+										</md-input-container>
+									</md-list-item>
+									<md-list-item flex="40">
+										<md-button class="btnNextCiber" ng-if="$ctrl.cuponAplicado != true" ng-click="$ctrl.aplicarDecuento()" ng-disabled="$ctrl.idDescuento == null || $ctrl.idDescuento == '' || $ctrl.cuponAplicado == true" layout="row" layout-align="center center">
+											<i class="fa-light fa-check"></i> APLICAR DESCUENTO
+										</md-button>
+									</md-list-item>
+								</md-list>
+								<span style="color: #6E7894;font-size: 0.8em"><i class="fa-light fa-bell" style="color: #8a1a93;margin-right: 5px;"></i> Si has seleccionado 'COTIZAR AD-HOC' debes introducir la prima con el <span style="color: #8a1a93;"> DESCUENTO APLICADO </span> en el siguiente paso</span></span>
+							</div>
+							<div>
+								<p style="color: #00cd99" ng-if="$ctrl.cuponAplicado == true"><i class="fa-light fa-check"></i> Descuento Tu Empresa Segura aplicado</p>
+							</div>
+						</div>
+						<div id="buttonsRow3" layout="row" layout-align="center center">
+							<md-button  class="btnBackCiber">
+								<span><i class="fa-light fa-backward-step"></i> ANTERIOR: SOBRE LA EMPRESA Y FILIALES</span>
+							</md-button>
+							<md-button class="btnNextCiber">
+								<span><i class="fa-light fa-check"></i> SIGUIENTE: PRIMAS, IMPUESTOS Y FRANQUICIA</span>
+							</md-button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- #ROW4 #BOX5 ADMINISTRATION VIEW: PRIMAS, IMPUESTOS Y FRANQUICIAS -->
+			<div id="adminRow4" layout="row" layout-align="center start">
+				<div id="adminBox5" class="boxCustomCiber" flex="100" style="text-align: center">
+					<h4 class="h5HeaderCiber">
+						<span>
+							<i class="fa-light fa-circle-5" style="margin-right: 3px"></i>
+							COTIZACIÓN.
+							<span style="font-family: TelefonicaWebBold!important"> PRIMAS, IMPUESTOS Y FRANQUICIA</span>
+						</span>
+					</h4>
+					<div id="adminBox5Child">
+						<div id="boxPrimaAnual" layout="row" layout-align="center center">
+							<div flex="100" class="accentBox">
+								<div id="boxFactSAsegAdHoc" layout="row" layout-align="center center" flex="100">
+									<div flex="60" style="text-align: center">
+										<span style="color: #6E7894"><i class="fa-light fa-handshake" style="color: #0066ff;font-size: 20px"></i> Has seleccionado <span style="color: #0066ff;">'COTIZACIÓN AD-HOC'</span> Necesitamos esta <span style="color: #0066ff;">INFORMACIÓN</span></span>
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item flex="50">
+												<md-input-container style="margin-top: 23px!important;" flex="100">
+													<label>FACTURACIÓN DE LA EMPRESA ASEGURADA EN €</label>
+													<input type="number" ng-model="$ctrl.objPri.turnover" required/>
+												</md-input-container>
+											</md-list-item>
+											<md-list-item flex="50">
+												<md-input-container style="margin-top: 23px!important;" flex="100">
+													<label>{{ 'INSURED_AMOUNT' | translate | uppercase }} €</label>
+													<input type="number" ng-model="$ctrl.objPri.amount" required/>
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+								</div>
+								<div layout="row" layout-align="center center" style="margin-top: 10px;padding: 20px;">
+									<p style="color:#2b3447!important">
+										<i class="fa-light fa-calculator-simple" style="margin-right: 3px"></i>
+										Introduce la <span style="color: #6E7894;font-family: TelefonicaWebBold">PRIMA BRUTA ANUAL</span> y el sistema calculará la <span style="color: #6E7894;font-family: TelefonicaWebBold">PRIMA NETA</span> y los <span style="color: #6E7894;font-family: TelefonicaWebBold">IMPUESTOS. </span>No olvides configurar la <span style="color: #6E7894;font-family: TelefonicaWebBold">FRANQUICIA</span>.
+										</br>Los importes calculados por el sistema tienen un redondeo al alza de 2 decimales y <span style="color: #5eba7d;font-family: TelefonicaWebBold">son editables si seleccionaste cotización AD-HOC</span></p>
+
+								</div>
+								<div id="boxInfoPrimas" layout="row" layout-align="center center" flex="100">
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container style="margin-top: 23px!important;" flex="100">
+													<label><i class="fa-light fa-euro-sign"></i> PRIMA BRUTA ANUAL</label>
+													<input ng-model="$ctrl.primas.PRIMA_TOTAL" step="any" placeholder="Introducir importe en €">
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container style="margin-top: 23px!important;" flex="100">
+													<label><i class="fa-light fa-euro-sign"></i> PRIMA NETA ANUAL</label>
+													<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.PRIMA_NETA" step="any" placeholder="Cálculo automático">
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container style="margin-top: 23px!important;" flex="100">
+													<label>IPS 8% SOBRE PRIMA NETA ANUAL</label>
+													<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.IPS" placeholder="-">
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container style="margin-top: 23px!important;" flex="100">
+													<label>LEA 0,15% SOBRE PRIMA NETA ANUAL</label>
+													<input ng-disabled="$ctrl.isCalcula != true"  ng-model="$ctrl.primas.LEA" placeholder="-">
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container style="margin-top: 23px!important;" flex="100">
+													<label>FRANQUICIA EN CASO DE SINIESTRO</label>
+													<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.FRANQUICIA" placeholder="-">
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+								</div>
+								<div id="boxOKCheckPrimas" layout="row" layout-align="center center" style="margin-top: 10px">
+									<div flex="100">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" flex="100">
+											<md-list-item>
+												<md-input-container flex="100">
+													<md-checkbox class="checkPrimasOK" ng-true-value="true"><span><i class="fa-solid fa-check-double" style="color: #0066ff;margin-right: 3px"></i> He comprobado las primas, impuestos y franquicia asociados</span></md-checkbox>
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="buttonsRow4" layout="row" layout-align="center center">
+							<div flex="100" style="text-align: center">
+								<md-button  class="btnBackCiber">
+									<span><i class="fa-light fa-backward-step"></i> ANTERIOR: TIPO DE TARIFICACIÓN Y EXTENSIÓN C4</span>
+								</md-button>
+								<md-button class="btnNextCiber" ng-click="$ctrl.changePrimasAdmin()">
+									<span><i class="fa-light fa-check"></i> SIGUIENTE: CONFIGURACIÓN DE VIGENCIA</span>
+								</md-button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- #ROW4 #BOX6 ADMINISTRATION VIEW: FECHAS VIGENCIA Y PRIMAS PARA PERIODO-->
+			<div id="adminRow5" layout="row" layout-align="center start">
+				<div id="adminBox6" class="boxCustomCiber" flex="100" style="text-align: center">
+					<h4 class="h5HeaderCiber">
+						<span>
+							<i class="fa-light fa-circle-6" style="margin-right: 3px"></i>
+							CONFIGURACIÓN DE
+							<span style="font-family: TelefonicaWebBold!important"> VIGENCIA Y CÁLCULO DE PRIMAS PROPORCIONALES</span>
+						</span>
+					</h4>
+					<div id="adminBox6Child" class="margin-top-20">
+						<span style="color: #6E7894"><i class="fa-light fa-bell" style="color: #0066ff;margin-right: 5px;"></i> ¿Quieres modificar las <span style="color: #0066ff;">FECHAS DE VIGENCIA</span> de la póliza a emitir?</span>
+						<div id="boxSelectVigencia" class="accentBox">
+							<md-list style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" flex="100">
+								<md-list-item>
+									<span flex="80" style="margin-right: 8px"><i class="fa-light fa-calendars" style="color: #0066ff; margin-right: 8px"></i> MODIFICAR FECHAS </span>
+									<md-switch aria-label="switch.vigencia"></md-switch>
+								</md-list-item>
+							</md-list>
+						</div>
+						<div id="boxVigencia" layout="row" layout-align="center center" style="margin-top: 15px">
+							<div flex="100" class="accentBox">
+								<div layout="row" layout-align="center center" style="margin-top: 10px;padding: 20px;">
+									<p style="color:#2b3447!important">
+										Si configuras un periodo de vigencia inferior a <span style="color: #6E7894;font-family: TelefonicaWebBold"> 1 AÑO</span> el sistema te ayudará a recalcular los importes proporcionales a aplicar <span style="color: #0066ff;font-family: TelefonicaWebBold"><i class="fa-light fa-siren-on"></i></span>
+									</p>
+								</div>
+								<div layout="row" layout-align="center center" flex="100">
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container flex="100">
+													<md-checkbox class="checBoxCiber" ng-change="$ctrl.changeFechaVigorPolizaCheck()" ng-model="$ctrl.checkFecha" ng-true-value="true"><span><i class="fa-light fa-binary-circle-check" style="color: #0066ff;margin-right: 3px"></i> ESTABLECER ENTRADA EN VIGOR: </span></md-checkbox>
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="colum" layout-align="start center" >
+											<md-list-item>
+												<md-input-container flex="100">
+
+													<md-datepicker ng-change="$ctrl.changeFechaVigor()" ng-model="$ctrl.opciones.fechaEfecto" ng-disabled="$ctrl.checkFecha!=true" md-min-date="$ctrl.date" md-max-date="$ctrl.opciones.fechaVencimiento">
+													</md-datepicker>
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+											<md-list-item layout-align="center center">
+												<md-input-container flex="100">
+													<md-checkbox class="checBoxCiber"  ng-change="$ctrl.changeFechaVencimientoPolizaCheck()" ng-model="$ctrl.checkFechaVencimiento" ng-true-value="true"><span><i class="fa-light fa-binary-slash" style="color: #0066ff;margin-right: 3px"></i> ESTABLECER FECHA DE VENCIMIENTO:</span></md-checkbox>
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+									<div flex="25" style="text-align: center">
+										<md-list style="margin-top: 0px;padding: 5px" layout="colum" layout-align="start center" >
+											<md-list-item>
+												<md-input-container flex="100">
+
+													<md-datepicker ng-change="$ctrl.calcularPrimasPeriodo()" ng-model="$ctrl.opciones.fechaVencimiento" ng-disabled="$ctrl.checkFechaVencimiento!=true" md-min-date="$ctrl.opciones.fechaEfecto">
+													</md-datepicker>
+												</md-input-container>
+											</md-list-item>
+										</md-list>
+									</div>
+								</div>
+								<div layout="row" layout-align="center center" flex="100">
+									<p style="color:#2b3447!important;font-size: 0.9em">
+										<i class="fa-light fa-siren-on" style="color:#0066ff;"></i> *Aplicaremos las primas proporcionales a la póliza y primer periodo de vigencia configurado
+										Las primas <span style="color: #6E7894;font-family: TelefonicaWebBold">anuales </span> que has confirmado serán de aplicación en la <span style="color: #6E7894;font-family: TelefonicaWebBold">próxima renovación</span> de la póliza que será <span style="color: #6E7894;font-family: TelefonicaWebBold">ANUAL</span>
+									</p>
+								</div>
+								<div layout="row" layout-align="center center" style="margin-top: 15px" ng-if="$ctrl.checkFechaVencimiento == true">
+									<div flex="100" class="accentBox">
+										<div layout="row" layout-align="center center" style="margin-top: 10px;">
+											<p style="color:#2b3447!important">
+												<i class="fa-light fa-calculator-simple" style="margin-right: 3px"></i>
+												El sistema ha calculado los siguientes <span style="color: #6E7894;font-family: TelefonicaWebBold">IMPORTES </span> con respecto a las <span style="color: #6E7894;font-family: TelefonicaWebBold">PRIMAS E IMPUESTOS ANUALES</span> confirmados y para el <span style="color: #6E7894;font-family: TelefonicaWebBold">PERIODO DE VIGENCIA: </span><span id="dateVigencia">dd/MM/yyyy - dd/MM/yyyy</span> establecido.
+											</p>
+										</div>
+										<div layout="row" layout-align="center center" flex="100">
+											<div flex="25" style="text-align: center">
+												<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+													<md-list-item layout-align="center center">
+														<md-input-container style="margin-top: 23px!important;" flex="100">
+															<label><i class="fa-light fa-euro-sign"></i> PRIMA BRUTA PERIODO</label>
+															<input ng-model="$ctrl.primas.PRIMA_TOTAL_PERIODO" step="any">
+														</md-input-container>
+													</md-list-item>
+												</md-list>
+											</div>
+											<div flex="25" style="text-align: center">
+												<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+													<md-list-item layout-align="center center">
+														<md-input-container style="margin-top: 23px!important;" flex="100">
+															<label><i class="fa-light fa-euro-sign"></i> PRIMA NETA ANUAL</label>
+															<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.PRIMA_NETA_PERIODO" step="any">
+														</md-input-container>
+													</md-list-item>
+												</md-list>
+											</div>
+											<div flex="25" style="text-align: center">
+												<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+													<md-list-item layout-align="center center">
+														<md-input-container style="margin-top: 23px!important;" flex="100">
+															<label>IPS 8%</label>
+															<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.IPS_PERIODO">
+														</md-input-container>
+													</md-list-item>
+												</md-list>
+											</div>
+											<div flex="25" style="text-align: center">
+												<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+													<md-list-item layout-align="center center">
+														<md-input-container style="margin-top: 23px!important;" flex="100">
+															<label>LEA 0,15%</label>
+															<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.LEA_PERIODO">
+														</md-input-container>
+													</md-list-item>
+												</md-list>
+											</div>
+											<div flex="25" style="text-align: center">
+												<md-list style="margin-top: 0px;padding: 5px" layout="row" layout-align="center center" >
+													<md-list-item layout-align="center center">
+														<md-input-container style="margin-top: 23px!important;" flex="100">
+															<label>FRANQUICIA EN CASO DE SINIESTRO</label>
+															<input ng-disabled="$ctrl.isCalcula != true" ng-model="$ctrl.primas.FRANQUICIA_PERIODO">
+														</md-input-container>
+													</md-list-item>
+												</md-list>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						<div id="buttonsRow5" layout="row" layout-align="center center">
+							<div flex="100" style="text-align: center">
+								<md-button  class="btnBackCiber">
+									<span><i class="fa-light fa-backward-step"></i> ANTERIOR: PRIMAS, IMPUESTOS Y FRANQUICIA</span>
+								</md-button>
+								<md-button class="btnNextCiber" ng-click="$ctrl.changePrimasAdmin()">
+									<span><i class="fa-light fa-check"></i> SIGUIENTE: REALIZAR TOMA DE DATOS FISCALES</span>
+								</md-button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </md-content>
+
+
+    <!-- CONTRATACIÓN -->
+<!--    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 2" md-whiteframe="1" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"-->
+    <md-content layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"  resize>
+        <div class="container_TarMovil" flex>
+            <form name="$ctrl.formConCompany">
+				<div class="animationIf">
+					<div id="boxDF_Asegurado" style="border: 1px solid #f2f2f2;margin: 0px 0px 20px;">
+						<h5 class="h5HeaderCiber"><i class="fa-light fa-building" style="margin-right: 5px"></i>DATOS FISCALES DE LA EMPRESA ASEGURADA</h5>
+						<div class="separadorDesplegables"></div>
+						<div style="padding: 20px">
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="15">
+									<label>NIF</label>
+									<input ng-model="$ctrl.objHolder.NU_DOCUMENTO" cvalidation="NU_DOCUMENTO" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="55">
+									<label>{{ 'CORPORATE_NAME' | translate | uppercase }}</label>
+									<input ng-model="$ctrl.objHolder.NO_NOMBRE" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="15">
+									<label>TELÉFONO DE CONTACTO</label>
+									<input ng-model="$ctrl.NU_TELEFONO" ng-pattern="/^[0-9]{9}$/" maxlength="9" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="15">
+									<label>EMAIL DE LA EMPRESA</label>
+									<input ng-model="$ctrl.objHolder.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" required>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="md-block" flex="40">
+									<label>DIRECCIÓN FISCAL</label>
+									<input ng-model="$ctrl.address.NO_DIRECCION" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="10">
+									<label>CP</label>
+									<input ng-model="$ctrl.address.CO_POSTAL" ng-change="$ctrl.checkPostal($ctrl.address.CO_POSTAL)" ng-pattern="/^[0-9]{5}$/" maxlength="5" required>
+								</md-input-container>
+
+								<md-input-container class="md-block" flex="25">
+									<label>LOCALIDAD</label>
+									<input ng-model="$ctrl.address.NO_LOCALIDAD" required disabled>
+								</md-input-container>
+
+								<md-input-container class="md-block" flex="25">
+									<label>PROVINCIA</label>
+									<input ng-model="$ctrl.address.NO_PROVINCIA" required disabled>
+								</md-input-container>
+							</div>
+							<div id="box-button-empresa-asegurada" layout="row" layout-align="center center">
+								<div flex="100" style="text-align: center">
+									<md-button class="btnNextCiber">
+										<span><i class="fa-light fa-check"></i> CONFIRMAR DATOS DE LE EMPRESA ASEGURADA</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="boxDF_PAutorizada" style="border: 1px solid #f2f2f2;margin: 0px 0px 20px;">
+						<h5 class="h5HeaderCiber"><i class="fa-light fa-user-tie" style="margin-right: 5px"></i>DATOS FISCALES DE LA PERSONA AUTORIZADA</h5>
+						<div class="separadorDesplegables"></div>
+						<div style="padding: 20px">
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="15">
+									<label>NIF</label>
+									<input ng-model="$ctrl.objAutPer.NU_DOCUMENTO" cvalidation="document_n" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>{{ 'NAME' | translate | uppercase }}</label>
+									<input ng-model="$ctrl.objAutPer.NO_NOMBRE" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>{{ 'SURNAME_1' | translate }}</label>
+									<input ng-model="$ctrl.objAutPer.NO_APELLIDO1" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>{{ 'SURNAME_2' | translate | uppercase }}</label>
+									<input ng-model="$ctrl.objAutPer.NO_APELLIDO2">
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>CARGO</label>
+									<input ng-model="$ctrl.objAutPer.NO_CARGO" required>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="15">
+									<label>TELÉFONO DE CONTACTO</label>
+									<input ng-model="$ctrl.objAutPer.NU_TELEFONO" ng-pattern="/^[0-9]{9}$/" maxlength="9" required>
+								</md-input-container>
+
+								<md-input-container class="md-block" flex="15">
+									<label>EMAIL PERSONAL</label>
+									<input ng-model="$ctrl.objAutPer.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" required>
+								</md-input-container>
+							</div>
+							<div id="box-button-persona-autorizada" layout="row" layout-align="center center">
+								<div flex="100" style="text-align: center">
+									<md-button class="btnNextCiber">
+										<span><i class="fa-light fa-check"></i> CONFIRMAR DATOS DE LA PERSONA AUTORIZADA</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="boxDF_MultiAAdicional" style="border: 1px solid #f2f2f2;margin: 0px 0px 20px;" ng-if="$ctrl.nuAseguradosAdhoc != null" ng-repeat="x in [].constructor($ctrl.nuAseguradosAdhoc) track by $index" >
+						<h5 class="h5HeaderCiber"><i class="fa-light fa-user-tie" style="margin-right: 5px"></i> ASEGURADO ADICIONAL 0{{ $index+1 }}</h5>
+						<div class="separadorDesplegables"></div>
+						<div style="padding: 20px">
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="15">
+									<label>NIF</label>
+									<input ng-model="$ctrl.listAseguradosAdhoc[$index].NU_DOCUMENTO" cvalidation="NU_DOCUMENTO" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="55">
+									<label>DENOMINACIÓN SOCIAL DE ASEGURADO ADICIONAL</label>
+									<input ng-model="$ctrl.listAseguradosAdhoc[$index].NO_NOMBRE" required>
+								</md-input-container>
+							</div>
+							<div id="box-button-asegurado-{{$index+1}}" layout="row" layout-align="center center">
+								<div flex="100" style="text-align: center">
+									<md-button class="btnNextCiber">
+										<span><i class="fa-light fa-check"></i> CONFIRMAR DATOS DE ASEGURADO 0{{$index+1}}</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="box-DFMedioPago" style="border: 1px solid #f2f2f2;margin: 0px 0px 20px;">
+						<h5 class="h5HeaderCiber"><i class="fa-light fa-envelope-open-dollar" style="margin-right: 5px"></i> TIPO Y DATOS DE PAGO</h5>
+						<div class="separadorDesplegables"></div>
+						<div id="box-DFMedioPago-Admin" ng-if="$ctrl.optionAdminSelected == 2">
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-radio-group ng-init="$ctrl.tipoPagoAdhoc = 7" class="radioGroupCoberturas" layout="row" layout-align="center start" ng-model="$ctrl.tipoPagoAdhoc" ng-change="$ctrl.bankAccount = null" required>
+									<md-radio-button ng-value="7" class="md-primary">Domiciliación bancaria</md-radio-button>
+									<md-radio-button ng-value="3">Transferencia</md-radio-button>
+									<md-radio-button ng-value="4">Mediador</md-radio-button>
+								</md-radio-group>
+							</div>
+							<div class="separadorDesplegables"></div>
+							<div class="separadorDesplegables"></div>
+							<div layout-gt-sm="row" ng-if="$ctrl.tipoPagoAdhoc == 7" layout-align="center center">
+								<md-input-container class="md-block" flex="30">
+									<label>TITULAR DE LA CUENTA</label>
+									<input ng-model="$ctrl.bankAccount.NO_TITULAR" required>
+								</md-input-container>
+
+								<md-input-container class="md-block" flex="10">
+									<label>BIC/SWIFT</label>
+									<input ng-model="$ctrl.bankAccount.CO_BIC" required>
+								</md-input-container>
+
+								<md-input-container class="md-block" flex="20">
+									<label>IBAN</label>
+									<input style="text-transform: none!important" ng-model="$ctrl.bankAccount.CO_IBAN" minlength="24" maxlength="24" cvalidation="iban" required uppercase>
+								</md-input-container>
+							</div>
+							<div id="box-button-datos-pago-admin" layout="row" layout-align="center center">
+								<div flex="100" style="text-align: center">
+									<md-button class="btnNextCiber">
+										<span><i class="fa-light fa-check"></i> CONFIRMAR DATOS DE PAGO</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+						
+						<div id="box-DFMedioPago_Default" style="padding: 20px" ng-if="$ctrl.checkMediador != true && $ctrl.optionAdminSelected != 2 && $ctrl.mediador.IN_COBRO_MEDIADOR != true" layout-align="center center">
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="30">
+									<label>TITULAR DE LA CUENTA</label>
+									<input ng-model="$ctrl.bankAccount.NO_TITULAR" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="10">
+									<label>BIC/SWIFT</label>
+									<input ng-model="$ctrl.bankAccount.CO_BIC" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="20">
+									<label>IBAN</label>
+									<input ng-model="$ctrl.bankAccount.CO_IBAN" minlength="24" maxlength="24" cvalidation="iban" required uppercase>
+								</md-input-container>
+							</div>
+							<div id="box-button-datos-pago" layout="row" layout-align="center center">
+								<div flex="100" style="text-align: center">
+									<md-button class="btnNextCiber">
+										<span><i class="fa-light fa-check"></i> CONFIRMAR DATOS DE PAGO</span>
+									</md-button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="boxDF-EnvioDocs" style="border: 1px solid #f2f2f2;margin: 0px 0px 20px;">
+						<h5 class="h5HeaderCiber"><i class="fa-light fa-paper-plane" style="margin-right: 5px"></i> SOBRE LA PÓLIZA, DOCUMENTOS ASOCIADOS Y SU ENVÍO</h5>
+						<div class="separadorDesplegables"></div>
+						<div style="padding: 20px">
+							<div layout-gt-sm="row" layout-align="center center" style="padding: 20px">
+								<span style="color: #6E7894"><i class="fa-light fa-bell-exclamation" style="color: #0066ff;font-size: 20px"></i> ¡ATENCIÓN! Por defecto el sistema envía la <span style="color: #0066ff;">PÓLIZA Y DOCUMENTOS ASOCIADOS</span> al <span style="color: #0066ff;">email de la empresa asegurada.</span> Puedes  <span style="color: #0066ff;">cambiar a dónde los enviamos</span></span>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-checkbox
+										ng-model="$ctrl.checkEmail"
+										ng-change="$ctrl.emailAccept = false; $ctrl.opciones.email = null;">
+									QUIERO QUE LA <span style="color: #6E7894;font-family: TelefonicaWebBold">PÓLIZA </span> Y LOS <span style="color: #6E7894;font-family: TelefonicaWebBold">DOCUMENTOS DE LA CONTRATACIÓN</span> SE ENVÍEN A
+								</md-checkbox>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-input-container class="md-block" flex="40">
+									<label>INTRODUCIR EMAIL DE RECEPCIÓN DE PÓLIZA Y DOCUMENTOS</label>
+									<input ng-model="$ctrl.opciones.email" ng-disabled="$ctrl.checkEmail==false || $ctrl.emailAccept == true">
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center">
+								<md-button class="btnNextCiber" ng-if="$ctrl.emailAccept == false && $ctrl.opciones.email != null && $ctrl.opciones.email != ''" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.aceptarEmail()">
+									<span>CONFIRMAR EMAIL DE RECEPCIÓN</span>
+								</md-button>
+							</div>
+						</div>
+						<div id="boxEbrokerDoc" class="accentBox">
+							<div layout-gt-sm="row" flex="100">
+								<img style="margin-left: 25px;" src="src/img/ebroker_logo.png" class="ng-scope">
+							</div>
+							<div layout-gt-sm="row" layout-align="center center" style="margin-bottom: 30px;">
+								<span style="color: #6E7894"><i class="fa-light fa-file-certificate" style="color: #0066ff;font-size: 20px"></i> Rellena la siguiente información sobre la <span style="color: #0066ff;">CORREDURÍA DE EBORKER ASOCIADA </span> para que podamos generar la documentación CiberWay asociada.</span>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center" flex="100">
+								<md-input-container class="md-block" flex="40">
+									<label>NOMBRE DE LA CORREDURÍA</label>
+									<input required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="15">
+									<label>DGS CORREDURÍA</label>
+									<input required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="15">
+									<label>TELÉFONO DE LA CORREDURÍA</label>
+									<input required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="15">
+									<label>EMAIL DE LA CORREDURÍA</label>
+									<input required>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row" layout-align="center center" flex="100">
+								<md-input-container class="md-block" flex="30">
+									<label>DIRECCIÓN DE LA CORREDURÍA</label>
+									<input ng-model="$ctrl.address.NO_DIRECCION" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex="10">
+									<label>CÓDIGO POSTAL</label>
+									<input maxlength="5" required>
+								</md-input-container>
+
+								<md-input-container class="md-block" flex="20">
+									<label>LOCALIDAD DE LA CORREDURÍA</label>
+									<input  required>
+								</md-input-container>
+
+								<md-input-container class="md-block" flex="20">
+									<label>PROVINCIA DE LA CORREDURÍA</label>
+									<input  required>
+								</md-input-container>
+							</div>
+						</div>
+						<div id="box-button-Contratar" layout="row" layout-align="center center">
+							<div flex="100" style="text-align: center">
+								<md-button class="btnNextCiber" ng-click="$ctrl.validate($ctrl.formConCompany)">
+									<span><i class="fa-light fa-check"></i> FINALIZAR CONTRATACIÓN Y GENERAR DOCUMENTACIÓN</span>
+								</md-button>
+							</div>
+						</div>
+					</div>
+				</div>
+            </form>
+        </div>
+    </md-content>
+    <!-- RESUME POLICY -->
+<!--    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 3" md-whiteframe="1" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"-->
+    <md-content layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll" resize>
+		<div class="container_TarMovil" flex>
+			<div class="accentBox" flex="100">
+				<div>
+					<div layout-gt-sm="row" layout-align="center center" style="margin-bottom: 30px;">
+						<span ng-model="$ctrl.objPres.NU_POLIZA" style="color: #5a5a59;font-size: 2.9em;font-family: 'TelefonicaWebBold';"><span style="color:#63e6be;margin-right: 5px"><i class="fa-light fa-check-double"></i></span>CEN0000013</span>
+					</div>
+					<div>
+						<div layout-gt-sm="row" layout-align="center center" style="margin-bottom: 20px;">
+							<img style="margin-left: 25px;" src="src/img/ebroker_logo.png" class="ng-scope">
+						</div>
+						<div layout-gt-sm="row" layout-align="center center" flex="100">
+							<span style="color: #6E7894">La documentación <span style="color: #0066ff;">se está generando </span> y podrá ser descargada desde el buscador de pólizas.</span>
+						</div>
+					</div>
+					<div>
+						<div layout-gt-sm="row" layout-align="center center" style="margin-bottom: 20px;">
+							<img style="margin-left: 25px;" src="src/img/logo-telefonica-50h.png" class="ng-scope">
+						</div>
+						<div layout-gt-sm="row" layout-align="center center" flex="100">
+							<span style="color: #6E7894">La documentación <span style="color: #0066ff;">se está generando </span> y será enviada al email configurado.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </md-content>
+
+</div>

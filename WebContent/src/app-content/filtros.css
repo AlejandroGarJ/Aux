@@ -1,0 +1,171 @@
+.btn-mensaje{
+	padding-top:10px;
+}
+.tabsFiltro > ul > li > a {
+	padding-top: 5px;
+	padding-bottom:5px;
+	border: 1px solid #ddd;
+	background-color:#F8F8F8;
+}
+.form-scroll{
+	
+	overflow:hidden;
+	overflow-y: hidden;
+	/*overflow-x: hidden;*/
+	clear:both;
+    margin-bottom: 20px;
+}
+.form-scroll::-webkit-scrollbar{
+	width:8px;
+}
+.form-scroll::-webkit-scrollbar-track{
+	/*background-color: #e6e6e6;
+	border-radius:50px;*/
+}
+.form-scroll::-webkit-scrollbar-thumb{
+	background-color:#31B0D5;
+	border-radius:50px;
+}
+
+.informesClass .md-button{
+	margin:0px !important;
+	width: 100% !important;
+	color: #003245;
+	text-align: left;
+	padding-left:10px;
+	font-size: 12px;
+	border-radius: 0px;
+}
+.informesClass .md-button.active{
+	background-color:#003245;
+	color:white; 
+}
+
+.formInToolbar {
+	background-color: #0066ff !important;
+    margin-top: 0px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-left: 30px !important;
+}
+
+.formInToolbar .dropdown-toggle {
+    background-color: #31577e;
+    margin-top: 0px;
+    color: white !important;
+    min-width: 250px;
+    font-weight: lighter !important;
+}
+
+.dropdown-toggle {
+    min-width: 250px;
+}
+
+.formInToolbar .open>.dropdown-menu {
+    min-width: 250px;
+}
+
+.formInToolbar .md-select-value.md-select-placeholder {
+    color: white !important;
+    border-color: white !important;
+}
+
+.formInToolbar .md-select-value.md-select-placeholder .md-select-icon {
+    color: white !important;
+}
+
+.formInToolbar .md-select-value, .formInToolbar .md-select-value .md-select-icon:after {
+    border-color: white !important;
+    color: white !important;
+    font-weight: lighter !important;
+}
+
+.formInToolbar .caret {
+    color: white !important;
+    font-weight: lighter !important;
+}
+
+.formInToolbar md-input-container label, .formInToolbar .md-select-value>span:not(.md-select-icon) {
+    font-weight: lighter !important;
+    color: white !important;
+}
+
+.formInToolbar .dropdown-toggle:hover, .formInToolbar .dropdown-toggle:active, .formInToolbar .dropdown-toggle:focus {
+    background-color: #31577e !important;
+}
+
+.formInToolbar md-input-container.ic-margin {
+    margin-bottom: 0px !important;
+}
+
+.formInToolbar .open>.dropdown-toggle.btn-default {
+    background-color: #31577e !important;
+}
+
+.formInToolbar md-input-container>md-select {
+    max-width: 200px;
+}
+
+.optionPadre {
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.optionHijo {
+    font-size: 12px;
+    margin-left: 20px;
+    font-weight: 100!important;
+}
+
+.fade-out.ng-hide {
+  opacity: 0;
+}
+
+.fade-out.ng-hide-add, .fade-out.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.check-element {
+  border: 1px solid black;
+  opacity: 1;
+  padding: 10px;
+}
+
+md-toast{
+	margin-bottom:30px;
+}
+
+.formInToolbar .md-errors-spacer {
+    display: none;
+}
+
+.formInToolbar .md-input {
+    color: white;
+    border-bottom: 1px solid white;
+}
+
+.selectHeader {
+  /* Please note: All these selectors are only applied to children of elements with the 'selectdemoSelectHeader' class */ }
+  .selectHeader .header-searchbox {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 100%;
+    padding: 0; }
+  .selectHeader .select-header {
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+    padding-left: 16px;
+    height: 48px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    width: auto; }
+  .selectHeader md-content._md {
+    max-height: 240px; }
+  .selectHeader md-input-container {
+    min-width: 112px; }
+
+/* .filtro label, .filtro md-select, .toolbar-filtro label { */
+/* 	font-size: 13px !important; */
+/* } */

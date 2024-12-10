@@ -1,0 +1,43 @@
+/* Aqui se modificarán los estilos de elementos de Angular Material para que sean iguales a los antiguos */
+
+.mdc-text-field {
+  background-color: white !important;
+
+  border: 1px solid #d1d5e4;
+
+  border-radius: 4px;
+}
+/* .mdc-line-ripple {
+  display: none;
+} */
+.flex-btn {
+  display: flex !important;
+}
+
+mat-label,
+mat-option {
+  color: #8c8c8c;
+  font-family: TelefonicaWebLight !important;
+}
+
+.mat-mdc-form-field-required-marker {
+  color: #82b4ff;
+}
+
+.mdc-floating-label--float-above {
+  color: #82b4ff !important;
+}
+
+.mdc-floating-label[ng-reflect-floating="true"] mat-label {
+  color: #82b4ff;
+}
+
+.invalid-input .mat-mdc-form-field-required-marker,
+.invalid-input mat-label {
+  color: red !important;
+}
+
+mat-option {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}

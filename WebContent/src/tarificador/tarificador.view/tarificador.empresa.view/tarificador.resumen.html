@@ -1,0 +1,353 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div>
+
+    <form class="animationIf" name="$ctrl.formTarEmpresa" id="formSubmitTarEmpresa" flex>
+        <div id="box-price"></div>
+        <div>
+            <div id="row-data-header" style="padding: 0;margin-top: 20px;" layout="row" layout-align="center center">
+                <p style="color:#474a59!important" ng-if="$ctrl.rol != 1 && $ctrl.rol != 4 && $ctrl.rol != 8">
+                    <i class="fa-regular fa-location-pin" style="margin-right: 3px;color: #00b0bd"></i> PRESUPUESTO
+                    <b style="color: #5eba7d;">{{$ctrl.budgetId}}</b>.Puedes realizar modificaciones y/o contratar desde esta pantalla</b></span>
+                </p>
+                <p style="color:#474a59!important" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 8">
+                	<i class="fa-duotone fa-user-shield" style="margin-right: 3px;color: #00b0bd"></i> Como Administrador/a puedes emitir este presupuesto accediendo al <b>'Panel de Administración'</b> y utilizando la opción <b>'EMITIR PRESUPUESTO EXISTENTE'</b></span>
+                </p>
+            </div>
+            <div id="row-data-price" layout="row" layout-align="center center" ng-class="{txtDesenfocado: ($ctrl.hidePrice == true)}" ng-hide="$ctrl.calc == true" style="padding: 0">
+                 <p style="font-size: 60px;display: flex" ng-if="$ctrl.isPrice">
+                    {{$ctrl.price == 0 ? '--' : $ctrl.formatPrice($ctrl.price) }}
+                    <span style="font-size: 20px;position: relative;margin-top: 40px;margin-left: 15px;" ng-if="$ctrl.formaPago == 2">€/año</span>
+                    <span style="font-size: 20px;position: relative;margin-top: 40px;margin-left: 15px;" ng-if="$ctrl.formaPago == 7">€/mes</span>
+                    <span style="font-size: 20px;position: relative;margin-top: 40px;margin-left: 15px;" ng-if="$ctrl.formaPago == 7 && $ctrl.anualPrice != null">€/año</span>
+                </p>
+                <p ng-if="!$ctrl.isPrice" style="font-size: 24px;position: relative;margin-top: 30px;margin-left: 15px;"><strong>Pendiente de prima</strong></p>
+            </div>
+            <div id="row-actions-budget" layout="row" layout-align="center center">
+                <md-button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.modalPdf($ctrl.budgetId, 0)" ng-hide="!$ctrl.isPrice">
+                    <i class="fa-duotone fa-file-pdf" style="margin-right: 5px;font-size: 14px"></i> DESCARGAR PDF
+                </md-button>
+                <md-button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.modalPdf($ctrl.budgetId, 1)" ng-hide="!$ctrl.isPrice">
+                    <i class="fa-duotone fa-paper-plane" style="margin-right: 5px;font-size: 14px"></i> ENVIAR POR EMAIL
+                </md-button>
+                <md-button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-click="$ctrl.rateCompany(false, true)">
+                    <i class="fa-duotone fa-copy" style="margin-right: 5px;font-size: 14px"></i> CLONAR (NUEVO A PARTIR DE ESTE)
+                </md-button>
+                <md-button class="md-raised md-primary medium-blue button-action-main-accent" ng-click="$ctrl.buttonSAsegCoberturas()">
+                    <i class="fa-duotone fa-grid-2" style="margin-right: 5px;font-size: 14px"></i> MOSTRAR SUMA ASEGURADA (POR COBERTURA)
+                </md-button>
+            </div>
+            <div id="box-sumasegurada" ng-show="$ctrl.isSumAsegCoberturas" style="text-align: center;margin-top: 30px;padding: 45px 40px 45px 20px" class="accentBox-shadow" layout="row" layout-align="center center">
+                <div class="container_TarMovil_div col-md-10" layout-align="center center" style="text-align: left;padding-left: 30px">
+                    <p class="textCobertura-budget-detail-dotted">COBERTURA 1. Respuesta ante Incidentes Cibernéticos</p>
+                    <p class="textCobertura-budget-detail-dotted">COBERTURA 2. Responsabilidad por Seguridad en las Redes, Privacidad y Multimedia</p>
+                    <p class="textCobertura-budget-detail-dotted">COBERTURA 3. Daños a los Sistemas e Interrupción de Negocio</p>
+                    <p class="textCobertura-budget-detail-dotted">COBERTURA 4. Extorsión Cibernética</p>
+                    <p ng-if="$ctrl.addCCE == false" class="textCobertura-budget-detail" style="color: #031A34;">
+                        COBERTURA 4. 'Robo de Identidad' y 'Fraude por Transferencia de Fondos'</p>
+                    <p ng-if="$ctrl.addCCE == true" class="textCobertura-budget-detail" style="color: #031A34;">
+                        COBERTURA 4. 'Robo de Identidad', 'Fraude por Transferencia de Fondos', 'Robo de Fondos de la Cuenta Fiduciaria',<br>'Robo de Fondos Personales', 'Hacking Telefónico' y 'Phising
+                    </p>
+
+                </div>
+                <div class="container_TarMovil_div col-md-2" layout-align="center center" style="text-align: left">
+                    <p class="textCobertura-budget-detail"><b>{{$ctrl.amount.DS_TIPOS}}</b></p>
+                    <p class="textCobertura-budget-detail"><b>{{$ctrl.amount.DS_TIPOS}}</b></p>
+                    <p class="textCobertura-budget-detail"><b>{{$ctrl.amount.DS_TIPOS}}</b></p>
+                    <p class="textCobertura-budget-detail"><b>{{$ctrl.amount.DS_TIPOS}}</b></p>
+                    <p ng-if="$ctrl.addCCE == false" class="textCobertura-budget-detail" style="color: #031A34;">
+                        <b>{{$ctrl.amountCC}}</b></p>
+                    <p ng-if="$ctrl.addCCE == true" class="textCobertura-budget-detail" style="color: #031A34;">
+                        <b>{{$ctrl.amountCC}}</b><br><span>&nbsp;</span></p>
+                </div>
+            </div>
+            <legend></legend>
+            <div layout-gt-sm="row" layout-align="center center" style="margin-bottom: 15px">
+                <p class="badget-light-warning">
+                    Para evitar emisiones erróneas o no deseadas, por favor, revisa con detenimiento que los datos del presupuesto son correctos antes de proceder a contratar.
+                </p>
+            </div>
+            
+            <div ng-if="$ctrl.tarifaAdhoc == 'adhoc' && ($ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 8)" layout-align="center center" ng-form="$ctrl.formEstados">
+            <div layout="row" layout-align="center center" >
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label><i class="fa-duotone fa-building"></i> ESTADO PRESUPUESTO</label>
+                    <md-select disabled ng-model="$ctrl.detalles.IN_EMITIDO" required>
+                        <md-option ng-repeat="estado in $ctrl.estadosPresupuesto" ng-value="estado.CO_TIPO">
+                            {{$ctrl.parent.getDescriptivo(estado, 'DS_TIPOS')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label><i class="fa-duotone fa-briefcase"></i> SUBESTADO PRESUPUESTO</label>
+                    <md-select ng-model="$ctrl.detalles.ID_SUBESTADO" ng-disabled="$ctrl.detalles.IN_EMITIDO != 0 && ($ctrl.detalles.IN_EMITIDO != 4 && !$ctrl.isCaducado) || $ctrl.subEstadosPresupuesto.length == 1" required>
+                        <md-option ng-repeat="subEstado in $ctrl.subEstadosPresupuesto" ng-value="subEstado.CO_TIPO">
+                            {{$ctrl.parent.getDescriptivo(subEstado, 'DS_TIPOS')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+<!--   Rechazo Beazley, Cerrado sin contratacion o No interesado-->
+            <div layout="row" layout-align="center center" ng-if="$ctrl.detalles.ID_SUBESTADO == 1 || $ctrl.detalles.ID_SUBESTADO == 6 || $ctrl.detalles.ID_SUBESTADO == 2" ng-init="$ctrl.getMotivosRechazo($ctrl.detalles.ID_SUBESTADO)">
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label><i class="fa-duotone fa-briefcase"></i> MOTIVO DE RECHAZO</label>
+                    <md-select ng-model="$ctrl.detalles.PECUNIARIAS.SUBESTADO.ID_MOTIVO_SUBESTADO" ng-disabled="$ctrl.detalles.IN_EMITIDO != 0 && ($ctrl.detalles.IN_EMITIDO != 4 && !$ctrl.isCaducado) || $ctrl.motivosRechazoBeazley.length == 1" required>
+                        <md-option ng-repeat="motivo in $ctrl.motivosRechazo" ng-value="motivo.CO_TIPO">
+                            {{$ctrl.parent.getDescriptivo(motivo, 'DS_TIPOS')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm="35" ng-if="$ctrl.detalles.PECUNIARIAS.SUBESTADO.ID_MOTIVO_SUBESTADO == 4 && ($ctrl.detalles.ID_SUBESTADO == 6 || $ctrl.detalles.ID_SUBESTADO == 2)">
+                    <label><i class="fa-duotone fa-briefcase"></i> OTRO MOTIVO</label>
+                    <input ng-model="$ctrl.detalles.PECUNIARIAS.SUBESTADO.OTRO_MOTIVO" ng-disabled="$ctrl.detalles.IN_EMITIDO != 0 && ($ctrl.detalles.IN_EMITIDO != 4 && !$ctrl.isCaducado)" required />             
+                </md-input-container>
+            </div>
+<!--   Fecha de envio Beazley -->
+            <div layout="row" layout-align="center center" ng-if="$ctrl.detalles.ID_SUBESTADO == 4">
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label><i class="fa-duotone fa-briefcase"></i> FECHA DE ENVÍO A REA</label>
+                <md-datepicker ng-disabled="$ctrl.fechaEnvBeazley" ng-model="$ctrl.detalles.PECUNIARIAS.SUBESTADO.FD_ENVIADO_BEAZLEY" required
+                    ng-click="($ctrl.detalles.PECUNIARIAS.SUBESTADO.FD_ENVIADO_BEAZLEY == undefined || $ctrl.detalles.PECUNIARIAS.SUBESTADO.FD_ENVIADO_BEAZLEY == null) ? $ctrl.detalles.PECUNIARIAS.SUBESTADO.FD_ENVIADO_BEAZLEY = null : ''">
+                </md-datepicker>
+                </md-input-container>
+            </div>
+            <legend></legend>
+        </div>
+            
+						
+		<div ng-if="$ctrl.tarifaAdhoc == 'adhoc' && ($ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 8)">
+			<label layout="row" style="color:#0066ff; font-family:'TelefonicaWebRegular', serif; font-weight:800; margin-left: 4% !important;"><span class="mov-ico ic-ciber-ico-doc-pdf" style="font-size: 15px !important;"></span>  {{ 'DOCUMENTATION' | translate | uppercase }}</label>
+			<div layout="row" layout-align="center center">
+				<div flex="40" ng-if="$ctrl.docAllowed">
+					<div layout="column" ng-model="$ctrl.files" ngf-drop ngf-select ngf-multiple="true" class="drop-box" ngf-drag-over-class="dragover">
+						<span><md-icon class="icon-blue">upload_file</md-icon></span>
+						<span>Arrastre y suelte los archivos o haga click para seleccionarlos</span>
+					</div>
+				</div>
+				<div flex="50">
+					<div class="files-container">
+						<div ng-repeat="file in $ctrl.listaArchivos track by $index" class="file-row" ng-class="{'deleted-file-row': file.IS_DELETED}">
+							<div flex="60">
+								<span>
+									{{file.NO_ARCHIVO}}
+								</span>
+							</div>
+							<div flex="20">
+								<span ng-if="file.ESTADO">
+									{{file.ESTADO}}
+								</span>
+								<span ng-if="!file.ESTADO">
+									{{ 'NOT_SAVED' | translate }}
+								</span>
+							</div>
+							<div flex="" class="txt-center">
+								<span ng-if="file.DESCARGAR != false && file.ESTADO">
+									<md-icon class="icon-blue" ng-click="$ctrl.descargarArchivo(file)">download_for_offline</md-icon>
+									<md-tooltip md-direction="bottom">Descargar</md-tooltip>
+								</span>
+							</div>
+							<div flex="" class="txt-center" ng-if="$ctrl.docAllowed">
+								<span>
+									<div ng-if="!file.ESTADO || !file.IS_DELETED">
+										<md-icon class="icon-blue" ng-click="$ctrl.deleteFile(file, $index)">delete_forever</md-icon>
+										<md-tooltip md-direction="bottom">{{ 'DELETE' | translate }}</md-tooltip>
+									</div>
+									<div ng-if="file.IS_DELETED">
+										<md-icon class="icon-blue" ng-click="$ctrl.deleteFile(file, $index)">undo</md-icon>
+										<md-tooltip md-direction="bottom">Volver a incluir</md-tooltip>
+									</div>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<legend></legend>
+		
+		<div ng-if="$ctrl.detObsAdhoc">
+			<label layout="row" style="color:#0066ff; font-family:'TelefonicaWebRegular', serif; font-weight:800; margin-left: 4% !important;"><span class="mov-ico ic-ciber-ico-ayuda-psicologica" style="font-size: 15px !important;"></span>  {{ 'OBSERVATIONS' | translate | uppercase }} AD HOC</label>
+			<div layout="row" layout-align="center center" style="margin-bottom: 20px" >
+				<md-input-container class="md-block" flex-gt-sm="70">
+					<label>OBSERVACIONES/ANOTACIONES</label>
+					<textarea rows="2" ng-model="$ctrl.detalles.PECUNIARIAS.OBSERVACIONES_ADHOC" ng-change="$ctrl.detalles.PECUNIARIAS.OBSERVACIONES_ADHOC=$ctrl.detalles.PECUNIARIAS.OBSERVACIONES_ADHOC.toUpperCase()"
+					ng-disabled = "!$ctrl.docAllowed"></textarea>
+				</md-input-container>
+			</div>
+			<legend></legend>	
+		</div>
+            
+            <div id="row-data-sect-act-principal" layout="row" layout-align="center center">
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label><i class="fa-duotone fa-building"></i> SECTOR DE LA EMPRESA PRINCIPAL</label>
+                    <md-select ng-disabled="($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" ng-model="$ctrl.sector" required>
+                        <md-option ng-repeat="sector in $ctrl.tpGroups" ng-value="sector">
+                            {{$ctrl.parent.getDescriptivo(sector, 'DS_TIPOS')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label><i class="fa-duotone fa-briefcase"></i> ACTIVIDAD DE LA EMPRESA PRINCIPAL</label>
+                    <md-select ng-disabled="$ctrl.sector == null || $ctrl.sector.LST_ACTIVIDADES.length <= 0 || ($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" ng-model="$ctrl.activity" ng-change="$ctrl.check_risk('activity', $ctrl.activity)" required>
+                        <md-option ng-repeat="activity in $ctrl.sector.LST_ACTIVIDADES" ng-value="activity">
+                            {{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div id="row-data-option-filiales" layout="row" layout-align="center center">
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <div layout="row" layout-align="center center" flex="100" style="font-size: 12px;">
+                        EXISTEN
+                        <span style="margin-left: 5px; margin-right: 5px; color: #0066ff;font-family: TelefonicaWebBold">FILIALES Y EMPRESAS HERMANAS (EN EUROPA Y EN REINO UNIDO)*</span>
+                        <md-switch ng-change="$ctrl.changeCheckFilialesEspanolas()" ng-disabled="($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" ng-model="$ctrl.existenFilialesEspanolas"></md-switch>
+                    </div>
+                    <p style="font-size: 10px;margin-top: -10px;color: #6e7894;text-align: center">*CON DISTINTA ACTIVIDAD A LA DE LA EMPRESA PRINCIPAL</p>
+                </md-input-container>
+            </div>
+            <div id="row-data-sect-act-filiales" layout="row" ng-if="$ctrl.existenFilialesEspanolas == true" layout-align="center center">
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label>SECTOR DE LAS FILIALES</label>
+                    <md-select ng-model="$ctrl.affiSector" ng-disabled="($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" multiple>
+                        <md-option ng-repeat="afSector in $ctrl.tpGroups" ng-value="afSector">
+                            {{afSector.DS_TIPOS}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label>ACTIVIDAD DE LAS FILIALES</label>
+                    <md-select ng-disabled="$ctrl.affiSector == null || $ctrl.affiSector.length <= 0 || ($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" ng-model="$ctrl.selActivities" ng-change="$ctrl.check_risk('selActivities', $ctrl.selActivities)" multiple>
+                        <md-optgroup label="{{afSector.DS_TIPOS}}" ng-repeat="afSector in $ctrl.affiSector">
+                            <md-option ng-repeat="activity in afSector.LST_ACTIVIDADES" ng-value="activity.DS_ACTIVIDAD">
+                                {{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+                            </md-option>
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div id="row-data-fact-sumaseg" layout-gt-sm="row" layout-align="center center" style="padding: 20px 0">
+                <md-input-container class="md-block" flex-gt-sm="20" ng-if="$ctrl.tarifaAdhoc != 'adhoc'">
+                    <label><i class="fa-duotone fa-piggy-bank"></i> {{ 'BILLING' | translate | uppercase }} (€)</label>
+                    <md-select ng-model="$ctrl.objPri.turnover" ng-change="$ctrl.check_risk('billing', $ctrl.objPri.turnover)" ng-disabled="($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" required>
+                        <md-option ng-repeat="fact in $ctrl.tpFacturacion" ng-value="fact.CO_TIPO" ng-if="fact.CO_TIPO < $ctrl.maxFacturacion">
+                            {{$ctrl.parent.getDescriptivo(fact, 'DS_TIPOS')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="20" ng-if="$ctrl.tarifaAdhoc == 'adhoc'">
+                    <label><i class="fa-duotone fa-piggy-bank"></i> {{ 'BILLING' | translate | uppercase }} (€)</label>
+                    <input ng-model="$ctrl.formatPrice($ctrl.objPri.turnover).split(',')[0]" ng-change="$ctrl.check_risk('billing', $ctrl.objPri.turnover)" ng-disabled="($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" required amount>    
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="20">
+                    <label><i class="fa-duotone fa-shield-check"></i> {{ 'INSURED_AMOUNT' | translate | uppercase }} (€)</label>
+                    <!-- <md-select ng-model="$ctrl.amount" ng-change="$ctrl.checkAmounts()"> -->
+                    <md-select ng-model="$ctrl.amount" ng-change="$ctrl.check_risk('amount', $ctrl.amount)" ng-disabled="$ctrl.objPri.turnover == undefined || ($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" required>
+                        <md-option ng-repeat="amount in $ctrl.tpAmount" ng-value="amount">
+                            {{$ctrl.parent.getDescriptivo(amount, 'DS_TIPOS')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="20">
+                    <label><i class="fa-duotone fa-shield-virus"></i> ¿HA SUFRIDO ALGÚN CIBERATAQUE?</label>
+                    <md-select ng-model="$ctrl.objPri.lossAttackAmountOption" ng-change="$ctrl.check_risk('atksOpt', $ctrl.objPri.lossAttackAmountOption)" ng-disabled="$ctrl.amount.DS_TIPOS == 0 || ($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" required>
+                        <md-option ng-repeat="lost in $ctrl.tpLosses" ng-value="lost.CO_TIPO">
+                            {{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" ng-if="($ctrl.objPri.lossAttackAmountOption != undefined && $ctrl.objPri.lossAttackAmountOption == 1) || ($ctrl.optionAdminSelected == 2 && $ctrl.objPri.lossAttackAmountOption != undefined && $ctrl.objPri.lossAttackAmountOption > 0)" flex-gt-sm="20">
+                    <label>¿De qué tipo?</label>
+                    <md-select ng-change="$ctrl.check_risk('selAtks', $ctrl.selAtks)" ng-model="$ctrl.selAtks" ng-disabled="($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" required multiple>
+                        <md-option ng-repeat="lost in $ctrl.tpCbatk" ng-value="lost.CO_TIPO">
+                            {{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="15" layout-align="center center">
+                    <md-checkbox ng-disabled="($ctrl.detalles.IN_EMITIDO == 1 || $ctrl.detalles.ID_PRESUPUESTO) && $ctrl.presuClonado == false" class="ciberempresaCheck" ng-disabled="($ctrl.price == null || $ctrl.price == 0) && $ctrl.optionAdminSelected != 2" ng-model="$ctrl.addCCE" ng-change="$ctrl.checkAmounts(true)" style="position: relative;top: 15px;left: 20px;">
+                        <span style="color:#031a34;font-family: TelefonicaWebBold;font-size: 0.8em;">SÍ, INCLUIR LA EXTENSIÓN</span>
+                    </md-checkbox>
+                </md-input-container>
+            </div>
+            <div id="row-action-contract" layout-gt-sm="row" layout-align="center center" style="padding-top: 30px;" ng-if="$ctrl.detalles.IN_EMITIDO != 1 && $ctrl.rol != 1 && $ctrl.rol != 4 && $ctrl.rol != 8 && $ctrl.colectivo.IN_EMITE != false && $ctrl.budgetId != undefined && $ctrl.budgetId != ''">
+                <div ng-if="$ctrl.rol != 1 && $ctrl.rol != 4 && $ctrl.rol != 8 && $ctrl.detalles.IN_EMITIDO != 7" layout-gt-sm="row" layout-align="center center">
+                    <i class="fa-duotone fa-check-to-slot" style="margin-right: 5px; color: #1bc5bd"></i> CONTINUAR CON LA CONTRATACIÓN (TOMA DE DATOS)
+                    <md-switch ng-model="$ctrl.switchContratarPoliza" ng-change="$ctrl.chkPolicyStatus($ctrl.switchContratarPoliza, $ctrl.detalles.IN_EMITIDO)" class="switch-mov"></md-switch>
+                </div>
+            </div>
+            <div layout-gt-sm="row" ng-if="$ctrl.switchContratarPoliza == true" layout-align="center center">
+                <div class="container_TarMovil_btn" layout="row" layout-align="center none">
+                    <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.rateCompany(true)" ng-disabled="$ctrl.colectivo.IN_EMITE == false || $ctrl.budgetId == undefined || $ctrl.budgetId == '' || $ctrl.calc == true">
+                        <i class="fas fa-edit"></i>&nbsp; PROCEDER A LA TOMA DE DATOS
+                    </md-button>
+                </div>
+            </div>
+            <div layout-gt-sm="row" layout-align="center center" style="margin-top: 2% !important;"
+           		 ng-if="$ctrl.tarifaAdhoc == 'adhoc' && ($ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 8) && ($ctrl.detalles.IN_EMITIDO == 0 || $ctrl.detalles.IN_EMITIDO == 4 || $ctrl.detalles.IN_EMITIDO == 7)">
+                <div class="container_TarMovil_btn" layout="row" layout-align="center none">
+                    <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.modPresuEmpresas()" ng-disabled="$ctrl.colectivo.IN_EMITE == false || $ctrl.budgetId == undefined || $ctrl.budgetId == '' || $ctrl.calc == true">
+                        <i class="fas fa-edit"></i>&nbsp; MODIFICAR PRESUPUESTO
+                    </md-button>
+                </div>
+            </div>
+
+            <!--FORMULARIO DE EMPRESA / NO TARIFA-->
+
+            <div layout="column" style="margin-top: 30px">
+                <div ng-if="$ctrl.priceable == false" style="margin-top: 5px;border: 1px dotted #01b1be;height: 100%;" layout="column" layout-sm="column">
+                    <form name="$ctrl.formFormulario">
+                        <div layout="column" layout-sm="column" layout-margin="">
+                            <div id="row-formCotizacion-header" layout="row" style="text-align: center">
+                                <h5>ENVÍO DE FORMULARIO.<span style="color: #0066ff"> TARIFA PERSONALIZADA</span></h5>
+                            </div>
+                            <div id="row-formCotizacion-msg" layout="row" style="text-align: center">
+                                Con los parámetros de tarificación seleccionados es necesario que el cliente rellene un formulario, te lo remita y nos lo hagas llegar a
+                                <a href="mailto:ciberseguro@telefonica.com" style="display: contents;">ciberseguro@telefonica.com</a>, para que podamos ofrecerle una tarifa personalizada
+                            </div>
+                            <div id="row-formCotizacion-data">
+                                <div layout="row">
+                                    <md-input-container class="md-block callbackForm_inputCont">
+                                        <label>{{ 'COMPANY' | translate }}</label>
+                                        <input ng-model="$ctrl.objSendF.NO_NOMBRE" uppercase required/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container class="md-block callbackForm_inputCont" flex-gt-sm="30">
+                                        <label>CIF</label>
+                                        <input cvalidation="NU_DOCUMENTO" ng-model="$ctrl.objSendF.NU_DOCUMENTO" uppercase required/>
+                                    </md-input-container>
+                                    <md-input-container class="md-block callbackForm_inputCont" flex-gt-sm="70">
+                                        <label>{{ 'EMAIL' | translate }}</label>
+                                        <input ng-model="$ctrl.objSendF.NO_EMAIL" ng-pattern="$ctrl.regexEmail" required/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <p style="font-size: 0.8em;text-align: center">
+                                        <i class="fa-duotone fa-envelopes" style="margin-right: 5px"></i>
+                                        Nota: enviaremos el formulario al email de la empresa que has indicado y al email asociado a tu usuario.
+                                    </p>
+                                </div>
+                                <div layout="row" layout-align="center none">
+                                    <md-progress-circular md-mode="indeterminate" ng-if="$ctrl.loadingForm == true" style="margin: 0 auto;"></md-progress-circular>
+                                    <md-button ng-if="$ctrl.loadingForm != true" ng-click="$ctrl.sendForm()" class="md-raised md-primary medium-blue button-action-main">
+                                        <i class="fa-light fa-paper-plane" style="margin-right: 3px;"></i> Enviar formulario
+                                    </md-button>
+                                </div>
+                                <div ng-if="$ctrl.msgForm != null && $ctrl.msgForm != ''" layout="row" layout-align="center none">
+                                    <p style="font-size: 0.9em;font-family: TelefonicaWebBold">{{ $ctrl.msgForm }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div layout-gt-sm="row" layout-align="center center">
+                    <p ng-if="$ctrl.colectivo.IN_EMITE == false || ($ctrl.llave != 'resumen' && $ctrl.llave != 'presupuesto') || $ctrl.budgetId == undefined || $ctrl.budgetId == ''" style="color:#474a59!important" ng-if="$ctrl.rol == 1 || $ctrl.rol == 4 || $ctrl.rol == 8">
+                        <i class="fa-regular fa-brake-warning" style="margin-right: 3px;color: #00b0bd"></i> La opción de contratación no está habilitada para tu usuario</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

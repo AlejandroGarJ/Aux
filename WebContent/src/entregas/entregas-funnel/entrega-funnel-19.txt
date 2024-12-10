@@ -1,0 +1,9 @@
+En esta entrega del funnel 19, se han realizado los siguientes cambios:
+- Área cliente:
+	+ Se han cambiado los diseños para las pantallas de alta, registro y login.
+	+ Se ha enlazado con los servicios de alta y registro.
+- Hogar:
+	+ Correcciones en los estilos al desactivar el catastro, al hacer click en el input de la fecha de inicio del seguro y al cambiar el tipo de documento del asegurado.
+	+ Evento GTM cuando la vivienda está asegurada con SL.
+	+ Evento GTM al pulsar en recalcular en la modalidad.
+	+ En el aviso de importe a reembolsar, calcular importe sobre la prima neta anual.

@@ -1,0 +1,47 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="formClass" id="form" ng-form="$ctrl.informeBBVA">
+	<div class="filtroInformesContainer">
+		<div class="tituloFiltroInformes">
+			<h3>LIQUIDACIÓN BBVA</h3>
+		</div>
+		<div layout-gt-sm="row">
+			<div layout-gt-sm="row" class="margin-top-20" layout-align="start center">
+				<md-input-container class="md-block min-w-160" flex-gt-sm>
+					<label>{{ 'DATE_SETTLEMENT' | translate }}</label>
+	          		<md-datepicker ng-click="($ctrl.fechaMes == null || $ctrl.fechaMes == undefined) ? $ctrl.fechaMes = null : ''" ng-model="$ctrl.fechaMes"
+						md-mode="month" md-date-locale="$ctrl.myDateFormat" md-max-date="$ctrl.maxDate" md-open-on-focus="true" ng-change="$ctrl.changeFechaMes()" required></md-datepicker>
+	          	</md-input-container>
+	    	</div>
+		</div>
+		<div layout="row" layout-align="start center" ng-if="$ctrl.cargando == false" style="margin-top: 20px;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informeBBVA.$valid, 'informe', 'reportBBVA')">
+				<i class="fa-duotone fa-download" style="margin-right: 5px"></i>
+				{{ 'GENERATE_REPORT' | translate | uppercase}}
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar($ctrl.form)">
+				<i class="fa fa-trash" style="margin-right: 5px"></i>
+				{{ 'CLEAN' | translate | uppercase }}
+			</md-button>
+		</div>
+	</div>
+
+	<div ng-if="$ctrl.cargando == true">
+		<div layout="row" layout-align="center center" >
+			<div class="cs-loader" style="height: 40px; width: 97%; position: relative">
+				<div class="cs-loader-inner">
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+				</div>
+			</div>
+		</div>
+		<div layout-gt-sm="row" layout-align="center">
+			<p style="text-align:center;font-size: 11px">¡Recibido! Estamos procesando tu solicitud...</p>
+		</div>
+	</div>
+</div>

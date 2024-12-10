@@ -1,0 +1,267 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex ng-if="$ctrl.template == 0">
+    <div style="padding: 25px 25px 0;">
+        <form name="formAseguradora" id="formSubmitAseguradora" class="formClass form-scroll" novalidate resize ng-style="resizeHeight(281)">
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos del producto
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_01 = !isCollapsed_01">
+                    <span ng-if="isCollapsed_01" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos del producto"></span>
+                    <span ng-if="!isCollapsed_01" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos del producto"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_01">
+                <div class="separadorDesplegables"></div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'NAME' | translate }}</label>
+                        <input ng-model="$ctrl.data.NO_PRODUCTO">
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'DESCRIPTION' | translate }}</label>
+                        <input ng-model="$ctrl.data.DS_PRODUCTO">
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'BRANCH' | translate }}</label>
+                        <md-select ng-model="$ctrl.data.ID_RAMO">
+                            <md-option ng-repeat="ramo in $ctrl.lstRamos" ng-value="ramo.ID_RAMO">
+								{{$ctrl.appParent.getDescriptivo(ramo, 'NO_RAMO')}}
+<!--                                 {{ramo.NO_RAMO}} -->
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                	<md-input-container class="flex" flex-gt-sm>
+                        <label>Programa</label>
+                        <input ng-model="$ctrl.data.DS_PROGRAMA">
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'DATE_START' | translate }}</label>
+                        <md-datepicker ng-model="$ctrl.data.FT_INI" ng-init="($ctrl.data.FT_INI == null || $ctrl.data.FT_INI == undefined) ? $ctrl.data.FT_INI = null : ' '"
+                            ng-click="($ctrl.data.FT_INI == null || $ctrl.data.FT_INI == undefined) ? $ctrl.data.FT_INI = null : ' '"></md-datepicker>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Fecha fin</label>
+                        <md-datepicker ng-model="$ctrl.data.FT_FIN" ng-init="($ctrl.data.FT_FIN == null || $ctrl.data.FT_FIN == undefined) ? $ctrl.data.FT_FIN = null : ' '"
+                            ng-click="($ctrl.data.FT_FIN == null || $ctrl.data.FT_FIN == undefined) ? $ctrl.data.FT_FIN = null : ' '"></md-datepicker>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Comisiones
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_02 = !isCollapsed_02">
+                    <span ng-if="isCollapsed_02" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar comisiones"></span>
+                    <span ng-if="!isCollapsed_02" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar comisiones"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_02">
+                
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.modalElement('commission')">
+                        <md-icon>add</md-icon>
+                        Añadir
+                    </md-button>
+                </md-input-container>
+                <div class="separadorDesplegables"></div>
+                <div style="margin-bottom: 15px;">
+                    <!-- <div class="ui-grid" ui-grid="$ctrl.gridComisiones" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(385)"></div> -->
+                    <div class="ui-grid" ui-grid="$ctrl.gridCommissions" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize></div>
+                </div>
+            </div>
+
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Garantías
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_03 = !isCollapsed_03">
+                    <span ng-if="isCollapsed_03" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar garantías"></span>
+                    <span ng-if="!isCollapsed_03" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar garantías"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_03">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.modalElement('coverage')">
+                        <md-icon>add</md-icon>
+                        Añadir
+                    </md-button>
+                </md-input-container>
+                <div class="separadorDesplegables"></div>
+                
+                <div style="margin-bottom: 15px;">
+                    <!-- <div class="ui-grid" ui-grid="$ctrl.gridGarantias" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(385)"></div> -->
+                    <div class="ui-grid" ui-grid="$ctrl.gridCoverages" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize></div>
+                </div>
+            </div>
+
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Partners
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_04 = !isCollapsed_04">
+                    <span ng-if="isCollapsed_04" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar partners"></span>
+                    <span ng-if="!isCollapsed_04" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar partners"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_04">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.modalElement('partner')">
+                        <md-icon>add</md-icon>
+                        Añadir
+                    </md-button>
+                </md-input-container>
+                <div class="separadorDesplegables"></div>
+                
+                <div style="margin-bottom: 15px;">
+                    <!-- <div class="ui-grid" ui-grid="$ctrl.gridPartners" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(385)"></div> -->
+                    <div class="ui-grid" ui-grid="$ctrl.gridPartners" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize></div>
+                </div>
+            </div>
+
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Medios de pago
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_05 = !isCollapsed_05">
+                    <span ng-if="isCollapsed_05" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar medios de pago"></span>
+                    <span ng-if="!isCollapsed_05" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar medios de pago"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_05">
+                <div layout-gt-sm="row" style="margin-bottom: 20px">
+                    <md-checkbox ng-repeat="method in $ctrl.lstPayMethods" ng-click="$ctrl.checkPayMethods(method, $ctrl.selPayMethods)" ng-checked="$ctrl.checkExists(method, $ctrl.selPayMethods)" style="margin: 0 10px 10px;">
+                        {{method.DS_TIPO_MEDIO_PAGO}}
+                    </md-checkbox>
+                </div>
+            </div>
+
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Formas de pago
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_06 = !isCollapsed_06">
+                    <span ng-if="isCollapsed_06" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar formas de pago"></span>
+                    <span ng-if="!isCollapsed_06" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar formas de pago"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_06">
+                <div layout-gt-sm="row">
+                    <div ng-repeat="type in $ctrl.lstPayTypes">
+                        <div style="margin: 0 10px;">{{type.DS_FORMAPAGO}}</div>
+                        <md-radio-group class="rb_product" ng-model="$ctrl.objPayTypes[type.ID_FORMAPAGO]">
+                            <md-radio-button ng-click="$ctrl.checkPayTypes(type, $ctrl.selPayTypes, 'add')" ng-value="true" style="margin: 5px 10px 10px;">
+                                Sí
+                            </md-radio-button>
+                            <md-radio-button ng-click="$ctrl.checkPayTypes(type, $ctrl.selPayTypes, 'del')" ng-value="false" style="margin: 5px 10px 10px;">
+                                No
+                            </md-radio-button>
+                        </md-radio-group>
+                        
+                        <md-input-container class="md-block" flex-gt-sm style="margin-top: 10px !important">
+                            <label>Recargo {{type.DS_FORMAPAGO}}</label>
+                            <input ng-model="$ctrl.objPayTypesFees[type.ID_FORMAPAGO]" ng-disabled="$ctrl.objPayTypes[type.ID_FORMAPAGO] == false" type="number">
+                        </md-input-container>
+                    </div>
+                </div>
+                
+                <!-- <div layout-gt-sm="row">
+                    {{$ctrl.objPayTypes}}
+                </div>
+                <div layout-gt-sm="row">
+                    {{$ctrl.objPayTypesFees}}
+                </div>
+                <div layout-gt-sm="row">
+                    {{$ctrl.selPayTypes}}
+                </div> -->
+
+            </div>
+        </form>
+        <div layout="row" layout-align="center none">
+            <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.saveProduct()" form="{{$ctrl.formulario}}">
+                <md-icon>save</md-icon>
+                Guardar
+            </md-button>
+        </div>
+    </div>
+	<!-- <div layout="row" layout-align="center none">
+		<md-button class="medium-green btnAceptar" ng-if="$ctrl.permisos.IN_ESCRITURA == true" ng-click="$ctrl.addAseguradora()" form="{{$ctrl.formulario}}">
+			<md-icon>save</md-icon>
+			Guardar
+		</md-button>
+	</div> -->
+</div>
+
+<div flex ng-if="$ctrl.template == 1">
+    <div style="padding: 25px 25px 0;">
+        <md-input-container class="md-block" flex-gt-sm style="margin-top: 0;">
+            <md-button class="dark-blue btnNuevo" ng-click="$ctrl.template = 0">
+                <md-icon>undo</md-icon>
+                Volver
+            </md-button>
+        </md-input-container>
+        <!-- <div ng-click="$ctrl.template = 0"><md-icon>undo</md-icon> VOLVER</div> -->
+        <form name="formAseguradora" id="formSubmitAseguradora" class="formClass form-scroll" novalidate resize ng-style="resizeHeight(351)">
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos de la garantía
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_07 = !isCollapsed_07">
+                    <span ng-if="isCollapsed_07" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos del producto"></span>
+                    <span ng-if="!isCollapsed_07" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos del producto"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_07">
+                <div class="separadorDesplegables"></div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Garantía</label>
+                        <input ng-model="$ctrl.coverage.NO_GARANTIA" disabled>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Tipo de tarificación</label>
+                        <!-- <md-select ng-model="$ctrl.selRateType" ng-change="$ctrl.checkRateType($ctrl.selRateType)">
+                            <md-option ng-repeat="rate in $ctrl.lstRateTypes" ng-value="rate" >{{rate.DS_TIPOS}}</md-option>
+                        </md-select> -->
+                        <md-select ng-model="$ctrl.coverage.CO_TIPO_TARIFICACION">
+                            <md-option ng-repeat="rate in $ctrl.lstRateTypes" ng-value="rate.CO_TIPO" >
+								{{$ctrl.appParent.getDescriptivo(rate, 'DS_TIPOS')}}
+<!-- 								{{rate.DS_TIPOS}} -->
+							</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row" style="margin-left: 20px;">
+					<md-checkbox ng-model="$ctrl.coverage.IN_PRINCIPAL" ng-true-value="true" ng-false-value="false">
+						Principal
+					</md-checkbox>
+					<md-checkbox ng-model="$ctrl.coverage.IN_OBLIGATORIA" ng-true-value="true" ng-false-value="false">
+						Obligatoria
+					</md-checkbox>
+				</div>
+
+            </div>
+
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Impuestos
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_08 = !isCollapsed_08">
+                    <span ng-if="isCollapsed_08" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar comisiones"></span>
+                    <span ng-if="!isCollapsed_08" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar comisiones"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_08">
+                
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-button class="dark-blue btnNuevo" ng-click="$ctrl.modalElement('tax')">
+                        <md-icon>add</md-icon>
+                        Añadir
+                    </md-button>
+                </md-input-container>
+                <div class="separadorDesplegables"></div>
+                <div style="margin-bottom: 15px;">
+                    <div class="ui-grid" ui-grid="$ctrl.gridTaxes" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize></div>
+                </div>
+            </div>
+
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Tarifas de la garantía
+                <button type="button" class="btn btn-link" ng-click="isCollapsed_09 = !isCollapsed_09">
+                    <span ng-if="isCollapsed_09" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar comisiones"></span>
+                    <span ng-if="!isCollapsed_09" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar comisiones"></span>
+                </button>
+            </legend>
+            <div class="collapsedDetalle" uib-collapse="isCollapsed_09">
+                
+                <div class="separadorDesplegables"></div>
+                <div style="margin-bottom: 15px;">
+                    <div class="ui-grid" ui-grid="$ctrl.gridRates" ui-grid-edit ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

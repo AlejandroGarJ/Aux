@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "ES6", // Cambiar de "none" a "ES6" o "CommonJS"
+    "moduleResolution": "node",
+    "target": "ES6", // Asegúrate de que el target sea al menos "ES6"
+    "outDir": "./dist",
+    "rootDir": "./",
+    "baseUrl": "../WebContent",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowJs": true, // Permite importar archivos JS sin declaración de tipos
+    "checkJs": false, // Evita que TypeScript intente comprobar los tipos en archivos JS
+    "noImplicitAny": false
+  },
+  "include": ["**/*.ts"],
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "enableIvy": false
+  }
+}

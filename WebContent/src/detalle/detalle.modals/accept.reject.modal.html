@@ -1,0 +1,20 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:35%;  height: 20%;">
+	<md-toolbar style="background-color: white; min-height:25px;">
+		<div class="md-toolbar-tools" style="{{$ctrl.styleLetter}}">
+			<p style="margin-top:5%" >&#191;Est&#225;s seguro que quieres {{$ctrl.msg}}?</p>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+			<div style="display:inline-flex; width:36%; margin:3% 0% 1% 31%;">
+				<div layout="row" class="modalContenedorBtn" layout-align="center center" style="width:50%">
+					<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.accept()">Aceptar</md-button>
+				</div>
+				<div layout="row" class="modalContenedorBtn" layout-align="center center" style="width:50%">
+					<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.cancel()">Rechazar</md-button>
+				</div>
+			</div>
+	</md-dialog-content>
+</md-dialog>

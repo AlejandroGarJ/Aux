@@ -1,0 +1,82 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'ADDRESS_CHANGE' | translate }}
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+   <!-- <sub>Nº Poliza: {{$ctrl.form.POLIZA.NU_POLIZA}} - Cliente:</sub> -->
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+<!-- 	<h4>Cambio de domicilio</h4> -->
+	<div class="separadorDesplegables"></div>
+	<div layout="row" style="margin-bottom:20px">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'POLICY_HOLDER_CURRENT' | translate }}</label>
+			<md-select ng-model="$ctrl.aseguradoSeleccionado">
+				<md-option ng-repeat="tomador in $ctrl.form.OPOLIZA.LST_ASEGURADOS | filter:{ID_TIPO_CLIENTE:3}" ng-value="tomador">
+					{{tomador.NO_NOMBRE_COMPLETO}}
+				</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	<div layout="row">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'CURRENT_ADDRESS' | translate }}</label>
+			<!-- <md-select ng-model="$ctrl.form.ID_CLIENTE" required>
+				<md-option ng-repeat="dir in $ctrl.form.ASEGURADO.LIST_DOMICILIOS" ng-value="dir.ID_DOMICILIO">{{dir.DS_TIPO_VIA}} {{dir.NO_DIRECCION}} {{dir.CO_POSTAL}} {{dir.NO_LOCALIDAD}} {{dir.NO_PROVINCIA}}</md-option>
+			</md-select> -->
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_SELECCIONADO" required>
+				<md-option ng-repeat="dir in $ctrl.aseguradoSeleccionado.LIST_DOMICILIOS" ng-value="dir">{{dir.DS_TIPO_VIA}} {{dir.NO_DIRECCION}} {{dir.CO_POSTAL}} {{dir.NO_LOCALIDAD}} {{dir.NO_PROVINCIA}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	<legend style="margin: 20px 0; padding-bottom: 5px;">{{ 'NEW_ADDRESS' | translate }}</legend>
+	<div layout="row">
+		
+			<!-- <label>{{ 'ROAD_TYPE' | translate }}</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_ACTUALIZADO.ID_TIPO_VIA" required>
+				<md-option ng-repeat="tipo in $ctrl.tipos.tiposVia" ng-value="tipo.ID_TIPO_VIA">
+	              	{{tipo.DS_TIPO_VIA}}
+	            </md-option>
+			</md-select> -->
+			<md-autocomplete name="Via" flex-gt-sm required md-no-cache="$ctrl.noCache"
+				md-selected-item="$ctrl.tipoVia" md-search-text="$ctrl.textoBusquedaVia"
+				md-items="via in $ctrl.querySearch($ctrl.textoBusquedaVia, $ctrl.tipos.tiposVia, 'DS_TIPO_VIA')"
+				md-item-text="via.DS_TIPO_VIA" md-min-length="0" md-require-match
+				md-floating-label="{{ 'ROAD_TYPE' | translate }}">
+				<md-item-template>
+					<span md-highlight-text="$ctrl.textoBusquedaVia"
+						md-highlight-flags="^i">{{via.DS_TIPO_VIA}}</span>
+				</md-item-template>
+				<md-not-found>
+					No existe el tipo de vía '{{$ctrl.textoBusquedaVia}}'.
+				</md-not-found>
+			</md-autocomplete>
+	
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'ADDRESS' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_ACTUALIZADO.NO_DIRECCION" required>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'NUMBER' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_ACTUALIZADO.NU_NUMERO">
+		</md-input-container>
+	</div>
+	<div layout="row">
+		<md-input-container class="md-block" flex-gt-sm>
+           	<label>{{ 'POSTAL_CODE' | translate }}</label>
+           	<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_ACTUALIZADO.CO_POSTAL" maxlength="5" ng-change="$ctrl.updateDir($ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_ACTUALIZADO.CO_POSTAL, $index)">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>{{ 'LOCALITY' | translate }}</label>
+            <input disabled ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_ACTUALIZADO.NO_LOCALIDAD">
+        </md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+           	<label>{{ 'PROVINCE' | translate }}</label>
+           	<input disabled ng-value="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_ACTUALIZADO.NO_PROVINCIA" ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_DOMICILIO.XML_DOMICILIO_ACTUALIZADO.NO_PROVINCIA">
+       	</md-input-container>
+       	
+	</div>
+</div>

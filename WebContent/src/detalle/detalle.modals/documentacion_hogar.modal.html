@@ -1,0 +1,37 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:40%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Documentación hogar</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="padding:10px 10px">
+		<div layout="column" layout-align="center center">
+			<!-- GENERALES -->
+<!-- 			<a href="src/documentos/Seguro_hogar_Movistar_documento_operativas.pdf" class="enlace_tarificador_hogar" target="_blank">Operativas</a> -->
+<!-- 			<a href="src/documentos/CALL_CENTER_FICHA_y_OPERATIVAS.pptx" class="enlace_tarificador_hogar" target="_blank">CALL CENTER Ficha y Operativas</a> -->
+			<a ng-if="$ctrl.codAseguradora != 1" href="src/documentos/SEGURO_DIGITAL_GLOSARIO_HOGAR_2.pdf" class="enlace_tarificador_hogar" target="_blank">Glosario hogar Telefónica Seguros </a>
+			<a ng-if="$ctrl.codAseguradora != 2" href="src/documentos/SEGURO_DIGITAL_GLOSARIO_HOGAR_1.pdf" class="enlace_tarificador_hogar" target="_blank">Glosario hogar Telefónica Seguros + Santalucía</a>
+			<a href="src/documentos/AREA_CLIENTE_Manual_de_usuario.pdf" class="enlace_tarificador_hogar" target="_blank">Manual Área Cliente</a>
+<!-- 			<a href="src/documentos/Manual_del_CRM_VF.pdf" class="enlace_tarificador_hogar" target="_blank">Manual CRM</a> -->
+			<a href="src/documentos/TARIFICADOR_HOGAR_Manual_de_usuario.pdf" class="enlace_tarificador_hogar" target="_blank">Manual Portal Gestor</a>
+<!-- 			<a href="src/documentos/Promocion_Hogar.pdf" class="enlace_tarificador_hogar" target="_blank">Promocion Seguro de Hogar desde 23112021</a> -->
+<!-- 			<a href="src/documentos/SalesFolder_Seguro_de_Hogar.pdf" class="enlace_tarificador_hogar" target="_blank">SalesFolder Seguro de Hogar</a> -->
+			<a href="src/documentos/TIENDAS_Ejemplo_modelo_carta_no_renovacion_seguro.docx" class="enlace_tarificador_hogar" target="_blank">TIENDAS Ejemplo modelo carta no renovación seguro</a>
+<!-- 			<a href="src/documentos/TIENDAS_FICHA_y_OPERATIVAS_Seguro_hogar_Movistar_CP.pptx" class="enlace_tarificador_hogar" target="_blank">TIENDAS Ficha y Operativas Seguro de hogar Movistar CP</a> -->
+			<a href="src/documentos/TIENDAS_Gestion_CRM_Validacion_Contratacion_en_tiendas.pdf" class="enlace_tarificador_hogar" target="_blank">Tiendas_Gestión CRM Validación Contratación en tiendas</a>
+			<a ng-if="$ctrl.codAseguradora != 1" href="src/documentos/TIENDAS_Texto_cierre_de_venta_TelefonicaSeguros.pdf" class="enlace_tarificador_hogar" target="_blank">TIENDAS Texto cierre de venta TelefonicaSeguros</a>
+			<a ng-if="$ctrl.codAseguradora != 2" href="src/documentos/TIENDAS_Texto_cierre_de_venta_TelefonicaSegurosySantalucia.pdf" class="enlace_tarificador_hogar" target="_blank">TIENDAS Texto cierre de venta Telefonica SegurosySantalucia</a>
+			<a href="src/documentos/TIENDAS_Venta_tiendas_Movistar_Seguros.pdf" class="enlace_tarificador_hogar" target="_blank">TIENDAS Venta tiendas Movistar Seguros</a>
+			
+			<!-- SANTA LUCÍA -->
+			
+			<!--BBVA -->
+		</div>
+	</md-dialog-content>
+</md-dialog>

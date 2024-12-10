@@ -1,0 +1,54 @@
+
+<!-- Tabla de clientes -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        
+		<md-button ng-if="$ctrl.active==0 && $ctrl.isConsultagdpr != true && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4  && ($ctrl.parent.url == 'riesgos' || $ctrl.parent.url == 'clientes') && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+            <md-icon>file_copy</md-icon>Exportar a excel
+        </md-button>        
+        <!-- <md-button ng-if="$ctrl.active==0 && $ctrl.isConsultagdpr != true && $ctrl.vista == 4  && ($ctrl.parent.url == 'riesgos' || $ctrl.parent.url == 'clientes') && $ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.newRisk()"> -->
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.dialogRisk('Nuevo')">
+            <md-icon>add</md-icon>Nuevo riesgo
+        </md-button>   
+
+        <!-- Botones de consulta GDPR -->
+        <md-button class="dark-blue btnSuperior btnNuevo" ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true">
+            <md-icon>lock_open</md-icon>Desbloquear cliente
+        </md-button>
+        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+            <md-icon>file_copy</md-icon>Exportar cliente
+        </md-button>
+			
+        <md-tab label="Resultado de la búsqueda">
+
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+            </div>
+            <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+            <div id="mensajeNingunResultado" class="mensajesBusqueda" ng-if="$ctrl.vista == 3">
+                <h2>No se ha encontrado ningún riesgo</h2>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="resizeHeight(248)"></div>
+        </md-tab>
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+            <md-tab-label ng-if="detalles != null">
+                Cliente: {{detalles.NU_DOCUMENTO}}
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </md-tab-label>
+            <md-tab-body>
+                <detalle-sd id-detalle="detalles" tipo="'cliente'"></detalle-sd>
+            </md-tab-body>
+        </md-tab>
+    </md-tabs>
+
+</div>

@@ -1,0 +1,47 @@
+<!-- Tabla de recibos devueltos -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+      
+        <md-tab label="{{$ctrl.txtTabLabel}}">
+                <div style="margin-left: 78%;" class="md-padding">
+           	<md-button ng-if="$ctrl.active==0 && $ctrl.gridRecibos.data !=undefined && $ctrl.vista == 4  && $ctrl.permisos.IN_EXPORTAR == true && $ctrl.inDuplicado == 1" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+                <md-icon>file_copy</md-icon>Exportar a excel
+            </md-button>
+            <md-button ng-if="$ctrl.active==0 && $ctrl.gridRecibos.data!=undefined && ($ctrl.vista == 4 || $ctrl.vista == 3)" class="medium-green btnSuperior btnNuevo" ng-click="$ctrl.volverDash()">
+                <md-icon style="margin-right: 5%; padding-top:3%;">keyboard_return</md-icon>Volver
+            </md-button>
+        </div>
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+            </div>
+            <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+            <div id="mensajeNingunResultado" class="mensajesBusqueda" resize ng-style="resizeHeight(150)" ng-if="$ctrl.vista == 3">
+                <h2>No se ha encontrado ningún recibo devuelto</h2>
+            </div>
+
+                <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridRecibos" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-grouping ui-grid-selection resize ng-style="$ctrl.getTableHeight()"></div>
+        </md-tab>
+
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+            <md-tab-label ng-if="detalles != null">
+		   		<span ng-if="detalles != null">Recibo: {{detalles.NU_RECIBO}}</span>
+		   		<span ng-if="detalles == null">{{$ctrl.heading}}</span>
+		   		<div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+             				<span aria-hidden="true">×</span>
+             			</div>
+		   	</md-tab-label> 
+            <md-tab-body>
+                <detalle-sd call-get-detail="$ctrl.callGetDetail" ng-if="detalles.ID_RECIBO != undefined && detalles.ID_RECIBO != null" id-detalle="detalles" tipo="'recibodevuelto'" ></detalle-sd>
+                <!-- <sd-solicitud datos-cliente="$ctrl.datosCliente" ng-if="detalles.ID_RECIBO == undefined || detalles.ID_RECIBO == null" tipo-head="$ctrl.headTipo" detalle-cliente="$ctrl.detalleCliente"></sd-solicitud> -->
+		   	</md-tab-body>		    
+        </md-tab>
+    </md-tabs>
+
+</div>

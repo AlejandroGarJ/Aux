@@ -1,0 +1,551 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+    <md-content ng-show="$ctrl.loading == true" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize ng-style="resizeHeight(330)">
+        <div id="buscandoGif" 
+                style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+                resize ng-style="resizeHeight(330)">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+        </div>
+    </md-content>
+    
+    
+	<md-content ng-show="$ctrl.loading == false && $ctrl.step == 1 && $ctrl.templateTarificador == 'resumen'" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll" resize>
+		<div flex-gt-sm="80">
+			<div layout="row" layout-align="center center">
+				<md-list ng-hide="$ctrl.calc == true || $ctrl.price == 0 || $ctrl.hidePrice == true"  ng-if="$ctrl.detalles.IN_EMITIDO != 1" flex="20" style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.rateChild(true)">
+					<md-list-item>
+						<span flex="100"><i class="fa-light fa-file-signature" style="color: #73b957; margin-right: 10px"></i> CONTRATAR</span>
+					</md-list-item>
+				</md-list>
+				<md-list flex="20" style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.modalPdf($ctrl.budgetId, 0)">
+					<md-list-item>
+						<div layout="row" layout-align="center center">
+							<i class="fa-light fa-arrow-down-to-bracket" style="color: #73b957; margin-right: 10px"></i> 
+							<span flex="100">DESCARGAR PRESUPUESTO</span>
+						</div>
+					</md-list-item>
+				</md-list>
+				<md-list flex="20" style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.modalPdf($ctrl.budgetId, 1)">
+					<md-list-item>
+						<div layout="row" layout-align="center center">
+							<i class="fa-light fa-paper-plane" style="color: #73b957; margin-right: 10px"></i>
+							<span flex="100">ENVIAR PRESUPUESTO</span>
+						</div>
+					</md-list-item>
+				</md-list>
+				<md-list flex="20" style="margin-top: 0px;padding: 5px" layout="column" layout-align="center center" class="btn_admin_ciberempresa" ng-click="$ctrl.rateChild(false, true)">
+					<md-list-item>
+						<div layout="row" layout-align="center center">
+							<i class="fa-light fa-send-backward" style="color: #73b957; margin-right: 10px"></i>
+							<span flex="100">NUEVO PRESUPUESTO A PARTIR DE ESTE</span>
+						</div>
+					</md-list-item>
+				</md-list>
+			</div>
+
+			<form class="animationIf" name="$ctrl.formTarEmpresa" id="formSubmitTarEmpresa" style="margin-top: 20px" flex>
+				<div id="box-price"></div>
+				<div class="accentBox" style="border: 0px">
+					<div ng-show="true" class="container_TarMovil_price" layout="row" layout-align="center center">
+						<div layout="row" layout-align="center center" flex="100" style="padding: 0px">
+							<div layout="row" flex="100" style="padding: 0px">
+								<div style="padding: 0px">
+									<md-progress-circular md-mode="indeterminate" ng-show="$ctrl.calc == true" style="margin: 0 auto;"></md-progress-circular>
+									<div style="padding: 0px" layout="row" layout-align="space-between center">
+										<div style="padding: 0px" layout="column" layout-align="start start">
+											<span>Presupuesto</span>
+											<span style="font-size: 30px"><b>{{$ctrl.budgetId}}</b></span>
+										</div>
+										<span ng-class="{txtDesenfocado: ($ctrl.hidePrice == true)}" ng-hide="$ctrl.calc == true"><b style="font-size: 30px">{{$ctrl.price == 0 ? '--' : $ctrl.formatPrice($ctrl.price) }}</b>€</span>
+									</div>
+									<span ng-hide="$ctrl.calc == true || $ctrl.price == 0 || $ctrl.hidePrice == true" class="txtRegular">{{ 'TAXES_INCLUDED' | translate }}</span>
+									<p ng-if="$ctrl.formaPago == 2" class="text-right color-blue">Precio del seguro: <b>Anual</b></p>
+									<p ng-if="$ctrl.formaPago == 7" class="text-right color-blue" style="margin-bottom: 0px">Precio del seguro: <b>Mensual</b></p>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				
+				<div layout="column">
+				      <div layout-gt-sm="row" class="margenPresupuestos">
+	                    <md-input-container class="md-block" flex="30">
+                            <label>Nº de hijos y/o tutelados menores de 18 años que quieras asegurar</label>
+                            <md-select ng-disabled="$ctrl.detalles.IN_EMITIDO == 1" ng-model="$ctrl.assuredNumber" ng-change="$ctrl.rateChild()" required>
+                                <md-option ng-repeat="tpHij in $ctrl.typesHijos" ng-value="tpHij.CO_TIPO">{{tpHij.DS_TIPOS}}</md-option>
+                            </md-select>
+                        </md-input-container>
+	                </div>
+				</div>
+            </form>
+        </div>
+    </md-content>
+
+    <!-- TARIFICACIÓN -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 1 && $ctrl.templateTarificador != 'resumen'" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+        <div class="container_TarMovil" flex>
+            <h4 class="h4Tar"><span class="fas fa-feather-alt m-r_15"></span>CiberSeguro Hijos - Calcular Tarifa</h4>
+
+			<div class="header-hijos" layout="row" layout-align="space-between center" style="display: flow-root;">
+				<p>SEGURO CIBERFAMILIAS > HIJOS > COTIZACIÓN</p>
+				<img ng-src="src/img/Banca_March_logo.png">
+			</div>
+            <div class="bg-color-hijos" layout="row" layout-sm="column" style="display: flow-root;">
+                <div layout="row" layout-align="center start" class="container_TarMovil_btn autocomplete-white" style="float: left;">
+                	<md-autocomplete ng-if="$ctrl.showSelectColectivos == true && $ctrl.rol != 1 && $ctrl.rol != 4" name="comisionistas" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+						   md-search-text="$ctrl.searchComisionista"
+						   md-items="item in $ctrl.querySearch($ctrl.searchComisionista, $ctrl.listComisionistas, 'NO_COMPANIA')"
+						   md-item-text="item.NO_COMPANIA" md-min-length="0"
+						   md-floating-label="Selecciona empresa"
+						   md-selected-item="$ctrl.autocomplete.COMISIONISTA"
+						   md-selected-item-change="$ctrl.idComisionista = $ctrl.autocomplete.COMISIONISTA.ID_COMPANIA; $ctrl.changeComisionista()"
+						   ng-blur="$ctrl.autocomplete.COMISIONISTA == undefined ? $ctrl.searchComisionista = '' : ''"
+					    >
+						   <md-item-template>
+							   <span md-highlight-text="$ctrl.searchComisionista"
+							  	 	md-highlight-flags="^i">{{$ctrl.parent.getDescriptivo(item, 'NO_COMPANIA')}}</span>
+						   </md-item-template>
+						   <md-not-found>
+							   No existe el campo "{{$ctrl.searchComisionista}}".
+						   </md-not-found>
+				     </md-autocomplete>
+		             
+<!-- 		             Cuando es admin o superadmin -->
+		             <div layout="row" ng-if=" $ctrl.mostrarAdmin != true && $ctrl.rol == 1 || $ctrl.rol == 4" style="width: 100%; margin-bottom: 10px; margin-top: 10px;">
+		             	<div layout="row" layout-align="center center">
+		             		<md-autocomplete name="comisionistas" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+							   md-search-text="$ctrl.searchComisionista"
+							   md-items="item in $ctrl.querySearch($ctrl.searchComisionista, $ctrl.listComisionistas, 'NO_COMPANIA')"
+							   md-item-text="item.NO_COMPANIA" md-min-length="0"
+							   md-floating-label="Selecciona empresa"
+							   md-selected-item="$ctrl.autocomplete.COMISIONISTA"
+							   md-selected-item-change="$ctrl.idComisionista = $ctrl.autocomplete.COMISIONISTA.ID_COMPANIA; $ctrl.changeComisionista()"
+							   ng-blur="$ctrl.autocomplete.COMISIONISTA == undefined ? $ctrl.searchComisionista = '' : ''"
+						    >
+							   <md-item-template>
+								   <span md-highlight-text="$ctrl.searchComisionista"
+								  	 	md-highlight-flags="^i">{{$ctrl.parent.getDescriptivo(item, 'NO_COMPANIA')}}</span>
+							   </md-item-template>
+							   <md-not-found>
+								   No existe el campo "{{$ctrl.searchComisionista}}".
+							   </md-not-found>
+						   </md-autocomplete>
+						   <md-autocomplete ng-if="$ctrl.idComisionista != null && $ctrl.loadGestores != true && $ctrl.listUsers.length > 0" name="gestor" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+							   md-search-text="$ctrl.searchGestor"
+							   md-items="item in $ctrl.querySearch($ctrl.searchGestor, $ctrl.listUsers, 'NO_USUARIO')"
+							   md-item-text="$ctrl.getUsuario(item)" md-min-length="0"
+							   md-floating-label="Selecciona gestor"
+							   md-selected-item="$ctrl.autocomplete.GESTOR"
+							   md-selected-item-change="$ctrl.idUsuario = $ctrl.autocomplete.GESTOR.NO_USUARIO; $ctrl.reset()"
+							   ng-blur="$ctrl.autocomplete.GESTOR == undefined ? $ctrl.searchGestor = '' : ''">
+							   <md-item-template>
+								   <span md-highlight-text="$ctrl.searchGestor"
+								  	 	md-highlight-flags="^i">{{item.NO_USUARIO}} - {{item.NO_NOMBRE}} {{item.NO_APELLIDO1}}</span>
+							   </md-item-template>
+							   <md-not-found>
+								   No existe el campo "{{$ctrl.searchGestor}}".
+							   </md-not-found>
+						   </md-autocomplete>
+						   <p ng-if="$ctrl.loadGestores == true">Cargando...</p>
+                           <p ng-if="$ctrl.idComisionista != null && $ctrl.loadGestores != true && ($ctrl.listUsers == null || $ctrl.listUsers.length == 0)">No se ha encontrado ningún gestor asociado</p>
+		             	</div>
+		             </div>
+		             
+                    <div>
+	                    <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.reset()" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+	                        <md-icon>refresh</md-icon>
+	                        Empezar nuevo
+	                    </md-button>
+                    </div>
+                    <div>
+	                    <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.modalPdf($ctrl.budgetId)" ng-disabled="$ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+	                        <md-icon>file_copy</md-icon>
+	                        Descargar o enviar presupuesto
+	                    </md-button>
+                    </div>
+                </div>
+            </div>
+
+            <form ng-class="{formDisabled: (($ctrl.idUsuario == null && $ctrl.showSelectColectivos == true && $ctrl.rol != 1 && $ctrl.rol != 4) || ($ctrl.idUsuario == null && $ctrl.mostrarAdmin != true && $ctrl.rol == 1 || $ctrl.rol == 4))}" name="$ctrl.formTarHijos" id="formSubmitTarHijos" flex novalidate>
+                <div layout="row" layout-sm="column" layout-xs="column">
+                    <div class="container_TarMovil_div" layout="column" layout-sm="column" layout-xs="column" flex="66">
+                        <div layout="row" layout-sm="column" layout-margin="">
+                            <div class="container_TarMovil_input" flex="">
+                                <span class="ic-ciber-ico-numero-hijos ico_TarMovil"></span>
+                                <md-input-container class="md-block">
+                                    <label>Nº de hijos y/o tutelados menores de 18 años que quieras asegurar</label>
+                                    <md-select ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.assuredNumber" ng-change="$ctrl.rateChild()" required>
+                                        <md-option ng-repeat="tpHij in $ctrl.typesHijos" ng-value="tpHij.CO_TIPO">{{tpHij.DS_TIPOS}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                
+		                <div class="container_TarMovil_info info_hijos">
+		                    <span class="ic-ciber-ico-info color-blue"></span> 
+		                    <a href="src/documentos/IPID_Hijos.pdf" class="" target="_blank">Ver el Documento de Información sobre Producto de Seguro</a>
+		                </div>
+                    </div>
+
+                    <div class="container_TarMovil_div" layout="column" layout-sm="column" layout-xs="column" flex="33">
+                        <div layout="column" layout-sm="column" layout-margin="" ng-if="$ctrl.assuredNumber != -1">
+                            <div class="container_TarMovil_price" layout="row">
+                                <div layout="row" flex="66">
+                                    <div>
+                                        <md-progress-circular md-mode="indeterminate" ng-show="$ctrl.calc == true" style="margin: 0 auto;"></md-progress-circular>
+                                        <span ng-hide="$ctrl.calc == true" class="spPrice">{{$ctrl.price == 0 ? '--' : $ctrl.formatPrice($ctrl.price) }}</span>
+                                        <span ng-hide="$ctrl.calc == true || $ctrl.price == 0" class="txtRegular">{{ 'TAXES_INCLUDED' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div layout="row" flex="33">
+                                    <div>
+                                        <span class="txtRegular color-light-blue">Precio del seguro</span>
+                                        <span class="txtRegular txt-underline">Anual</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container_TarMovil_budget" ng-if="$ctrl.budgetId != undefined && $ctrl.budgetId != ''">
+                                Nº presupuesto: <span>{{$ctrl.budgetId}}</span>
+                            </div>
+                            <div class="container_TarMovil_msg" layout="row" ng-hide="$ctrl.dataWarning == false">
+                                <span class="ic-ciber-ico-alerta"></span>
+                                <span>Debes completar todas las opciones para calcular tu seguro</span>
+                            </div>
+                            <div class="container_TarMovil_btn" layout="row" layout-align="center none">
+                                <md-button class="btn_confirmar_hijos btn_TarMovil" ng-click="$ctrl.rateChild(true)" ng-disabled="$ctrl.colectivo.IN_EMITE == false || $ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+                                    <i class="fa-duotone fa-check-double"></i>
+                                    Confirmar datos
+                                </md-button>
+                            </div>
+                        </div>
+                        
+                        <div layout="column" layout-sm="column" layout-margin="" ng-if="$ctrl.assuredNumber == -1">
+                            <div class="container_TarMovil_msg" layout="row">
+                                <span class="ic-ciber-ico-alerta"></span>
+                                <span>No se puede realizar la contratación para los datos seleccionados</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+            
+        </div>
+    </md-content>
+
+    <!-- CONTRATACIÓN -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 2" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+
+        <div class="container_TarMovil" flex>
+
+		<div class="form_rate_hijos">
+			<div class="header-hijos" layout="row" layout-align="space-between center" style="display: flow-root;">
+				<p class="header-rate-hijos">CiberSeguro Familias > Hijos > Contratación</p>
+				<img ng-src="src/img/Banca_March_logo.png">
+			</div>
+            <form name="$ctrl.formConChild" class="form-child">
+                <!-- <div>
+                    <i class="fas fa-file-signature"></i> Formulario de contratación - CiberSeguro Hijos
+                </div> -->
+                <!-- <div>FORM.$VALID -> {{$ctrl.formConChild.$valid}}</div>
+                <div>DOC_NUM.$VALID -> {{$ctrl.formConChild.holderDocumentNumber.$valid}}</div>
+                <div>DOC_NUM.$ERRORS -> {{$ctrl.formConChild.holderDocumentNumber.$error}}</div>
+                <div>IBAN_NUM.$VALID -> {{$ctrl.formConChild.input_ibanCode.$valid}}</div>
+                <div>DOC_NUM.$ERRORS -> {{$ctrl.formConChild.input_ibanCode.$error}}</div> -->
+                <h4 class="h4_child_bl"><span class="ic-ciber-ico-tomador"></span> Tomador y representante legal</h4>
+
+                <div class="separadorDesplegables"></div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>{{ 'NAME' | translate }}</label>
+                        <input ng-model="$ctrl.objHolder.NO_NOMBRE" uppercase required>
+                    </md-input-container>
+        
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Apellido 1</label>
+                        <input ng-model="$ctrl.objHolder.NO_APELLIDO1" uppercase required>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Apellido 2</label>
+                        <input ng-model="$ctrl.objHolder.NO_APELLIDO2" uppercase>
+                    </md-input-container>
+                    
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>NIF / NIE</label>
+                        <!-- <input ng-model="$ctrl.objHolder.documentNumber" name="holderDocumentNumber" minlength="9" maxlength="10"
+                            ng-change="$ctrl.checkInput($ctrl.formConChild.holderDocumentNumber, 'docNum')" required> -->
+                        <input ng-model="$ctrl.objHolder.NU_DOCUMENTO" name="holderDocumentNumber" minlength="9" maxlength="10"
+                            cvalidation="document_n" uppercase required>
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Dirección</label>
+                        <input ng-model="$ctrl.address.NO_DIRECCION" uppercase required>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>CP</label>
+                        <input ng-model="$ctrl.address.CO_POSTAL" ng-change="$ctrl.checkPostal($ctrl.address.CO_POSTAL)" ng-pattern="/^[0-9]{5}$/" maxlength="5" required>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Localidad</label>
+                        <input ng-model="$ctrl.address.NO_LOCALIDAD" disabled required>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Provincia</label>
+                        <input ng-model="$ctrl.address.NO_PROVINCIA" disabled required>
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Email</label>
+                        <input ng-model="$ctrl.objHolder.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" required>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Teléfono móvil</label>
+                        <input ng-model="$ctrl.objHolder.NU_TELEFONO" ng-pattern="/^[0-9]{9}$/" maxlength="9" required>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Fecha de nacimiento</label>
+                        <md-datepicker ng-model="$ctrl.objHolder.FD_NACIMIENTO" ng-click="($ctrl.objHolder.FD_NACIMIENTO == undefined || $ctrl.objHolder.FD_NACIMIENTO == null) ? $ctrl.objHolder.FD_NACIMIENTO = null : ''"
+                            md-max-date="$ctrl.maxDateA" name="holderBornDate" required>
+                        <!-- <md-datepicker ng-model="$ctrl.objHolder.bornDate" ng-click="($ctrl.objHolder.bornDate == undefined || $ctrl.objHolder.bornDate == null) ? $ctrl.objHolder.bornDate = null : ''"
+                            md-max-date="$ctrl.maxDateA" name="holderBornDate" ng-change="$ctrl.checkInput($ctrl.formConChild.holderBornDate, 'dateA')" required> -->
+                        </md-datepicker>
+                    </md-input-container>
+                </div>
+                
+                <h4 class="h4_child_bl"><span class="ic-ciber-ico-tomador"></span> Hijos y tutelados menores de 18 años asegurados</h4>
+                <div class="separadorDesplegables"></div>
+                <!-- <legend class="lg_child"><span class="ic-ciber-ico-tomador"></span> Asegurado 1</legend>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>{{ 'NAME' | translate }}</label>
+                        <input ng-model="$ctrl.objHolder.name">
+                    </md-input-container>
+        
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Apellido 1</label>
+                        <input ng-model="$ctrl.objHolder.surname1">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Apellido 2</label>
+                        <input ng-model="$ctrl.objHolder.surname2">
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Fecha de nacimiento</label>
+                        <md-datepicker ng-model="$ctrl.objHolder.birthday"
+                            ng-click="($ctrl.objHolder.birthday == undefined || $ctrl.objHolder.birthday == null) ? $ctrl.objHolder.birthday = null : ''">
+                        </md-datepicker>
+                    </md-input-container>
+                </div> -->
+
+                <div ng-repeat="assured in $ctrl.lstAssured">
+
+                    <legend class="lg_child"><span class="ic-ciber-ico-tomador"></span> Asegurado {{$index + 1}}</legend>
+
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'NAME' | translate }}</label>
+                            <input ng-model="assured.NO_NOMBRE" uppercase required>
+                        </md-input-container>
+            
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Apellido 1</label>
+                            <input ng-model="assured.NO_APELLIDO1" uppercase required>
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Apellido 2</label>
+                            <input ng-model="assured.NO_APELLIDO2" uppercase>
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Fecha de nacimiento</label>
+                            <!-- <md-datepicker ng-model="assured.bornDate" ng-click="(assured.bornDate == undefined || assured.bornDate == null) ? assured.bornDate = null : ''"
+                                md-min-date="ctrl.minDateC" md-max-date="ctrl.maxDateC"
+                                name="childBornDate{{$index + 1}}" ng-change="$ctrl.checkInput($ctrl.formConChild['childBornDate' + {{$index + 1}}], 'dateC')" required> -->
+                            <md-datepicker ng-model="assured.FD_NACIMIENTO" ng-click="(assured.FD_NACIMIENTO == undefined || assured.FD_NACIMIENTO == null) ? assured.FD_NACIMIENTO = null : ''"
+                                md-min-date="$ctrl.minDateC" md-max-date="$ctrl.maxDateC" name="childBornDate{{$index + 1}}" required>
+                            </md-datepicker>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <h4 class="h4_child_bl"><span class="ic-ciber-ico_datos_bancarios"></span> Domiciliación bancaria</h4>
+                <div class="separadorDesplegables"></div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Titular de la cuenta</label>
+                        <input ng-model="$ctrl.bankAccount.NO_TITULAR" uppercase required>
+                    </md-input-container>
+        
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>BIC/SWIFT</label>
+                        <input ng-model="$ctrl.bankAccount.CO_BIC" uppercase required>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>IBAN</label>
+                        <!-- <input ng-model="$ctrl.bankAccount.ibanCode" name="input_ibanCode" minlength="24" maxlength="24"
+                            ng-change="$ctrl.checkInput($ctrl.formConChild.input_ibanCode, 'ibanNum')" required> -->
+                        <input ng-model="$ctrl.bankAccount.CO_IBAN" name="input_ibanCode" minlength="24" maxlength="24" cvalidation="iban"
+                            uppercase required>
+                    </md-input-container>
+                </div>
+                
+                <div layout-gt-sm="row" layout-align="start center" class="warning-domiciliacion">
+                	<span class="material-icons">monetization_on</span>
+                    <h4>Estos datos son importantes. Con ellos generamos la orden de domiciliación SEPA para el cobro de las primas.</h4>
+                </div>
+                
+                <h4 class="h4_child_bl"><span class="ic-ciber-ico-envio"></span> Envío - Opciones adicionales</h4>
+                <div class="separadorDesplegables"></div>
+                <div layout-gt-sm="row">
+                    <md-checkbox
+                        ng-model="$ctrl.sendDoc">
+                         Enviar documentación generada ÚNICAMENTE a este email:
+                    </md-checkbox>
+                </div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Email</label>
+                        <input ng-required="$ctrl.sendDoc == true" ng-model="$ctrl.policyMail" ng-disabled="$ctrl.sendDoc != true" ng-pattern="/^.+@.+\..+$/">
+                    </md-input-container>
+                </div>
+                
+                <div layout-gt-sm="row" layout-align="start center" class="warning-documentacion">
+                	<span class="material-icons">send</span>
+                    <h4 ng-if="$ctrl.sendDoc != true">Enviaremos la documentación generada al email del cliente y al asociado a tu usuario.</h4>
+                    <h4 ng-if="$ctrl.sendDoc == true">¡Genial! Enviaremos la documentación generada sólo al email que has indicado aquí.</h4>
+                </div>
+
+                <div class="container_TarMovil_btn" layout-gt-sm="row" layout-align="center" layout-margin="">
+                   	<div layout="row" layout-align="center center" class="volver-dispositivos" ng-click="$ctrl.volver()">
+                   		<md-icon>keyboard_backspace</md-icon>
+                        Volver
+                   	</div>
+                   	
+                    <md-button class="btn_confirmar_hijos btn_TarMovil" ng-click="$ctrl.validate($ctrl.formConChild)">
+                        <i class="fa-duotone fa-check-double"></i>
+                        Confirmar y generar póliza
+                    </md-button>
+                </div>
+            </form>
+        </div>
+    </div>
+            
+    </md-content>
+
+    <!-- DATOS PÓLIZA -->
+    <md-content ng-show="$ctrl.loading == false && $ctrl.step == 3" layout="row" layout-align="center none" layout-padding class="mdContentWithoutBorder formCliente formClass form-scroll"
+        resize>
+
+		<div class="container_TarMovil container-poliza" flex>
+		
+			<div class="container-poliza-ok" layout="row" layout-align="center center">
+				<p>
+					<span class="material-icons">check_circle_outline</span>
+					Póliza generada
+				<p>
+			</div>
+			
+			<div layout="row" layout-align="start center">
+				<p class="fd_activacion">Fecha de activación de la póliza: <span>{{$ctrl.dateFormat($ctrl.objPol.PRESUPUESTO.PECUNIARIAS.DATOS_PAGO.FD_INICIO)}}</span><p>
+			</div>
+			
+			<div layout="row">
+				<div layout="column" flex="75">
+					<div layout="row">
+						<div layout="column" flex="33">
+							<p class="label_child">Número de póliza:</p>
+							<p class="value">{{$ctrl.objPol.NU_POLIZA}}</p>
+						</div>
+						<div layout="column" flex="33">
+							<p class="label_child">Modalidad:</p>
+							<p class="value">{{$ctrl.objPol.OTARIFA.NO_PRODUCTO}}</p>
+						</div>
+						<div layout="column" flex="33">
+							<p class="label_child">Prima anual:</p>
+							<p class="value">{{$ctrl.formatPrice($ctrl.objPol.OTARIFA.IM_PRIMA_ANUAL_TOT)}}€</p>
+						</div>
+					</div>
+					<div layout="row">
+						<div layout="column" flex="33">
+							<p class="label_child">Nombre:</p>
+							<p class="value">{{$ctrl.objHolder.NO_NOMBRE}}</p>
+						</div>
+						<div layout="column" flex="33">
+							<p class="label_child">Apellidos:</p>
+							<p class="value">{{$ctrl.holderSurnames}}</p>
+						</div>
+						<div layout="column" flex="33">
+							<p class="label_child">NIF:</p>
+							<p class="value">{{$ctrl.objHolder.NU_DOCUMENTO}}</p>
+						</div>
+					</div>
+					<div layout="row">
+						<div layout="column" flex="33">
+							<p class="label_child">Teléfono de contacto:</p>
+							<p class="value">{{$ctrl.objHolder.NU_TELEFONO}}</p>
+						</div>
+						<div layout="column" flex="33">
+							<p class="label_child">Email:</p>
+							<p class="value">{{$ctrl.objHolder.NO_EMAIL}}</p>
+						</div>
+					</div>
+					<div layout="row">
+						<div layout="column" flex="33">
+							<p class="label_child">Código activación QUSTODIO:</p>
+							<p class="value">{{$ctrl.objPol.coCustodio}}</p>
+						</div>
+					</div>
+				</div>
+				<div layout="column" flex="25">
+					<div layout="column">
+						<span class="img_pdf ic-ciber-ico_documento_pdf"></span>
+						<div layout-gt-sm="row" layout-align="center">
+							<md-button class="btn_confirmar_hijos btn_TarMovil" ng-click="$ctrl.dlPolicy()">
+			                    Descargar
+			                </md-button>
+		                </div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="container-warning-qustodio">
+				<div class="warning-qustodio" layout="row" layout-align="start center">
+					<p>
+						<span class="material-icons">warning_amber</span>
+						No te olvides de activar tu código de Qustodio
+					<p>
+				</div>
+			</div>
+		
+		</div>
+
+    </md-content>
+
+</div>

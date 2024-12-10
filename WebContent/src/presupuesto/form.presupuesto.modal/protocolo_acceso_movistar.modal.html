@@ -1,0 +1,73 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="height: auto">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Protocolo de acceso Movistar</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="container_modal_pdf" flex>
+			<form ng-init="$ctrl.mostrarTextoProteccion = false" name="$ctrl.formDownloadBudget" class="formClass">
+				<div layout-gt-sm="row" style="margin-bottom: 10px">
+					<a ng-if="$ctrl.mostrarTextoProteccion == false" ng-click="$ctrl.mostrarTextoProteccion = true">Mostrar texto de protección de datos/consentimiento</a>
+					<a ng-if="$ctrl.mostrarTextoProteccion == true" ng-click="$ctrl.mostrarTextoProteccion = false">Ocultar texto de protección de datos/consentimiento</a>
+				</div>
+				<div>
+					
+					<div ng-if="$ctrl.mostrarTextoProteccion == true">
+						<div layout-gt-sm="row">
+							<p style="padding: 0px 10px; font-size: 14px">
+								<span style="color: #4472C4">Agente</span>: 
+								<span style="color: #70AD47">¿[nombre] eres cliente Movistar? </span>
+								<span>Si, y está a mi nombre. Entonces </span>
+								<span style="color: #4472C4">Agente</span>: 
+								<span style="color: #70AD47">para poder acceder a consultar tus datos como cliente Movistar (nombre y apellidos, cuenta bancaria, teléfono contacto, email y jurídica o empresa con la que  tienes contratado Movistar)  necesito me facilites tu código identificación fiscal (dni/nie…) y nos des tu consentimiento para poder acceder a consultar los datos indicados como cliente Movistar. Das tu consentimiento?</span>
+							</p>
+						</div>
+						
+						<div layout-gt-sm="row">
+							<ul style="font-size: 14px">
+								<li>No. El tomador deberá facilitar sus datos y cuenta bancaria, El mediador será TdE</li>
+								<li>
+									Si: 
+									<span style="color: #4472C4">Agente</span>: 
+									<span style="color: #70AD47">muchas gracias, un momento mientras accedo a consultar la información indicada como cliente Movistar</span>. 
+									El agente informará que solo se puede modificar el teléfono de contacto, email y cuenta bancaria. El mediador será Telefónica de España (TdE) o Telefónica Móviles España (TME), según jurídica
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div style="margin-top: 40px" layout-gt-sm="row" layout-align="center center">
+						<div flex="60" layout-gt-sm="row" layout-align="center start">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>NIF/NIE/CIF</label>
+								<input required ng-model="$ctrl.datos.DATOS_TOMADOR.NU_DOCUMENTO">
+								<span style="color: #ff9900" class="text-importe-siniestro-error" ng-if="$ctrl.clienteEncontradoMovistar == false"><i class="fas fa-exclamation-triangle"></i>&nbsp;El cliente no pertenece a Movistar</span>
+							</md-input-container>
+	                        <md-button ng-if="$ctrl.loadCliente != true" ng-disabled="$ctrl.datos.DATOS_TOMADOR.NU_DOCUMENTO == null || $ctrl.datos.DATOS_TOMADOR.NU_DOCUMENTO == ''" style="height: 36px !important" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.buscarCliente()" flex="10">
+	                            <i class="fa-light fa-magnifying-glass"></i>
+	                        </md-button>
+	                        <div ng-if="$ctrl.loadCliente == true" layout="row" layout-align="center center" style="margin-bottom: 20px">
+								<md-progress-circular md-diameter="25" md-mode="indeterminate" style="margin: 0 auto;"></md-progress-circular>
+	                        </div>
+						</div>
+					</div>
+					
+				</div>
+
+				<div class="container_TarMovil_btn" layout-gt-sm="row" layout-align="center" layout-margin="">
+					<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.hide()">
+						ACEPTAR
+					</md-button>
+				</div>
+
+			</form>
+		</div>
+	</md-dialog-content>
+</md-dialog>

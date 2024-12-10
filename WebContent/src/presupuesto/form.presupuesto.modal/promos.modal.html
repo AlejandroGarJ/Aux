@@ -1,0 +1,10 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+	<span>{{$ctrl.tarifa.NO_MODALIDAD}}</span>
+
+	<div ng-repeat="mensaje in $ctrl.men">
+		<ng-switch on="mensaje.CO_MESSAGE_TYPE">
+	<h6 ng-switch-when="PROMO">* {{mensaje.DS_MESSAGE}}</h6>
+		</ng-switch>
+	</div>

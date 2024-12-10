@@ -1,0 +1,147 @@
+
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toolbar>
+	<div class="md-toolbar-tools" style="height:44px">
+		<h2>Búsqueda de Campañas <i class="fa fa-magnifying-glass"></i></h2>
+        <md-button class="md-icon-button filtroLateral" ng-click="$ctrl.filtro.lateral()" style="right:20px; position:absolute">
+            <md-icon aria-label="Close dialog">arrow_back_ios</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+	<form class="formClass" id="form" ng-submit="$ctrl.buscar('tipo-campana')">
+		<div>
+			<div layout-gt-sm="row" class="margin-top-20">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Identificador</label>
+		         	<input ng-model="$ctrl.form.ID_CAMPAIGN.value">
+		       	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<md-checkbox ng-model="IS_VIGOR">En vigor</md-checkbox>
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>{{ 'NAME' | translate }}</label>
+		         	<input ng-model="$ctrl.form.DS_SHORT.value">
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<!-- <md-input-container class="md-block" flex-gt-sm style="margin-bottom:20px">
+		         	<label>{{ 'BRANCH' | translate }}</label>
+					<md-select ng-model="$ctrl.form.ID_RAMO.value">
+		           		<md-option ng-repeat="ramo in $ctrl.tipos.ramos" ng-value="ramo.ID_RAMO">
+			              	{{ramo.NO_RAMO}}
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container> -->
+				<md-autocomplete name="Ramo" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchRamo"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchRamo, $ctrl.tipos.ramos, 'NO_RAMO')"
+				   md-item-text="item.NO_RAMO" md-min-length="0"
+				   md-floating-label="Ramo"
+				   md-selected-item="$ctrl.autocomplete.RAMO"
+				   md-selected-item-change="$ctrl.form.ID_RAMO.value = $ctrl.autocomplete.RAMO.ID_RAMO"
+				   ng-blur="$ctrl.autocomplete.RAMO == undefined ? $ctrl.searchRamo = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchRamo"
+						   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_RAMO')}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el ramo "{{$ctrl.searchRamo}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<!-- <md-input-container class="md-block" flex-gt-sm>
+		         	<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+					<md-select ng-model="$ctrl.form.ID_COMPANIA.value">
+		           		<md-option ng-repeat="tipo in $ctrl.tipos.compania" ng-value="tipo.ID_COMPANIA">
+			              	{{tipo.NO_COMERCIAL}}
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container> -->
+				<md-autocomplete name="Aseguradora" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+					md-search-text="$ctrl.searchAseg"
+					md-items="item in $ctrl.parent.querySearch($ctrl.searchAseg, $ctrl.tipos.compania, 'NO_COMERCIAL')"
+					md-item-text="item.NO_COMERCIAL" md-min-length="0"
+					md-floating-label="Aseguradora"
+					md-selected-item="$ctrl.autocomplete.ASEG"
+					md-selected-item-change="$ctrl.form.ID_COMPANIA.value = $ctrl.autocomplete.ASEG.ID_COMPANIA"
+					ng-blur="$ctrl.autocomplete.ASEG == undefined ? $ctrl.searchAseg = '' : ''">
+					<md-item-template>
+						<span md-highlight-text="$ctrl.searchAseg"
+							md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_COMERCIAL')}}</span>
+				   	</md-item-template>
+				   	<md-not-found>
+					   No existe la aseguradora "{{$ctrl.searchAseg}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<!-- <md-input-container class="md-block" flex-gt-sm style="margin-bottom:20px">
+		         	<label>Partner</label>
+					<md-select ng-model="$ctrl.form.ID_COLECTIVO.value">
+		           		<md-option ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">
+			              	{{colectivo.DS_TIPO_POLIZA}}
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container> -->
+				<md-autocomplete name="Partner" md-no-cache="$ctrl.noCache" flex-gt-sm="100" class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchColectivo"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchColectivo, $ctrl.colectivos, 'DS_TIPO_POLIZA')"
+				   md-item-text="item.DS_TIPO_POLIZA" md-min-length="0"
+				   md-floating-label="Partner"
+				   md-selected-item="$ctrl.autocomplete.COLECTIVO"
+				   md-selected-item-change="$ctrl.form.ID_COLECTIVO.value = $ctrl.autocomplete.COLECTIVO.ID_TIPO_POLIZA"
+				   ng-blur="$ctrl.autocomplete.COLECTIVO == undefined ? $ctrl.searchColectivo = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchColectivo"
+						   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'DS_TIPO_POLIZA')}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el colectivo "{{$ctrl.searchColectivo}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<!-- <md-input-container class="md-block" flex-gt-sm>
+		         	<label>Canal</label>
+					<md-select ng-model="$ctrl.form.LST_CANAL.value" multiple>
+						<md-option ng-repeat="canal in $ctrl.tipos.canales" ng-value="canal.ID_TIPOS">
+						   {{canal.DS_TIPOS}}
+					 </md-option>
+					</md-select>
+		       	</md-input-container> -->
+				<md-autocomplete name="Canal" md-no-cache="$ctrl.noCache" flex-gt-sm="50" class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchCanal"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchCanal, $ctrl.tipos.canales, 'DS_TIPOS')"
+				   md-item-text="item.DS_TIPOS" md-min-length="0"
+				   md-floating-label="Canal"
+				   md-selected-item="$ctrl.autocomplete.CANAL"
+				   md-selected-item-change="$ctrl.form.ID_TIPO.value = $ctrl.autocomplete.CANAL.ID_TIPOS"
+			   >
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchCanal"
+						   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'DS_TIPOS')}}</span>
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el canal "{{$ctrl.searchCanal}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			</div>
+		</div>
+		<div style="text-align:center;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				Buscar
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-trash"></i>
+				{{ 'CLEAN' | translate | uppercase }}
+			</md-button>
+		</div>
+	</form>
+</md-content>

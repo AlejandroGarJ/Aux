@@ -1,0 +1,41 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="md-toolbar-tools toolbar-filtro">
+	<div layout="row" layout-align="start center" flex="90">
+		<h2 style="text-transform: uppercase; color:#0066FF"><span style="color:#2b3447!important"><span style="color:#4b4b4b" ng-click="$ctrl.navTo('#!/area_privada?smovil=true')"><span><i class="fa-solid fa-caret-left"></i></span> MENÚ <span style="color:#0066FF">SEGURO MÓVIL</span> </span> <i class="fa-thin fa-chevron-right"></i> TOKENS DE <span style="font-family: TelefonicaWebBold!important">CONTRATACIÓN</span></span></h2>
+	</div>
+</div>
+<div style="margin-top: -20px!important;margin-left: 16px;color: #8f97af">
+	<h6 style="text-transform: uppercase">{{ 'SEARCH_DESCRIPTION' | translate }}</h6>
+</div>
+<md-content>
+	<form  class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('envio-movistar')">
+		<div class="form-scroll" resize>
+			<div layout-gt-sm="row" class="margin-top-20">
+				<md-input-container class="md-block" flex-gt-sm="10" class="inputSpace">
+					<label><i class="fa-solid fa-fingerprint" style="margin-right:5px"></i>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+					<input ng-model="$ctrl.form.num_identificacion.value" maxlength="9">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="12.5" class="inputSpace">
+					<label><i class="fa-light fa-phone" style="margin-right:5px"></i>{{ 'MSISDN' | translate }}</label>
+					<input ng-model="$ctrl.form.msisdn.value" maxlength="9">
+				</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm="15" class="inputSpace">
+		         	<label><i class="fa-light fa-barcode-read" style="margin-right:5px"></i>{{ 'IMEI' | translate }}</label>
+		         	<input ng-model="$ctrl.form.imei.value" maxlength="15"  >
+		       	</md-input-container>
+				<div >
+					<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+						<i class="fa fa-magnifying-glass"></i>
+						{{ 'SEARCH_BTN' | translate }}
+					</md-button>
+					<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar($ctrl.form)" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+						<i class="fa fa-trash"></i>
+						{{ 'CLEAN' | translate }}
+					</md-button>
+				</div>
+			</div>
+		</div>
+	</form>
+</md-content>

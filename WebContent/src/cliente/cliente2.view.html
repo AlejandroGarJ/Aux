@@ -1,0 +1,308 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color:white">
+	<div layout="row" style="margin-top: 20px;">
+		<div flex="10"></div>
+		<div flex="80" >
+			<div class="formClass form-scroll" style="padding:0px 30px;margin-top: 20px" resize ng-style="resizeHeight(205)">
+				<div layout="row">
+					<div class="flex-80">
+						<h3 tyle="text-transform: uppercase; padding-left: 15px;">
+							<span style="color:#5e5e5e!important">
+								CREACIÓN DE</span><span style="color:#0066ff!important"> NUEVO CLIENTE
+							</span>
+							<div layout-gt-sm="row">
+								<h6 style="text-align: center;text-transform: uppercase">RELLENA LOS CAMPOS Y HAZ CLICK EN GUARDAR</h6>
+							</div>
+						</h3>
+					</div>
+					<div class="flex-20" style="text-align: right;margin-top: 15px">
+						<md-button style="text-align: right" ng-if="$ctrl.navegador != 'internet explorer' && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" type="submit" form="formNuevoCliente">
+							<i class="fa-regular fa-floppy-disk" style="margin-right: 3px;color: #5bc615"></i> {{ 'SAVE' | translate }}
+						</md-button>
+						<md-button style="text-align: right" ng-if="$ctrl.navegador == 'internet explorer' && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.altaCliente()" form="formNuevoCliente">
+							<i class="fa-regular fa-floppy-disk" style="margin-right: 3px;color: #5bc615"></i> {{ 'SAVE' | translate }}
+						</md-button>
+					</div>
+				</div>
+				<form name="$ctrl.formCliente" class="formClass" id="formNuevoCliente" ng-submit="$ctrl.altaCliente()" novalidate>
+					<div layout-gt-sm="row" class="margin-top-20">
+						<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.changeDoc != 2">
+							<!-- <label>{{ 'NAME' | translate }}</label> -->
+							<label>{{ 'NAME' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_NOMBRE.value" required>
+						</md-input-container>
+						<!-- <md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.changeDoc != 2 && $ctrl.changeDoc != 5">
+							<label>{{ 'SURNAME_1' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_APELLIDO1.value" required>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.changeDoc != 2 && $ctrl.changeDoc != 5">
+							<label>{{ 'SURNAME_2' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_APELLIDO2.value">
+						  </md-input-container> -->
+						<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.changeDoc != 2">
+							<!-- <label>Apellidos</label> -->
+							<label>{{ 'SURNAME' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_APELLIDO1.value" required>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.changeDoc == 2" >
+							<label>{{ 'TRADE_NAME' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_NOMBRE.value" required>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container ng-if="$ctrl.CLIENTE_POTENCIAL != true" class="md-block" flex-gt-sm>
+							<label>{{ 'DOCUMENT_TYPE' | translate }}</label>
+							<md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_TIPO_DOCUMENTO.value" ng-init="$ctrl.form.ID_TIPO_DOCUMENTO.value ='1'" ng-blur="$ctrl.checkDocument()" ng-change="$ctrl.changeForm(); $ctrl.changeTipoDocumento()" required>
+								<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO" ng-if="tipo.ID_TIPO_DOCUMENTO != 5">
+								{{$ctrl.parent.getDescriptivo(tipo, 'DS_TIPO_DOCUMENTO')}}
+	<!-- 				              	{{tipo.DS_TIPO_DOCUMENTO}} -->
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container ng-if="$ctrl.form.ID_TIPO_DOCUMENTO.value != '5'" class="md-block" flex-gt-sm>
+							<!-- <label>NIF</label> -->
+							<label>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+							<input name="documentNumber" ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_DOCUMENTO.value" ng-blur="$ctrl.checkDocument()" ng-change="$ctrl.changeForm($ctrl.form.NU_DOCUMENTO.value)" ng-required="$ctrl.form.ID_TIPO_DOCUMENTO.value != '5'">
+						</md-input-container>
+						<md-input-container class="md-block" ng-if="$ctrl.changeDoc != 2" flex-gt-sm>
+							<label>{{ 'NATIONALITY' | translate }}</label>
+							<md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false || $ctrl.form.ID_TIPO_DOCUMENTO.value == 1" ng-model="$ctrl.form.CO_NACIONALIDAD.value" ng-if="$ctrl.form.ID_TIPO_DOCUMENTO.value == '1' || $ctrl.form.ID_TIPO_DOCUMENTO.value =='2' ? $ctrl.form.CO_NACIONALIDAD.value = 'ESP' : ' '" ng-required="$ctrl.form.ID_TIPO_DOCUMENTO.value != '5'">
+								<md-option ng-repeat="pais in $ctrl.tipos.paises" ng-value="pais.CO_ISO_A3" ng-disabled="$ctrl.form.ID_TIPO_DOCUMENTO.value == '4' && pais.CO_ISO_A3 == 'ESP'">
+									{{$ctrl.parent.getDescriptivo(pais, 'NO_PAIS')}}
+	<!-- 				              	{{pais.NO_PAIS}} -->
+								</md-option>
+							</md-select>
+						</md-input-container>
+					</div>
+				<!--   <div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Vía de pago</label>
+							<md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_TIPO_MEDIO_PAGO.value" required>
+								<md-option ng-repeat="pago in $ctrl.tipos.pago" ng-value="pago.ID_TIPO_MEDIO_PAGO">
+									{{pago.DS_TIPO_MEDIO_PAGO}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Partner</label>
+							<md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_TIPOEMPLEADO.value">
+								<md-option ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">
+									{{colectivo.DS_TIPO_POLIZA}}
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<div flex-gt-sm>
+							<md-checkbox ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.IN_CLIENTE_PROTEGIDO.value">
+								No portal
+							</md-checkbox>
+						</div>
+						<div flex-gt-sm>
+							<md-checkbox class="clienteVip" ng-model="$ctrl.form.IN_CLIENTE_VIP.value">
+								VIP
+							</md-checkbox>
+						</div>
+						<div flex-gt-sm>
+							<md-checkbox ng-model="$ctrl.form.IN_CLUB_PLEYADE.value">
+								Club Pleyade
+							</md-checkbox>
+						</div>
+					</div>-->
+					<div ng-class="{'margin-top-20': $ctrl.form.ID_TIPO_DOCUMENTO.value == '5'}" layout-gt-sm="row" ng-if="$ctrl.changeDoc != 2">
+						<md-input-container class="md-block" ng-if="$ctrl.changeDoc != 2" flex-gt-sm>
+							<label>{{ 'GENDER' | translate }}</label>
+							<md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_SEXO.value">
+								<md-option ng-repeat="sexo in $ctrl.tipos.sexo" ng-value="sexo.ID_SEXO">
+									{{$ctrl.parent.getDescriptivo(sexo, 'DS_SEXO')}}
+	<!-- 				              	{{sexo.DS_SEXO}} -->
+								</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'BIRTH_DATE' | translate }}</label>
+
+								<md-datepicker ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" md-max-date="$ctrl.date"	ng-model="$ctrl.form.FD_NACIMIENTO.value"
+									ng-init="($ctrl.form.FD_NACIMIENTO.value == null || $ctrl.form.FD_NACIMIENTO.value == undefined) ? $ctrl.form.FD_NACIMIENTO.value = null : ' '" ng-click="($ctrl.form.FD_NACIMIENTO.value == null || $ctrl.form.FD_NACIMIENTO.value == undefined) ? $ctrl.form.FD_NACIMIENTO.value = null : ' '"></md-datepicker>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'CIVIL_STATUS' | translate }}</label>
+							<md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_ESTADO_CIVIL.value">
+								<md-option ng-repeat="estado in $ctrl.tipos.estadoCivil" ng-value="estado.ID_TIPOS">
+									{{$ctrl.parent.getDescriptivo(estado, 'DS_TIPOS')}}
+	<!-- 				              	{{estado.DS_TIPOS}} -->
+								</md-option>
+							</md-select>
+						</md-input-container>
+
+	<!-- 		          	<md-input-container class="md-block" flex-gt-sm> -->
+	<!-- 		          		<label>Fecha Carnet</label> -->
+	<!-- 							<md-datepicker ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.FD_CARNET.value" -->
+	<!-- 								ng-init="($ctrl.form.FD_CARNET.value == null || $ctrl.form.FD_CARNET.value == undefined) ? $ctrl.form.FD_CARNET.value = null : ' '" ng-click="($ctrl.form.FD_CARNET.value == null || $ctrl.form.FD_CARNET.value == undefined) ? $ctrl.form.FD_CARNET.value = null : ' '"></md-datepicker> -->
+	<!-- 		          	</md-input-container> -->
+	<!-- 		          	<md-input-container class="md-block" flex-gt-sm> -->
+	<!-- 		            	<label>Situación laboral</label> -->
+	<!-- 		            	<md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.ID_SITUACION_LABORAL.value" ng-change="$ctrl.putMatricula()"> -->
+	<!-- 		            		<md-option ng-repeat="pago in $ctrl.tipos.situaCliente" ng-value="pago.ID_SITUACION_CLIENTE"> -->
+	<!-- 				              	{{pago.DS_SITUACION_CLIENTE}} -->
+	<!-- 				            </md-option> -->
+	<!-- 		            	</md-select> -->
+	<!-- 		          	</md-input-container> -->
+	<!-- 		          	<md-input-container class="md-block" flex-gt-sm="10" ng-if="$ctrl.show"> -->
+	<!-- 		            	<label>Matrícula</label> -->
+	<!-- 		            	<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_MATRICULA.value"> -->
+	<!-- 		          	</md-input-container> -->
+	<!-- 		          	<md-input-container class="md-block" flex-gt-sm="5" ng-if="$ctrl.show"> -->
+	<!-- 		            	<label>Dígito</label> -->
+	<!-- 		            	<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_DIGI_MATRICULA.value"> -->
+	<!-- 		          	</md-input-container> -->
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm="50">
+							<label>{{ 'EMAIL' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NO_EMAIL.value" ng-required="$ctrl.form.ID_TIPO_DOCUMENTO.value != '5'" type="email">
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'TELEPHONE_1' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_TELEFONO1.value" maxlength="9" minlength="9" ng-required="$ctrl.form.ID_TIPO_DOCUMENTO.value == '5' && ($ctrl.form.NU_TELEFONO2.value == null || $ctrl.form.NU_TELEFONO2.value == '') && ($ctrl.form.NU_MOVIL1.value == null || $ctrl.form.NU_MOVIL1.value == '')">
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'TELEPHONE_2' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_TELEFONO2.value" maxlength="9" minlength="9" ng-required="$ctrl.form.ID_TIPO_DOCUMENTO.value == '5' && ($ctrl.form.NU_TELEFONO1.value == null || $ctrl.form.NU_TELEFONO1.value == '') && ($ctrl.form.NU_MOVIL1.value == null || $ctrl.form.NU_MOVIL1.value == '')">
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>{{ 'MOBILE_TELEPHONE' | translate }}</label>
+							<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.NU_MOVIL1.value" maxlength="9" minlength="9" ng-required="$ctrl.form.ID_TIPO_DOCUMENTO.value == '5' && ($ctrl.form.NU_TELEFONO1.value == null || $ctrl.form.NU_TELEFONO1.value == '') && ($ctrl.form.NU_TELEFONO2.value == null || $ctrl.form.NU_TELEFONO2.value == '')">
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<div flex-gt-sm>
+							<md-checkbox ng-model="$ctrl.CLIENTE_POTENCIAL" ng-change="$ctrl.changeClientePotencial()">
+								Cliente potencial
+							</md-checkbox>
+						</div>
+						<div flex-gt-sm>
+							<md-checkbox ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.IN_PUBLICIDAD.value">
+								{{ 'ADVERTISING' | translate }}
+							</md-checkbox>
+						</div>
+						<div flex-gt-sm>
+							<md-checkbox ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.IN_LOPD.value">
+								{{ 'BLOCKING' | translate }}
+							</md-checkbox>
+						</div>
+						<div flex-gt-sm>
+							<md-checkbox ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.form.IN_NO_DEC_AUTO.value">
+								{{ 'AUTOMATED' | translate }}
+							</md-checkbox>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<legend class="margin-top-20"><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'ADDRESS_DATA' | translate }}</legend>
+							<md-button ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.anadirDir()">
+								<md-icon>add</md-icon>
+								{{ 'ADD' | translate }}
+							</md-button>
+							<div class="margin-top-20">
+								<div layout-gt-sm="row" ng-repeat="dir in $ctrl.dirs track by $index">
+									<a ng-click="$ctrl.eliminarFila()">
+										<span id="delete" class="glyphicon glyphicon-trash"></span>
+									  </a>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'ROAD_TYPE' | translate }}</label>
+										<md-select ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.dirs[$index]['ID_TIPO_VIA']" ng-change="$ctrl.updateDir('tipo', $index)">
+											<md-option ng-repeat="tipo in $ctrl.tipos.tiposVia" ng-value="tipo.ID_TIPO_VIA">
+												{{$ctrl.parent.getDescriptivo(tipo, 'DS_TIPO_VIA')}}
+	<!-- 							              	{{tipo.DS_TIPO_VIA}} -->
+											</md-option>
+										</md-select>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'ADDRESS' | translate }}</label>
+										<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.dirs[$index]['NO_DIRECCION']" required>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'NUMBER' | translate }}</label>
+										<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.dirs[$index]['NU_NUMERO']">
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'POSTAL_CODE' | translate }}</label>
+										<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.dirs[$index]['CO_POSTAL']" maxlength="5" ng-change="$ctrl.updateDir($ctrl.dirs[$index]['CO_POSTAL'], $index)" required>
+									  </md-input-container>
+										   <md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'LOCALITY' | translate }}</label>
+										<input disabled ng-model="$ctrl.dirs[$index]['NO_LOCALIDAD']" required>
+									</md-input-container>
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'PROVINCE' | translate }}</label>
+										<input disabled ng-value="$ctrl.dirs[$index].NO_PROVINCIA" ng-model="$ctrl.dirs[$index]['NO_PROVINCIA']" required>
+									</md-input-container>
+									<div flex-gt-sm>
+										<md-checkbox ng-model="$ctrl.dirs[$index]['IN_CORRESPONDENCIA']">
+											{{ 'CORRESPONDENCE' | translate }}
+										</md-checkbox>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<legend><span class="mov-ico ic-ciber-ico-suma-asegurada"></span> {{ 'BANK_DATA' | translate }}</legend>
+							<md-button ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.anadirBanco($ctrl.bancos)">
+								<md-icon>add</md-icon>
+								{{ 'ADD' | translate }}
+							</md-button>
+							<div class="margin-top-20">
+								<div layout-gt-sm="row" ng-repeat="banco in $ctrl.bancos track by $index">
+									<a ng-click="$ctrl.eliminarFilaBan()">
+										<span id="delete2" class="glyphicon glyphicon-trash"></span>
+									  </a>
+	<!-- 								<md-input-container class="md-block" flex-gt-sm="10"> -->
+	<!-- 									<label>Banco</label> -->
+	<!-- 									<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.bancos[$index]['CO_BANCO']" maxlength="4" pattern="[0-9]{4}"> -->
+	<!-- 								</md-input-container> -->
+	<!-- 								<md-input-container class="md-block" flex-gt-sm="10"> -->
+	<!-- 					            	<label>Sucursal</label> -->
+	<!-- 					            	<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.bancos[$index]['NU_SUCURSAL']" maxlength="4" pattern="[0-9]{4}"> -->
+	<!-- 					          	</md-input-container> -->
+	<!-- 					          	<md-input-container class="md-block" flex-gt-sm="10"> -->
+	<!-- 					            	<label>DC</label> -->
+	<!-- 					            	<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.bancos[$index]['NU_DC']" maxlength="2" pattern="[0-9]{2}"> -->
+	<!-- 					          	</md-input-container> -->
+	<!-- 					          	<md-input-container class="md-block" flex-gt-sm="50"> -->
+	<!-- 					            	<label>Cuenta</label> -->
+	<!-- 					            	<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.bancos[$index]['NU_CUENTA']" maxlength="10" pattern="[0-9]{10}"> -->
+	<!-- 					          	</md-input-container> -->
+									<md-input-container class="md-block" flex-gt-sm="50">
+										<label>{{ 'IBAN' | translate }}</label>
+										<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.bancos[$index]['CO_IBAN']" minlength="24" maxlength="24" cvalidation="iban" required>
+									</md-input-container>
+	<!-- 								<md-input-container class="md-block" flex-gt-sm="10"> -->
+	<!-- 					            	<label>BIC</label> -->
+	<!-- 					            	<input ng-disabled="$ctrl.permisos.IN_ESCRITURA === false" ng-model="$ctrl.bancos[$index]['CO_BIC']" maxlength="11" pattern="[a-zA-Z0-9]{8,11}"> -->
+	<!-- 					          	</md-input-container> -->
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</form>
+			</div>
+			<div flex="10"></div>
+			<div layout="row" layout-align="center" layout-margin>
+
+			</div>
+	<!-- 			<ng-form role='form' id="formCliente" name="clienteForm" ng-submit="$ctrl.submitForm(clienteForm.$valid)" novalidate> -->
+
+	<!-- 			</ng-form> -->
+
+	<!-- 		<div flex="20"></div> -->
+		</div>
+	</div>
+
+</md-content>

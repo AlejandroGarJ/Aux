@@ -1,0 +1,51 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:55%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>
+				<span ng-if="$ctrl.dialogType == 'imei'">Añade el IMEI</span>
+				<span ng-if="$ctrl.dialogType == 'iban'">Añade el IBAN</span>
+			</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="height:90px;">
+	
+		<form class="fade-out formClass" id="form" ng-submit="$ctrl.confirmar()">
+			<!-- <md-tabs class="estiloTabs" md-dynamic-height md-border-bottom ng-click="$ctrl.clearModel()" resize ng-style="resizeHeight(190)"> -->
+			<div class="form-scroll" resize>
+				<div layout-gt-sm="row" layout-align="center start" class="margin-top-20">
+					<!-- <md-input-container class="md-block" flex-gt-sm="10"> -->
+						<!-- <label><i class="fa-solid fa-fingerprint" style="margin-right:5px"></i>{{ 'DOCUMENT_NUMBER' | translate }}</label> -->
+						<!-- <input ng-model="$ctrl.form.documentNumber.value"> -->
+					<!-- </md-input-container> -->
+					
+					<md-input-container ng-if="$ctrl.dialogType == 'imei'" class="md-block" flex-gt-sm="50">
+						<label>IMEI</label>
+						<input required ng-model="$ctrl.form.imei">
+					</md-input-container>
+
+					<md-input-container ng-if="$ctrl.dialogType == 'iban'" class="md-block" flex-gt-sm="50">
+						<label>IBAN</label>
+						<input ng-model="$ctrl.form.iban" minlength="24" maxlength="24" cvalidation="iban" uppercase required>
+					</md-input-container>
+
+					<md-button ng-if="$ctrl.cargar!=true" class="md-raised md-primary medium-blue button-action-main" type="submit">
+						<span ng-if="$ctrl.dialogType == 'imei'">Confirmar IMEI</span>
+						<span ng-if="$ctrl.dialogType == 'iban'">Confirmar IBAN</span>
+					</md-button>
+		        	<div ng-if="$ctrl.cargar==true" id="buscandoGif" style="margin-top: 0px;padding:0px; display:table; z-index: 999999999; position: fixed; width: 75%; height: 2%;">
+			            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+							<div class = "blob-3"></div>
+							<div class = "blob-4"></div>
+						</div>
+			        </div>
+				</div>
+			</div>
+		</form>
+	</md-dialog-content>
+</md-dialog>

@@ -1,0 +1,28 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> {{ 'POLICY_CANCELATION' | translate }}
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+<!-- <h4>Alta de asegurado</h4> -->
+	<div class="separadorDesplegables"></div>
+	<div layout-gt-sm="row" style="margin-bottom:20px">
+		<md-input-container class="md-block" flex-gt-sm="50">
+			<label>{{ 'REQUEST_POLICY_CANCELATION' | translate }}</label>
+			<md-select ng-change="$ctrl.getData()" ng-model="$ctrl.form.ID_CAUSAANULACION" ng-disabled="$ctrl.bajaDisabled == true" required>
+				<md-option ng-repeat="anul in $ctrl.tipos.anulaciones" ng-value="anul.ID_CAUSAANULACION">{{anul.DS_CAUSAANULACION}}</md-option>
+			</md-select>
+		</md-input-container>
+
+		<div ng-show="$ctrl.msgWarn" flex-gt-sm="" class="msg-warn-container">
+			<p>
+				<md-icon>warning</md-icon>
+				{{$ctrl.msgWarn}}
+			</p>
+		</div>
+	</div>
+</div>

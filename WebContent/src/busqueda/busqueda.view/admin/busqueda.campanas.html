@@ -1,0 +1,24 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results">
+	<md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+		<md-tab label="Resultado de la búsqueda">
+			<div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+	        	<!-- <h2>Busque una campaña</h2> -->
+	        </div>
+	        <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+<!-- 			            <h2>Buscando</h2> -->
+	            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+					<div class = "blob-3"></div>
+					<div class = "blob-4"></div>
+				</div>
+	        </div>
+	        <div id="mensajeNingunResultado" class="mensajesBusqueda" ng-if="$ctrl.vista == 3">
+	       		<h2>No se ha encontrado ninguna campaña</h2>
+	        </div>
+		
+			<div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(209)"></div>
+		</md-tab>
+	</md-tabs>
+</div>

@@ -1,0 +1,265 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+
+    <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll">
+        <div class="container_adminpanel" flex>
+        
+        	<!--<div layout="row" layout-align="start start">
+				<i ng-click="$ctrl.navTo('#!/area_privada?smovil=true')" class="fas fa-chevron-left" style="font-size: 1.7em; margin-right: 10px"></i>
+        		<h3 style="text-transform: uppercase; padding-left: 15px; margin-top: 0px" flex-gt-sm="25" ><span style="color:#2b3447!important">Estadísticas</span><span style="color:#0066ff!important"> Seguro Móvil </span></h3>
+        	</div>-->
+
+			<div layout-gt-sm="row" style="margin-top: 20px">
+				<div flex="15">
+					<div style="margin-bottom: 20px">
+						<p class="operative-box-subtext label-promo">Promo primer mes gratis <i class="far fa-dot-circle" style="color:#64cd7a"></i></p>
+					</div>
+					<div>
+						<div class="operative-box-column">
+							<span class="operative-box-text">One Click y Sim Only</span>
+						</div>
+						<div class="operative-box-column-content">
+							<p class="operative-box-subtext"><i class="fas fa-location-arrow" style="margin-right: 5px"></i> Operativa General</p>
+							<p class="operative-box-subtext"><i class="fa-light fa-phone" style="margin-right: 5px"></i> Acceder a tarificación y contratación</p>
+							<p class="operative-box-subsection"> Informes</p>
+							<p class="operative-box-subtext"><i class="fas fa-filter" style="margin-right: 5px"></i> GENERAR INFORME de recordatorios de prepólizas</p>
+						</div>
+					</div>
+					<div>
+						<div class="operative-box-column">
+							<span class="operative-box-text">Fusión Banner</span>
+						</div>
+						<div class="operative-box-column-content">
+							<p class="operative-box-subtext"><i class="fas fa-location-arrow" style="margin-right: 5px"></i> Operativa Banner</p>
+							<p class="operative-box-subtext"><i class="fas fa-external-link-alt" style="margin-right: 5px"></i> Confirmar IMEI de una prepóliza</p>
+							<p class="operative-box-subsection"> Informes</p>
+							<p class="operative-box-subtext"><i class="fas fa-filter" style="margin-right: 5px"></i> GENERAR INFORME de recordatorios de prepólizas</p>
+						</div>
+					</div>
+					<div>
+						<div class="operative-box-column">
+							<span class="operative-box-text">Fusión Web Carrito</span>
+						</div>
+						<div class="operative-box-column-content">
+							<p class="operative-box-subtext"><i class="fas fa-location-arrow" style="margin-right: 5px"></i> Operativa Web Carrito</p>
+							<p class="operative-box-subtext"><i class="fas fa-external-link-alt" style="margin-right: 5px"></i> Confirmar IMEI de una prepóliza</p>
+							<p class="operative-box-subsection"> Informes</p>
+							<p class="operative-box-subtext"><i class="fas fa-filter" style="margin-right: 5px"></i> GENERAR INFORME de ventas</p>
+						</div>
+					</div>
+					<div>
+						<div class="operative-box-column">
+							<span class="operative-box-text">Portabilidad</span>
+						</div>
+						<div class="operative-box-column-content">
+							<p class="operative-box-subtext"><i class="fas fa-external-link-alt" style="margin-right: 5px"></i> Tramitar consentimiento de cobro o contratación</p>
+							<p class="operative-box-subsection"> Informes</p>
+							<p class="operative-box-subtext"><i class="fas fa-filter" style="margin-right: 5px"></i> GENERAR INFORME de operativa</p>
+						</div>
+					</div>
+					<div>
+						<div class="operative-box-column">
+							<span class="operative-box-text">Terminales</span>
+						</div>
+						<div class="operative-box-column-content">
+							<span class="operative-box-subtext">Creación y actualización de terminales</span>
+						</div>
+					</div>
+				</div>
+				<div flex="85" style="width: 100%; padding-left: 50px;">
+					<div layout="row" layout-align="left left">
+						<div layout-gt-sm="row"  flex="50">
+							<md-input-container class="md-block" flex-gt-sm="30">
+								<md-select ng-model="$ctrl.form.periodo">
+									<md-option ng-selected="true" ng-value="1">Este mes - Por días</md-option>
+									<md-option ng-value="2">Esta año - Por meses</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm="30">
+								<md-select ng-model="$ctrl.form.periodo">
+									<md-option ng-selected="true" ng-value="1">Digital + Atento</md-option>
+									<md-option ng-value="2">Digital</md-option>
+									<md-option ng-value="3">Atento - Call Center</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+						<div flex="50" style="margin-top: 10px" layout-align="right right">
+							<md-input-container class="md-block" flex-gt-sm="30">
+								<md-select ng-model="$ctrl.form.periodo">
+									<md-option ng-selected="true" ng-value="1">Digital + Atento</md-option>
+									<md-option ng-value="2">Digital</md-option>
+									<md-option ng-value="3">Atento - Call Center</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="margin-top-20">
+						<div flex="50" layout-align="center center" style="padding: 0px 20px 0px 20px">
+							<canvas id="chart01" width="100" height="40"></canvas>
+						</div>
+						<div flex="50" layout-align="center center" style="padding: 0px 20px 0px 20px">
+							<canvas id="chart02" width="100" height="40"></canvas>
+						</div>
+					</div>
+
+					<div layout="row" class="margin-top-20" style="margin-left:40px;margin-right: 100px">
+						<div flex="50" class="ui-card-segment" layout-align="left center">
+							<a class="ui-ribbon">Generar token de contratación</a>
+							<div layout-gt-sm="row" class="margin-top-20">
+								<md-input-container class="md-block" flex-gt-sm="30">
+									<md-select ng-model="$ctrl.form.periodo">
+										<md-option ng-selected="true" ng-value="1">Operativa</md-option>
+										<md-option ng-value="ONECLICK">ONE CLICK</md-option>
+										<md-option ng-value="SIMONLY">SIM ONLY -15</md-option>
+										<md-option ng-value="SIMONLY15">SIM ONLY +15</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm="25">
+									<label>MSISDN</label>
+									<input>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm="45">
+									<label>IMEI</label>
+									<input>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row" >
+								<div flex-gt-sm="50">
+									<md-autocomplete name="Brand" flex-gt-sm md-no-cache="$ctrl.noCache" required
+													 md-selected-item="$ctrl.selBrand" md-search-text="$ctrl.searchBrand"
+													 md-selected-item-change="$ctrl.getModels()"
+													 md-items="brand in $ctrl.querySearch($ctrl.searchBrand, $ctrl.lstBrands, 'brandName')"
+													 md-item-text="brand.brandName" md-min-length="0" md-require-match
+													 md-floating-label="{{ 'BRAND' | translate }}">
+										<md-item-template>
+	                                <span md-highlight-text="$ctrl.searchBrand"
+										  md-highlight-flags="^i">{{brand.brandName}}</span>
+										</md-item-template>
+										<md-not-found>
+											No existe la marca "{{$ctrl.searchBrand}}".
+										</md-not-found>
+									</md-autocomplete>
+								</div>
+								<div flex-gt-sm="50">
+									<md-autocomplete name="Model" ng-disabled="$ctrl.selBrand == null || $ctrl.selBrand == undefined" flex-gt-sm md-no-cache="$ctrl.noCache" required
+													 md-selected-item="$ctrl.selModel" md-search-text="$ctrl.searchModel"
+													 md-items="model in $ctrl.querySearch($ctrl.searchModel, $ctrl.lstModels, 'modelName')"
+													 md-item-text="model.modelName" md-min-length="0" md-require-match
+													 md-floating-label="{{ 'MODEL' | translate }}">
+										<md-item-template>
+	                                <span md-highlight-text="$ctrl.searchModel"
+										  md-highlight-flags="^i">{{model.modelName}}</span>
+										</md-item-template>
+										<md-not-found>
+											No existe el modelo "{{$ctrl.searchModel}}".
+										</md-not-found>
+									</md-autocomplete>
+								</div>
+
+							</div>
+						</div>
+					</div>
+<!--					<div layout="row" layout-align="center center">-->
+<!--						<a class="button-circle circle" href="#">welcome</a>-->
+<!--					</div>-->
+				</div>
+			</div>
+			<!--<div layout="row" layout-align="left left">
+				<div layout-gt-sm="row"  flex="50" class="margin-top-20">
+					<md-input-container class="md-block" flex-gt-sm="30">
+						<md-select ng-model="$ctrl.form.periodo">
+							<md-option ng-selected="true" ng-value="1">Este mes - Por días</md-option>
+							<md-option ng-value="2">Esta año - Por meses</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm="30">
+						<md-select ng-model="$ctrl.form.periodo">
+							<md-option ng-selected="true" ng-value="1">Digital + Atento</md-option>
+							<md-option ng-value="2">Digital</md-option>
+							<md-option ng-value="3">Atento - Call Center</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<div flex="50" style="margin-top: 10px" layout-align="right right">
+					<md-input-container class="md-block" flex-gt-sm="30">
+						<md-select ng-model="$ctrl.form.periodo">
+							<md-option ng-selected="true" ng-value="1">Digital + Atento</md-option>
+							<md-option ng-value="2">Digital</md-option>
+							<md-option ng-value="3">Atento - Call Center</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+			</div>
+			<div layout="row" layout-align="center center" class="margin-top-20">
+				<div flex="50" layout-align="center center">
+					<canvas id="chart01" width="100" height="40"></canvas>
+				</div>
+				<div flex="50" layout-align="center center">
+					<canvas id="chart02" width="100" height="40"></canvas>
+				</div>
+			</div>-->
+
+            <!--<div class="form-scroll" resize>
+				<div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+					<md-input-container class="md-block" flex-gt-sm="15">
+						<label>Tipo de informe</label>
+						<md-select ng-model="$ctrl.form.tipoInforme">
+							<md-option ng-value="1">Informe 1</md-option>
+							<md-option ng-value="2">Informe 2</md-option>
+							<md-option ng-value="3">Informe 3</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm="15">
+						<label>Tipo de informe</label>
+						<md-select ng-model="$ctrl.form.periodo">
+							<md-option ng-value="1">Hoy</md-option>
+							<md-option ng-value="2">Esta semana</md-option>
+							<md-option ng-value="3">Este mes</md-option>
+							<md-option ng-value="4">Este año</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm="15">
+						<label>Mediador</label>
+						<md-select ng-model="$ctrl.form.mediador">
+							<md-option ng-value="1">Telefonica Seguros</md-option>
+							<md-option ng-value="2">Atento</md-option>
+						</md-select>
+					</md-input-container>
+					<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+						<i class="fa-light fa-magnifying-glass"></i>
+						Mostrar gráficos
+					</md-button>
+					<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+						<i class="fa fa-trash"></i>
+						{{ 'CLEAN' | translate }}
+					</md-button>
+				</div>
+			</div>
+			
+		    <md-content ng-show="$ctrl.loading == true" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll">
+		        <div id="buscandoGif" 
+		            style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+		            resize ng-style="resizeHeight(330)">
+		            <div class="centered" style="display:table-cell; vertical-align: middle;">
+		                <div class="blob-3"></div>
+		                <div class="blob-4"></div>
+		            </div>
+		        </div>
+		    </md-content>
+    
+			<div layout="row" layout-align="center center">
+				<div flex="60" layout-align="center center" style="padding: 30px; margin-top: 30px">
+					<canvas id="chartEstadistica1" width="100" height="60"></canvas>
+				</div>
+				<div flex="40" layout-align="center center" style="padding: 30px; margin-top: 30px">
+					<canvas id="chartEstadistica2" width="100" height="80"></canvas>
+				</div>
+			</div>-->
+            
+        </div>
+    </md-content>
+    
+
+</div>

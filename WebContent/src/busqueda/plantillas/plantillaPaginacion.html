@@ -1,0 +1,94 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div role="contentinfo" class="ui-grid-pager-panel" ui-grid-pager ng-show="grid.options.enablePaginationControls">
+    <div role="navigation" class="ui-grid-pager-container">
+        <div role="menubar" class="ui-grid-pager-control">
+            <button type="button" role="menuitem" class="ui-grid-pager-first" ui-grid-one-bind-title="aria.pageToFirst" ui-grid-one-bind-aria-label="aria.pageToFirst" ng-click="pageFirstPageClick()" ng-disabled="cantPageBackward()">
+                <div class="first-triangle"><div class="first-bar"></div>
+            </div>
+        </button>
+        <button type="button" role="menuitem" class="ui-grid-pager-previous" ui-grid-one-bind-title="aria.pageBack" ui-grid-one-bind-aria-label="aria.pageBack" ng-click="pagePreviousPageClick()" ng-disabled="cantPageBackward()">
+            <div class="first-triangle prev-triangle"></div>
+        </button>
+        <input type="number" ui-grid-one-bind-title="aria.pageSelected" ui-grid-one-bind-aria-label="aria.pageSelected" class="ui-grid-pager-control-input" ng-model="grid.options.paginationCurrentPage" min="1" max="{{ paginationApi.getTotalPages() }}" required>
+        <span class="ui-grid-pager-max-pages-number" ng-show="paginationApi.getTotalPages() > 0">
+            <abbr ui-grid-one-bind-title="paginationOf"> / </abbr> {{ paginationApi.getTotalPages() }}
+        </span>
+        <button type="button" role="menuitem" class="ui-grid-pager-next" ui-grid-one-bind-title="aria.pageForward" ui-grid-one-bind-aria-label="aria.pageForward" ng-click="pageNextPageClick()" ng-disabled="cantPageForward()">
+            <div class="last-triangle next-triangle"></div>
+        </button>
+        <button type="button" role="menuitem" class="ui-grid-pager-last" ui-grid-one-bind-title="aria.pageToLast" ui-grid-one-bind-aria-label="aria.pageToLast" ng-click="pageLastPageClick()" ng-disabled="cantPageToLast()">
+            <div class="last-triangle">
+                <div class="last-bar"></div>
+            </div>
+        </button>
+        </div>
+        <div class="ui-grid-pager-row-count-picker" ng-if="grid.options.paginationPageSizes.length > 1">
+            <select ui-grid-one-bind-aria-labelledby-grid="'items-per-page-label'" ng-model="grid.options.paginationPageSize" ng-options="o as o for o in grid.options.paginationPageSizes"></select>
+            <span class="ui-grid-pager-row-count-label">&nbsp;elementos por página</span>
+            <!-- <span class="ui-grid-pager-row-count-label">&nbsp;elementos por página - PAGINAR = {{grid.appScope.$ctrl.pagination}} (plantillaPaginacion)</span> -->
+        </div>
+        <span ng-if="grid.options.paginationPageSizes.length <= 1" class="ui-grid-pager-row-count-label">{{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}</span>
+    </div>
+    <div class="ui-grid-pager-count-container">
+        <div class="ui-grid-pager-count" ng-if="grid.appScope.$ctrl.parent.pagination == false">
+            <span ng-if="grid.appScope.$ctrl.gridOptions != undefined" ng-show="grid.appScope.$ctrl.gridOptions.data.length > 0">
+                <abbr ui-grid-one-bind-title="paginationThrough">Total</abbr>
+                {{grid.appScope.$ctrl.gridOptions.data.length}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridRecibos != undefined" ng-show="grid.appScope.$ctrl.gridRecibos.data.length > 0">
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{grid.appScope.$ctrl.gridRecibos.data.length}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridDetalleRecibo != undefined" ng-show="grid.appScope.$ctrl.gridDetalleRecibo.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridDetalleRecibo.data.length ? grid.appScope.$ctrl.gridDetalleRecibo.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.gridDetalleRecibo.data.length}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridSiniestros != undefined" ng-show="grid.appScope.$ctrl.gridSiniestros.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridSiniestros.data.length ? grid.appScope.$ctrl.gridSiniestros.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.gridSiniestros.data.length}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridDetalleSiniestro != undefined" ng-show="grid.appScope.$ctrl.gridDetalleSiniestro.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridDetalleSiniestro.data.length ? grid.appScope.$ctrl.gridDetalleSiniestro.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.gridDetalleSiniestro.data.length}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridDetalleGarantia != undefined" ng-show="grid.appScope.$ctrl.gridDetalleGarantia.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridDetalleGarantia.data.length ? grid.appScope.$ctrl.gridDetalleGarantia.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.gridDetalleGarantia.data.length}}
+            </span>
+        </div>
+        <div class="ui-grid-pager-count" ng-if="grid.appScope.$ctrl.parent.pagination == true">
+            <span ng-if="grid.appScope.$ctrl.gridOptions != undefined" ng-show="grid.appScope.$ctrl.gridOptions.data.length > 0">
+                <abbr ui-grid-one-bind-title="paginationThrough">Total</abbr>
+                {{grid.appScope.$ctrl.parent.searchResult.total}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridRecibos != undefined" ng-show="grid.appScope.$ctrl.gridRecibos.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridRecibos.data.length ? grid.appScope.$ctrl.gridRecibos.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.parent.searchResult.total}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridDetalleRecibo != undefined" ng-show="grid.appScope.$ctrl.gridDetalleRecibo.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridDetalleRecibo.data.length ? grid.appScope.$ctrl.gridDetalleRecibo.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.parent.searchResult.total}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridSiniestros != undefined" ng-show="grid.appScope.$ctrl.gridSiniestros.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridSiniestros.data.length ? grid.appScope.$ctrl.gridSiniestros.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.parent.searchResult.total}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridDetalleSiniestro != undefined" ng-show="grid.appScope.$ctrl.gridDetalleSiniestro.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridDetalleSiniestro.data.length ? grid.appScope.$ctrl.gridDetalleSiniestro.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.parent.searchResult.total}}
+            </span>
+            <span ng-if="grid.appScope.$ctrl.gridDetalleGarantia != undefined" ng-show="grid.appScope.$ctrl.gridDetalleGarantia.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridDetalleGarantia.data.length ? grid.appScope.$ctrl.gridDetalleGarantia.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.parent.searchResult.total}}
+            </span>
+        </div>
+        <div class="ui-grid-pager-count" ng-if="grid.appScope.$ctrl.gridInformesLiq != null">
+            <span ng-if="grid.appScope.$ctrl.gridInformesLiq != undefined" ng-show="grid.appScope.$ctrl.gridInformesLiq.data.length > 0">Mostrando {{(((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize) +1)}}
+                <abbr ui-grid-one-bind-title="paginationThrough">-</abbr>
+                {{(grid.options.paginationCurrentPage * grid.options.paginationPageSize > grid.appScope.$ctrl.gridInformesLiq.data.length ? grid.appScope.$ctrl.gridInformesLiq.data.length : grid.options.paginationCurrentPage * grid.options.paginationPageSize)}} de {{grid.appScope.$ctrl.gridInformesLiq.data.length}}
+            </span>
+        </div>
+    </div>
+</div>

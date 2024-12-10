@@ -1,0 +1,181 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="row" resize
+	ng-style="resizeHeight({{$ctrl.medida}})">
+	<form role="form" id="formConsulta" class="formClass form-detalle" flex>
+		<section>
+			<legend><span class="mov-ico ic-ciber-ico-alerta-fraudes"></span> Reclamación cliente 
+			   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+			       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos del cliente"></span>
+			       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos del cliente"></span>
+			   </button>
+			</legend>
+				<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+					<div class="separadorDesplegables"></div>
+						<div layout="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Reclamación</label> 
+								<input ng-model="$ctrl.datos.ID_SOLICITUD" disabled> 
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Estado</label> 
+								<input ng-model="$ctrl.datos.DS_SITUACION_SOLICITUD" disabled> 
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Creado</label> 
+								<md-datepicker ng-model="$ctrl.datos.FD_ENTRADA" disabled> </md-datepicker> 
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Fecha Validación</label> 
+								<md-datepicker ng-model="$ctrl.datos.FD_VALIDACION" disabled> </md-datepicker> 
+							</md-input-container>
+					</div>
+					<div layout="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Canal</label> 
+							<input ng-model="$ctrl.datos.DS_TIPO" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Colectivo</label> 
+							<input ng-model="$ctrl.datos.OPOLIZA.DS_TIPO_COLECTIVO" disabled>
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Fecha Confirmación</label> 
+							<md-datepicker ng-model="$ctrl.datos.FD_CONFIRMACION" disabled></md-datepicker> 
+						</md-input-container>
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Fecha Resolución</label> 
+							<md-datepicker ng-model="$ctrl.datos.FD_CIERRE" disabled></md-datepicker> 
+						</md-input-container>
+					</div>
+				</div>
+		</section>
+		<section>
+			<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos del cliente
+			   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+			       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos del cliente"></span>
+			       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos del cliente"></span>
+			   </button>
+			</legend>
+				<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+					<div class="separadorDesplegables"></div>
+						<div layout="row" style="margin-bottom:1%">
+							<md-input-container class="md-block" flex-gt-sm="40">
+								<label>{{ 'NAME' | translate }}</label>
+								<input ng-model="$ctrl.datos.OCLIENTE.NO_NOMBRE_COMPLETO" disabled>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm="20">
+								<label>NIF</label>
+								<input ng-model="$ctrl.datos.OCLIENTE.NU_DOCUMENTO" disabled>
+							</md-input-container>
+		   					<md-input-container class="md-block" flex-gt-sm="40">
+		   						<label>Jur&#237;dica</label>
+		   						<input ng-model="$ctrl.datos.OCLIENTE.DS_SITUACION_CLIENTE" disabled>
+							</md-input-container>
+						</div>
+					</div>
+			</section>
+			<section>
+			<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos de la póliza
+			   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed3 = !$ctrl.isCollapsed3">
+			       <span ng-if="$ctrl.isCollapsed3" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos de la póliza"></span>
+			       <span ng-if="!$ctrl.isCollapsed3" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos de la póliza"></span>
+			   </button>
+			</legend>
+				<div id="divPoliza" uib-collapse="$ctrl.isCollapsed3">
+					<div class="separadorDesplegables"></div>
+						<div layout="row" style="margin-bottom:1%">
+		   					<md-input-container class="md-block" flex-gt-sm="30">
+		   						<label>Póliza</label>
+		   						<input ng-model="$ctrl.datos.OPOLIZA.NU_POLIZA" disabled>
+		   					</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm="50">
+		   						<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+								<input ng-model="$ctrl.datos.OPOLIZA.NO_COMPANIA" disabled>
+							</md-input-container>
+							</md-input-container>
+		   					<md-input-container class="md-block" flex-gt-sm="20">
+		   						<label>{{ 'BRANCH' | translate }}</label>
+								<input ng-model="$ctrl.datos.OPOLIZA.NO_RAMO" disabled>
+							</md-input-container>
+						</div>
+						<div layout="row" style="margin-bottom:1%">
+		   					<md-input-container class="md-block" flex-gt-sm="60" required>
+		   						<label>Motivo consulta a realizar</label>
+								<input ng-model="$ctrl.datos.CONSULTA_EXTERNA.DS_MOTIVO" disabled>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm="40">
+		   						<label>Asignado a</label>
+								<input ng-model="$ctrl.datos.NO_USU_ALTA" disabled>
+							</md-input-container>	
+						</div>	
+				</div>
+		</section>
+		<section>
+			<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos adicionales
+			   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed1 = !$ctrl.isCollapsed1">
+			       <span ng-if="$ctrl.isCollapsed1" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar datos adicionales"></span>
+			       <span ng-if="!$ctrl.isCollapsed1" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar datos adicionales"></span>
+			   </button>
+			</legend>
+				<div id="divPoliza" uib-collapse="$ctrl.isCollapsed1">
+					<div class="separadorDesplegables"></div>
+						<div layout="row" style="margin-bottom:1%"> 
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'OBSERVATIONS' | translate }}</label>
+									 <textarea ng-model="$ctrl.datos.CONSULTA_EXTERNA.XML_OBSERVACIONES.TX_OBSERVACIONES" disabled></textarea>
+							</md-input-container>
+						</div>
+				</div>
+		</section>	
+		<section>
+			<legend><span class="mov-ico ic-ciber-ico-coberturasgarantizadas"></span> Ficheros adjuntos
+				<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed5 = !isCollapsed5">
+					<span ng-if="!isCollapsed5" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span> 
+					<span ng-if="isCollapsed5" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+				</button>
+			</legend>
+			<div id="divPoliza" uib-collapse="!isCollapsed5">
+				<div class="separadorDesplegables"></div>
+					<div layout="column">
+						<input type="file" id="file_rec" name="file" class="inputfile" /> 
+							<label class="dark-blue md-button btnAddArchivo btnNuevo" for="file_rec">
+								<i class="material-icons btnIconoNube">cloud_upload</i> AÑADIR
+							</label>
+						<div class="margin-top-20" ng-repeat="archivo in $ctrl.listaArchivos" layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm flex="20">
+								<label>Fichero</label> <input ng-model="archivo.NO_ARCHIVO" disabled> 
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm flex="20">
+								<label>Estado</label> 
+								<input type="text" ng-model="archivo.ESTADO" disabled> 
+							</md-input-container>
+								<i ng-if="archivo.DESCARGAR != false"class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(archivo)"> cloud_download 
+									<md-tooltip md-direction="top">DESCARGAR</md-tooltip>
+								</i> 
+								<i class="material-icons btnIcono" ng-click="$ctrl.deleteFile(archivo)"> delete_outline 
+									<md-tooltip md-direction="top">{{ 'DELETE' | translate | uppercase }}</md-tooltip>
+								</i>
+						</div>
+					</div>
+				</div>
+		</section>
+
+
+<div layout="row" layout-align="center" layout-margin>
+	<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.datos.ID_SITUACION_SOLICITUD == 1" ng-click="$ctrl.validarSolicitud()">
+		<i class="fa-duotone fa-check-double"></i>  Validar
+	</md-button>
+	<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.datos.ID_SITUACION_SOLICITUD == 2" ng-click="$ctrl.validarSolicitud()">
+		<md-icon>check_circle</md-icon> Confirmar 
+	</md-button>
+	<md-button class="md-raised md-primary medium-blue button-action-main"
+		ng-click="$ctrl.reasignar()" ng-if="$ctrl.datos.ID_SITUACION_SOLICITUD == 1 || $ctrl.datos.ID_SITUACION_SOLICITUD == 2"> <md-icon>assignment_ind</md-icon> Reasignar 
+	</md-button>
+	<md-button class="md-raised md-primary medium-blue button-action-erase"
+		ng-click="$ctrl.rechazoSolicitud()" ng-if="$ctrl.datos.ID_SITUACION_SOLICITUD == 1 || $ctrl.datos.ID_SITUACION_SOLICITUD == 2"> <md-icon>report_problem</md-icon> Rechazar 
+	</md-button>
+</div>
+	</form>
+</div>					

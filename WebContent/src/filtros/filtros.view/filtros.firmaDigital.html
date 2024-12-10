@@ -1,0 +1,46 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color: #ffffff" class="margin-top-20">
+
+	<div layout-gt-sm="row" class="inputs-without-label-value" style="background-color:white; margin-top: 15px;margin-left: 13px;margin-right: 10px;border-left: 3px solid #0066ff">
+		<h3 style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="50" >
+			<span style="color:#5e5e5e!important">
+				{{ 'SEARCH' | translate }} DE</span><span style="color:#0066ff!important"> PÓLIZAS PENDIENTES DE FIRMA
+			</span>
+			<div layout-gt-sm="row">
+				<h6 style="text-align: center;text-transform: uppercase">BÚSQUEDA Y GESTIÓN DE PÓLIZAS PENDIENTES DE FIRMA</h6>
+			</div>
+		</h3>
+	</div>
+
+	<form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('firma_digital')">
+		<!-- <md-tabs class="estiloTabs" md-dynamic-height md-border-bottom ng-click="$ctrl.clearModel()" resize ng-style="resizeHeight(190)"> -->
+		<div class="form-scroll" resize>
+			<div layout-gt-sm="row" layout-align="start start" class="margin-top-20" style="margin-left:30px">
+				<md-input-container class="md-block" flex-gt-sm="10">
+					<label><i class="fa-light fa-phone" style="margin-right:5px"></i>{{ 'MSISDN' | translate }}</label>
+					<input ng-model="$ctrl.form.telefono.value" minlength="9" maxlength="9">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="10">
+					<label><i class="fa-solid fa-fingerprint" style="margin-right:5px"></i>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+					<input ng-model="$ctrl.form.documento.value">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm="10">
+					<label><i class="fa-light fa-i-cursor" style="margin-right:5px"></i>{{ 'POLICY_NU' | translate }}</label>
+					<input ng-model="$ctrl.form.NU_POLIZA.value">
+				</md-input-container>
+			 	<div style="margin-top:13px">
+					<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+						<i class="fa fa-magnifying-glass"></i>
+						{{ 'SEARCH_BTN' | translate }}
+					</md-button>
+					<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+						<i class="fa fa-trash"></i>
+						{{ 'CLEAN' | translate }}
+					</md-button>
+				</div>
+			</div>
+		</div>
+	</form>
+</md-content>

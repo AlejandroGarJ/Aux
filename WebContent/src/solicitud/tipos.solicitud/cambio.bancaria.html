@@ -1,0 +1,75 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-suma-asegurada"></span> {{ 'BANK_ACCOUNT_CHANGE' | translate }}
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+<!-- 	<h4>Cuenta bancaria anterior</h4> -->
+	<div class="separadorDesplegables"></div>
+	<div layout="row">
+<!-- 		<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 			<label>Banco</label> -->
+<!-- 			<input ng-model="$ctrl.form.OPOLIZA.CO_BANCO" disabled> -->
+<!-- 		</md-input-container> -->
+<!-- 		<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 			<label>Sucursal</label> -->
+<!-- 			<input ng-model="$ctrl.form.OPOLIZA.NO_SUCURSAL" disabled> -->
+<!-- 		</md-input-container> -->
+<!-- 		<md-input-container class="md-block" flex-gt-sm="10"> -->
+<!-- 			<label>DC</label> -->
+<!-- 			<input ng-model="$ctrl.form.OPOLIZA.NU_DC" disabled> -->
+<!-- 		</md-input-container> -->
+<!-- 		<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 			<label>Cuenta</label> -->
+<!-- 			<input ng-model="$ctrl.form.OPOLIZA.NU_CUENTA" disabled> -->
+<!-- 		</md-input-container> -->
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'IBAN' | translate }}</label>
+			<input ng-model="$ctrl.form.OPOLIZA.CO_IBAN" disabled>
+			 <span ng-if="$ctrl.form.OPOLIZA.CO_IBAN == undefined">
+        		*{{ 'NOT_FOUND_ACCOUNT' | translate }}
+        	 </span>
+		</md-input-container>
+	</div>
+	<h4>{{ 'NEW_BANK_ACCOUNT' | translate }}</h4>
+<!-- 	<div layout="row"> -->
+<!-- 		<md-radio-group layout-gt-sm="row" ng-init="tipoCuenta = 0" ng-model="tipoCuenta" style="margin-bottom:10px; margin-left:20px;" required> -->
+<!-- 			<md-radio-button value="0"> -->
+<!-- 				Cuenta bancaria -->
+<!-- 			</md-radio-button> -->
+<!-- 			<md-radio-button value="1"> -->
+<!-- 				IBAN -->
+<!-- 			</md-radio-button> -->
+<!-- 		</md-radio-group> -->
+<!-- 	</div> -->
+	<div layout="row" class="margin-top-10">
+<!-- 		<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 			<label>Banco</label> -->
+<!-- 			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_CUENTA_BANCARIA.XML_CUENTA_BANCARIA_ACTUALIZADA.CO_BANCO" ng-disabled="tipoCuenta != 0"> -->
+<!-- 		</md-input-container> -->
+<!-- 		<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 			<label>Sucursal</label> -->
+<!-- 			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_CUENTA_BANCARIA.XML_CUENTA_BANCARIA_ACTUALIZADA.NO_SUCURSAL" ng-disabled="tipoCuenta != 0"> -->
+<!-- 		</md-input-container> -->
+<!-- 		<md-input-container class="md-block" flex-gt-sm="10" ng-disabled="tipoCuenta != 0"> -->
+<!-- 			<label>DC</label> -->
+<!-- 			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_CUENTA_BANCARIA.XML_CUENTA_BANCARIA_ACTUALIZADA.NU_DC" ng-disabled="tipoCuenta != 0"> -->
+<!-- 		</md-input-container> -->
+<!-- 		<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 			<label>Cuenta</label> -->
+<!-- 			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_CUENTA_BANCARIA.XML_CUENTA_BANCARIA_ACTUALIZADA.NU_CUENTA" ng-disabled="tipoCuenta != 0"> -->
+<!-- 		</md-input-container> -->
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'IBAN' | translate }}</label>
+			<input style="text-transform: none!important" ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_CUENTA_BANCARIA.XML_CUENTA_BANCARIA_ACTUALIZADA.CO_IBAN" minlength="24" maxlength="24" cvalidation="iban" required>
+				<span class="error" ng-show="$ctrl.form.OPOLIZA.CO_IBAN == $ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_CUENTA_BANCARIA.XML_CUENTA_BANCARIA_ACTUALIZADA.CO_IBAN && $ctrl.cuenta == true">
+					*{{ 'ERROR_SAME_ACCOUNT' | translate }}
+				</span>
+<!-- 			 ng-disabled="tipoCuenta != 1" -->
+		</md-input-container>
+	</div>
+</div>

@@ -1,0 +1,37 @@
+<div flex>
+    <uib-tabset class="tabsPasos" type="pills" justified="true" flex="none">
+    
+            <!--CONTENIDO DE RESUMEN-->
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaResumen}})">
+                <div flex>
+                	<!--DATOS SALUD DENTAL-->
+                    <div layout="column" class="margenPresupuestos">
+                        <legend>Datos de salud dental</legend>
+                        <div layout-gt-sm="row" class="margenPresupuestos">
+				        	<md-input-container class="md-block" flex-gt-sm>
+				        		<label>Provincia de contratación</label>
+				          		<md-select ng-model="$ctrl.datos.DATOS_DENTAL.CO_PROVINCIA" disabled>
+									<md-option ng-repeat="provincia in $ctrl.tipos.provincias" ng-value="provincia.CO_PROVINCIA">{{provincia.NO_PROVINCIA}}</md-option>
+								</md-select>
+				          	</md-input-container>
+			          	</div>
+			          	<div layout-gt-sm="row" class="margenPresupuestos">
+				        	<md-input-container class="md-block" flex-gt-sm>
+				        		<label>Número de asegurados</label>
+				          		<input ng-model="$ctrl.datos.DATOS_DENTAL.NU_ASEGURADOS_TEMPORAL" disabled>
+				          	</md-input-container>
+			          	</div>
+		
+						<!-- DATOS DE PAGO -->
+						<legend>Datos del Pago</legend>
+						<div layout-gt-sm="row" class="margenPresupuestos">
+				        	<md-input-container class="md-block" flex-gt-sm>
+				        		<label>{{ 'DATE_START' | translate }}</label>
+				          		<md-datepicker ng-if="($ctrl.datos.DATOS_PAGO.FD_INICIO == null || $ctrl.datos.DATOS_PAGO.FD_INICIO == undefined) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null : $ctrl.datos.DATOS_PAGO.FD_INICIO" ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" disabled></md-datepicker>
+				          	</md-input-container>
+			          	</div>
+                    </div>
+	            </div>
+        	</md-content>
+	</uib-tabset>     
+</div>   

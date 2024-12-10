@@ -1,0 +1,93 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-numero-trabajadores"></span> Cambio del segundo conductor
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+	<div class="separadorDesplegables"></div>
+    <div layout="row" layout-align="center center">
+        <md-radio-group layout-gt-sm="row" ng-init="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC = 1" ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC" style="margin-bottom:20px; margin-left:20px;" required>
+			<md-radio-button value="1">
+				Alta segundo conductor
+			</md-radio-button>
+			<md-radio-button value="3">
+				Modificación segundo conductor
+			</md-radio-button>
+			<md-radio-button value="2">
+				Baja de segundo conductor
+			</md-radio-button>
+		</md-radio-group>
+	</div>
+    <div layout="row" id="CondSelec" class="margin-top-10" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 || $ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 2">
+		<md-input-container class="md-block" flex-gt-sm >
+			<label>Segundo conductor seleccionado</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_SELECCIONADO" required>
+				<md-option ng-repeat="segConductor in $ctrl.form.OPOLIZA.LST_ASEGURADOS" ng-value="segConductor">{{segConductor.NO_NOMBRE_COMPLETO}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+		<div layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC != 2">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'NAME' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.NO_NOMBRE" required  ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 && !$ctrl.noExiste">
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'SURNAME_1' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.NO_APELLIDO1" required  ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 && !$ctrl.noExiste">
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'SURNAME_2' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.NO_APELLIDO2" required  ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 && !$ctrl.noExiste">
+		</md-input-container>
+	</div>
+		<div layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC != 2">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Tipo documento</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.ID_TIPO_DOCUMENTO" required  ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 && !$ctrl.noExiste">
+				<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">{{tipo.DS_TIPO_DOCUMENTO}}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>NIF</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.NU_DOCUMENTO" required  ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 && !$ctrl.noExiste">
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Fecha de nacimiento</label>
+
+			<md-datepicker ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.FD_NACIMIENTO"
+				ng-click="ctrl.calcEdad($ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.FD_NACIMIENTO)" required>
+			</md-datepicker>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Sexo</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.ID_SEXO" required  ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 && !$ctrl.noExiste">
+				<md-option ng-value="1">Hombre</md-option>
+				<md-option ng-value="2">Mujer</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+		<div layout="row" ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC != 2">
+		<md-input-container class="md-block">
+			<label>Tipo de permiso</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.ID_TIPO_PERMISO" required  			
+			ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 && !$ctrl.noExiste">
+				<md-option ng-value="1">A</md-option>
+				<md-option ng-value="2">B</md-option>
+				<md-option ng-value="3">C</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container class="md-block">
+			<label>Fecha de carnet</label>
+
+			<md-datepicker ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.FD_CARNET"
+				ng-click="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.FD_CARNET == undefined ? $ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.FD_CARNET = null : $ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.FD_CARNET = ''" required  
+				ng-change="$ctrl.calcEdadConducir($ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.XML_SEGUNDO_CONDUCTOR_ACTUALIZADO.FD_CARNET)"
+				ng-disabled="$ctrl.form[$ctrl.tipoSolicitud].XML_CAMBIO_SEGUNDO_CONDUCTOR.CO_TIPO_SOLICITUD_SC == 3 && !$ctrl.noExiste">
+			</md-datepicker>
+		</md-input-container>		
+	</div>
+</div>

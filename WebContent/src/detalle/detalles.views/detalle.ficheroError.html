@@ -1,0 +1,42 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+	<uib-tabset>
+		<md-content class="formCliente formClass" >
+			
+			<div layout-gt-sm="row" layout-align="end center" class="margin-top-30">
+				<md-input-container class="md-block" flex-gt-sm="10" flex="100">
+					<label>Total</label>
+					<input ng-model="$ctrl.descriptionData.total" disabled>
+				</md-input-container>
+
+				<md-input-container class="md-block" flex-gt-sm="10" flex="100">
+					<label>Carga correcta</label>
+					<input ng-model="$ctrl.descriptionData.okCount" disabled>
+				</md-input-container>
+
+				<md-input-container class="md-block" flex-gt-sm="10" flex="100">
+					<label>No procesados</label>
+					<input ng-model="$ctrl.descriptionData.koCount" disabled>
+				</md-input-container>
+
+				<div class="container-btn-top">
+					<!-- <md-button class="btnSuperior btnNuevo" ng-click="$ctrl.busqueda.exportarExcel()"> -->
+					<md-button class="btnSuperior btnNuevo" ng-click="$ctrl.exportExcel()">
+						<!-- <md-icon>file_copy</md-icon>Exportar a excel -->
+						<span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+					</md-button>
+				</div>
+			</div>
+
+			<div flex ng-if="$ctrl.descriptionData && $ctrl.descriptionData.unloaded.length > 0 && $ctrl.descriptionData.unloaded[0] != ''">
+				<div class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-exporter ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(208)"></div>
+			</div>
+
+			<div flex ng-if="$ctrl.descriptionData && $ctrl.descriptionData.traces.length > 0">
+				<div class="ui-grid" ui-grid="$ctrl.gridOptionsTrace" ui-grid-exporter ui-grid-grouping ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="$ctrl.gridOptionsTrace.data.length > 13 ? resizeHeight(208) : resizeHeight(508)"></div>
+			</div>
+		</md-content>
+	</uib-tabset>
+</div>

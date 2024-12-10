@@ -1,0 +1,288 @@
+<div flex>
+    <uib-tabset active="$ctrl.indice" class="tabsPasos" type="pills" justified="true" flex="none">
+    
+        <!--VEHICULO -->
+        <uib-tab index="1" heading="Vehículo" class="btn-sm">
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaEdicion}})">
+                <div flex>
+				<form name="formVehiculoFlotas" id="formSubmitVehiculoFlotas" novalidate>
+                    <legend>Datos del Vehículo
+                    </legend>
+                    <div class="margenPresupuestos" uib-collapse="isCollapsed">
+						<div class="separadorDesplegables"></div>
+                    	<div hide layout-gt-sm="row" style="margin-bottom:20px">
+	                        <div flex-gt-sm>
+	                            <label>Tipo de vehículo</label>
+	                        </div>
+	                        <md-radio-group ng-change="$ctrl.getMarcas()" ng-if="$ctrl.datos.BLOCK_SELECCION_VEHICULO.CO_CATEGORIA==undefined ? $ctrl.datos.BLOCK_SELECCION_VEHICULO.CO_CATEGORIA=1 : ' '" flex-gt-sm layout-gt-sm="row" ng-model="$ctrl.datos.BLOCK_SELECCION_VEHICULO.CO_CATEGORIA" required>
+	                            <md-radio-button ng-value="3"> Motocicleta </md-radio-button>
+                                <md-radio-button ng-value="1"> Turismo </md-radio-button>
+	                        </md-radio-group>
+	                    </div>
+                        <div layout-gt-sm="row">
+                            <md-autocomplete flex-gt-sm required md-no-cache="$ctrl.noCache" md-selected-item="$ctrl.form.MARCA" md-search-text="$ctrl.searchMarca"
+                                md-selected-item-change="$ctrl.getModelos()" md-items="marca in $ctrl.querySearch($ctrl.searchMarca, $ctrl.marcas, 'DS_MARCA')"
+                                md-item-text="marca.DS_MARCA" md-min-length="0" md-require-match md-floating-label="Marca">
+                                <md-item-template>
+                                    <span md-highlight-text="$ctrl.searchMarca" md-highlight-flags="^i">{{marca.DS_MARCA}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No existe la marca "{{$ctrl.searchMarca}}".
+                                </md-not-found>
+                            </md-autocomplete>
+                            <md-autocomplete flex-gt-sm md-no-cache="$ctrl.noCache" md-selected-item="$ctrl.form.MODELO" md-search-text="$ctrl.searchModelo"
+                                md-selected-item-change="$ctrl.getVersiones()" md-items="modelo in $ctrl.querySearch($ctrl.searchModelo, $ctrl.modelos, 'DS_MODELO')"
+                                md-item-text="modelo.DS_MODELO" md-min-length="0" md-require-match md-floating-label="Modelo"
+                                required>
+                                <md-item-template>
+                                    <span md-highlight-text="$ctrl.searchModelo" md-highlight-flags="^i">{{modelo.DS_MODELO}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No existe el modelo "{{$ctrl.searchModelo}}".
+                                </md-not-found>
+                            </md-autocomplete>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-autocomplete flex-gt-sm md-no-cache="$ctrl.noCache" md-selected-item="$ctrl.pre.form.VERSION" md-search-text="$ctrl.searchVersion"
+                                md-items="version in $ctrl.querySearch($ctrl.searchVersion, $ctrl.versiones, 'text')" md-item-text="version.DS_VERSION"
+                                md-min-length="0" md-selected-item-change="$ctrl.calcularValores()" md-require-match md-floating-label="Versión"required>
+                                <md-item-template>
+                                    <span md-highlight-text="$ctrl.searchVersion" md-highlight-flags="i">
+                                    {{version.text}}	
+                                    </span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No existe la versión "{{$ctrl.searchVersion}}".
+                                </md-not-found>
+                            </md-autocomplete>
+                        </div>
+
+                        <div layout-gt-sm="row" ng-if="$ctrl.searchVersion!=undefined && $ctrl.searchVersion!=''">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Potencia</label>
+                                <input ng-model="$ctrl.datos.BLOCK_SELECCION_VEHICULO.NU_POTENCIA" disabled required>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Valor de vehículo</label>
+                                <input ng-change="$ctrl.calcularTotal()" ng-model="$ctrl.datos.BLOCK_SELECCION_VEHICULO.IM_PRECIO" pattern="^\d*\.?\d*$" required>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Valor de accesorios</label>
+                                <input ng-change="$ctrl.calcularTotal()" ng-model="$ctrl.datos.BLOCK_SELECCION_VEHICULO.IM_ACCESORIOS" pattern="^\d*\.?\d*$" required>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Valor total</label>
+                                <input ng-model="$ctrl.datos.BLOCK_SELECCION_VEHICULO.IM_VALOR_TOTAL" disabled>
+                            </md-input-container>
+						</div>
+                        <div layout-gt-sm="row">
+                        	<md-input-container class="md-block" flex="20" flex-gt-sm>
+                                <label>Fecha de matriculación</label>
+                                <md-datepicker ng-model="$ctrl.datos.DATOS_VEHICULO.FD_MATRICULACION" required
+                                			ng-click="($ctrl.datos.DATOS_VEHICULO.FD_MATRICULACION == null || $ctrl.datos.DATOS_VEHICULO.FD_MATRICULACION == undefined) ? $ctrl.datos.DATOS_VEHICULO.FD_MATRICULACION = null : ' '">
+                                </md-datepicker>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="20" flex-gt-sm>
+                                <label>Antigüedad del vehículo</label>
+                                <md-select ng-model="$ctrl.datos.DATOS_VEHICULO.ID_ANTIGUEDAD_VEHICULO" required>
+                                    <md-option ng-value="'01'">Es nuevo</md-option>
+                                    <md-option ng-value="'04'">Segunda mano - Concesionario</md-option>
+                                    <md-option ng-value="'02'">Segunda mano - Particular</md-option>
+                                    <md-option ng-value="'03'">Ya lo tenía. Sólo quiero cambiar de seguro</md-option>
+                                </md-select>
+                            </md-input-container>
+                    	</div>
+                    </div>
+					</form>
+				</div>
+			</md-content>
+		</uib-tab>
+		
+		<!-- ASEGURADOS -->
+		<uib-tab index="2" heading="Asegurados" disable="$ctrl.formVehiculosFlotas=!formVehiculoFlotas.$valid" class="btn-sm">
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaEdicion}})">
+                <div flex>	
+				<form name="formAseguradosFlotas" id="formSubmitAseguradosFlotas" novalidate>
+                    <div flex ng-if="$ctrl.pre.idColectivo == 31">
+	                    <div ng-repeat="tipos in $ctrl.tiposConductor">        
+	                        <legend ng-if="$index == 0">Datos del Conductor Principal</legend>
+	                        <legend ng-if="$index == 3">Datos del Conductor Ocasional</legend>
+	                        <div ng-if="tipos.TIPO_CONDUCTOR=='DATOS_CONDUCTOR_OCASIONAL'" layout="row" class="margenPresupuestos">
+	                            <div flex="50">
+	                                <label for="marca">* ¿Existe algún conductor ocasional?</label>
+	                            </div> 
+	                            <md-radio-group ng-if="$ctrl.datos[tipos.TIPO_CONDUCTOR][tipos.IS_TOMADOR] == undefined ? $ctrl.datos[tipos.TIPO_CONDUCTOR][tipos.IS_TOMADOR] = '02' : ' '" ng-model="$ctrl.datos[tipos.TIPO_CONDUCTOR][tipos.IS_TOMADOR]"
+	                            				flex="50" layout-gt-sm="row">
+	                                <md-radio-button ng-value="'02'">
+	                                    No
+	                                </md-radio-button>
+	                                <md-radio-button ng-value="'01'">
+	                                    Sí
+	                                </md-radio-button>
+	                            </md-radio-group> 
+	                        </div>
+				
+	                        <div ng-if="(tipos.TIPO_CONDUCTOR == 'DATOS_CONDUCTOR_PRINCIPAL') || ($ctrl.datos.DATOS_CONDUCTOR_OCASIONAL.IN_CONDUCTOR_OCASIONAL == '01' && tipos.TIPO_CONDUCTOR == 'DATOS_CONDUCTOR_OCASIONAL')"
+	                            class="margenPresupuestos">
+	                            <div layout-gt-sm="row" >
+	                                <md-input-container flex="20" class="md-block" flex-gt-sm>
+	                                    <label>Fecha Nacimiento</label>
+	                                    <md-datepicker ng-model="$ctrl.datos[tipos.TIPO_CONDUCTOR].FD_NACIMIENTO" required>
+                                  		</md-datepicker>
+	                                </md-input-container>
+	                                <md-input-container flex="20" class="md-block" flex-gt-sm>
+	                                    <label>Fecha Carnet</label>
+	                                    <md-datepicker ng-model="$ctrl.datos[tipos.TIPO_CONDUCTOR].FD_CARNET" required>
+	                                    </md-datepicker>
+	                                </md-input-container>
+								</div>
+							</div>
+		                </div>
+                   	</div>
+                    <legend>Datos del pago</legend>
+                    <div layout-gt-sm="row">
+	                	<div ng-if="$ctrl.pre.idColectivo == 31">
+	                    	<md-input-container class="md-block" flex-gt-sm="90">
+	                        	<label>Descuento</label>
+	                            <md-select ng-model="$ctrl.datos.DATOS_PAGO.NU_DESCUENTO_FLOTAS" ng-if="$ctrl.datos.DATOS_PAGO.NU_DESCUENTO_FLOTAS == undefined ? $ctrl.datos.DATOS_PAGO.NU_DESCUENTO_FLOTAS = -30 : ' '" required>
+	                            	<md-option ng-value="40">+40%</md-option>
+	                                <md-option ng-value="35">+35%</md-option>
+	                                <md-option ng-value="30">+30%</md-option>
+	                                <md-option ng-value="25">+25%</md-option>
+	                                <md-option ng-value="20">+20%</md-option>
+	                                <md-option ng-value="15">+15%</md-option>
+	                                <md-option ng-value="10">+10%</md-option>
+	                                <md-option ng-value="5">+5%</md-option>
+	                                <md-option ng-value="0">0%</md-option>
+	                                <md-option ng-value="-5">-5%</md-option>
+	                                <md-option ng-value="-10">-10%</md-option>
+	                                <md-option ng-value="-15">-15%</md-option>
+	                                <md-option ng-value="-20">-20%</md-option>
+	                                <md-option ng-value="-25">-25%</md-option>
+	                                <md-option ng-value="-30">-30%</md-option>                                    
+	                                <md-option ng-value="-35">-35%</md-option>
+	                                <md-option ng-value="-40">-40%</md-option>
+								</md-select>
+	                    	</md-input-container>
+						</div>
+                        <md-input-container flex="20" class="md-block" flex-gt-sm>
+                        	<label>{{ 'DATE_START' | translate }}</label>
+                            <md-datepicker ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" required>
+                            </md-datepicker>
+						</md-input-container>
+					</div>
+				 </form>
+                </div>
+            </md-content>
+        </uib-tab>
+
+        <!--PRESUPUESTO-->
+        <uib-tab index="3" disable="$ctrl.formAseguradosFlotas=!formAseguradosFlotas.$valid" ng-click="$ctrl.pre.tarificarPresupuestos($ctrl.datos,'PRESUPUESTO_AUTO')"
+            heading="Presupuesto" class="btn-sm">
+            <div layout="column">
+                <md-card class="form-scroll">
+                    <md-card-content class="form-scroll" style="padding:0px 16px;" resize ng-style="resizeHeight(330)">
+                        <div ng-if="$ctrl.pre.cargar==true" id="buscandoGif" style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+                            resize ng-style="resizeHeight(330)">
+                            <div class="centered" style="display:table-cell; vertical-align: middle;">
+                                <div class="blob-3"></div>
+                                <div class="blob-4"></div>
+                            </div>
+                        </div>
+                        <table style="text-align: center" width="100%" ng-if="$ctrl.tarifas.length>0">
+							<thead> 
+						       <tr layout="row" layout-align="center center" style="height:50px !important; z-index: 1">
+						       	   <th class="tablaPresu" flex="10"></th>
+						           <th class="tablaPresu" ng-click="$ctrl.pre.ordenarTabla('aseguradora')" layout="row" layout-align="center center" flex = "10">Aseguradora</th>
+						           <th class="tablaPresu" ng-click="$ctrl.pre.ordenarTabla('producto')" flex="20" layout="row" layout-align="center center">Producto</th>
+								   <th class="tablaPresu" ng-click="$ctrl.pre.ordenarTabla('modalidad')" flex="20" layout="row" layout-align="center center">Modalidad</th>
+								   <th class="tablaPresu" ng-click="$ctrl.pre.ordenarTabla('prima')" flex="15" layout="row" layout-align="center center">Prima anual</th>
+								   <th class="tablaPresu" flex="5" layout="row" layout-align="center center"></th>
+								   <th class="tablaPresu" flex="20" layout="row" layout-align="center center"></th>
+						       </tr>
+						   </thead>
+						
+						   <tbody> <!-- Cuerpo de la tabla -->
+						       <tr layout="row" layout-align="center center" style="z-index: 1" ng-repeat="tarifa in $ctrl.tarifas">
+						           <td flex="10">
+											<ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE != undefined || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE != undefined || tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE != null || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE != null)" on="tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="ERROR" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="INFO" ng-src="src/img/aseguradoras/INFO.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="WARN" ng-src="src/img/aseguradoras/WARN.png"
+			                                        width="30%" />
+			                                </ng-switch>
+			                                <ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE != undefined || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE != undefined || tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE != null || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE != null)" on="tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="ERROR" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="INFO" ng-src="src/img/aseguradoras/INFO.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="WARN" ng-src="src/img/aseguradoras/WARN.png"
+			                                        width="30%" />
+			                                </ng-switch>
+			                                <ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE == undefined && tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE == undefined && tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE == undefined && tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE == undefined)" on="tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE || tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE == undefined || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-switch-default ng-src="src/img/aseguradoras/OK.png" width="30%" />
+			                                </ng-switch>
+			                                <img ng-if="tarifa.IM_PRIMA_ANUAL_TOT== 0 || tarifa.IM_PRIMA_ANUAL_TOT== null || tarifa.IM_PRIMA_ANUAL_TOT== undefined" ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+								   </td>
+						           <td flex = "10">
+										<img class="imgTarifa" width="60%" ng-src="src/img/aseguradoras/{{tarifa.ID_COMPANIA}}.png"/>
+								   </td>
+						           <td flex="20" layout="row" layout-align="center center">
+										{{tarifa.NO_PRODUCTO}}
+								   </td>
+								   <td flex="20" layout="row" layout-align="center center">
+										{{tarifa.NO_MODALIDAD}}
+								   </td>
+						           <td flex="15" layout="row" layout-align="center center">
+										<h4 ng-if="tarifa.IM_PRIMA_ANUAL_TOT!= null || tarifa.IM_PRIMA_ANUAL_TOT!=undefined" class="color_titulo_h4">{{tarifa.IM_PRIMA_ANUAL_TOT}} €</h4>
+								   </td>
+						           <td flex="5" layout="row" layout-align="center center">
+										<md-icon md-svg-src="src/img/garantia.svg" ng-click="$ctrl.pre.verGarantias($event,tarifa)"></md-icon>
+								   </td>
+								   <td flex="20" layout="row" layout-align="center center">
+										<md-button ng-if="tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined && tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE!='ERROR'"  ng-click="$ctrl.clave.verDetalle($ctrl.pre.detalles,'contratar')"  ng-disabled="$ctrl.emitido!='0'" class="dark-yellow btnNuevo">
+											<md-icon>gavel</md-icon>
+											Contratar
+										</md-button>
+								   </td>
+						      </tr>
+						   </tbody>
+						</table>
+                        <div layout="row" layout-align="center center" ng-if="$ctrl.pre.vista == 4">
+                            <h3>No hay tarifas</h3>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+    <div layout="row" layout-align="center none">
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice > 1" ng-click="$ctrl.anterior()">
+            <md-icon>navigate_before</md-icon>
+            Anterior
+        </md-button>
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice == 3" ng-click="$ctrl.pre.descargarPresupuesto()">
+            <md-icon>picture_as_pdf</md-icon>
+            Exportar a PDF
+        </md-button>
+        &nbsp;
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice == 3" ng-click="$ctrl.pre.enviarPresupuestoPDF()">
+            <i class="fa-duotone fa-paper-plane"></i>
+            Enviar presupuestos
+        </md-button>
+        <md-button type="submit" class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice < 3" ng-click="$ctrl.siguiente($ctrl.indice)" form="{{$ctrl.formulario}}">
+            <md-icon>navigate_next</md-icon>
+            Siguiente
+        </md-button>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content resize ng-style="resizeHeight(100)" class="form-scroll">
+	<div layout-xs="column" layout="row">
+		<div flex="50" style="padding:30px 50px;">
+	   		<md-card class="card-detalles">
+				<md-card-title>
+					<h4>Periodo a renovar</h4>
+				</md-card-title>
+	       		<md-card-content class="polizas-card">
+		        	<form ng-submit="" class="formClass formCliente" name="newImpuesto" role="form">
+						<div layout-gt-sm="row" style="margin-bottom: 20px; margin-top:20px">
+							<md-input-container class="md-block" flex-gt-sm>
+				        		<label>Tipo de flota </label>
+				          		<md-select ng-model="$ctrl.form.idflotas" required>
+									<md-option ng-repeat="flota in $ctrl.listaTipoFlotas" ng-value="flota.tipo">{{flota.tipo}}</md-option>
+								</md-select>
+				          	</md-input-container>
+						</div>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Fecha inicio </label>
+								<md-datepicker ng-model="$ctrl.form.FD_NACIMIENTO.value"></md-datepicker>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Fecha fin </label>
+								<md-datepicker ng-model="$ctrl.form.FD_NACIMIENTO.value"></md-datepicker>
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'INSURANCE_CARRIER' | translate }} </label>
+								<md-select ng-model="$ctrl.form.idAseguradora" required>
+									<md-option ng-repeat="aseguradora in $ctrl.listaAseguradora" ng-value="aseguradora.nombre">{{aseguradora.nombre}}</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+					</form>
+	       		</md-card-content>
+	     	</md-card>
+	   	</div>
+	   	<div flex="50" style="padding:30px 50px;">
+	   		<md-card class="card-detalles">
+				<md-card-title>
+					<h4>Nueva cartera</h4>
+				</md-card-title>
+	       		<md-card-content class="polizas-card">
+		        	<form ng-submit="" class="formClass formCliente" name="newImpuesto" role="form">
+		        		<div layout-gt-sm="row" style="margin-top:20px">
+							<md-input-container class="md-block" flex-gt-sm="50">
+								<label>Fecha efecto </label>
+								<md-datepicker ng-model="$ctrl.form.FD_NACIMIENTO.value"></md-datepicker>
+								<!-- <md-select name="vehiculo" required>
+									<md-option ng-repeat="vehiculo in $ctrl.lista" ng-value="vehiculo.ano">{{vehiculo.ano}}</md-option>
+								</md-select> -->
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm="50">
+								<label>Fecha vencimiento </label>
+								<md-datepicker ng-model="$ctrl.form.FD_NACIMIENTO.value"></md-datepicker>
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm="50">
+								<label>Fecha emisión recibos </label>
+								<md-datepicker ng-model="$ctrl.form.FD_NACIMIENTO.value"></md-datepicker>
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<md-button type="submit" class="medium-blue btnNuevo">Consultar estado pólizas</md-button>
+							</md-input-container>
+						</div>
+					</form>
+	       		</md-card-content>
+	     	</md-card>
+	   	</div>
+	</div>
+	<div layout-xs="column" layout="row" style="padding: 0px 55px">
+		<div flex layout="row" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize style="height:200px"></div>
+	</div>
+</md-content>	

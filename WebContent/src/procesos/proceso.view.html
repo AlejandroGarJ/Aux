@@ -1,0 +1,140 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<uib-tabset class="tabsPasos" type="pills" justified="true" flex="none">
+	<md-content layout="row" layout-align="center" layout-padding class="margin-top-20 formCliente formClass form-scroll" resize ng-style="resizeHeight(180)">
+		<div layout-align="center center" style="margin: 0 auto; max-width: 1400px;" flex>
+			<div class="" layout="row" layout-xs="column">
+				<md-input-container class="md-block" flex>
+					<label>{{ 'DESCRIPTION' | translate }}</label>
+					<input ng-model="$ctrl.datos.DS_PROCESO" disabled>
+				</md-input-container>
+				<md-input-container class="md-block" flex>
+					<label>Tipo de proceso</label>
+					<input ng-model="$ctrl.datos.NO_PROCESO" disabled>
+				</md-input-container>
+			</div>
+			<div class="" layout="row" layout-xs="column">
+				<md-input-container class="md-block" flex>
+					<label>Fecha última ejecución</label>
+
+					<md-datepicker ng-model="$ctrl.datos.FD_LAST_EXEC" disabled></md-datepicker>
+				</md-input-container>
+				<md-input-container class="md-block" flex>
+					<label>Fecha próxima ejecución</label>
+
+					<md-datepicker ng-model="$ctrl.datos.FD_NEXT_EXEC" disabled></md-datepicker>
+				</md-input-container>
+			</div>
+		            	
+			<div>
+				<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Detalle de proceso</legend>
+				<div class="">
+					<div flex layout="row" layout-xs="column">
+						<md-input-container class="md-block" flex>
+							<md-checkbox ng-true-value="'0'" ng-false-value="'1'" ng-model="$ctrl.datos.IN_BAJA_REG" >Activado</md-checkbox>
+						</md-input-container>
+						<md-input-container class="md-block" flex>
+							<label>Año</label>
+							<input ng-model="$ctrl.datos.CO_YEAR">
+						</md-input-container>
+						<md-input-container class="md-block" flex>
+							<label>Mes</label>
+							<input ng-model="$ctrl.datos.CO_MONTH">
+						</md-input-container>
+						<md-input-container class="md-block" flex>
+							<label>Días del mes</label>
+							<input ng-model="$ctrl.datos.CO_DAY_OF_MONTH">
+						</md-input-container>
+						<md-input-container class="md-block" flex>
+							<label>Días de la semana</label>
+							<input ng-model="$ctrl.datos.CO_DAY_OF_WEEK">
+						</md-input-container>
+						<md-input-container class="md-block" flex>
+							<label>Hora</label>
+							<input ng-model="$ctrl.datos.CO_HOUR">
+						</md-input-container>
+						<md-input-container class="md-block" flex>
+							<label>Minuto</label>
+							<input ng-model="$ctrl.datos.CO_MINUTE">
+						</md-input-container>
+						<md-input-container class="md-block" flex>
+							<label>Segundo</label>
+							<input ng-model="$ctrl.datos.CO_SECOND">
+						</md-input-container>
+					</div>
+				</div>
+			</div>
+					   
+			<div ng-if="$ctrl.datos.ID_PROCESO == 25 || $ctrl.datos.ID_PROCESO == 32 || $ctrl.datos.ID_PROCESO == 33 || $ctrl.datos.ID_PROCESO == 34">
+				<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Opciones adicionales</legend>
+				<div class="separadorDesplegables"></div>
+				<div class="" layout="row" layout-xs="column">
+					<md-input-container class="md-block" flex>
+						<label>Compañía</label>
+						<md-select ng-init="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_COMPANIA == null ? $ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_COMPANIA = 0 : null" ng-model="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_COMPANIA" class="mb_24" required>
+							<md-option ng-repeat="compania in $ctrl.companias" ng-value="compania.ID_COMPANIA">
+								{{$ctrl.parent.getDescriptivo(compania, 'NO_COMPANIA')}}
+<!-- 								{{compania.NO_COMPANIA}} -->
+							</md-option>
+							<md-option ng-value="0">Todos</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex>
+						<label>{{ 'PARTNER' | translate }}</label>
+						<md-select ng-init="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_TIPO_POLIZA == null ? $ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_TIPO_POLIZA = 0 : null" ng-model="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_TIPO_POLIZA" class="mb_24" required>
+							<md-option ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">{{colectivo.DS_TIPO_POLIZA}}</md-option>
+							<md-option ng-value="0">Todos</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container class="md-block" flex>
+						<label>{{ 'MOVEMENT_OF_TYPE' | translate }}</label>
+						<md-select ng-init="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_TIPO_MOVIMIENTO == null ? $ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_TIPO_MOVIMIENTO = 0 : null" ng-model="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_TIPO_MOVIMIENTO" class="mb_24" required>
+							<md-option ng-repeat="movimiento in $ctrl.movimientos" ng-value="movimiento.ID_SITUARECIBO">{{movimiento.DS_SITUARECIBO}}</md-option>
+							<md-option ng-value="0">Todos</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+
+				<div class="" layout="row" layout-xs="column">
+					<md-input-container class="md-block" flex>
+						<label>Fecha contabilización desde</label>
+
+						<md-datepicker ng-model="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.FD_INICIO_DESDE" ng-click="($ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.FD_INICIO_DESDE == undefined || $ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.FD_INICIO_DESDE == null) ? $ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.FD_INICIO_DESDE = null : ''"
+							required>
+						</md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex>
+						<label>Fecha contabilización hasta</label>
+
+						<md-datepicker ng-model="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.FD_INICIO_HASTA" ng-click="($ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.FD_INICIO_HASTA == undefined || $ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.FD_INICIO_HASTA == null) ? $ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.FD_INICIO_HASTA = null : ''"
+							required>
+						</md-datepicker>
+					</md-input-container>
+					<md-input-container class="md-block" flex>
+						<label>Medio de pago</label>
+						<md-select disabled ng-model="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.ID_TIPO_MEDIO_PAGO" class="mb_24">
+							<md-option ng-repeat="pago in $ctrl.medioPago" ng-value="pago.ID_TIPO_MEDIO_PAGO">
+                                {{pago.DS_TIPO_MEDIO_PAGO}}
+                            </md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+
+				<div class="" layout="row">
+					<label>Agrupar recibos</label>
+					<md-radio-group style="margin-left: 15px;" flex ng-model="$ctrl.datos.FILTRO.BLOCK_PROCESO_ENVIO_SAP.IN_AGRUPAR" required>
+						<md-radio-button style="display: inline-block; margin-right: 15px;" ng-value="'true'">Si</md-radio-button>
+						<md-radio-button style="display: inline-block; margin-right: 15px;" ng-value="'false'">No</md-radio-button>
+					</md-radio-group>
+				</div>
+			</div>
+			<div layout="row" layout-align="center none">
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.guardarProceso()">
+					<md-icon>save</md-icon>
+					Guardar
+				</md-button>
+			</div>
+		</div>
+	</md-content>
+</uib-tabset>

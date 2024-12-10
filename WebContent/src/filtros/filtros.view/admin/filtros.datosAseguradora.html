@@ -1,0 +1,97 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content style="background-color:white">
+
+	<div layout-gt-sm="row" class="inputs-without-label-value" style="background-color:white; margin-top: 15px;margin-left: 13px;margin-right: 10px;border-left: 3px solid #0066ff">
+		<h3 style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="50" >
+			<span style="color:#5e5e5e!important">
+				{{ 'SEARCH' | translate }} DE</span><span style="color:#0066ff!important"> DATOS DE ASEGURADORAS
+			</span>
+			<div layout-gt-sm="row">
+				<h6 style="text-align: center;text-transform: uppercase">DATOS DE ASEGURADORAS</h6>
+			</div>
+		</h3>
+	</div>
+	<div layout-gt-sm="row" >
+		<a ng-click="$ctrl.showBasicSearch()" ng-if="$ctrl.basicSearch == true">{{ 'SHOW_SEARCH_FIELDS' | translate }}</a>
+	</div>
+	
+    <form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('tipo-datosAseguradora')">
+        <div class="form-scroll" resize>
+            <div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+                <md-autocomplete name="Aseguradora" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchAseg"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchAseg, $ctrl.tipos.compania, 'NO_COMERCIAL')"
+				   md-item-text="item.NO_COMERCIAL" md-min-length="0"
+				   md-floating-label="Aseguradora"
+				   md-selected-item="$ctrl.autocomplete.ASEG"
+				   md-selected-item-change="$ctrl.form.ID_COMPANIA.value = $ctrl.autocomplete.ASEG.ID_COMPANIA"
+				   ng-blur="$ctrl.autocomplete.ASEG == undefined ? $ctrl.searchAseg = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchAseg"
+					   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_COMERCIAL')}}</span>
+						   <!-- md-highlight-flags="^i">{{item.NO_COMERCIAL}}</span> -->
+				   </md-item-template>
+				   <md-not-found>
+					   No existe la aseguradora "{{$ctrl.searchAseg}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			   <md-autocomplete name="Ramo" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchRamo"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchRamo, $ctrl.tipos.ramos, 'NO_RAMO')"
+				   md-item-text="item.NO_RAMO" md-min-length="0"
+				   md-floating-label="Ramo"
+				   md-selected-item="$ctrl.autocomplete.RAMO"
+				   md-selected-item-change="$ctrl.form.ID_RAMO.value = $ctrl.autocomplete.RAMO.ID_RAMO"
+				   ng-blur="$ctrl.autocomplete.RAMO == undefined ? $ctrl.searchRamo = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchRamo"
+						   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'NO_RAMO')}}</span>
+						   <!-- md-highlight-flags="^i">{{item.NO_RAMO}}</span> -->
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el ramo "{{$ctrl.searchRamo}}".
+				   </md-not-found>
+			   </md-autocomplete>
+			   <md-autocomplete name="Campo" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral"
+				   md-search-text="$ctrl.searchCampo"
+				   md-items="item in $ctrl.parent.querySearch($ctrl.searchCampo, $ctrl.tipos.campos, 'DS_CAMPO')"
+				   md-item-text="item.DS_CAMPO" md-min-length="0"
+				   md-floating-label="Campo"
+				   md-selected-item="$ctrl.autocomplete.CAMPO"
+				   md-selected-item-change="$ctrl.form.ID_CAMPO.value = $ctrl.autocomplete.CAMPO.ID_CAMPO"
+				   ng-blur="$ctrl.autocomplete.CAMPO == undefined ? $ctrl.searchCampo = '' : ''">
+				   <md-item-template>
+					   <span md-highlight-text="$ctrl.searchCampo"
+						   md-highlight-flags="^i">{{$ctrl.parent.parent.getDescriptivo(item, 'DS_CAMPO')}}</span>
+						   <!-- md-highlight-flags="^i">{{item.DS_CAMPO}}</span> -->
+				   </md-item-template>
+				   <md-not-found>
+					   No existe el campo "{{$ctrl.searchCampo}}".
+				   </md-not-found>
+			   </md-autocomplete>
+            </div>
+            <div layout-gt-sm="row" layout-align="start start">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Valor</label>
+		         	<input ng-model="$ctrl.form.NO_VALOR.value">
+		       	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Operación</label>
+		         	<input ng-model="$ctrl.form.NO_OPERACION.value">
+		       	</md-input-container>
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				{{ 'SEARCH_BTN' | translate }}
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+				<i class="fa fa-trash"></i>
+				{{ 'CLEAN' | translate }}
+			</md-button>
+        </div>
+    </form>
+</md-content>

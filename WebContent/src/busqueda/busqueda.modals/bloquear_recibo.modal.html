@@ -1,0 +1,30 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="height:44px">
+
+            <h4 class="modal-title" style="text-align: center">{{ 'CONFIRM' | translate }}</h4>
+
+        </div>
+    </md-toolbar>
+
+    <ng-dialog-content style="height: 25%; max-width:35em;" class="md-dialog-content formCliente formClass">
+
+        <div layout-gt-sm="row" layout-align="center">
+            <h4>Si se bloquean los recibos no se enviarán a SAP para su gestión económica. ¿Está seguro de bloquear los recibos?</h4>
+        </div>
+<!--         <div flex="100" layout-gt-sm="row"> -->
+		<div flex="100" layout="row" layout-align="center" layout-margin>
+            <md-button class="btnModalSN medium-green btnNuevo" ng-click="$ctrl.bloqRecibo(true)" flex>
+                <i class="fa-duotone fa-check-double"></i>
+                {{ 'YES' | translate }}
+            </md-button>
+            <md-button class="btnModalSN medium-orange btnNuevo" ng-click="$ctrl.bloqRecibo(false)" flex>
+                <md-icon>clear</md-icon>
+                {{ 'NO' | translate }}
+            </md-button>
+        </div>
+    </ng-dialog-content>
+</md-dialog>

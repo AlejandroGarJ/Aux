@@ -1,0 +1,72 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<legend><span class="mov-ico ic-ciber-ico-respuesta-inmediata"></span> Cambio de datos del tomador
+   <button id="btnDesplegarPoliza" type="submit" class="btn btn-link" ng-click="$ctrl.isCollapsed2 = !$ctrl.isCollapsed2">
+       <span ng-if="$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos del tomador"></span>
+       <span ng-if="!$ctrl.isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos del tomador"></span>
+   </button>
+</legend>
+<div id="divPoliza" uib-collapse="$ctrl.isCollapsed2">
+	<div class="separadorDesplegables"></div>
+	<div layout="row" style="margin-bottom:20px">
+		<md-input-container flex-gt-sm>
+			<label>Tomador actual</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_SELECCIONADO">
+				<md-option ng-click="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO = tomador" ng-repeat="tomador in $ctrl.form.OPOLIZA.LST_ASEGURADOS | filter:{ID_TIPO_CLIENTE:3}" ng-value="tomador">{{tomador.NO_NOMBRE_COMPLETO}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	<div layout="row" ng-if="tipoPropietario != 2">
+		<md-input-container ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO != 2" class="md-block" flex-gt-sm>
+			<label>{{ 'DOCUMENT_NUMBER' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.NU_DOCUMENTO" cvalidation="document_n" required disabled>
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'NAME' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.NO_NOMBRE" required>
+		</md-input-container>
+		<md-input-container ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO != 2" class="md-block" flex-gt-sm>
+			<label>{{ 'SURNAME_1' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.NO_APELLIDO1" required>
+		</md-input-container>
+		<md-input-container ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO != 2" class="md-block" flex-gt-sm>
+			<label>{{ 'SURNAME_2' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.NO_APELLIDO2">
+		</md-input-container>
+	</div>
+	<div layout="row" ng-if="tipoPropietario != 2">
+		<md-input-container ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO != 2" class="md-block" flex-gt-sm>
+			<label>{{ 'TELEPHONE' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.NU_TELEFONO1" ng-pattern="/^[0-9]{9}$/" maxlength="9" required>
+		</md-input-container>
+		<md-input-container ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO != 2" class="md-block" flex-gt-sm>
+			<label>{{ 'EMAIL' | translate }}</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.NO_EMAIL" required>
+		</md-input-container>
+	</div>
+	<div layout="row" ng-if="tipoPropietario != 2">
+		<md-input-container ng-if="$ctrl.form.OPOLIZA.ID_PRODUCTO == 6 || $ctrl.form.OPOLIZA.ID_PRODUCTO == 5" class="md-block" flex-gt-sm>
+			<label>{{ 'DOCUMENT_TYPE' | translate }}</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO" required>
+				<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">{{tipo.DS_TIPO_DOCUMENTO}}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO == 2" class="md-block" flex-gt-sm>
+			<label>CIF</label>
+			<input ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.NU_DOCUMENTO" cvalidation="document_a" required>
+		</md-input-container>
+		<!-- <md-input-container ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO != 2" class="md-block" flex-gt-sm>
+			<label>{{ 'BIRTH_DATE' | translate }}</label>
+			<md-datepicker ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.FD_NACIMIENTO"
+				ng-click="$ctrl.calcEdad($ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.FD_NACIMIENTO)" md-max-date="$ctrl.todayDate"></md-datepicker>
+		</md-input-container>
+		<md-input-container ng-if="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_TIPO_DOCUMENTO != 2" class="md-block" flex-gt-sm>
+			<label>{{ 'GENDER' | translate }}</label>
+			<md-select ng-model="$ctrl.form[$ctrl.tipoSolicitud].XML_MOD_TOMADOR.XML_TOMADOR_ACTUALIZADO.ID_SEXO">
+				<md-option ng-value="1">{{ 'MALE' | translate }}</md-option>
+				<md-option ng-value="2">{{ 'FEMALE' | translate }}</md-option>
+			</md-select>
+		</md-input-container> -->
+	</div>
+</div>

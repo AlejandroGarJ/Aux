@@ -1,0 +1,36 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content>
+
+	<h3 style="text-transform: uppercase; padding-left: 15px;" flex-gt-sm="100" ><span style="color:#2b3447!important"><i class="fas fa-search"></i> {{ 'SEARCH' | translate }}</span><span style="color:#0066ff!important"> Programas </span></h3>
+		
+	<div layout-gt-sm="row" style="border-bottom: 2px solid #2b3447;border-image: linear-gradient(-90deg, #2b3447 , #414b61 25%, #ffffff 90%, #ffffff 40%) 10;">
+		<a ng-click="$ctrl.showBasicSearch()" ng-if="$ctrl.basicSearch == true">{{ 'SHOW_SEARCH_FIELDS' | translate }}</a>
+	</div>
+	
+    <form ng-hide="$ctrl.desplegado == false" class="fade-out formClass" id="form" ng-submit="$ctrl.buscar('tipo-programasProveedor')">
+        <div class="form-scroll" resize>
+            <div layout-gt-sm="row" layout-align="start start" class="margin-top-20">
+                <md-input-container class="md-block" flex-gt-sm="25">
+		         	<label>Programa</label>
+                     <md-select ng-model="$ctrl.form.NO_PROGRAMA.value">
+                        <md-option ng-repeat="programa in $ctrl.listProductos" ng-value="programa.NO_PROGRAMA">
+                            {{programa.NO_PROGRAMA}} 
+                         </md-option>
+                    </md-select>
+		       	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm style="margin-top: 14px!important;">
+		            <md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.filtro.vista == 2">
+						<i class="fa fa-magnifying-glass"></i>
+						{{ 'SEARCH_BTN' | translate }}
+					</md-button>
+					<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.filtro.vista == 2">
+						<i class="fa fa-trash"></i>
+						{{ 'CLEAN' | translate }}
+					</md-button>
+		       	</md-input-container>
+            </div>
+        </div>
+    </form>
+</md-content>

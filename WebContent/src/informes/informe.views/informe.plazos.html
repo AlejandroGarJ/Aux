@@ -1,0 +1,81 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="formClass" id="form" ng-form="$ctrl.informePlazos">
+	<h3>Plazos de emisión de aseguradoras</h3>
+	<div layout-gt-sm="row" class="margin-top-20">
+		<md-input-container class="md-block" flex-gt-sm>
+           	<label>Partner</label>
+           	<md-select ng-model="$ctrl.form.ID_COLECTIVO" required ng-change="$ctrl.changeForm()">
+           		<md-option ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">
+	              	{{colectivo.DS_TIPO_POLIZA}}
+	            </md-option>
+           	</md-select>
+        </md-input-container>
+	</div>
+	<div layout-gt-sm="row" class="margin-top-20">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+			<md-select ng-model="$ctrl.form.ID_COMPANIA">
+           		<md-option ng-repeat="tipo in $ctrl.tipos.compania" ng-value="tipo.ID_COMPANIA">
+	              	{{tipo.NO_COMERCIAL}}
+	            </md-option>
+           	</md-select>
+		</md-input-container>
+	</div>
+	<div layout-gt-sm="row" class="margin-top-20">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>{{ 'BRANCH' | translate }}</label>
+			<md-select ng-model="$ctrl.form.ID_RAMO">
+           		<md-option ng-repeat="tipo in $ctrl.tipos.ramos" ng-value="tipo.ID_RAMO">
+<!-- 	              	{{tipo.NO_RAMO}} -->
+               		{{$ctrl.parent.getDescriptivo(tipo, 'NO_RAMO')}}
+	            </md-option>
+           	</md-select>
+		</md-input-container>
+	</div>
+	<div layout-gt-sm="row" class="margin-top-20">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Tomador</label>
+			<md-select ng-model="$ctrl.form.ID_TIPO_DOCUMENTO">
+           		<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">
+<!-- 	              	{{tipo.DS_TIPO_DOCUMENTO}} -->
+               		{{$ctrl.parent.getDescriptivo(tipo, 'DS_TIPO_DOCUMENTO')}}
+	            </md-option>
+           	</md-select>
+		</md-input-container>
+	</div>
+	<div layout-gt-sm="row">
+		<div layout-gt-sm="row" class="margin-top-20">
+        	<md-input-container class="md-block min-w-160" flex-gt-sm>
+        		<label>F.Inicio desde...</label>
+
+          		<md-datepicker ng-click="($ctrl.form.FD_CRITERIO_FROM == null || $ctrl.form.FD_CRITERIO_FROM == undefined) ? $ctrl.form.FD_CRITERIO_FROM = null : ''" ng-model="$ctrl.form.FD_CRITERIO_FROM" required></md-datepicker>
+          	</md-input-container>
+          	<md-input-container class="md-block min-w-160" flex-gt-sm>
+          		<label>F. Inicio hasta...</label>
+
+          		<md-datepicker ng-click="($ctrl.form.FD_CRITERIO_TO == null || $ctrl.form.FD_CRITERIO_TO == undefined) ? $ctrl.form.FD_CRITERIO_TO = null : ''" ng-model="$ctrl.form.FD_CRITERIO_TO" required></md-datepicker>
+          	</md-input-container>
+    	</div>
+	</div>
+
+	<div style="text-align:center" ng-if="$ctrl.cargando == false">
+		<!-- <md-button class="md-raised md-primary dark-blue" ng-click="$ctrl.exportarPDF()"> -->
+		<md-button class="md-raised md-primary medium-blue button-action-main" form="formInforme" ng-click="$ctrl.validarFormulario($ctrl.informePlazos.$valid, 'pdf')">
+			<md-icon>picture_as_pdf</md-icon>
+			Descargar PDF
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar($ctrl.form)">
+			<i class="fa fa-trash"></i>
+			LIMPIAR
+		</md-button>
+	</div>
+
+	<div id="buscandoGif" style="width: 100%; margin: 10% auto 0;" ng-if="$ctrl.cargando == true">
+		<div class="centered" style="height: 100%; margin: 0 auto;">
+			<div class="blob-3"></div>
+			<div class="blob-4"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width: 45%">
+	<md-toolbar style="min-height:34px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h1>{{ $ctrl.title }}</h1>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form style="margin-top: 20px;" class="formClass" id="formConfirmPhone" name="formConfirmPhone">
+		     <h5 style="margin: 0!important;text-align: center">
+                     Puedes {{ $ctrl.action }} un nuevo PIN al tel&#233;fono m&#243;vil recuperado o a uno diferente que indiques.</h5>
+        	<div layout="row" flex="100" style="margin-top: 28px;" layout-align="center center">
+				<md-input-container class="md-block margin-input-detail"  flex="20" >
+                     <label class="">{{ 'MOBILE_TELEPHONE' | translate | uppercase }}</label>
+                     <input class="ellipsis" ng-model="$ctrl.telefono" ng-change="$ctrl.checkMobilePhoneNumber($ctrl.telefono)" maxlength="9" 
+                     ng-disabled="$ctrl.reenviandoCode" required>
+                </md-input-container>
+				<md-button class="md-raised md-primary medium-blue button-action-main-accent-blue" ng-disabled = "$ctrl.errorResult"
+        	 	ng-click="$ctrl.confirmPhone()" style="margin-top: 25px;">
+                  {{ $ctrl.button }}
+         		   <div class="lds-ring" style="margin-right: 8px;" ng-if="$ctrl.reenviandoCode">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+             	</md-button>
+			</div>
+			 <h6 style="margin-top: 50px;"><strong>*Importante:</strong> al enviar un nuevo PIN garantizas que el titular de la l&#237;nea m&#243;vil abajo indicada, es tambi&#233;n el tomador del seguro.</h6>			
+			<div layout="row" flex="100" style="margin-top: 10px;" layout-align="center center">
+				 <div layout-gt-sm="row" layout-align="center center" style="color:#e66c64;" ng-if="$ctrl.errorResult">
+		                <span>{{ $ctrl.error }}</span>
+		         </div>
+        	</div>
+
+        	<div layout="row" layout-align="center center" flex="100" class="md-padding">
+
+             </div>
+             
+		</form>
+	</md-dialog-content>
+</md-dialog>

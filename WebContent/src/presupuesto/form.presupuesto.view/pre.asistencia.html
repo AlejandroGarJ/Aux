@@ -1,0 +1,156 @@
+<md-content>
+	<div layout="row" layout-padding layout-align="center none" class="formClass formCliente" >
+<!-- 		<p ng-click="$ctrl.pre.mostrarDatos()" class="mostrarDetalles"><span ng-if="$ctrl.pre.mostrar==false">Mostrar</span><span ng-if="$ctrl.pre.mostrar==true">Ocultar</span></p> -->
+<!-- 		<div ng-if="$ctrl.pre.mostrar==true" flex="30"> -->
+<!-- 		<p ng-click="$ctrl.pre.mostrar = !$ctrl.pre.mostrar" class="mostrarDetalles"><span ng-if="$ctrl.pre.mostrar==false">Mostrar</span><span ng-if="$ctrl.pre.mostrar==true">Ocultar</span></p> -->
+		<md-button type="button" ng-click="$ctrl.pre.mostrar = !$ctrl.pre.mostrar" class="mostrarDetalles">
+			<span title="Mostrar datos del pago" ng-if="$ctrl.pre.mostrar==false">
+				<md-icon>keyboard_arrow_right</md-icon>
+			</span>
+			<span title="Ocultar datos del pago" ng-if="$ctrl.pre.mostrar==true">
+				<md-icon>keyboard_arrow_left</md-icon>		
+			</span>
+		</md-button>
+		<div ng-if="$ctrl.pre.mostrar" class="mostrarOcultar" flex="30">
+			<form name="$ctrl.formAsistencia">
+				<h4 class="color_titulo_h4">Datos de la tarifa</h4>
+
+				<b>Tipo de producto</b><br>
+				<md-radio-group ng-if="$ctrl.datos.TARIF_ASISTENCIA.ID_TIPO_PRODUCTO==undefined ? $ctrl.datos.TARIF_ASISTENCIA.ID_TIPO_PRODUCTO='01' : ' '" ng-disabled="true" layout-gt-sm="row" ng-model="$ctrl.datos.TARIF_ASISTENCIA.ID_TIPO_PRODUCTO" style="margin-bottom:10px" required>
+					<md-radio-button ng-value="'01'">
+						Anual
+					</md-radio-button>
+					<md-radio-button ng-value="'02'">
+						Temporal
+					</md-radio-button>
+				</md-radio-group>
+				<b>Número de asegurados*</b><br>
+				<md-radio-group layout-gt-sm="row" ng-model="$ctrl.datos.TARIF_ASISTENCIA.NU_ASEGURADOS_ANUAL" required> 
+					<md-radio-button ng-value="'02'">
+						Producto familiar
+					</md-radio-button>
+					<md-radio-button ng-value="'01'">
+						Producto individual
+					</md-radio-button>
+				</md-radio-group>
+				<h4 class="color_titulo_h4">Datos del Pago</h4>
+				 <div layout-gt-sm="row" class="margin-top-20" ng-if="$ctrl.changeDoc != 2 && $ctrl.changeDoc != 5">
+		        	<md-input-container class="md-block" flex-gt-sm>
+		        		<label>{{ 'DATE_START' | translate }}</label>
+		          		<md-datepicker 
+		          		ng-click="($ctrl.datos.DATOS_PAGO.FD_INICIO == null || $ctrl.datos.DATOS_PAGO.FD_INICIO == undefined) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null : ''" 
+		          		ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" required></md-datepicker>
+		          	</md-input-container>
+	          	</div>
+			
+				<div style="text-align: center;" class="margin-top-20">
+	<!-- 					<button type="submit" class="btn btn-info btn-sm"> -->
+	<!-- 						<span class="glyphicon glyphicon-piggy-bank"></span> Calcular tarificación -->
+	<!-- 					</button> -->
+					<md-button ng-click="$ctrl.validar($ctrl.formAsistencia.$invalid)" class="dark-blue btnNuevo">
+						<md-icon>attach_money</md-icon>
+						Calcular tarificación
+					</md-button>
+				</div>
+			</form>
+		</div>
+		<div flex="100">
+			<md-card class="form-scroll">
+				<md-card-content class="form-scroll" style="padding:0px 16px;" resize ng-style="resizeHeight(330)">
+
+					<div ng-if="$ctrl.pre.cargar==true" id="buscandoGif" style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 60%; height: 100%;" resize ng-style="resizeHeight(330)">
+			            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+							<div class = "blob-3"></div>
+							<div class = "blob-4"></div>
+						</div>
+			        </div>
+			        <table style="text-align: center" width="100%" ng-if="$ctrl.tarifas.length>0">
+							<thead> 
+						       <tr layout="row" layout-align="center center" style="height:50px !important; z-index: 1">
+						       	   <th flex="10"></th>
+						           <th ng-click="$ctrl.pre.ordenarTabla('aseguradora')" layout="row" layout-align="center center" flex = "10">Aseguradora</th>
+						           <th ng-click="$ctrl.pre.ordenarTabla('producto')" flex="20" layout="row" layout-align="center center">Producto</th>
+								   <th ng-click="$ctrl.pre.ordenarTabla('modalidad')" flex="20" layout="row" layout-align="center center">Modalidad</th>
+								   <th ng-click="$ctrl.pre.ordenarTabla('prima')" flex="15" layout="row" layout-align="center center">Prima anual</th>
+								   <th flex="5" layout="row" layout-align="center center"></th>
+								   <th flex="20" layout="row" layout-align="center center"></th>
+						       </tr>
+						   </thead>
+						
+						   <tbody> <!-- Cuerpo de la tabla -->
+						       <tr layout="row" layout-align="center center" style="z-index: 1" ng-repeat="tarifa in $ctrl.tarifas">
+						           <td flex="10">
+											<ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE != undefined || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE != undefined || tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE != null || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE != null)" on="tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="ERROR" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="INFO" ng-src="src/img/aseguradoras/INFO.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="WARN" ng-src="src/img/aseguradoras/WARN.png"
+			                                        width="30%" />
+			                                </ng-switch>
+			                                <ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE != undefined || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE != undefined || tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE != null || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE != null)" on="tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="ERROR" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="INFO" ng-src="src/img/aseguradoras/INFO.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="WARN" ng-src="src/img/aseguradoras/WARN.png"
+			                                        width="30%" />
+			                                </ng-switch>
+			                                <ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE == undefined && tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE == undefined && tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE == undefined && tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE == undefined)" on="tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE || tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE == undefined || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-switch-default ng-src="src/img/aseguradoras/OK.png" width="30%" />
+			                                </ng-switch>
+			                                <img ng-if="tarifa.IM_PRIMA_ANUAL_TOT== 0 || tarifa.IM_PRIMA_ANUAL_TOT== null || tarifa.IM_PRIMA_ANUAL_TOT== undefined" ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+								   </td>
+						           <td flex = "10">
+										<img class="imgTarifa" width="60%" ng-src="src/img/aseguradoras/{{tarifa.ID_COMPANIA}}.png"/>
+								   </td>
+						           <td flex="20" layout="row" layout-align="center center">
+										{{tarifa.NO_PRODUCTO}}
+								   </td>
+								   <td flex="20" layout="row" layout-align="center center">
+										{{tarifa.NO_MODALIDAD}}
+								   </td>
+						           <td flex="15" layout="row" layout-align="center center">
+										<h4 ng-if="tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!=undefined && tarifa.IM_PRIMA_ANUAL_TOT!=0" class="color_titulo_h4">{{tarifa.IM_PRIMA_ANUAL_TOT}} €</h4>
+								   </td>
+						           <td flex="5" layout="row" layout-align="center center">
+										<md-icon md-svg-src="src/img/garantia.svg" ng-click="$ctrl.pre.verGarantias($event,tarifa)"></md-icon>
+								   </td>
+								   <td flex="20" layout="row" layout-align="center center">
+										<md-button ng-if="tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined && tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE!='ERROR'"  ng-click="$ctrl.contratarInTarificacion($index, $ctrl.pre.detalles, 'contratar', tarifa)" class="dark-yellow btnNuevo">
+											<md-icon>gavel</md-icon>
+											Contratar
+										</md-button>
+								   </td>
+						      </tr>
+						   </tbody>
+						</table>
+						
+					<div layout="row" layout-align="center center" ng-if="$ctrl.pre.vista == 4">
+						<h3>No hay tarifas</h3>
+					</div>
+				</md-card-content>
+			</md-card>
+			<div layout="row" layout-align="center none">
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.pre.descargarPresupuesto()">
+					<md-icon>picture_as_pdf</md-icon>
+					Exportar a PDF
+				</md-button>
+				&nbsp;
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.pre.enviarPresupuestoPDF()">
+					<i class="fa-duotone fa-paper-plane"></i>
+					Enviar presupuestos
+				</md-button>
+			</div>
+		</div>
+	</div>
+	
+</md-content>

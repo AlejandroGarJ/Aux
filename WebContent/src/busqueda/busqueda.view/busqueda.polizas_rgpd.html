@@ -1,0 +1,61 @@
+<!-- Tabla de polizas -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+  <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+	        <div layout="row" layout-align="end center" class="md-padding">
+		        <md-button ng-if="$ctrl.permisos.IN_ESCRITURA === true && $ctrl.parent.url != 'polizas'" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.openNewPoliza()">
+		            {{ 'NEW_POLICY' | translate }}
+		        </md-button>
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr != true && ($ctrl.parent.url == 'polizas' || $ctrl.parent.url == 'clientes') && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.exportarExcel()">
+		            <span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+		        </md-button>
+		        
+		        <!-- Botones de consulta GDPR -->
+		        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true">
+		            <md-icon>lock_open</md-icon> {{ 'UNLOCK_CLIENT' | translate }}
+		        </md-button>
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+		            <md-icon>file_copy</md-icon> {{ 'EXPORT_CLIENT' | translate }}
+		        </md-button>
+	        </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> {{ 'NOT_FOUND_POLICY' | translate }}</h4>
+            </div>
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+            </div>
+            <div id="buscandoGif" style="display:table; height: 50vh;" ng-if="$ctrl.vista == 2">
+
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4 && $ctrl.tipo == 'rgpd_polizas'" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="$ctrl.screenHeight < 620 ? $ctrl.getTableHeight() : $ctrl.gridOptions.totalItems < 30 ? resizeHeight(377) : $ctrl.getTableHeight()"></div>
+           
+        </md-tab>
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index" label="{{ 'POLICY_NU' | translate }}: {{detalles.NU_POLIZA}}">
+            <md-tab-label ng-if="detalles != null">
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='poliza' ">{{ 'POLICY_NU' | translate }}: {{detalles.NU_POLIZA}}</span>
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='rgpd_clientes' ">{{ 'CLIENT' | translate }} {{detalles.NU_DOCUMENTO}}</span>
+                <span ng-if="detalles == null && $ctrl.nomDetalles[$index]=='poliza'">{{ 'NEW_POLICY' | translate }}
+                </span>
+
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </md-tab-label>
+            <md-tab-body>
+                <detalle-sd datos-cliente="$ctrl.datosCliente" llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='poliza'" id-detalle="detalles" tipo="'rgpd_polizas'"></detalle-sd>
+                <detalle-sd llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='rgpd_clientes'" id-detalle="$ctrl.detallesCliente" tipo="'rgpd_clientes'"></detalle-sd>
+            </md-tab-body>
+
+        </md-tab>
+
+    </md-tabs>
+
+</div>

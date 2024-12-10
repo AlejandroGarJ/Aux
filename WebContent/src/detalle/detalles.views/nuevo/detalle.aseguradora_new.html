@@ -1,0 +1,72 @@
+<div flex>
+    <div class="contenedorNuevaAseg" resize ng-style="resizeHeight(223)">
+        <form name="$ctrl.formNewAseguradora" id="formSubmitAseguradora" class="formClass" novalidate>
+            <legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos de la aseguradora</legend>
+            <div class="separadorDesplegables"></div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'NAME' | translate }}</label>
+                        <input ng-model="$ctrl.datos.NO_COMPANIA" maxlength="500" required>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Nombre Comercial</label>
+                        <input ng-model="$ctrl.datos.NO_COMERCIAL" maxlength="500">
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>CIF</label>
+                        <input ng-model="$ctrl.datos.NU_CIF" required>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Dirección</label>
+                        <input ng-model="$ctrl.datos.NO_DIRECCION" required>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Localidad</label>
+                        <input ng-model="$ctrl.datos.NO_LOCALIDAD" required>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Código Postal</label>
+                        <input ng-model="$ctrl.datos.CO_POSTAL">
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>{{ 'TELEPHONE' | translate }}</label>
+                        <input ng-model="$ctrl.datos.NU_TELEFONO" required>
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Fax</label>
+                        <input ng-model="$ctrl.datos.NU_FAX">
+                    </md-input-container>
+                    <md-input-container class="flex" flex-gt-sm>
+                        <label>Email</label>
+                        <input ng-model="$ctrl.datos.NO_EMAIL">
+                    </md-input-container>
+                </div>
+            
+
+                <!-- <div layout-gt-sm="row">
+                    <div class="contenedorCB">
+                        <md-checkbox ng-model="$ctrl.datos.IN_EMISION_WS"> Acceso a WebService </md-checkbox>
+                        <md-checkbox ng-model="$ctrl.datos.IN_PLEYADE"> Aseguradora Pléyade </md-checkbox>
+                    </div>
+                </div> -->
+
+        </form>
+        <div layout="row" layout-align="center none">
+            <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.permisos.IN_ESCRITURA == true" ng-click="$ctrl.newAseguradora()" form="{{$ctrl.formulario}}">
+                <md-icon>save</md-icon>
+                Guardar
+            </md-button>
+        </div>
+    </div>
+	<!-- <div layout="row" layout-align="center none">
+		<md-button class="medium-green btnAceptar" ng-if="$ctrl.permisos.IN_ESCRITURA == true" ng-click="$ctrl.addAseguradora()" form="{{$ctrl.formulario}}">
+			<md-icon>save</md-icon>
+			Guardar
+		</md-button>
+	</div> -->
+</div>

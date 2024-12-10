@@ -1,0 +1,56 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%;">
+	<md-toolbar style="background-color: white; min-height:25px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>ALTA DE BLOQUE DE IDENTIFICADORES</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	            <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form name="$ctrl.formModalNuevoPo" id="formModalNuevoPo" flex class="formClass md-padding">
+			<div layout="row" layout-align="center center">
+                <h4>{{ $ctrl.datos.brandName + " " + $ctrl.datos.modelName }}</h4>
+			</div>
+			<div layout="row" layout-align="center center" class="margin-top-20">
+				<md-input-container class="hide-validation-error md-block" flex-gt-sm="25">
+                    <label>PO PRINCIPAL</label>
+                    <input ng-model="$ctrl.form.pOffering_1" type="number" ng-change="$ctrl.inputLengthLimiter('pOffering_1',6)" required md-no-asterisk>
+				</md-input-container>
+				<md-input-container class="hide-validation-error md-block" flex-gt-sm="25">
+                    <label>PO ADICIONAL*</label>
+                    <input ng-model="$ctrl.form.pOffering_2" type="number" ng-change="$ctrl.inputLengthLimiter('pOffering_2',6)">
+				</md-input-container>
+				<md-input-container class="hide-validation-error md-block" flex-gt-sm="25">
+                    <label>ID CAPACIDAD</label>
+                    <input ng-model="$ctrl.form.idCapacidad" type="number" ng-change="$ctrl.inputLengthLimiter('idCapacidad',4)" required md-no-asterisk>
+				</md-input-container>
+                <md-input-container class="md-block hide-validation-error" flex-gt-sm="25">
+                    <label>ENTRADA EN VIGOR</label>
+
+                    <md-datepicker ng-model="$ctrl.form.startDate" md-min-date="$ctrl.minDate" required md-no-asterisk></md-datepicker>
+                </md-input-container>
+			</div>
+			
+			<div layout="row" layout-align="center center" class="margin-top-20">
+                <p>* El PO ADICIONAL es opcional</p>
+			</div>
+			
+			<div layout="row" class="margin-top-20" layout-align="center center" ng-if="$ctrl.cargar != true">
+				<md-button class="md-raised md-primary medium-blue button-action-main btnNextCiber" ng-click="$ctrl.save()"><i class="fa-light fa-check-double" style="margin-right: 5px"></i> REALIZAR ALTA DE BLOQUE</md-button>
+			</div>
+			<div class="cs-loader" ng-if="$ctrl.cargar == true" style="height: auto; width: 97%; position: relative; height: 40px;">
+				<div class="cs-loader-inner">
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+				</div>
+			</div>
+	</md-dialog-content>
+</md-dialog>

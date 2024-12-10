@@ -1,0 +1,394 @@
+<div flex>
+    <uib-tabset ng-if="$ctrl.pasoPresupuesto == 1" active="$ctrl.indice" class="tabsPasos" type="pills" justified="true">
+        <uib-tab index="1" heading="Localización" class="btn-sm">
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll">
+                <div flex>
+                    <form name="formVivienda" id="formSubmitVivienda" novalidate>
+                        <legend>Localización de la vivienda</legend>
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Código postal</label>
+                                <input ng-disabled="$ctrl.emitido!='0'" ng-change="$ctrl.updateDir('BLOCK_DIRECCION_VIVIENDA', $ctrl.datos.BLOCK_DIRECCION_VIVIENDA.CO_POSTAL)"
+                                    ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.CO_POSTAL" required>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Localidad</label>
+                                <md-select ng-disabled="true" ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_LOCALIDAD" required>
+                                    <md-option ng-value="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_LOCALIDAD">{{$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_LOCALIDAD}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Provincia</label>
+                                <md-select ng-disabled="true" ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.CO_PROVINCIA" required>
+                                    <md-option ng-value="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.CO_PROVINCIA">{{$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.DS__CO_PROVINCIA}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        
+                        <fieldset ng-disabled="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.CO_POSTAL == undefined || $ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_LOCALIDAD == undefined || $ctrl.datos.BLOCK_DIRECCION_VIVIENDA.CO_PROVINCIA == undefined">
+                            <!-- ***CATASTRO OK*** -->
+                            <div layout-gt-sm="row" ng-if="$ctrl.estadoCatastro != undefined && $ctrl.estadoCatastro == 0">
+                                <md-autocomplete name="Via" flex-gt-sm required md-no-cache="true"
+                                    md-search-text="$ctrl.textoBusquedaVia"
+                                    md-selected-item="$ctrl.tipoViaSeleccionada"
+                                    md-selected-item-change="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.ID_TIPO_VIA = $ctrl.tipoViaSeleccionada.ID_TIPO_VIA"
+                                    md-items="via in $ctrl.querySearch($ctrl.textoBusquedaVia, $ctrl.tipos.tiposVia, 'DS_TIPO_VIA')"
+                                    md-item-text="via.DS_TIPO_VIA" md-min-length="0" md-require-match
+                                    md-floating-label="Tipo de vía">
+                                    <md-item-template>
+                                        <span md-highlight-text="$ctrl.textoBusquedaVia"
+                                            md-highlight-flags="^i">{{via.DS_TIPO_VIA}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No existe el tipo de vía '{{$ctrl.textoBusquedaVia}}'.
+                                    </md-not-found>
+                                </md-autocomplete>
+                                
+                                <md-autocomplete name="NombreVia" flex-gt-sm required md-no-cache="true"
+                                    ng-init="$ctrl.listaVias = []"
+                                    md-selected-item="$ctrl.viaSeleccionada"
+                                    md-selected-item-change="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_DIRECCION = via"
+                                    md-search-text="$ctrl.textoBusquedaNombreVia"
+                                    md-search-text-change="$ctrl.buscarVias($ctrl.textoBusquedaNombreVia)"
+                                    md-items="via in $ctrl.querySearch($ctrl.textoBusquedaNombreVia, $ctrl.listaVias, 'via')"
+                                    md-item-text="via" md-min-length="3" md-require-match
+                                    md-floating-label="Nombre de vía">
+                                    <md-item-template>
+                                        <span md-highlight-text="$ctrl.textoBusquedaNombreVia"
+                                            md-highlight-flags="^i">{{via}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No existe la vía '{{$ctrl.textoBusquedaNombreVia}}'.
+                                    </md-not-found>
+                                </md-autocomplete>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Número</label>
+                                    <input ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NU_NUMERO" ng-change="$ctrl.buscarDireccionesSug()" required>
+                                </md-input-container>
+
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Bloque</label>
+                                    <md-select ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_PORTAL" ng-change="$ctrl.listarPisos('bloque')" ng-disabled="$ctrl.listaBloques.length == 0">
+                                        <md-option ng-repeat="bloque in $ctrl.listaBloques" ng-value="bloque" >{{bloque}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Escalera</label>
+                                    <md-select ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_ESCALERA" ng-change="$ctrl.listarPisos('escalera')" ng-disabled="$ctrl.listaEscaleras.length <= 0">
+                                        <md-option ng-repeat="escalera in $ctrl.listaEscaleras" ng-value="escalera" >{{escalera}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Planta</label>
+                                    <md-select ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NU_PLANTA" ng-change="$ctrl.listarPisos('planta')" ng-disabled="$ctrl.listaPlantas.length <= 0">
+                                        <md-option ng-repeat="planta in $ctrl.listaPlantas" ng-value="planta" >{{planta}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Puerta</label>
+                                    <md-select ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_PUERTA" ng-disabled="$ctrl.listaPuertas.length <= 0">
+                                        <md-option ng-repeat="puerta in $ctrl.listaPuertas" ng-value="puerta">{{puerta}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                            </div>
+
+                            <!-- ***CATASTRO KO*** -->
+                            <div layout-gt-sm="row" ng-if="$ctrl.estadoCatastro != undefined && $ctrl.estadoCatastro != 0">
+                                <md-autocomplete name="Via" flex-gt-sm required md-no-cache="$ctrl.noCache"
+                                    md-search-text="$ctrl.textoBusquedaVia"
+                                    md-selected-item="$ctrl.tipoViaSeleccionada"
+                                    md-selected-item-change="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.ID_TIPO_VIA = $ctrl.tipoViaSeleccionada.ID_TIPO_VIA"
+                                    md-items="via in $ctrl.querySearch($ctrl.textoBusquedaVia, $ctrl.tipos.tiposVia, 'DS_TIPO_VIA')"
+                                    md-item-text="via.DS_TIPO_VIA" md-min-length="0" md-require-match
+                                    md-floating-label="Tipo de vía">
+                                    <md-item-template>
+                                        <span md-highlight-text="$ctrl.textoBusquedaVia"
+                                            md-highlight-flags="^i">{{via.DS_TIPO_VIA}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No existe el tipo de vía '{{$ctrl.textoBusquedaVia}}'.
+                                    </md-not-found>
+                                </md-autocomplete>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Dirección</label>
+                                    <input ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_DIRECCION" required>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Número</label>
+                                    <input ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NU_NUMERO" required>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Bloque</label>
+                                    <input ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_PORTAL">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Escalera</label>
+                                    <input ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_ESCALERA">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Planta</label>
+                                    <input ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NU_PLANTA">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Puerta</label>
+                                    <input ng-model="$ctrl.datos.BLOCK_DIRECCION_VIVIENDA.NO_PUERTA">
+                                </md-input-container>
+
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </md-content>
+        </uib-tab>
+
+        <uib-tab index="2" disable="$ctrl.formVivienda=!formVivienda.$valid" heading="Características" class="btn-sm">
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+                resize>
+                <div flex>
+                    <form name="formCaracteristicas" id="formSubmitCaracteristicas" novalidate>
+                        <legend>Información de la vivienda</legend>
+                        <div class="separadorDesplegables"></div>
+
+                        <!-- Santa Lucía -->
+
+                        <div layout-gt-sm="row" ng-if="$ctrl.codAseguradora != undefined && $ctrl.codAseguradora == 1">
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label>Tipo de vivienda</label>
+                                <md-select ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.ID_TIPO_VIVIENDA" required>
+                                    <md-option ng-repeat="tipoVivienda in $ctrl.tiposVivienda" ng-value="tipoVivienda.CO_FIELD">{{tipoVivienda.DS_FIELD}}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label>Propietario o inquilino</label>
+                                <md-select ng-model="$ctrl.datos.BLOCK_USO_REGIMEN.ID_REGIMEN_VIVIENDA" required>
+                                    <md-option ng-repeat="tipoRegimen in $ctrl.regimenesVivienda" ng-value="tipoRegimen.CO_FIELD">{{tipoRegimen.DS_FIELD}}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label>Uso de la vivienda</label>
+                                <md-select ng-model="$ctrl.datos.BLOCK_USO_REGIMEN.ID_USO_VIVIENDA" required>
+                                    <md-option ng-repeat="tipoUso in $ctrl.usosVivienda" ng-value="tipoUso.CO_FIELD">{{tipoUso.DS_FIELD}}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label>Localización</label>
+                                <md-select ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.ID_SITUACION_VIVIENDA" required>
+                                    <md-option ng-repeat="tipoLocalizacion in $ctrl.situacionesVivienda" ng-value="tipoLocalizacion.CO_FIELD">{{tipoLocalizacion.DS_FIELD}}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label>Ocupación vivienda</label>
+                                <md-select ng-model="$ctrl.ocupacion" required>
+                                    <md-option ng-value="01">Habitada</md-option>
+                                    <md-option ng-value="00">Deshabitada</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Año construcción</label>
+                                <input ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.NU_ANIO_CONSTRUCCION" required>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Superficie (m<sup>2</sup>)</label>
+                                <input ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.CA_METROS_CUADRADOS" required>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Anexos (m<sup>2</sup>)</label>
+                                <input ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.IM_SUPERFICIE_ANEXA">
+                            </md-input-container>
+
+                        </div>
+
+                        <!-- BBVA -->
+
+                        <div layout-gt-sm="row" ng-if="$ctrl.codAseguradora != undefined && $ctrl.codAseguradora == 2">
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label>Tipo de vivienda</label>
+                                <md-select ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.ID_TIPO_VIVIENDA" required>
+                                    <md-option ng-repeat="tipoVivienda in $ctrl.tiposVivienda" ng-value="tipoVivienda.CO_FIELD">{{tipoVivienda.DS_FIELD}}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label>Propietario o inquilino</label>
+                                <md-select ng-model="$ctrl.datos.BLOCK_USO_REGIMEN.ID_REGIMEN_VIVIENDA" required>
+                                    <md-option ng-repeat="tipoRegimen in $ctrl.regimenesVivienda" ng-value="tipoRegimen.CO_FIELD">{{tipoRegimen.DS_FIELD}}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm="20">
+                                <label>Uso de la vivienda</label>
+                                <md-select ng-model="$ctrl.datos.BLOCK_USO_REGIMEN.ID_USO_VIVIENDA" required>
+                                    <md-option ng-repeat="tipoUso in $ctrl.usosVivienda" ng-value="tipoUso.CO_FIELD">{{tipoUso.DS_FIELD}}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Año construcción</label>
+                                <input ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.NU_ANIO_CONSTRUCCION" required>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Superficie (m<sup>2</sup>)</label>
+                                <input ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.CA_METROS_CUADRADOS" required>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Anexos (m<sup>2</sup>)</label>
+                                <input ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.IM_SUPERFICIE_ANEXA">
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Zonas comunes (m<sup>2</sup>)</label>
+                                <input ng-model="$ctrl.datos.BLOCK_INFORMACION_VIVIENDA.NU_METROS_COMUNES">
+                            </md-input-container>
+                        </div>
+                        
+                
+                    </form>
+                </div>
+            </md-content>
+        </uib-tab>
+        
+        <uib-tab index="3" disable="$ctrl.formCaracteristicas=!formCaracteristicas.$valid" heading="Capitales" class="btn-sm">
+            <md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+                resize>
+                <div flex>
+                    <form name="formCapitales" id="formSubmitCapitales" novalidate>
+                        <legend>Continente y contenido</legend>
+                        <div class="separadorDesplegables"></div>
+
+                        <!-- Santa Lucía -->
+
+                        <div layout-gt-sm="row" ng-if="$ctrl.codAseguradora != undefined && $ctrl.codAseguradora == 1">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Continente</label>
+                                <input ng-model="$ctrl.datos.BLOCK_CAPITALES.IM_VALOR_CONTINENTE" required>
+                                <div id="valorContinente" class="hint" style="font-size: 10px;">(*) Valor recomendado:
+                                    {{$ctrl.valorContinente}} €</div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Contenido</label>
+                                <input ng-model="$ctrl.datos.BLOCK_CAPITALES.IM_VALOR_CONTENIDO"
+                                    required>
+                                <div id="valorContenido" class="hint" style="font-size: 10px;">(*) Valor recomendado:
+                                    {{$ctrl.valorContenido}} €</div>
+                            </md-input-container>
+
+                        </div>
+
+                        <!-- BBVA -->
+
+                        <div layout-gt-sm="row" ng-if="$ctrl.codAseguradora != undefined && $ctrl.codAseguradora == 2">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Construcción principal</label>
+                                <input ng-model="$ctrl.datos.BLOCK_CAPITALES.IM_VALOR_CONTINENTE" required>
+                                <div id="valorContinente" class="hint" style="font-size: 10px;">
+                                    (*) Valor recomendado: {{$ctrl.valorContinente}} €
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Anexos</label>
+                                <input>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Instalaciones adicionales m<sup>2</sup></label>
+                                <input>
+                            </md-input-container>
+                            
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Contenido de la vivienda</label>
+                                <input ng-model="$ctrl.datos.BLOCK_CAPITALES.IM_VALOR_CONTENIDO"
+                                    required>
+                                <div id="valorContenido" class="hint" style="font-size: 10px;">
+                                    (*) Valor recomendado: {{$ctrl.valorContenido}} €
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                    </form>
+                </div>
+            </md-content>
+        </uib-tab>
+
+        <uib-tab index="4" disable="$ctrl.formCapitales=!formCapitales.$valid" heading="Otros" class="btn-sm">
+            <md-content ng-if="$ctrl.cargando != true" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+                resize>
+                <div flex>
+                    <form name="formOtros" id="formSubmitOtros" novalidate>
+                        <legend>Configuración de Seguro Hogar Movistar</legend>
+
+                        <div class="separadorDesplegables"></div>
+                        <div layout-gt-sm="row">
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>{{ 'DATE_START' | translate }}</label>
+                                <md-datepicker ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" required
+                                    ng-click="($ctrl.datos.DATOS_PAGO.FD_INICIO == undefined || $ctrl.datos.DATOS_PAGO.FD_INICIO == null) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null : ''">
+                                </md-datepicker>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Contacto</label>
+                                <input ng-model="$ctrl.numContacto">
+                            </md-input-container>
+
+                        </div>
+
+                    </form>
+                </div>
+            </md-content>
+            <md-content ng-if="$ctrl.cargando == true" layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll"
+                resize>
+                <div id="buscandoGif" 
+	               	 style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;"
+	                 resize >
+                     <div class="centered" style="display:table-cell; vertical-align: middle;">
+                         <div class="blob-3"></div>
+                         <div class="blob-4"></div>
+                     </div>
+	            </div>
+            </md-content>
+        </uib-tab>
+        
+    </uib-tabset>
+    <div layout="row" layout-align="center none">
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice > 1" ng-click="$ctrl.anterior()">
+            <md-icon>navigate_before</md-icon>
+            Anterior
+        </md-button>
+        <!-- <md-button class="medium-orange btnExportar" ng-if="$ctrl.indice==5" ng-click="$ctrl.pre.descargarPresupuesto()">
+            <md-icon>picture_as_pdf</md-icon>
+            Exportar a PDF
+        </md-button> -->
+        &nbsp;
+        <!-- <md-button class="medium-green btnAceptar" ng-if="$ctrl.indice==5" ng-click="$ctrl.pre.enviarPresupuestoPDF()">
+            <i class="fa-duotone fa-paper-plane"></i>
+            Enviar presupuestos
+        </md-button> -->
+        <md-button type="submit" class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice < 4" ng-click="$ctrl.siguiente($ctrl.indice)" form="{{$ctrl.formulario}}">
+            <md-icon>navigate_next</md-icon>
+            Siguiente
+        </md-button>
+        <md-button disable="$ctrl.formOtros=!formOtros.$valid" type="submit" class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice == 4" ng-click="$ctrl.siguiente($ctrl.indice)" form="{{$ctrl.formulario}}">
+            Calcular
+        </md-button>
+    </div>
+</div>

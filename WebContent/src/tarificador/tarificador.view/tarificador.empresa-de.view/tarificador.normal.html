@@ -1,0 +1,370 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="container_TarMovil" flex>
+            <h4 class="h4Tar"><span class="fas fa-feather-alt m-r_15"></span> {{ 'CYBER_INSURANCE' | translate }}</h4>
+            
+            <div layout="row" layout-sm="column" style="display: flow-root;">
+                <div class="container_TarMovil_btn" style="float: left;">
+                    <md-button ng-if="$ctrl.rol != 15" layout-align="center center" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.reset()" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+                        <md-icon>refresh</md-icon>
+                        {{ 'START_NEW' | translate }}
+                    </md-button>
+                    <md-button ng-if="$ctrl.rol == 15" layout-align="center center" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.reset()" ng-disabled="$ctrl.llave == 'resumen'">
+                        <md-icon>refresh</md-icon>
+                        {{ 'START_NEW' | translate }}
+                    </md-button>
+                    
+                    <md-button ng-if="$ctrl.rol != 15" layout-align="center center" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.rateCompany(false, true)" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+                        <md-icon>library_add</md-icon>
+                        {{ 'NEW_BUDGET_COPY' | translate }}
+                    </md-button>
+                </div>
+                <div class="container_TarMovil_btn" style="float: right;">
+                    <md-button ng-if="$ctrl.rol != 15" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.modalPdf($ctrl.budgetId)" ng-disabled="$ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+                        <md-icon>file_copy</md-icon>
+                        {{ 'DOWNLOAD_SEND_BUDGET' | translate }}
+                    </md-button>
+                    <md-button ng-if="$ctrl.rol == 15" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.modalDescargaTiper()">
+                        <md-icon>file_copy</md-icon>
+                        {{ 'SEND_INFO' | translate }}
+                    </md-button>
+                </div>
+            </div>
+            
+            <form name="$ctrl.formTarEmpresa" id="formSubmitTarEmpresa" flex>
+                <div layout="row" layout-sm="column" layout-xs="column">
+                    <div class="container_TarMovil_div" layout="column" layout-sm="column" layout-xs="column" flex="66">
+                        <div layout="row" layout-sm="column" layout-xs="column" layout-margin="">
+                            <div class="container_TarMovil_input" flex="">
+                                <span class="ic-ciber-ico-sector-actividad ico_TarMovil"></span>
+                                <md-input-container class="md-block" >
+                                    <label>{{ 'SECTOR' | translate }}</label>
+                                    <md-select ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.sector" required>
+                                        <md-option ng-repeat="sector in $ctrl.tpGroups" ng-value="sector">
+		                                    {{$ctrl.parent.getDescriptivo(sector, 'DS_TIPOS')}}
+<!-- 		                                    {{sector.DS_TIPOS}} -->
+		                                </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" ng-if="$ctrl.sector != undefined && $ctrl.sector != ''">
+                                    <label>{{ 'ACTIVITY' | translate }}</label>
+                                    <md-select ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.activity" ng-change="$ctrl.check_risk('activity', $ctrl.activity)" required>
+                                        <md-option ng-repeat="activity in $ctrl.sector.LST_ACTIVIDADES" ng-value="activity">
+		                                    {{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+<!-- 		                                    {{activity.DS_ACTIVIDAD}} -->
+		                                </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="container_TarMovil_input" flex="">
+                                <span class="ic-ciber-ico-pago-sanciones-regulatorias ico_TarMovil"></span>
+                                <md-input-container class="md-block">
+                                    <label>{{ 'TYPE_BUSSINES' | translate }}</label>
+                                    <md-select ng-model="$ctrl.tipoEmpresa" ng-change="$ctrl.changeTipoEmpresa()" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.activity == undefined" required>
+                                        <md-option ng-repeat="empresa in $ctrl.tiposEmpresa" ng-value="empresa.CO_TIPO">
+		                                    {{$ctrl.parent.getDescriptivo(empresa, 'DS_TIPOS')}}
+		                                </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container ng-if="$ctrl.tipoEmpresa != null" class="md-block">
+                                    <label>{{ 'BILLING_EUR' | translate }}</label>
+                                    <md-select ng-model="$ctrl.objPri.turnover" ng-change="$ctrl.check_risk('billing', $ctrl.objPri.turnover)" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.activity == undefined" required>
+                                        <md-option ng-repeat="fact in $ctrl.tpFacturacion" ng-value="fact.CO_TIPO">
+		                                    {{$ctrl.parent.getDescriptivo(fact, 'DS_TIPOS')}}
+<!-- 		                                    {{fact.DS_TIPOS}} -->
+		                                </md-option>
+                                    </md-select>
+                                    <div class="txt_cmt">{{ 'INCLUDE_COMPANY_SUBSIDIARY' | translate }}</div>
+                                </md-input-container>
+                            </div>
+                            
+                            <div class="container_TarMovil_input" flex="">
+                                <span class="ic-ciber-ico_importe_asegurado ico_TarMovil"></span>
+                                <md-input-container class="md-block">
+                                    <label>{{ 'INSURED_AMOUNT' | translate }}</label>
+                                    <!-- <md-select ng-model="$ctrl.amount" ng-change="$ctrl.checkAmounts()"> -->
+                                    <md-select ng-model="$ctrl.amount" ng-change="$ctrl.check_risk('amount', $ctrl.amount)" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.objPri.turnover == undefined" required>
+                                        <md-option ng-repeat="amount in $ctrl.tpAmount" ng-value="amount">
+		                                    {{$ctrl.parent.getDescriptivo(amount, 'DS_TIPOS')}}
+<!-- 		                                    {{amount.DS_TIPOS}} -->
+		                                </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div layout="column" layout-gt-sm="row" layout-margin="">
+                            <!-- <div class="container_TarMovil_input" flex="">
+                                <span class="ic-ciber-ico-sucursales ico_TarMovil"></span>
+                                <md-input-container class="md-block">
+                                    <label>Indica sector / Actividad de tus filiales</label>
+                                    <md-select ng-model="$ctrl.sector" ng-change="$ctrl.check_sector($ctrl.sector)">
+                                        <md-option ng-repeat="sector in $ctrl.tpGroups" ng-value="sector">{{sector.typeDescription}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" >
+                                    <md-select ng-model="$ctrl.activity" ng-if="$ctrl.sector != undefined && $ctrl.sector != ''">
+                                        <md-option ng-repeat="activity in $ctrl.sector.activities" ng-value="activity">{{activity.typeDescription}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div> -->
+
+
+                            <div class="container_TarMovil_input" flex="">
+                                <span class="ic-ciber-ico-sucursales ico_TarMovil"></span>
+                                <div class="container_info_tt">
+                                    <md-tooltip class="info_tt">
+                                        {{ 'SELECT_SECTOR_1' | translate }} <br>
+                                        {{ 'SELECT_SECTOR_2' | translate }} <br>
+                                        {{ 'SELECT_SECTOR_3' | translate }} <br>
+                                        {{ 'SELECT_SECTOR_4' | translate }} <br>
+                                        {{ 'SELECT_SECTOR_5' | translate }}
+                                    </md-tooltip>
+                                    <md-icon>help</md-icon>
+                                </div>
+                                
+                                <div layout="row" layout-align="center center" class="md-block md-apdding">
+                               		<div flex>
+                                		Möchten Sie eine Tochtergesellschaft hinzufügen? 
+                               		</div>
+	                                <md-radio-group ng-change="$ctrl.changeAddFilial()" flex layout="row" layout-align="center center" ng-model="$ctrl.addFilial" ng-init="$ctrl.addFilial = false" required>
+								      <md-radio-button ng-value=true>{{ 'YES' | translate }}</md-radio-button>
+								      <md-radio-button ng-value=false>{{ 'NO' | translate }}</md-radio-button>
+								    </md-radio-group>
+                                </div>
+                                
+                                <md-input-container ng-if="$ctrl.addFilial == true" class="md-block">
+                                    <label>{{ 'SECTOR' | translate }}</label>
+                                    <md-select ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.affiSector" multiple>
+                                        <md-option ng-repeat="afSector in $ctrl.tpGroups" ng-value="afSector">
+		                                    {{$ctrl.parent.getDescriptivo(afSector, 'DS_TIPOS')}}
+<!-- 		                                    {{afSector.DS_TIPOS}} -->
+		                                </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container ng-if="$ctrl.addFilial == true" class="md-block">
+                                    <label>{{ 'SUBSIDIARY_ACTIVITY' | translate }}</label>
+                                    <md-select ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.selActivities" ng-change="$ctrl.check_risk('selActivities', $ctrl.selActivities)" multiple>
+                                        <md-optgroup label="{{afSector.DS_TIPOS}}" ng-repeat="afSector in $ctrl.affiSector">
+                                            <md-option ng-repeat="activity in afSector.LST_ACTIVIDADES" ng-value="activity.DS_ACTIVIDAD">
+			                                    {{$ctrl.parent.getDescriptivo(activity, 'DS_ACTIVIDAD')}}
+<!-- 			                                    {{activity.DS_ACTIVIDAD}} -->
+		                                    </md-option>
+                                            <!-- <md-option ng-repeat="activity in $ctrl.sector.activities | filter: {typeCode: '' }" ng-value="activity">{{activity.typeDescription}}</md-option> -->
+                                        </md-optgroup>
+                                    </md-select>
+                                    <div class="txt_cmt">{{ 'SUBSIDIARIES' | translate }}</div>
+                                </md-input-container>
+                            </div>
+
+
+
+                            <div class="container_TarMovil_input" flex="">
+                                <span class="ic-ciber-ico-ciberataque ico_TarMovil"></span>
+                                <div class="txt_cmt">{{ 'LAST_3_YEARS' | translate }}</div>
+                                <md-input-container class="md-block">
+                                    <label>{{ 'QUESTION_CYBER_ATTACK' | translate }}</label>
+                                    <md-select ng-model="$ctrl.objPri.lossAttackAmountOption" ng-change="$ctrl.check_risk('atksOpt', $ctrl.objPri.lossAttackAmountOption)" ng-disabled="$ctrl.llave == 'resumen' || $ctrl.amount.DS_TIPOS == 0" required>
+                                        <md-option ng-repeat="lost in $ctrl.tpLosses" ng-value="lost.CO_TIPO">
+		                                    {{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+<!-- 		                                    {{lost.DS_TIPOS}} -->
+			                            </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" ng-if="$ctrl.objPri.lossAttackAmountOption != undefined && $ctrl.objPri.lossAttackAmountOption == 1">
+                                    <label>{{ 'QUESTION_CYBER_ATTACK_TYPE' | translate }}</label>
+                                    <md-select ng-change="$ctrl.check_risk('selAtks', $ctrl.selAtks)" ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.selAtks" required multiple>
+                                        <md-option ng-repeat="lost in $ctrl.tpCbatk" ng-value="lost.CO_TIPO">
+		                                    {{$ctrl.parent.getDescriptivo(lost, 'DS_TIPOS')}}
+<!-- 		                                    {{lost.DS_TIPOS}} -->
+		                                </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="container_TarMovil_input" flex="">
+                                <!-- <span class="ic-ciber-paso03 ico_TarMovil"></span> -->
+                                <span><i class="ic-ciber-ico_mas"></i> {{ 'ADD_EXTENSION' | translate }}</span>
+                                <div class="md-block">
+                                    <md-list-item>
+                                        <md-switch ng-disabled="$ctrl.llave == 'resumen'" ng-model="$ctrl.addCCE" ng-change="$ctrl.checkAmounts(true)"></md-switch>
+                                        <span flex="70" style="color: #8a1a93;font-family: 'TelefonicaWebBold';"> {{ 'CIBERCRIME' | translate }}</span>
+                                    </md-list-item>
+                                    <md-list-item>
+                                        {{ 'CYBERATTACK' | translate }}
+                                    </md-list-item>
+                                    <md-list-item>
+                                        <div class="txt_cmt">
+                                            100.000€
+                                        </div>
+                                    </md-list-item>
+                                    <!-- <md-list-item>
+                                        <md-switch ng-disabled="$ctrl.llave == 'resumen' || $ctrl.disabledFranq == true;" ng-true-value="1" ng-false-value="0" ng-model="$ctrl.isFranquicia" ng-change="$ctrl.checkAmounts(true)"></md-switch>
+                                        <span flex="70" style="color: #8a1a93;font-family: 'TelefonicaWebBold';"> {{ 'FRANCHISE' | translate }}</span>
+                                    </md-list-item> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container_TarMovil_div" layout="column" layout-sm="column" layout-xs="column" flex="33">
+                        <div layout="column" layout-sm="column" layout-margin="" ng-if="$ctrl.priceable == true">
+                            <div class="container_TarMovil_price" layout="row" layout-align="end center">
+                                <div layout="row">
+                                    <div>
+                                        <md-progress-circular md-mode="indeterminate" ng-show="$ctrl.calc == true" style="margin: 0 auto;"></md-progress-circular>
+                                        <span ng-hide="$ctrl.calc == true" class="spPrice">{{$ctrl.price == 0 ? '--' : $ctrl.formatPrice($ctrl.price) }}</span>
+                                        <span ng-hide="$ctrl.calc == true || $ctrl.price == 0" class="txtRegular">{{ 'TAXES_INCLUDED' | translate }}</span>
+                                        <span ng-if="$ctrl.franquicia != null && $ctrl.franquicia != 0" ng-hide="$ctrl.calc == true || $ctrl.price == 0" class="txtRegular">{{ 'FRANCHISE' | translate }}: {{$ctrl.franquicia}} €</span>
+                                    	<p class="text-right color-blue">{{ 'INSURANCE_PRICE' | translate }}: <b>{{ 'YEARLY' | translate }}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div layout="row" layout-sm="column" layout-align="center center">
+                                <md-button class="btn_TarMovil btnNuevo btnCircle" ng-click="$ctrl.reset()"
+                                    ng-disabled="$ctrl.llave == 'resumen' || $ctrl.budgetId == undefined ||$ctrl.budgetId == ''">
+                                    <md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false">{{ 'START_NEW' | translate }}</md-tooltip>
+                                    <md-icon>refresh</md-icon>
+                                </md-button>
+                                <md-button class="btn_TarMovil btnNuevo btnCircle" ng-click="$ctrl.rateCompany(false, true)"
+                                    ng-disabled="$ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+                                    <md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false">{{ 'NEW_BUDGET_COPY' | translate }}</md-tooltip>
+                                    <md-icon>library_add</md-icon>
+                                </md-button>
+                                <md-button class="btn_TarMovil btnNuevo btnCircle" ng-click="$ctrl.modalPdf($ctrl.budgetId, 0)"
+                                    ng-disabled="$ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+                                    <md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false">{{ 'DOWNLOAD_BUDGET' | translate }}</md-tooltip>
+                                    <md-icon>file_copy</md-icon>
+                                </md-button>
+                                <md-button class="btn_TarMovil btnNuevo btnCircle" ng-click="$ctrl.modalPdf($ctrl.budgetId, 1)"
+                                    ng-disabled="$ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+                                    <md-tooltip md-direction="down" md-visible="tooltipVisible" md-autohide="false">{{ 'SEND_BUDGET' | translate }}</md-tooltip>
+                                    <i class="fa-duotone fa-paper-plane"></i>
+                                </md-button>
+                            </div> -->
+
+                            <div layout="column">
+                                <div class="container_TarMovil_budget" ng-if="$ctrl.budgetId != undefined && $ctrl.budgetId != ''">
+                                    {{ 'BUDGET_NUMBER' | translate }}: <span>{{$ctrl.budgetId}}</span>
+                                </div>
+                                <div class="info_pk" layout="row">
+                                    <span class="ic-ciber-ico-transferencia"></span> {{ 'INSURED_AMOUNT_INFO' | translate }}
+                                </div>
+                                <div class="lst_BB_bl" layout="row">
+                                    <div flex="80">
+                                        {{ 'CYBERATTACK_RESPONSE' | translate }}
+                                    </div>
+                                    <div>
+                                        {{$ctrl.getAmountText($ctrl.amount.CO_TIPO)}}
+                                    </div>
+                                </div>
+                                <div class="lst_BB_bl" layout="row">
+                                    <div flex="80">
+                                        {{ 'CYBERSECURITY' | translate }}
+                                    </div>
+                                    <div>
+                                        {{$ctrl.getAmountText($ctrl.amount.CO_TIPO)}}
+                                    </div>
+                                </div>
+                                <div class="lst_BB_bl" layout="row">
+                                    <div flex="80">
+                                        {{ 'SYSTEM_DAMAGE' | translate }}
+                                    </div>
+                                    <div>
+                                        {{$ctrl.getAmountText($ctrl.amount.CO_TIPO)}}
+                                    </div>
+                                </div>
+                                <div class="lst_BB_bl" layout="row">
+                                    <div flex="80">
+                                        {{ 'CYBERCRIME' | translate }}
+                                    </div>
+                                    <div>
+                                        {{$ctrl.getAmountText($ctrl.amount.CO_TIPO, true)}}
+                                    </div>
+                                </div>
+                                <div ng-if="$ctrl.addCCE == true" class="lst_BB_bl" layout="row">
+                                    <div flex="80">
+                                        {{ 'CYBER_EXTORTION' | translate }}
+                                    </div>
+                                    <div>
+                                        100.000 €
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="container_TarMovil_msg" layout="row" ng-hide="$ctrl.dataWarning == false">
+                                <span class="ic-ciber-ico-alerta"></span>
+                                <span>Debes completar todas las opciones para calcular tu seguro</span>
+                            </div> -->
+                            <div ng-if="$ctrl.rol != 15" class="container_TarMovil_btn" layout="row" layout-align="center none">
+                                <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.rateCompany(true)" ng-disabled="$ctrl.colectivo.IN_EMITE == false || $ctrl.llave == 'resumen' || $ctrl.budgetId == undefined || $ctrl.budgetId == ''">
+                                    <md-icon>history_edu</md-icon>
+                                    {{ 'CONTRACT' | translate }}
+                                </md-button>
+                            </div>
+                
+			                <div ng-if="$ctrl.rol != 15" class="container_TarMovil_info">
+			                    <span class="ic-ciber-ico-info color-blue"></span> 
+			                    <a href="src/documentos/Tabla_Orientativa_2024.pdf" class="" target="_blank">{{ 'TABLE' | translate }}</a>
+			                </div>
+                
+			                <div ng-if="$ctrl.rol != 15" class="container_TarMovil_info">
+			                    <span class="ic-ciber-ico-info color-blue"></span> 
+			                    <a href="src/documentos/Telefonica_Cyber_Versicherung_12.22.pdf" class="" target="_blank">{{ 'GENERAL_CONDITIONS' | translate }}</a>
+			                </div>
+                
+			                <div ng-if="$ctrl.rol != 15" class="container_TarMovil_info">
+			                    <span class="ic-ciber-ico-info color-blue"></span> 
+			                    <a href="src/documentos/Data_Protection_Information_12.22.pdf" class="" target="_blank">{{ 'DATA_PROTECTION' | translate }}</a>
+			                </div>
+                        </div>
+                        <div layout="column" layout-sm="column" layout-margin="" ng-if="$ctrl.priceable == false">
+                            <div layout="row" class="callbackForm_header">
+                                {{ 'CUSTOM_RATE' | translate }}
+                            </div>
+                            <div layout="row">
+                                {{ 'WARN_FORM_1' | translate }} 
+                                <a href="mailto:ciberseguro@telefonica.com" style="display: contents;">ciberseguro@telefonica.com</a>, {{ 'WARN_FORM_2' | translate }}
+                            </div>
+<!--                             <div layout="row"> -->
+<!--                                 <md-input-container class="md-block callbackForm_inputCont" > -->
+<!--                                     <label>{{ 'DOCUMENT_NUMBER' | translate }}</label> -->
+<!--                                     <input ng-model="$ctrl.objSendF.NU_DOCUMENTO" /> -->
+<!--                                 </md-input-container> -->
+<!--                             </div> -->
+                            <div layout="row">
+                                <md-input-container class="md-block callbackForm_inputCont" >
+                                    <label>{{ 'COMPANY_NAME' | translate }}</label>
+                                    <input ng-model="$ctrl.objSendF.NO_NOMBRE" />
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block callbackForm_inputCont" >
+                                    <label>{{ 'EMAIL' | translate }}</label>
+                                    <input ng-model="$ctrl.objSendF.NO_EMAIL" ng-pattern="/^.+@.+\..+$/" />
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block callbackForm_inputCont" >
+                                    <label>{{ 'TELEPHONE' | translate }}</label>
+                                    <input ng-model="$ctrl.objSendF.NU_TELEFONO1" />
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                * {{ 'SEND_FORM_INFO' | translate }}
+                            </div>
+                            <div layout="row" layout-align="center none">
+                            	<md-progress-circular md-mode="indeterminate" ng-if="$ctrl.loadingForm == true" style="margin: 0 auto;"></md-progress-circular>
+                                <md-button ng-if="$ctrl.loadingForm != true" ng-click="$ctrl.sendForm()" class="md-raised md-primary medium-blue button-action-main">
+                                    {{ 'SEND_FORM' | translate }}
+                                </md-button>
+                            </div>
+                            <div ng-if="$ctrl.msgForm != null && $ctrl.msgForm != ''" layout="row" layout-align="center none">
+                                <p>{{ $ctrl.msgForm }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+            
+        </div>

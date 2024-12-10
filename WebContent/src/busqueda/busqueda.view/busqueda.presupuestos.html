@@ -1,0 +1,84 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda" flex>
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom flex>
+        
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+        	<div layout="row" layout-align="start center" class="md-padding">
+                <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.crearPresupuesto($event)" ng-if="$ctrl.permisos.IN_ESCRITURA == true">
+                    <i class="fa-regular fa-plus" style="margin-right: 5px"></i> {{ 'NEW_BUDGET' | translate }}
+		        </md-button>
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && ($ctrl.parent.url == 'presupuestos' || $ctrl.parent.url == 'clientes') && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.exportarExcel()">
+		            <span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+		        </md-button>
+		        
+		        <!-- Botones de consulta GDPR -->
+		        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true">
+		            <md-icon>lock_open</md-icon> {{ 'UNLOCK_CLIENT' | translate }}
+		        </md-button>
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridOptions.data!=undefined && $ctrl.vista == 4 && $ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+		            <md-icon>file_copy</md-icon> {{ 'EXPORT_CLIENT' | translate }}
+		        </md-button>
+	        </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> {{ 'NOT_FOUND_BUDGET' | translate }}</h4>
+            </div>
+            <div layout="row" layout-align="center center" resize ng-if="$ctrl.vista == 1">
+<!--                 <h2>Busque un Presupuesto</h2> -->
+            </div>
+            <div id="buscandoGif" style="display:table; height: 50vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+			
+            <div ng-if="$ctrl.vista == 4 && $ctrl.tipo == 'presupuestos'" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="$ctrl.screenHeight < 620 ? $ctrl.getTableHeight() : $ctrl.gridOptions.totalItems < 30 ? resizeHeight(377) : $ctrl.getTableHeight()"></div>
+			<div ng-if="$ctrl.vista == 4 && $ctrl.tipo == 'presupuestosBy'" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize resize ng-style="resizeHeight(248)"></div>
+                
+        </md-tab>
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+            <md-tab-label ng-if="detalles != null">
+                <!-- 				   <ng-switch on="$ctrl.llave"> -->
+                <span ng-if="detalles.ID_PRESUPUESTO != undefined && $ctrl.nomDetalles[$index]=='presupuesto'">{{ 'BUDGET_NUMBER' | translate }}: {{detalles.ID_PRESUPUESTO}}</span>
+                <span ng-if="detalles.ID_PRESUPUESTO != undefined && $ctrl.nomDetalles[$index]=='contratar'">{{ 'CONTRACT' | translate }}: {{detalles.ID_PRESUPUESTO}}</span>
+                <span ng-if="detalles.ID_PRESUPUESTO != undefined && $ctrl.nomDetalles[$index]=='resumen'">{{ 'DETAIL' | translate }}: {{detalles.ID_PRESUPUESTO}}</span>
+                <span ng-if="detalles.ID_PRESUPUESTO != undefined && $ctrl.nomDetalles[$index]=='clientes'">{{ 'CLIENT' | translate }}: {{detalles.OCLIENTE.NU_DOCUMENTO}}</span>
+                <span ng-if="detalles.ID_PRESUPUESTO != undefined && $ctrl.nomDetalles[$index]=='cliente'">{{ 'POLICY_NU' | translate }}: {{detalles.OPOLIZA.NU_POLIZA}}</span>
+                <span ng-if="detalles.ID_PRESUPUESTO == undefined">{{ 'NEW_BUDGET' | translate }}</span>
+                <!-- 				   </ng-switch> -->
+
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </md-tab-label>
+            <md-tab-body>
+                <!-- 		   		<detalle-sd id-detalle="detalles" tipo="'poliza'"></detalle-sd> -->
+                <sd-presupuesto llave="$ctrl.nomDetalles[$index]" ng-if="($ctrl.nomDetalles[$index]!='cliente' || $ctrl.nomDetalles[$index]!='clientes') && detalles.ID_RAMO != 103" 
+                    id-ramo="detalles.ID_RAMO" id-colectivo="detalles.ID_TIPO_COLECTIVO" id-cliente="detalles.OCLIENTE.ID_CLIENTE" detalles="detalles">
+                </sd-presupuesto>
+                
+                <detalle-sd llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='cliente'" id-detalle="$ctrl.detallesPoliza"
+                    tipo="'poliza'"></detalle-sd>
+                
+                <detalle-sd llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='clientes'" id-detalle="$ctrl.detallesCliente" permisos="$ctrl.permisos"
+                    tipo="'cliente'"></detalle-sd>
+                    
+                    
+				<tar-empresa-app llave="$ctrl.nomDetalles[$index]" detalles="detalles" ng-if="(detalles.ID_RAMO == 103 && detalles.ID_PRODUCTO != 19 && detalles.PECUNIARIAS != null && detalles.PECUNIARIAS.CIBERRIESGO != null) || (detalles.ID_RAMO == 103 && $ctrl.llave == 'CBEMP-INDEP')"></tar-empresa-app>
+				
+				<tar-empresa-de-app llave="$ctrl.nomDetalles[$index]" detalles="detalles" ng-if="(detalles.ID_RAMO == 103 && detalles.ID_PRODUCTO == 19 && detalles.PECUNIARIAS != null && detalles.PECUNIARIAS.CIBERRIESGO != null) || (detalles.ID_RAMO == 103 && $ctrl.llave == 'CBEMP-INDEP-DE')"></tar-empresa-de-app>
+				
+				<tar-hijos-app llave="$ctrl.nomDetalles[$index]" detalles="detalles" ng-if="(detalles.ID_RAMO == 103 && detalles.PECUNIARIAS != null && detalles.PECUNIARIAS.HIJOSEIDENTIDAD != null && detalles.PECUNIARIAS.HIJOSEIDENTIDAD.ASSURED_NUMBER == null) || (detalles.ID_RAMO == 103 && $ctrl.llave == 'CBH')"></tar-hijos-app>
+                    
+				<tar-identidad-app llave="$ctrl.nomDetalles[$index]" detalles="detalles" ng-if="(detalles.ID_RAMO == 103 && detalles.PECUNIARIAS != null && detalles.PECUNIARIAS.HIJOSEIDENTIDAD != null && detalles.PECUNIARIAS.HIJOSEIDENTIDAD.ASSURED_NUMBER != null) || (detalles.ID_RAMO == 103 && $ctrl.llave == 'CBI')"></tar-identidad-app>
+                    
+				<tar-dispositivos-app llave="$ctrl.nomDetalles[$index]" detalles="detalles" ng-if="(detalles.ID_RAMO == 103 && detalles.PECUNIARIAS != null && detalles.PECUNIARIAS.DISPOSITIVOS != null) || (detalles.ID_RAMO == 103 && $ctrl.llave == 'DIS')"></tar-dispositivos-app>
+
+                <tar-ciberparticulares-app llave="$ctrl.nomDetalles[$index]" detalles="detalles" ng-if="(detalles.ID_RAMO == 103 && detalles.PECUNIARIAS != null && detalles.PECUNIARIAS.CIBERPARTICULARES != null) || (detalles.ID_RAMO == 103 && $ctrl.llave == 'CBP')"></tar-ciberparticulares-app>
+            </md-tab-body>
+
+        </md-tab>
+    </md-tabs>
+</div>

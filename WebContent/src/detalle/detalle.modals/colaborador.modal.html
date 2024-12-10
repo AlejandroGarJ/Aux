@@ -1,0 +1,92 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:65%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h4>Nueva comisión</h4>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="height: 300px" class="md-dialog-content formCliente formClass form-scroll">
+		<div class="md-dialog-content" style="padding:0px;">
+			<form name="$ctrl.formColaboradorModal" class="formClass formCliente">
+				<div flex="100" layout="row" style="margin-bottom:20px;">
+					<div layout="column" flex="30">
+						<md-input-container style="margin-top: 20px; margin-bottom: 20px" class="md-block">
+							<label>Partner</label>
+				            	<md-select required ng-model="$ctrl.form.ID_TIPO_COLECTIVO">
+				            		<md-option ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">
+						              	{{colectivo.DS_TIPO_POLIZA}}
+						            </md-option>
+				            	</md-select>
+						</md-input-container>
+					</div>
+					<div layout="column" flex="35">
+						<md-input-container style="margin-top: 40px; margin-bottom: 20px" class="md-block">
+							<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+				            	<md-select required ng-model="$ctrl.form.ID_COMPANIA" ng-change="$ctrl.cambiarAseguradora()" ng-disabled="$ctrl.aseguradoras==undefined || $ctrl.aseguradoras==null || $ctrl.aseguradoras.length==0">
+				            		<md-option ng-repeat="aseguradora in $ctrl.aseguradoras" ng-value="aseguradora.ID_COMPANIA">
+						              	{{aseguradora.NO_COMERCIAL}}
+						            </md-option>
+				            	</md-select>
+						</md-input-container>
+					</div>
+					<div layout="column" flex="35">
+						<md-input-container style="margin-top: 20px; margin-bottom: 20px" class="md-block">
+							<label>Producto</label>
+				            	<md-select required ng-model="$ctrl.form.ID_COMP_RAMO_PROD" ng-disabled="$ctrl.productos == undefined || $ctrl.productos == null || $ctrl.productos.length == 0" ng-change="">
+				            		<md-option ng-repeat="producto in $ctrl.productos" ng-value="producto.ID_COMP_RAMO_PROD">
+						              	{{producto.NO_PRODUCTO}}
+						            </md-option>
+				            	</md-select>
+						</md-input-container>
+					</div>
+				</div>
+				<div flex="100" layout="row" style="margin-bottom:20px;">
+					<div layout="column" flex="35">
+						<md-input-container style="margin-top: 20px; margin-bottom: 20px" class="md-block">
+							<label>Tipo de comisión</label>
+				            	<md-select required ng-model="$ctrl.form.CO_TIPO_COMISION">
+				            		<md-option ng-repeat="comision in $ctrl.tipos.comisiones" ng-value="comision.CO_TIPO">
+						              	{{comision.DS_TIPOS}}
+						            </md-option>
+				            	</md-select>
+						</md-input-container>
+					</div>
+					<div layout="column" flex="35">
+						<md-input-container style="margin-bottom: 20px" class="md-block">
+							<label>Unidad</label>
+				            	<md-select required ng-model="$ctrl.form.CO_TIPO_UNIDAD">
+				            		<md-option ng-repeat="unidad in $ctrl.tipos.unidades" ng-value="unidad.CO_TIPO">
+						              	{{unidad.DS_TIPOS}}
+						            </md-option>
+				            	</md-select>
+						</md-input-container>
+					</div>
+					<div layout="column" flex="30">
+						<md-input-container style="margin-top: 40px; margin-bottom: 20px" class="md-block">
+							<label>Comisión</label>
+				            	<input required ng-model="$ctrl.form.NU_PORCENTAJE">
+						</md-input-container>
+					</div>
+				</div>
+				<div flex="100" layout="row" layout-align="center center" style="margin-bottom:20px;">
+					<div layout="column">
+						<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.addComision()">
+							<md-icon>save</md-icon>
+							Añadir comisión
+						</md-button>
+					</div>
+					<div layout="column" ng-if="$ctrl.messageError != ''">
+						<p>
+							{{$ctrl.messageError}}
+						</p>
+					</div>
+				</div>
+			</form>
+		</div>
+	</md-dialog-content>
+</md-dialog>

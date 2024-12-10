@@ -1,0 +1,5 @@
+En esta entrega back 41, se han realizado los siguientes cambios:
+- Fix:
+	- Nuevos asientos de pólizas y recibos para SAP
+	- Solicitudes de empresas
+	- Controles en siniestros

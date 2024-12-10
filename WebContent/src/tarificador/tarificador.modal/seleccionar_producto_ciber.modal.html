@@ -1,0 +1,27 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+    <md-toolbar style="min-height:34px;">
+        <div class="md-toolbar-tools" style="height:44px">
+<!--             <md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute"> -->
+<!--               <md-icon aria-label="Close dialog">clear</md-icon> -->
+<!--             </md-button> -->
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div style="width: 500px !important; padding: 20px !important;" class="formClass" flex>
+            <div layout-gt-sm="row" layout-align="center center">
+                <md-input-container class="md-block" flex-gt-sm="75">
+                    <label>Selecciona producto</label>
+                    <md-select ng-model="$ctrl.producto" required>
+                          <md-option ng-repeat="producto in $ctrl.listProductos" ng-value="producto">{{ producto.NO_PRODUCTO }}</md-option>
+                       </md-select>
+                </md-input-container>
+                <md-button flex-gt-sm="25" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.seleccionarProducto()">
+                    Seleccionar
+                </md-button>
+            </div>
+        </div>
+    </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,24 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+            <div id="buscandoGif" style="display:table; height: 70vh; width: 100%">
+                <div ng-if="$ctrl.vista == 1" style="display:table-cell; vertical-align: middle; text-align:center;">
+<!--                     <h2>Busque una baja de vehículos</h2> -->
+                </div>
+                <div class="centered" style="display:table-cell; vertical-align: middle;" ng-if="$ctrl.vista == 2">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+                <div ng-if="$ctrl.vista == 3" style="display:table-cell; vertical-align: middle; text-align:center;">
+                    <h2>No se ha encontrado ninguna baja de vehículos</h2>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize
+                resize ng-style="resizeHeightTable()"></div>
+        </md-tab>
+    </md-tabs>
+</div>

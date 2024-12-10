@@ -1,0 +1,161 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="row" style="margin: 0 auto; max-width: 1400px;" resize ng-style="resizeHeight({{$ctrl.medida}})">
+
+	<form role="form" name="formRecibo" id="formNuevoRecibo" ng-value="$ctrl.formRecibo=!formRecibo.$valid" ng-submit="$ctrl.gestionarRecibo()" class="form-detalle formClass" flex novalidate>
+	
+		<legend>
+			<span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos del recibo
+		</legend>
+		<div class="separadorDesplegables"></div>
+		<div flex layout="row" layout-xs="column">
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>Recibo</label>
+				<input ng-model="$ctrl.datos.NU_RECIBO" disabled>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>Motivo de devolución</label>
+			<input ng-model="$ctrl.datos.DS_DEVUELTO" disabled>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>N&#250;mero de reintentos de cobro</label>
+			<input ng-model="$ctrl.datos.NU_REENVIO" disabled>
+			</md-input-container>
+		</div>
+		<div flex layout="row" layout-xs="column">
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>Estado del recibo</label>
+			<input ng-model="$ctrl.datos.DS_SITUARECIBO" disabled>
+			</md-input-container>	
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>Prima neta</label>
+				<input ng-model="$ctrl.datos.IM_PRIMANETA + '&euro;'" disabled>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>Prima total</label>
+				<input ng-model="$ctrl.datos.IM_RECIBO_TOTAL + '&euro;'" disabled>
+			</md-input-container>
+		</div>
+		<div flex layout="row" layout-xs="column">
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>Fecha emisión</label>
+				<md-datepicker ng-click="($ctrl.datos.FD_EMISION == undefined || $ctrl.datos.FD_EMISION == null) ? $ctrl.datos.FD_EMISION = null : ''"
+				ng-model="$ctrl.datos.FD_EMISION" disabled></md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>{{ 'DATE_START' | translate }}</label>
+				<md-datepicker ng-click="($ctrl.datos.FD_INICIO_REC == undefined || $ctrl.datos.FD_INICIO_REC == null) ? $ctrl.datos.FD_INICIO_REC = null : ''"
+				ng-model="$ctrl.datos.FD_INICIO_REC" disabled></md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>Fecha vencimiento</label>
+				<md-datepicker ng-click="($ctrl.datos.FD_VCTO_REC == undefined || $ctrl.datos.FD_VCTO_REC == null) ? $ctrl.datos.FD_VCTO_REC = null : ''"
+				ng-model="$ctrl.datos.FD_VCTO_REC" disabled></md-datepicker>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-xs>
+				<label>Fecha devolución</label>
+				<md-datepicker ng-click="($ctrl.datos.FT_USU_MOD == undefined || $ctrl.datos.FT_USU_MOD == null) ? $ctrl.datos.FT_USU_MOD = null : ''"
+				ng-model="$ctrl.datos.FT_USU_MOD" disabled></md-datepicker>
+			</md-input-container>
+		</div>
+		<legend>
+			<span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos de la póliza
+		</legend>
+		<div class="separadorDesplegables"></div>
+		<div flex layout="row" layout-xs="column">
+			<md-input-container class="md-block" flex-gt-xs="25">
+				<label>Póliza</label>
+				<input ng-model="$ctrl.datos.OPOLIZA.NU_POLIZA" disabled>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-xs="25">
+				<label>Estado</label>
+			<input ng-model="$ctrl.datos.OPOLIZA.DS_SITUAPOLIZA" disabled>
+			</md-input-container>
+			<md-input-container class="md-block" flex-gt-xs="25">
+				<label>Estado interno</label>
+				<input ng-model="$ctrl.datos.OPOLIZA.DS_ESTADO_INTERNO" disabled>
+			</md-input-container>
+				<md-input-container class="md-block" flex-gt-xs="25">
+				<label>Periodicidad</label>
+				<input ng-model="$ctrl.datos.DS_FORMAPAGO" disabled>
+			</md-input-container>
+		</div>
+		<legend>
+			<span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos del cliente
+		</legend>
+		<div class="separadorDesplegables"></div>
+			<div flex layout="row" layout-xs="column">
+				<md-input-container class="md-block" flex-gt-xs>
+					<label>Nombre cliente</label>
+					<input ng-model="$ctrl.datos.OPAGADOR.NO_NOMBRE_COMPLETO" disabled>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-xs>
+					<label>N&#176; documento</label>
+					<input ng-model="$ctrl.datos.OPAGADOR.NU_DOCUMENTO" disabled>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-xs>
+					<label>Tel&#233;fono</label>
+					<input ng-model="$ctrl.telefonoAntiguo" disabled>
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-xs>
+					<label>Email</label>
+					<input ng-model="$ctrl.mailAntiguo" disabled>
+				</md-input-container>
+			<div style="margin-top: 2%">
+				<md-button
+					ng-if="$ctrl.datos.IN_DUPLICADO == 1 || $ctrl.datos.IN_DUPLICADO == 4"
+					class="medium-green btnSuperior btnNuevo" style="height: 3%;"
+					ng-click="$ctrl.cambiarDatos($ctrl.datos)"> Cambiar
+				datos </md-button>
+			</div>
+		</div>     
+			<div ng-if="$ctrl.datos.IN_DUPLICADO == 1 || $ctrl.datos.IN_DUPLICADO == 3 || $ctrl.datos.IN_DUPLICADO == 4">
+			<legend>
+				<span class="mov-ico ic-ciber-ico-info"></span> Resolución de devuelto
+			</legend>
+			<div class="separadorDesplegables"></div>
+			<div flex layout="row" layout-xs="column">
+				<md-input-container class="md-block" style="max-width: 400px;" ng-if="$ctrl.datos.IN_DUPLICADO == 1 || $ctrl.datos.IN_DUPLICADO == 4" flex-gt-xs>
+					<label>Tipo de resolución</label>
+					<md-select ng-model="$ctrl.gestion.CO_TIPO" ng-change="$ctrl.checkGestion()" class="mb_24" ng-disabled="$ctrl.emited == true || $ctrl.datos.IN_DUPLICADO == 3 || $ctrl.IN_PROCESO">
+						<md-option ng-if="$ctrl.datos.OPOLIZA.ID_SITUAPOLIZA == 4" ng-repeat="gestion in $ctrl.gestionesSuspendida" ng-value="gestion.CO_TIPO">{{gestion.DS_TIPOS}}</md-option>
+						<md-option ng-if="$ctrl.rol == 8" ng-repeat="gestion in $ctrl.gestionesRol" ng-value="gestion.CO_TIPO">{{gestion.DS_TIPOS}}</md-option>
+						<md-option ng-if="$ctrl.datos.OPOLIZA.ID_SITUAPOLIZA != 4 && $ctrl.rol != 8 " ng-repeat="gestion in $ctrl.gestiones" ng-value="gestion.CO_TIPO">{{gestion.DS_TIPOS}}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block" style="max-width: 400px;" ng-if="$ctrl.datos.IN_DUPLICADO == 3" flex-gt-xs>
+					<label>Tipo de resolución</label>
+					<input ng-model="$ctrl.datos.DS_TIPO_RESOLUCION_DEVUELTO" disabled>
+				</md-input-container>
+				<div ng-if="$ctrl.datos.IN_DUPLICADO == 4 || $ctrl.datos.IN_DUPLICADO == 1" style="margin-top: 1.5%;">
+                	<md-switch ng-model="$ctrl.IN_PROCESO" aria-label="Cliente contactado" style="padding-left:3%;padding-bottom: 16%;">
+						Cliente contactado (En espera)
+					 </md-switch>
+				</div>
+				<div ng-if="$ctrl.gestion.CO_TIPO == 1 && !$ctrl.IN_PROCESO" style="padding-left:3%;">
+					<md-input-container class="md-block" flex-gt-xs style="min-width: 400px;" ng-disabled="$ctrl.emited == true">
+						<label>IBAN</label>
+						<input ng-model="$ctrl.datos.OPOLIZA.CO_IBAN" required>
+					</md-input-container>
+				</div>
+				<div ng-if="$ctrl.gestion.CO_TIPO == 4 || $ctrl.gestion.CO_TIPO == 5"">
+					<md-input-container class="md-block" flex-gt-sm>
+						<md-checkbox ng-model="$ctrl.IN_COPY" ng-init="$ctrl.IN_COPY = true">Mail en copia</md-checkbox>
+					</md-input-container>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div layout="row" layout-align="center" layout-margin ng-if="$ctrl.emited == false">
+	<md-button ng-if="$ctrl.navegador != 'internet explorer' && $ctrl.datos.IN_DUPLICADO == 1 || $ctrl.datos.IN_DUPLICADO == 4" class="md-raised md-primary medium-blue button-action-main" type="submit" form="formNuevoRecibo" ng-disabled="$ctrl.gestion.CO_TIPO == 1 && $ctrl.datos.OPOLIZA.CO_IBAN == undefined">
+		<md-icon>save</md-icon>
+		Guardar
+	</md-button>
+	<md-button ng-if="$ctrl.navegador == 'internet explorer' && $ctrl.datos.IN_DUPLICADO == 1" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.gestionarRecibo()" form="formNuevoRecibo" ng-disabled="$ctrl.gestion.CO_TIPO == 1 && $ctrl.datos.OPOLIZA.CO_IBAN == undefined">
+		<md-icon>save</md-icon>
+		Guardar
+	</md-button>
+</div>	

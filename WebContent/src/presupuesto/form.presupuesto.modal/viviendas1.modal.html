@@ -1,0 +1,60 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width: 60%"><md-dialog-content style="min-height:260px;">
+    
+<!--    <md-toolbar>-->
+<!--        <div class="md-toolbar-tools" style="height:44px">-->
+<!--            <h4 class="modal-title" style="text-align: center">Tipos de vivienda asegurables</h4>-->
+<!--        </div>-->
+<!--    </md-toolbar>-->
+    <md-dialog-content style="min-height:260px;">
+        <form class="formClass">
+            <div layout="row" flex="100" style="margin-top: 10px; margin-left:10px; margin-right: 10px;">
+                
+                <div layout="column" layout-align="center center">
+                    
+                    <div class="row">
+
+                        <div class="col-xs-12">
+                            <!-- <legend class="titular" style="font-weight: bold;"><span class="ic-ciber-ico-casa-corazon ico-big"></span> Viviendas que puedes asegurar</legend>
+                            <p style="padding-left:40px"><span class="ic-ciber-ico-flecha ico-flip"></span> Viviendas en propiedad de uso habitual o secundario y destinadas al alquiler.</p> -->
+
+                            <legend style="text-transform: uppercase" class="color-black bold" data-bottom="40">¿Incurre la vivienda a asegurar en alguna de las circunstancias que seguidamente se enumeran?</legend>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip"></span> Está construida íntegra o parcialmente de madera o con otros materiales combustibles.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip"></span> Se desarrolla en ella una actividad profesional o comercial diferente a la ejercida en un despacho o consulta, requiriendo para ello de la instalación de maquinaria, instrumental, mercancía o, en definitiva, de una instalación especial que le haga perder el carácter principal de vivienda.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip"></span> Su titularidad es en multipropiedad.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip"></span> Es prefabricada, caravana o casa cueva.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip"></span> Existen líquidos inflamables en más de 500 litros y/o explosivo.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip"></span> Está situada en despoblado, entendido éste como una población inferior a 50 viviendas o a más de 1 kilómetro de una población constituida al menos por 50 viviendas.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip"></span> Tiene una antigüedad superior a 100 años.</p>
+
+                            <!-- <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> Las fabricadas de madera (aquellas que tienen columnas, vigas, muros de carga y demás elementos portantes y de cerramiento, o sólo los de cerramiento, mayoritariamente de madera) o similares (materiales combustibles), prefabricadas, casas cuevas o caravanas.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> En multipropiedad.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> Deshabitadas más de 12 meses consecutivos.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> En las que se desarrolle una actividad profesional o comercial. Sí podrán asegurarse aquellas viviendas en las que en alguna de sus estancias se desarrolle una profesión que no requiera instalación especial y que no la haga perder el carácter principal de vivienda.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> Localizadas en despoblado (aquellas que se encuentran a una distancia de más de 1 km desde el límite de un núcleo urbano (50 viviendas) y en una zona que no reúna las condiciones y características de una urbanización, entendiendo como tal una edificación o conjunto de edificaciones que disponga de servicios públicos de alumbrado, agua y alcantarillado.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> Tienen una antigüedad superior a 100 años.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> La suma asegurada para Continente supera la cantidad de 500.000 €.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> Es la vivienda principal del Asegurado y la suma asegurada para el Contenido supera la cantidad de 50.000 €.</p>
+                            <p style="font-size: 15px"><span class="ic-ciber-ico-flecha ico-flip ico-red"></span> No es la vivienda principal del Asegurado y la suma asegurada para Contenido es superior a 25.000 €.</p> -->
+
+                        </div>
+                            
+                    </div>
+                
+                    <div layout="row" layout-align="center center" style="margin-top: 20px">
+                        <!-- <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.aceptar()">
+                            {{ 'CONFIRM' | translate }}
+                        </md-button> -->
+                        <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.cancel()">SÍ</md-button>
+                        <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.aceptar()">NO</md-button>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </form>
+    </md-dialog-content>
+
+</md-dialog>

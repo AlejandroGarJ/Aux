@@ -1,0 +1,115 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="row" resize ng-style="resizeHeight({{$ctrl.medida}})">
+
+    <form role="form" name="formRemesa" id="formRemesa" ng-value="$ctrl.formRemesa=!formRemesa.$valid"
+        ng-submit="$ctrl.nuevaRemesa()" class="form-detalle formClass" flex novalidate>
+
+        <legend>Remesa</legend>
+        <div class="margenPresupuestos" uib-collapse="isCollapsed">
+            <div class="separadorDesplegables"></div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Número Remesa</label>
+                    <input ng-model="$ctrl.datos.ID_RECIBO_REMESA" disabled>
+                </md-input-container>
+                <!-- <md-input-container class="md-block" flex-gt-sm="75">
+                    <label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+                    <md-select ng-model="$ctrl.datos.ID_COMPANIA" required>
+                        <md-option ng-repeat="compania in $ctrl.tipos.compania" ng-value="compania.ID_COMPANIA">
+                            {{compania.NO_COMPANIA}}
+                        </md-option>
+                    </md-select>
+                </md-input-container> -->
+                <md-autocomplete name="Mediador" md-no-cache="$ctrl.noCache" flex-gt-sm class="autocompleteGeneral" required
+                    md-search-text="$ctrl.searchAseg"
+                    md-items="item in $ctrl.parent.querySearch($ctrl.searchAseg, $ctrl.tipos.compania, 'NO_COMPANIA')"
+                    md-item-text="item.NO_COMPANIA" md-min-length="0"
+                    md-floating-label="Mediador"
+                    md-selected-item="$ctrl.autocomplete.ASEG"
+                    md-selected-item-change="$ctrl.datos.OPOLIZA.ID_COMPANIA = $ctrl.autocomplete.ASEG.ID_COMPANIA"
+                    ng-blur="$ctrl.autocomplete.ASEG == undefined ? $ctrl.searchAseg = '' : ''">
+                    <md-item-template>
+                        <span md-highlight-text="$ctrl.searchAseg"
+                            md-highlight-flags="^i">{{item.NO_COMPANIA}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No existe el mediador "{{$ctrl.searchAseg}}".
+                    </md-not-found>
+                </md-autocomplete>
+            </div>
+            <div layout-gt-sm="row">
+                <!-- <md-input-container class="md-block" flex-gt-sm>
+                    <label>Colectivo</label><br/> -->
+                    <!-- <md-select ng-model="$ctrl.form.ID_TIPORECIBO" required>
+						<md-option ng-repeat="colectivo in $ctrl.colectivos" ng-value="colectivo.ID_TIPO_POLIZA">
+							{{colectivo.DS_TIPO_POLIZA}}
+						</md-option>
+					</md-select> -->
+                    <!-- <md-radio-group layout-gt-sm="row" style="margin-bottom:10px; margin-top: 10px;" ng-model="$ctrl.datos.OPOLIZA.ID_TIPO_POLIZA" >
+                        <md-radio-button ng-value="'1'">
+                            Particulares
+                        </md-radio-button>
+                        <md-radio-button ng-value="'2'">
+                            Flotas
+                        </md-radio-button>
+                    </md-radio-group> -->
+                <!-- </md-input-container> -->
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Vía de pago</label>
+                    <md-select ng-model="$ctrl.datos.ID_TIPO_MEDIO_PAGO" required>
+                        <md-option ng-repeat="pago in $ctrl.tipos.pago" ng-value="pago.ID_TIPO_MEDIO_PAGO">
+                            {{pago.DS_TIPO_MEDIO_PAGO}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Producto</label>
+                    <md-select ng-model="$ctrl.datos.OPOLIZA.ID_COMP_RAMO_PROD" required>
+                        <md-option ng-repeat="programa in $ctrl.tipos.programa" ng-value="programa.ID_PROGRAMA">
+                            {{programa.DS_PROGRAMA}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row" style="margin-top: 20px">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Fecha Contab. desde...</label>
+
+					<md-datepicker ng-model="$ctrl.datos.FD_SAP" ng-init="$ctrl.form.FD_SAP.value = null"
+						ng-click="($ctrl.form.FD_SAP.value == null || $ctrl.form.FD_SAP.value == undefined) ? $ctrl.form.FD_SAP.value = null : ' '" required>
+					</md-datepicker>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Fecha Contab. hasta...</label>
+
+					<md-datepicker ng-model="$ctrl.datos.FD_SAP_HASTA"
+						ng-init="$ctrl.form.FD_SAP_HASTA.value = null"
+						ng-click="($ctrl.form.FD_SAP_HASTA.value == null || $ctrl.form.FD_SAP_HASTA.value == undefined) ? $ctrl.form.FD_SAP_HASTA.value = null : ' '" required>
+					</md-datepicker>
+                </md-input-container> 
+            </div>
+            <!-- <div layout-gt-sm="row" style="margin-bottom: 20px">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Fecha emisión</label>
+					<md-datepicker
+						ng-click="($ctrl.datos.FD_EMISION == undefined || $ctrl.datos.FD_EMISION == null) ? $ctrl.datos.FD_EMISION = null : ''"
+						ng-model="$ctrl.datos.FD_EMISION" required>
+					</md-datepicker>
+                </md-input-container>
+            </div> -->
+        </div>
+    </form>
+</div>
+
+<div layout="row" layout-align="center" layout-margin>
+    <md-button ng-if="$ctrl.navegador != 'internet explorer' && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main"
+        type="submit" form="formRemesa">
+        <md-icon>save</md-icon>
+        Guardar
+    </md-button>
+    <md-button ng-if="$ctrl.navegador == 'internet explorer' && $ctrl.permisos.IN_ESCRITURA === true" class="md-raised md-primary medium-blue button-action-main"
+        ng-click="$ctrl.nuevaRemesa()" form="formRemesa">
+        <md-icon>save</md-icon>
+        Guardar
+    </md-button>
+</div>

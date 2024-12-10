@@ -1,0 +1,45 @@
+<!-- Tabla de tarifas -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.openNewTarifa()">
+            Nueva tarifa
+        </md-button>
+
+        <md-tab label="Resultado de la búsqueda">
+            <div layout="row" layout-align="center center" resize ng-style="resizeHeight(140)" ng-if="$ctrl.vista == 1">
+<!--                 <h2>Busque una tarifa</h2> -->
+            </div>
+            <div id="buscandoGif" style="display:table; height: 70vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+            <div layout="row" layout-align="center center" resize ng-style="resizeHeight(140)" ng-if="$ctrl.vista == 3">
+                <h2>No se ha encontrado ninguna tarifa</h2>
+            </div>
+
+            <div ng-if="$ctrl.vista == 4" class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-grouping
+                ui-grid-auto-resize resize ng-style="resizeHeightTable()"></div>
+
+        </md-tab>
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index" label="Póliza: {{detalles.NU_POLIZA}}">
+            <md-tab-label ng-if="detalles != null">
+                <span ng-if="detalles != null">Tarifa: {{detalles.NU_POLIZA}}</span>
+                <span ng-if="detalles == null">Nueva tarifa
+                </span>
+                <div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </md-tab-label>
+            <md-tab-body>
+                <detalle-sd id-detalle="detalles" tipo="'tarifas'"></detalle-sd>
+            </md-tab-body>
+        </md-tab>
+    </md-tabs>
+
+</div>

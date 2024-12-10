@@ -1,0 +1,426 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-content class="form-scroll" resize ng-style="resizeHeight(135)">
+	<div layout="column" class="formClass" style="padding:10px 30px">
+		<div>
+			<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos del Seguro
+                <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed1 = !isCollapsed1">
+                    <span ng-if="!isCollapsed1" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                    <span ng-if="isCollapsed1" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                </button>
+            </legend>
+            <div id="divPoliza" uib-collapse="isCollapsed1">
+				<div class="separadorDesplegables"></div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Tipo de solicitud</label>
+            			<input ng-model="$ctrl.altaBajaSolicitud" disabled>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.tipoHead == 'altaSolicitud'">
+            			<label>Tipo de Flota </label>
+            			<md-select ng-model="$ctrl.form.ID_FLOTA">
+            				<md-option ng-value="1">Directivos</md-option>
+            				<md-option ng-value="2">Industriales</md-option>
+            				<md-option ng-value="3">Plan de Compesación Flexible(PCF)</md-option>
+            				<md-option ng-value="4">Producto No Negociado</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.tipoHead == 'bajaSolicitud'">
+            			<label>Tipo de baja </label>
+            			<md-select ng-model="$ctrl.form.ID_FLOTA">
+            				<md-option ng-value="1">Individual</md-option>
+            				<md-option ng-value="2">Masiva</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.tipoHead == 'bajaSolicitud'">
+            			<label>Causa de baja </label>
+            			<md-select ng-model="$ctrl.form.ID_FLOTA">
+            				<md-option ng-value="1">Siniestro total</md-option>
+            				<md-option ng-value="2">Venta</md-option>
+            				<md-option ng-value="2">Renovación Vehículo</md-option>
+            				<md-option ng-value="2">Finalización Renting</md-option>
+            				<md-option ng-value="2">Otras</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.tipoHead == 'altaSolicitud'">
+            			<label>Código Negocio</label>
+            			<md-select ng-model="$ctrl.form.CO_NEGOCIO">
+            				<md-option ng-value="1">Directivos</md-option>
+            				<md-option ng-value="2">Industriales</md-option>
+            				<md-option ng-value="3">Plan de Compesación Flexible(PCF)</md-option>
+            				<md-option ng-value="4">Producto No Negociado</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.tipoHead == 'altaSolicitud'">
+            			<label>Modalidad</label>
+            			<md-select ng-model="$ctrl.form.ID_MODALIDAD">
+            				<md-option ng-value="1">TR-TR</md-option>
+            			</md-select>
+            		</md-input-container>
+            	</div>
+            	<div layout="row" style="margin-bottom:20px" ng-if="$ctrl.tipoHead == 'altaSolicitud'">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Forma de pago</label>
+            			<md-select ng-model="$ctrl.form.ID_FORMA_PAGO">
+            				<md-option ng-value="1">Pago en efectivo de todos los recibos</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Tomador</label>
+            			<md-select ng-model="$ctrl.form.ID_TOMADOR">
+            				<md-option ng-value="1">Atento Inversiones</md-option>
+            				<md-option ng-value="2">TeleServicios España S.A.</md-option>
+            				<md-option ng-value="3">IberBanda</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Propietario</label>
+            			<md-select ng-model="$ctrl.form.ID_PROPIETARIO">
+            				<md-option ng-value="1">ALD AUTORENTING SAU</md-option>
+            				<md-option ng-value="2">ALPHABET FLEET MANAGEMENT</md-option>
+            				<md-option ng-value="3">CAIXA RENTING S.A.</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Provincia</label>
+            			<md-select ng-model="$ctrl.form.ID_PROVINCIA">
+            				<md-option ng-repeat="provincia in $ctrl.tipos.provincias" ng-value="provincia.ID_PROVINCIA">{{provincia.NO_PROVINCIA}}</md-option>
+            			</md-select>
+            		</md-input-container>
+            	</div>
+            	<div layout="row">
+            		<md-input-container class="md-block" ng-if="$ctrl.tipoHead == 'altaSolicitud'">
+            			<label>Fecha de efecto</label>
+
+            			<md-datepicker ng-model="$ctrl.form.FD_INICIO" ng-click="$ctrl.form.FD_INICIO == undefined ? $ctrl.form.FD_INICIO = null : $ctrl.form.FD_INICIO = ''">
+						</md-datepicker>
+            		</md-input-container>
+            		<md-input-container class="md-block" ng-if="$ctrl.tipoHead == 'bajaSolicitud'">
+            			<label>Fecha de baja</label>
+
+            			<md-datepicker ng-model="$ctrl.form.FD_BAJA" ng-click="$ctrl.form.FD_BAJA == undefined ? $ctrl.form.FD_BAJA = null : $ctrl.form.FD_BAJA = ''">
+						</md-datepicker>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm ng-if="$ctrl.tipoHead == 'altaSolicitud'">
+            			<label>Período de pago</label>
+            			<md-select ng-model="$ctrl.ID_TIPO_PAGO">
+            				<md-option ng-value="1">Anual</md-option>
+            				<md-option ng-value="2">Mensual</md-option>
+            				<md-option ng-value="3">Semanal</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" ng-if="$ctrl.tipoHead == 'altaSolicitud'">
+            			<label>Franquicia</label>
+            			<input type="number">
+            		</md-input-container>
+            		<md-input-container class="md-block" ng-if="$ctrl.tipoHead == 'bajaSolicitud'">
+            			<label>Extorno</label>
+            			<input type="number">
+            		</md-input-container>
+            	</div>
+            </div>
+		</div>
+		<div>
+			<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos del Solicitante
+                <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+                    <span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                    <span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                </button>
+            </legend>
+            <div id="divPoliza" uib-collapse="isCollapsed2">
+				<div class="separadorDesplegables"></div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'NAME' | translate }}</label>
+            			<input ng-model="$ctrl.form.NO_NOMBRE">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'SURNAME_1' | translate }}</label>
+            			<input ng-model="$ctrl.form.NO_APELLIDO1">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'SURNAME_2' | translate }}</label>
+            			<input ng-model="$ctrl.form.NO_APELLIDO2">
+            		</md-input-container>
+            	</div>
+            	<div layout="row">
+            		<md-input-container class="md-block">
+            			<label>Empresa</label>
+            			<input ng-model="$ctrl.form.NO_EMPRESA">
+            		</md-input-container>
+            		<md-input-container class="md-block">
+            			<label>{{ 'TELEPHONE' | translate }}</label>
+            			<input ng-model="$ctrl.form.NU_TELEFONO">
+            		</md-input-container>
+            	</div>
+            </div>
+		</div>
+		<div>
+			<legend><span class="mov-ico ic-ciber-ico-reocogida-entrega"></span> Datos del Vehículo
+                <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed3 = !isCollapsed3">
+                    <span ng-if="!isCollapsed3" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                    <span ng-if="isCollapsed3" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                </button>
+            </legend>
+            <div id="divPoliza" uib-collapse="isCollapsed3">
+				<div class="separadorDesplegables"></div>
+            	<div layout="row" style="margin-bottom:20px" ng-if="$ctrl.tipoHead == 'altaSolicitud'">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Listado vehículos</label>
+            			<md-select ng-model="$ctrl.form.LST_VEHICULOS">
+            				<md-option ng-value="1">Vehículos cargados</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Tipo de vehículo</label>
+            			<md-select ng-model="$ctrl.form.ID_TIPO_VEHICULO">
+            				<md-option ng-value="1">Turismo</md-option>
+            				<md-option ng-value="2">Monovolumen</md-option>
+            				<md-option ng-value="3">Todoterreno</md-option>
+            				<md-option ng-value="4">Comercial derivado de turismo</md-option>
+            				<md-option ng-value="5">Furgones y camiones ligeros</md-option>
+            			</md-select>
+            		</md-input-container>
+            	</div>
+            	<div layout="row">
+           			<md-autocomplete flex-gt-sm
+				          md-no-cache="$ctrl.noCache"
+				          md-selected-item="$ctrl.form.MARCA"
+				          md-search-text="$ctrl.searchMarca"
+				          md-selected-item-change="$ctrl.getModelos()"
+				          md-items="marca in $ctrl.querySearch($ctrl.searchMarca, $ctrl.marcas, 'DS_MARCA')"
+				          md-item-text="marca.DS_MARCA"
+				          md-min-length="0"
+				          md-require-match
+			              md-floating-label="Marca">
+				          <md-item-template>
+				            <span md-highlight-text="$ctrl.searchMarca" md-highlight-flags="^i">{{marca.DS_MARCA}}</span>
+				          </md-item-template>
+				          <md-not-found>
+					          No existe la marca "{{$ctrl.searchMarca}}".
+					      </md-not-found>
+			        </md-autocomplete>
+            		<md-autocomplete flex-gt-sm
+				          md-no-cache="$ctrl.noCache"
+				          md-selected-item="$ctrl.form.MODELO"
+				          md-search-text="$ctrl.searchModelo"
+				          md-selected-item-change="$ctrl.getVersiones()"
+				          md-items="modelo in $ctrl.querySearch($ctrl.searchModelo, $ctrl.modelos, 'DS_MODELO')"
+				          md-item-text="modelo.DS_MODELO"
+				          md-min-length="0"
+				          md-require-match
+			              md-floating-label="Modelo">
+				          <md-item-template>
+				            <span md-highlight-text="$ctrl.searchModelo" md-highlight-flags="^i">{{modelo.DS_MODELO}}</span>
+				          </md-item-template>
+				          <md-not-found>
+					          No existe el modelo "{{$ctrl.searchModelo}}".
+					      </md-not-found>
+	       			</md-autocomplete>
+            		<md-autocomplete flex-gt-sm
+				          md-no-cache="$ctrl.noCache"
+				          md-selected-item="$ctrl.form.VERSION"
+				          md-search-text="$ctrl.searchVersion"
+				          md-items="version in $ctrl.querySearch($ctrl.searchVersion, $ctrl.versiones, 'DS_VERSION')"
+				          md-item-text="version.DS_VERSION"
+				          md-min-length="0"
+				          md-require-match
+			              md-floating-label="Versión">
+				          <md-item-template>
+				            <span md-highlight-text="$ctrl.searchVersion" md-highlight-flags="i">
+				            	{{version.DS_VERSION}} - F.LANZ:{{version.FD_LANZAMIENTO}} - PUERTAS:{{version.NU_PUERTAS}} - POT:{{version.NU_POTENCIA}} - TARA:{{version.NU_CILINDRADA}} - PLAZAS:{{version.NU_PLAZAS}}
+				            </span>
+				          </md-item-template>
+				          <md-not-found>
+					          No existe la versión "{{$ctrl.searchVersion}}".
+					      </md-not-found>
+			        </md-autocomplete>
+			        <md-input-container class="md-block" flex-gt-sm>
+            			<label>Matrícula</label>
+            			<input ng-model="$ctrl.form.NU_MATRICULA">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Año de fabricación</label>
+            			<input type="number" ng-model="$ctrl.form.FD_FABRICACION">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Potencia</label>
+            			<input ng-model="$ctrl.form.NU_POTENCIA">
+            		</md-input-container>
+            	</div>
+            	<div layout="row">
+            		<div flex-gt-sm>
+		          		<md-checkbox ng-model="$ctrl.form.IN_REMOLQUE.value">
+		          			¿Tiene remolque?
+		          		</md-checkbox>
+		          	</div>
+		          	<div flex-gt-sm>
+		          		<md-checkbox ng-model="$ctrl.form.IN_NUEVO.value">
+		          			¿Es nuevo?
+		          		</md-checkbox>
+		          	</div>
+		          	<md-input-container class="md-block" flex-gt-sm>
+            			<label>Accesorios</label>
+            			<md-select ng-model="$ctrl.form.LST_ACCESORIOS" multiple>
+            				<md-option ng-value="1">Suspensión</md-option>
+            				<md-option ng-value="2">Tapiceria</md-option>
+            				<md-option ng-value="3">Camará trasera</md-option>
+            				<md-option ng-value="4">Reloj</md-option>
+            				<md-option ng-value="5">Protector de pilotos</md-option>
+            			</md-select>
+            		</md-input-container>
+            	</div>
+            </div>
+		</div>
+		<div ng-if="$ctrl.tipoHead == 'bajaSolicitud'">
+			<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Estado
+                <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed10 = !isCollapsed10">
+                    <span ng-if="!isCollapsed10" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                    <span ng-if="isCollapsed10" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                </button>
+            </legend>
+            <div id="divPoliza" uib-collapse="isCollapsed10">
+				<div class="separadorDesplegables"></div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Nº Póliza</label>
+            			<input ng-model="$ctrl.form.NU_POLIZA">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Estado</label>
+            			<md-select ng-model="$ctrl.form.ID_SITUAPOLIZA">
+            				<md-option ng-repeat="tipo in $ctrl.tipos.estados" ng-value="tipo.ID_SITUAPOLIZA">{{tipo.DS_SITUAPOLIZA}}</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Fecha de efecto</label>
+
+            			<md-datepicker ng-model="$ctrl.form.FD_INICIO" ng-click="$ctrl.form.FD_INICIO == undefined ? $ctrl.form.FD_INICIO = null : $ctrl.form.FD_INICIO = ''">
+						</md-datepicker>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Fecha de vencimiento</label>
+
+            			<md-datepicker ng-model="$ctrl.form.FD_VENCIMIENTO" ng-click="$ctrl.form.FD_VENCIMIENTO == undefined ? $ctrl.form.FD_VENCIMIENTO = null : $ctrl.form.FD_VENCIMIENTO = ''">
+						</md-datepicker>
+            		</md-input-container>
+            	</div>
+            </div>
+        </div>
+        <div ng-if="$ctrl.tipoHead == 'bajaSolicitud'">
+			<legend><span class="mov-ico ic-ciber-ico-tomador"></span> Tomador
+                <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed10 = !isCollapsed10">
+                    <span ng-if="!isCollapsed10" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                    <span ng-if="isCollapsed10" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                </button>
+            </legend>
+            <div id="divPoliza" uib-collapse="isCollapsed10">
+				<div class="separadorDesplegables"></div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Nombre y apellidos / Razón social</label>
+            			<input ng-model="$ctrl.form.NO_NOMBRE_COMPLETO">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>NIF</label>
+            			<input ng-model="$ctrl.form.NU_DOCUMENTO">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Cod. Postal</label>
+            			<input ng-model="$ctrl.form.NU_CP" ng-blur="$ctrl.updateDir($ctrl.form.NU_CP)">
+            		</md-input-container>
+            	</div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Localidad</label>
+            			<md-select ng-model="$ctrl.form.ID_LOCALIDAD">
+            				<md-option ng-repeat="localidad in $ctrl.localidades" ng-value="localidad.ID_LOCALIDAD">{{localidad.NO_LOCALIDAD}}</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Provincia</label>
+            			<input ng-model="$ctrl.form.NO_PROVINCIA">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Dirección</label>
+            			<input ng-model="$ctrl.form.NU_DIRECCION">
+            		</md-input-container>
+            	</div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Opción de contratación</label>
+            			<input ng-model="$ctrl.form.ID_CONTRATACION">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Cód. de aseguradora</label>
+            			<input ng-model="$ctrl.form.CO_ASEGURADORA">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Cod. de empresa tomadora</label>
+            			<input ng-model="$ctrl.form.CO_EMPRESA">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Cod. de negocio tomadora</label>
+            			<input ng-model="$ctrl.form.CO_NEGOCIO">
+            		</md-input-container>
+            	</div>
+            </div>
+        </div>
+		<div>
+			<legend><span class="mov-ico ic-ciber-ico-tomador"></span> Datos del conductor
+                <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed3 = !isCollapsed3">
+                    <span ng-if="!isCollapsed3" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+                    <span ng-if="isCollapsed3" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+                </button>
+            </legend>
+            <div id="divPoliza" uib-collapse="isCollapsed3">
+				<div class="separadorDesplegables"></div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'NAME' | translate }}</label>
+            			<input ng-model="$ctrl.form.NO_NOMBRE">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'SURNAME_1' | translate }}</label>
+            			<input ng-model="$ctrl.form.NO_APELLIDO1">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>{{ 'SURNAME_2' | translate }}</label>
+            			<input ng-model="$ctrl.form.NO_APELLIDO2">
+            		</md-input-container>
+            	</div>
+            	<div layout="row">
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>NIF</label>
+            			<input ng-model="$ctrl.form.NU_DOCUMENTO">
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Sexo</label>
+            			<md-select ng-model="$ctrl.form.ID_SEXO">
+            				<md-option ng-value="1">Hombre</md-option>
+            				<md-option ng-value="2">Mujer</md-option>
+            			</md-select>
+            		</md-input-container>
+            		<md-input-container class="md-block" flex-gt-sm>
+            			<label>Estado civil</label>
+            			<md-select ng-model="$ctrl.form.ID_ESTADO_CIVIL">
+            				<md-option ng-repeat="civil in $ctrl.tipos.estadoCivil" ng-value="civil.ID_TIPOS">{{civil.DS_TIPOS}}</md-option>
+            			</md-select>
+            		</md-input-container>
+            	</div>
+            </div>
+		</div>
+		<div>
+			<md-button class="md-raised md-primary medium-blue button-action-main">
+				<md-icon>save</md-icon>
+				Guardar
+			</md-button>
+			<md-button class="dark-yellow btnNuevo" ng-click="money = '1430 €'">
+				<md-icon>attach_money</md-icon>
+				Calcular
+			</md-button>
+			Precio Total: {{money}}
+		</div>
+	</div>
+</md-content>

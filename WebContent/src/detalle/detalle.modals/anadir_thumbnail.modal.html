@@ -1,0 +1,44 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%;">
+	<md-toolbar style="background-color: white; min-height:25px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2><i class="fa-regular fa-image" style="color: #ffffff; margin-right: 3px"></i> Añadir thumbnail</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	            <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form name="$ctrl.formModalBajaPo" id="formModalBajaPo" flex class="formClass md-padding">
+			<div layout="row" layout-align="center start" class="margin-top-20">
+				<div flex="25">
+					<div class="thumbnailNotSelected" ng-if="$ctrl.form.imageURLs == null || $ctrl.form.imageURLs == ''">
+						<i class="fa-regular fa-image-slash"></i>
+					</div>
+					<div class="thumbnailNotSelected" ng-if="$ctrl.form.imageURLs != null && $ctrl.form.imageURLs != ''">
+						<img ng-src={{$ctrl.form.imageURLs}} />
+					</div>
+				</div>
+                <md-input-container class="md-block hide-validation-error" flex-gt-sm="75">
+                    <label>URL de la imagen</label>
+                    <input ng-model="$ctrl.form.imageURLs" placeholder="Inserta URL de la imagen"/>
+                </md-input-container>
+			</div>
+			
+			<div layout="row" class="margin-top-20" layout-align="center center" ng-if="$ctrl.cargar != true">
+				<md-button class="md-raised md-primary medium-blue button-action-main btnNextCiber" ng-disabled="$ctrl.form.imageURLs == null || $ctrl.form.imageURLs == ''" ng-click="$ctrl.save()"><md-icon>check_circle</md-icon> {{ 'CONFIRM' | translate | uppercase }}</md-button>
+			</div>
+			<div class="cs-loader" ng-if="$ctrl.cargar == true" style="height: auto; width: 97%; position: relative; height: 40px;">
+				<div class="cs-loader-inner">
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+				</div>
+			</div>
+	</md-dialog-content>
+</md-dialog>

@@ -1,0 +1,28 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="height:44px">
+            <h4 class="modal-title" style="text-align: center">Liquidar</h4>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	            <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+    </md-toolbar>
+
+    <ng-dialog-content style="height: 25%" class="md-dialog-content formCliente formClass">
+        <div>
+            <md-input-container class="md-block" flex-gt-sm>
+        		<label>{{ 'OBSERVATIONS' | translate }}</label>
+          		<input ng-model="$ctrl.obs">
+          	</md-input-container>
+        </div>
+        <div flex="100" layout-gt-sm="row">
+            <md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.aceptar()">
+                <i class="fa-duotone fa-check-double"></i>
+                Liquidar recibo
+            </md-button>
+        </div>
+    </ng-dialog-content>
+</md-dialog>

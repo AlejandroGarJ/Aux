@@ -1,0 +1,24 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<!-- <md-dialog style="width: 400px;"> -->
+<md-dialog ng-style="{width: $ctrl.dialogWidth + 'px'}">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="background-color:#FFF">	
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon style="color:blue" aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+    </md-toolbar>
+    <div style="height:1px; background-color:#2593B5"></div>
+	<ng-dialog-content class="md-dialog-content formCliente formClass form-scroll pass-dialog-content">
+		<div ng-show="$ctrl.showCPI == true">
+			<iframe src="../passManager/chng/sedig" width="100%" scrolling="no" style="height:457px;" frameborder="0" onload="resizePassIframe()" class="passOpt_iframe"></iframe>
+			<!-- <iframe src="../passManager/chng/sedig" height="434" width="100%" style="height:434px;" scrolling="no" frameborder="0"></iframe> -->
+		</div>
+		<div ng-show="$ctrl.showRPI == true">
+			<iframe src="../passManager/reqreset/sedig" width="100%" style="height:207px;" scrolling="no" frameborder="0" ></iframe>
+			<!-- <iframe src="../passManager/reqreset/sedig" width="100%" scrolling="no" frameborder="0" onload="resizePassIframe()" class="passOpt_iframe"></iframe> -->
+		</div>
+	</ng-dialog-content>
+</md-dialog>

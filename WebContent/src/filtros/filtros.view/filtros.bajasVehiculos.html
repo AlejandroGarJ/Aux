@@ -1,0 +1,94 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-toolbar>
+	<div class="md-toolbar-tools" style="height:44px">
+        <h2>Búsqueda de Baja vehículo <i class="fa fa-magnifying-glass"></i></h2>
+        <md-button class="md-icon-button filtroLateral" ng-click="$ctrl.filtro.lateral()" style="right:20px; position:absolute">
+            <md-icon aria-label="Close dialog">arrow_back_ios</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+	<form class="formClass" id="form" ng-submit="$ctrl.buscar('clientes')">
+		<div class="form-scroll" resize ng-style="resizeHeight(261)">
+			<div layout-gt-sm="row" class="margin-top-20" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm="100">
+			       	<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+		           	<md-select ng-model="$ctrl.form.ID_COMPANIA.value">
+		           		<md-option ng-repeat="compania in $ctrl.tipos.compania" ng-value="compania.ID_COMPANIA">
+			              	{{compania.NO_COMERCIAL}}
+			            </md-option>
+		           	</md-select>
+	           	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Negocio</label>
+		         	<md-select ng-model="$ctrl.form.ID_NEGOCIO.value">
+		           		<md-option>
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-bottom:20px">
+		       	<md-input-container class="md-block" flex-gt-sm>
+		         	<label>Empresa</label>
+		         	<md-select ng-model="$ctrl.form.ID_TIPO_DOCUMENTO.value">
+		           		<md-option ng-value="1">
+		           			Antena 3
+			            </md-option>
+			            <md-option ng-value="2">
+			            	Telefónica
+			            </md-option>
+		           	</md-select>
+		       	</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label>Fecha Inicial</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FD_INICIO.value" ng-init="$ctrl.form.FD_INICIO.value = null"
+	          					ng-click="($ctrl.form.FD_INICIO.value == null || $ctrl.form.FD_INICIO.value == undefined) ? $ctrl.form.FD_INICIO.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+		       	<md-input-container class="md-block" flex-gt-sm>
+	        		<label>Fecha Final</label>
+
+	          		<md-datepicker ng-model="$ctrl.form.FD_FINAL.value" ng-init="$ctrl.form.FD_FINAL.value = null"
+	          					ng-click="($ctrl.form.FD_FINAL.value == null || $ctrl.form.FD_FINAL.value == undefined) ? $ctrl.form.FD_FINAL.value = null : ' '">
+	          		</md-datepicker>
+	          	</md-input-container>
+			</div>
+			<div layout-gt-sm="row" style="margin-left:10px">
+	    		<div flex-gt-sm>
+	          		<md-checkbox ng-model="$ctrl.form.IN_AMORTIZACION.value">
+	          			Amortización
+	          		</md-checkbox>
+	          	</div>
+	          	<div flex-gt-sm>
+	          		<md-checkbox ng-model="$ctrl.form.IN_SINIESTRO_TOTAL.value">
+	          			Siniestro total
+	          		</md-checkbox>
+	          	</div>
+	    	</div>
+	    	<div layout-gt-sm="row" style="margin-left:10px">
+	    		<div flex-gt-sm>
+	          		<md-checkbox ng-model="$ctrl.form.IN_RESTO_BAJAS.value">
+	          			Resto bajas
+	          		</md-checkbox>
+	          	</div>
+	    	</div>
+		</div>
+		<div style="text-align:center;">
+			<md-button class="md-raised md-primary medium-blue button-action-main" type="submit" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-magnifying-glass"></i>
+				Buscar
+			</md-button>
+			<md-button class="md-raised md-primary medium-blue button-action-erase" ng-click="$ctrl.limpiar()" ng-disabled="$ctrl.parent.busqueda.vista == 2">
+				<i class="fa fa-trash"></i>
+				LIMPIAR
+			</md-button>
+		</div>
+	</form>
+</md-content>

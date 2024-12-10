@@ -1,0 +1,102 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div flex>
+	<uib-tabset active="$ctrl.indice" class="tabsPasos" type="pills" justified="true" flex="none">
+		
+		<!-- DATOS REASEGURADORA -->
+
+		<uib-tab index="1" heading="Datos de la reaseguradora" class="btn-sm">
+			<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize>
+				<div flex>
+					<form ng-submit="$ctrl.saveReaseguradora()" name="$ctrl.formReaseguradora" id="formSubmitReaseguradora">
+						<legend><span class="mov-ico ic-ciber-ico-rellenoformulario"></span> Datos de la reaseguradora</legend>
+						<div class="margenPresupuestos" uib-collapse="isCollapsed">
+							<div class="separadorDesplegables"></div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Nombre reaseguradora</label>
+									<input ng-model="$ctrl.datos.NO_COMPANIA" required>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Nombre comercial</label>
+									<input ng-model="$ctrl.datos.NO_COMERCIAL">
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>CIF</label>
+									<input ng-model="$ctrl.datos.NU_CIF" required>
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Dirección</label>
+									<input ng-model="$ctrl.datos.NO_DIRECCION" required>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Localidad</label>
+									<input ng-model="$ctrl.datos.NO_LOCALIDAD" required>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Código postal</label>
+									<input ng-model="$ctrl.datos.CO_POSTAL">
+								</md-input-container>
+							</div>
+							<div layout-gt-sm="row">
+								<md-input-container class="flex" flex-gt-sm>
+									<label>{{ 'TELEPHONE' | translate }}</label>
+									<input ng-model="$ctrl.datos.NU_TELEFONO" required>
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Fax</label>
+									<input ng-model="$ctrl.datos.NU_FAX">
+								</md-input-container>
+								<md-input-container class="flex" flex-gt-sm>
+									<label>Email</label>
+									<input ng-model="$ctrl.datos.NO_EMAIL">
+								</md-input-container>
+							</div>
+						
+		
+							<div layout-gt-sm="row">
+								<md-checkbox> Acceso a WebService </md-checkbox>
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</md-content>
+		</uib-tab>
+			
+		<!--  -->
+		<uib-tab disable="$ctrl.formReaseguradora.$invalid" index="2" heading="Datos de las comisiones" class="btn-sm" ng-click="$ctrl.checkGrid($ctrl.gridApi)">
+			<md-content layout="column" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize>
+				
+				<div class="ui-grid" ui-grid="$ctrl.gridOptions" ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight(330)"></div>
+			
+			</md-content>
+		</uib-tab>
+	</uib-tabset>
+
+	<div layout="row" layout-align="center none" class="margin-top-10">
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice > 1" ng-click="$ctrl.anterior()">
+			<md-icon>navigate_before</md-icon>
+			Anterior
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice < 2" ng-click="$ctrl.siguiente($ctrl.indice)" form="{{$ctrl.formulario}}">
+			<md-icon>navigate_next</md-icon>
+			Siguiente
+		</md-button>
+		<md-button class="dark-blue btnNuevo" ng-if="$ctrl.indice == 2 && $ctrl.permisos.IN_ESCRITURA == true" ng-click="$ctrl.anadirReaseguradora()" form="{{$ctrl.formulario}}">
+			<md-icon>add</md-icon>
+			Añadir
+		</md-button>
+		<md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice == 2 && $ctrl.permisos.IN_BORRADO == true" ng-click="$ctrl.deleteComision()" form="{{$ctrl.formulario}}">
+			<i class="fa fa-trash"></i>
+			Borrar
+		</md-button>
+		<md-button type="submit" ng-if="$ctrl.permisos.IN_ESCRITURA == true" class="md-raised md-primary medium-blue button-action-main" form="formSubmitReaseguradora">
+			<md-icon>save</md-icon>
+			Validar y guardar
+		</md-button>
+	</div>
+</div>

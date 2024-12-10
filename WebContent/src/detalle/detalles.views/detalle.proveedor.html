@@ -1,0 +1,200 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div layout="row">
+
+<!-- 	<form role="form" id="formRecibo" name="reciboForm" ng-submit="$ctrl.editarRecibo()" class="form-detalle formClass" resize ng-style="resizeHeight(205)" novalidate> -->
+<!-- 	<form ng-if="$ctrl.parent.parent.url == 'clientes'" role="form" id="formRecibo" name="reciboForm" ng-submit="$ctrl.editarRecibo()" class="form-detalle formClass" resize ng-style="resizeHeight(245)" novalidate> -->
+<!-- 	<form role="form" id="formRecibo" name="reciboForm" ng-submit="$ctrl.editarRecibo()" class="form-detalle formClass" resize ng-style="resizeHeight({{$ctrl.medida}})" novalidate> -->
+	<form role="form" name="formProveedor" id="formProveedor" ng-value="$ctrl.formProveedor=!formProveedor.$valid" class="form-detalle formClass" flex novalidate>
+		
+        <div>
+			<legend><span class="mov-ico ic-ciber-ico-info"></span> Información del proveedor
+				<button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed1 = !isCollapsed1">
+					<span ng-if="isCollapsed1" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos del Proveedor"></span>
+					<span ng-if="!isCollapsed1" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos del Proveedor"></span>
+				</button>
+			</legend>
+			<div id="divPoliza" uib-collapse="isCollapsed1">
+				<div class="separadorDesplegables"></div>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Proveedor</label>
+						<input ng-model="$ctrl.datos.NO_EMPRESA" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>CIF</label>
+						<input ng-model="$ctrl.datos.NU_DOCUMENTO" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>{{ 'TELEPHONE' | translate }}</label>
+						<input ng-model="$ctrl.datos.NU_TELEFONO" disabled>
+					</md-input-container>
+					<md-input-container ng-if="$ctrl.isNew != true" class="md-block" flex-gt-sm>
+						<label>Programa</label>
+						<input ng-model="$ctrl.datos.NO_PROGRAMA" disabled>
+					</md-input-container>
+					<md-input-container ng-if="$ctrl.isNew == true" class="md-block" flex-gt-sm>
+						<label>Programa</label>
+						<md-select disabled ng-model="$ctrl.datos.ID_PROGRAMA">
+	        				<md-option ng-repeat="programa in $ctrl.listProgramas" ng-value="programa.ID_PROGRAMA">
+	        					{{programa.DS_PROGRAMA}}
+	        				</md-option>
+	        			</md-select>
+					</md-input-container>
+				</div>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Dirección</label>
+						<input ng-model="$ctrl.datos.DS_DIRECCION" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Código Postal</label>
+						<input ng-model="$ctrl.datos.CO_POSTAL" ng-change="$ctrl.changeCodigoPostal($ctrl.datos.CO_POSTAL)" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Localidad</label>
+						<input ng-model="$ctrl.datos.NO_LOCALIDAD" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Provincia</label>
+						<input ng-model="$ctrl.datos.NO_PROVINCIA" disabled>
+					</md-input-container>
+				</div>
+			</div>
+		</div>
+		
+<!-- 		<legend><span class="mov-ico ic-ciber-ico-doc-pdf"></span> Contratos -->
+<!--             <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2"> -->
+<!--                 <span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Contratos"></span> -->
+<!--                 <span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Contratos"></span> -->
+<!--             </button> -->
+<!--         </legend> -->
+<!--         <div id="divPoliza" uib-collapse="isCollapsed4"> -->
+<!-- 			<div class="separadorDesplegables"></div> -->
+<!-- 			<div layout="column"> -->
+<!-- 				<div layout-gt-sm="row"> -->
+<!-- 					<md-button class="fade-out md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.subirContrato()"> -->
+<!-- 		                 <md-icon>backup</md-icon>&nbsp;{{ 'UPLOAD_FILES' | translate }} -->
+<!-- 		            </md-button> -->
+<!-- 				</div>	 -->
+<!-- 	        	<div layout="row"> -->
+<!-- 					<div layout="column" flex="50"> -->
+<!-- 						<h4 class="margin-top-20" ng-if="$ctrl.contratosGuardados != null && $ctrl.contratosGuardados.length > 0">Contratos guardados</h4> -->
+<!-- 		                <div ng-if="$ctrl.contratosGuardados != null && $ctrl.contratosGuardados.length > 0" layout-gt-sm="row" layout-margin ng-repeat="contrato in $ctrl.contratosGuardados"> -->
+<!-- 							<md-input-container class="md-block" flex-gt-sm flex="33" > -->
+<!-- 		                        <label>{{ 'FILE' | translate }}</label> -->
+<!-- 		                        <input ng-model="contrato.NO_ARCHIVO" disabled> -->
+<!-- 		                    </md-input-container> -->
+<!-- 							<md-input-container class="md-block" flex-gt-sm flex="33"> -->
+<!-- 		                        <label>{{ 'STATUS' | translate }}</label> -->
+<!-- 		                        <input type="text" ng-model="contrato.ESTADO" disabled> -->
+<!-- 		                    </md-input-container> -->
+<!-- 							<i class="material-icons btnIcono" ng-click="$ctrl.descargarArchivo(contrato)"> -->
+<!-- 		                        cloud_download <md-tooltip md-direction="top">{{ 'DOWNLOAD' | translate | uppercase }}</md-tooltip> -->
+<!-- 		                    </i> -->
+<!-- 						</div> -->
+<!-- 	            	</div> -->
+<!-- 	        	</div> -->
+<!-- 			</div> -->
+<!--         </div> -->
+        
+        <legend><span class="mov-ico ic-ciber-ico-doc-pdf"></span> Contratos
+            <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+                <span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Contratos"></span>
+                <span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Contratos"></span>
+            </button>
+        </legend>
+        <div id="divPoliza" uib-collapse="isCollapsed4">
+			<div class="separadorDesplegables"></div>
+			<div layout="column">
+				<div layout="column">
+					<div ng-if="$ctrl.isNewContrato == true || $ctrl.isEditContrato == true">
+						<form id="formNuevoContrato" name="formNuevoContrato" ng-value="$ctrl.formNuevoContrato=!formNuevoContrato.$valid" style="margin-top: 12px;" layout="column">
+							<div layout="row" layout-align="start start">
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>Fecha vencimiento</label>
+									<md-datepicker ng-change="$ctrl.changeFechaVencimiento()" md-min-date="$ctrl.minDate" ng-model="$ctrl.form.FD_VENCIMIENTO" required></md-datepicker>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>Día de preaviso</label>
+									<input ng-change="$ctrl.changeDiasPreaviso()" ng-model="$ctrl.diaPreavisoContrato" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>Fecha de preaviso</label>
+									<md-datepicker md-min-date="$ctrl.minDate" ng-model="$ctrl.form.FECHA_PREAVISO" disabled required></md-datepicker>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>Preaviso 1</label>
+									<input ng-model="$ctrl.form.PREAVISO_1" required>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+									<label>Preaviso 2</label>
+									<input ng-model="$ctrl.form.PREAVISO_2">
+								</md-input-container>
+<!-- 							<md-input-container class="md-block" flex-gt-sm> -->
+<!-- 								<label>Días de aviso (separado por comas)</label> -->
+<!-- 								<input ng-model="$ctrl.form.NU_DIAS_PREAVISO" required> -->
+<!-- 							</md-input-container> -->
+							</div>
+							<div layout="row" layout-align="start start">
+								<div style="display:contents" flex-gt-sm>
+									<md-input-container class="md-block" flex>
+										<md-checkbox ng-model="$ctrl.form.IS_UNDEFINED"
+										ng-change="$ctrl.addYearsToFechaVencimiento()">Indefinido</md-checkbox>
+									</md-input-container>
+									<md-input-container class="md-block" flex>
+										<md-checkbox ng-model="$ctrl.form.IS_RENOVABLE_ANUAL">Prorrogable anualmente</md-checkbox>
+									</md-input-container>
+								</div>
+								<md-input-container class="md-block" flex-gt-sm="50">
+									<label>{{ 'DESCRIPTION' | translate }}</label>
+									<input ng-model="$ctrl.form.DS_ARCHIVO" required>
+								</md-input-container>
+								<div layout="row" layout-align="start start" flex="25">
+					                <input type="file" id="file_contrato_modal" name="file_contrato_modal" class="inputfile" multiple />
+					                <label ng-if="$ctrl.nombreArchivoContrato == null" class="dark-blue md-button btnNuevo" for="file_contrato_modal">
+					                    <i class="material-icons btnIconoNube">attachment</i> {{ 'SELECT_FILE' | translate }}
+					                </label>
+					                <label ng-if="$ctrl.nombreArchivoContrato != null" class="dark-blue md-button btnNuevo" for="file_contrato_modal">
+					                    <i class="material-icons btnIconoNube">attachment</i> {{$ctrl.nombreArchivoContrato}}
+					                </label>
+					            </div>
+							</div>
+			            </form>
+		            </div>
+	            	<div layout="row" flex="100" ng-if="$ctrl.form.FECHA_PREAVISO != null && ($ctrl.isNewContrato == true || $ctrl.isEditContrato == true)">
+			            <div class="avisoProveedoresContainer">
+			            	<div ng-if="$ctrl.form.FECHA_PREAVISO != null && $ctrl.form.PREAVISO_1 != null" class="avisoProveedores">
+			            		<div><md-icon>info</md-icon></div>
+			            		Los avisos se realizarán el {{ $ctrl.getDsAvisos() }}
+			            	</div>
+			            </div>
+		            </div>
+					<div layout="row" layout-align="end end">
+		                <md-input-container class="md-block">
+		                    <md-button ng-if="$ctrl.isNewContrato == false && $ctrl.isEditContrato == false" class="dark-blue btnNuevo" style="margin-top: 0;" ng-click="$ctrl.clickNewContrato(true)">
+								<md-icon>add</md-icon>
+								Nuevo contrato
+							</md-button>
+		                    <md-button ng-if="$ctrl.isNewContrato == true || $ctrl.isEditContrato == true" class="dark-blue btnNuevo" style="margin-top: 0;" ng-click="$ctrl.clickNewContrato(false)">
+								<md-icon>clear</md-icon>
+								Cancelar
+							</md-button>
+		                </md-input-container>
+		                <md-input-container ng-if="$ctrl.isNewContrato == true || $ctrl.isEditContrato == true" class="md-block">
+		                    <md-button class="dark-blue btnNuevo" style="margin-top: 0;" ng-click="$ctrl.addContrato()">
+								<md-icon>save</md-icon>
+								Guardar
+							</md-button>
+		                </md-input-container>
+	                </div>
+				</div>
+				<div layout="row">
+					<div class="ui-grid" ui-grid="$ctrl.gridOptionsContratos" ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-resize-columns ui-grid-resize-columns style="width:100%"></div>
+	        	</div>
+			</div>
+        </div>
+	</form>
+		
+</div>

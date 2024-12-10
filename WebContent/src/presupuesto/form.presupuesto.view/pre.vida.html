@@ -1,0 +1,354 @@
+<div flex>
+	<uib-tabset active="$ctrl.indice" class="tabsPasos" type="pills" justified="true" flex="none">
+    	<uib-tab index="1" heading="Datos del asegurado" class="btn-sm">
+    		<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaEdicion}})">
+    			<div flex>
+    			<form name="formAsegurados" id="formSubmitAsegurados" novalidate>
+		    		<legend>Datos del Asegurado de Vida
+				        <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed = !isCollapsed">
+				            <span ng-if="isCollapsed" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+				            <span ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+				        </button>
+				    </legend>
+			    	<div ng-form="$ctrl.formAsegurado" class="collapsedDetalle" uib-collapse="isCollapsed">
+						<div class="separadorDesplegables"></div>
+			    		<div layout-gt-sm="row">
+							<div layout="column" flex>
+		            			<label>Tomador es la misma persona que asegurado</label>
+			            		<md-radio-group ng-if="$ctrl.datos.TARIF_VIDA.IN_TOMADOR_ES_ASEGURADO==undefined ? $ctrl.datos.TARIF_VIDA.IN_TOMADOR_ES_ASEGURADO='01' : ' '" ng-disabled="$ctrl.emitido!='0'" ng-change="$ctrl.tomadorEsAsegurado($ctrl.datos.TARIF_VIDA.IN_TOMADOR_ES_ASEGURADO)" ng-init="$ctrl.tomadorEsAsegurado($ctrl.datos.TARIF_VIDA.IN_TOMADOR_ES_ASEGURADO)" layout-gt-sm="row" ng-model="$ctrl.datos.TARIF_VIDA.IN_TOMADOR_ES_ASEGURADO" ng-click required>
+									<md-radio-button ng-value="01">Sí</md-radio-button>
+									<md-radio-button ng-value="02">No</md-radio-button>
+								</md-radio-group>
+		            		</div>
+		            	</div>
+						<div layout-gt-sm="row" class="margin-top-20">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'NAME' | translate }}</label>
+								<input ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.NO_NOMBRE" required>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'SURNAME_1' | translate }}</label>
+								<input ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.NO_APELLIDO1" required>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>{{ 'SURNAME_2' | translate }}</label>
+								<input ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.NO_APELLIDO2">
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Tipo documento</label>
+								<md-select ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.ID_TIPO_DOCUMENTO" ng-change="$ctrl.actualizarNacionalidad($ctrl.datos.TARIF_VIDA.ID_TIPO_DOCUMENTO,'TARIF_VIDA')" required>
+									<md-option ng-repeat="tipo in $ctrl.tipos.tiposDocumento" ng-value="tipo.ID_TIPO_DOCUMENTO">{{tipo.DS_TIPO_DOCUMENTO}}</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>NIF</label>
+								<input ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.NU_DOCUMENTO" required>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Fecha Nacimiento</label>
+								<md-datepicker ng-disabled="$ctrl.emitido!='0'" ng-click="($ctrl.datos.TARIF_VIDA.FD_NACIMIENTO == undefined || $ctrl.datos.TARIF_VIDA.FD_NACIMIENTO == null) ? $ctrl.datos.TARIF_VIDA.FD_NACIMIENTO = null : ''" ng-model="$ctrl.datos.TARIF_VIDA.FD_NACIMIENTO" required></md-datepicker>
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Sexo</label>
+								<md-select ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.ID_SEXO" required>
+                                     <md-option ng-repeat="sex in $ctrl.tipos.sexo" ng-value="{{sex.CO_FIELD}}">{{sex.DS_FIELD}}</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label for="cliente">{{ 'TELEPHONE' | translate }}</label>
+								<input type="tel"  ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.NU_TELEFONO" required>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label for="cliente">Correo electrónico</label>
+								<input type="email"  ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.NO_EMAIL" required>
+							</md-input-container>
+						</div>
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Nacionalidad</label>
+								<md-select ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.CO_PAIS" required>
+									<md-option ng-repeat="tipo in $ctrl.tipos.paises" ng-value="tipo.CO_ISO_A3">{{tipo.NO_PAIS}}</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm>
+								<label>Estado civil</label>
+								<md-select ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.TARIF_VIDA.ID_ESTADO_CIVIL">
+									<md-option ng-repeat="tipo in $ctrl.tipos.civiles" ng-value="tipo.ID_TIPOS">{{tipo.DS_TIPOS}}</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+					</div>
+				</form>
+				</div>
+			</md-content>
+	   	</uib-tab>
+   	
+   		<uib-tab index="2" disable="$ctrl.formAsegurados=!formAsegurados.$valid" heading="Otros" class="btn-sm">
+   			<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaEdicion}})">
+	    		<div flex>
+	    		<form name="formOtros" id="formSubmitOtros" novalidate>
+		    		<legend>Modalidad
+				        <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed2 = !isCollapsed2">
+				            <span ng-if="isCollapsed2" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+				            <span ng-if="!isCollapsed2" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+				        </button>
+				    </legend>
+				    <div class="collapsedDetalle" uib-collapse="isCollapsed2">
+						<div class="separadorDesplegables"></div>
+			    		<div layout="row">
+			    			  <md-input-container class="md-block" flex-gt-sm>
+								<label>Modalidad *</label>
+								<md-select ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA==undefined ? $ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA='01' : ' '" flex="50" layout-gt-sm="row" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA">
+									<md-option ng-repeat="mol in $ctrl.tipos.modalidadVida" ng-value="'{{mol.CO_FIELD}}'">{{mol.DS_FIELD}}</md-option>
+								</md-select>
+							</md-input-container>
+			    		</div>
+			    	</div>
+			    	<legend>Coberturas
+				        <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed3 = !isCollapsed3">
+				            <span ng-if="isCollapsed3" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+				            <span ng-if="!isCollapsed3" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+				        </button>
+				    </legend>
+				    <div class="collapsedDetalle" uib-collapse="isCollapsed3">
+		<!-- 	    		<h4>Coberturas</h4> -->
+						<div class="separadorDesplegables"></div>
+						<div layout="row">
+			    			<div flex-gt-sm="50">
+								<label>Fallecimiento (contratación obligatoria)</label>
+							</div>
+							<md-radio-group ng-if="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_FALLECIMIENTO==undefined ? $ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_FALLECIMIENTO='01' : ' '" flex="50" layout-gt-sm="row" disabled ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_FALLECIMIENTO">
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" class="margin-top-10" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '01'">
+			    			<div flex-gt-sm="50">
+								<label>Fallecimiento por accidente *</label>
+							</div>
+							<md-radio-group ng-if="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_FALLECIMIENTO_ACC==undefined ? $ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_FALLECIMIENTO_ACC='02' : ' '" flex="50" layout-gt-sm="row" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_FALLECIMIENTO_ACC">
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+						<div layout="row" class="margin-top-10" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '01'">
+			    			<div flex-gt-sm="50">
+								<label>Invalidez permanente absoluta por accidente *</label>
+							</div>
+							<md-radio-group ng-if="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_INVALIDEZ_ACC==undefined ? $ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_INVALIDEZ_ACC='02' : ' '" flex="50" layout-gt-sm="row" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_INVALIDEZ_ACC">
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" class="margin-top-10" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '01'">
+			    			<div flex-gt-sm="50">
+								<label>Invalidez permanente absoluta *</label>
+							</div>
+							<md-radio-group ng-if="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_INVALIDEZ==undefined ? $ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_INVALIDEZ='02' : ' '" flex="50" layout-gt-sm="row" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IN_COBERTURA_INVALIDEZ">
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" class="margin-top-10" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '02'">
+			    			<div flex-gt-sm="50">
+								<label>Invalidez permanente total *</label>
+							</div>
+							<md-radio-group ng-if="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IN_COBERTURA_INVALIDEZ_TOTAL==undefined ? $ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IN_COBERTURA_INVALIDEZ_TOTAL='02' : ' '" flex="50" layout-gt-sm="row" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IN_COBERTURA_INVALIDEZ_TOTAL">
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" class="margin-top-10" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '02'">
+			    			<div flex-gt-sm="50">
+								<label>Invalidez permanente total + absoluta *</label>
+							</div>
+							<md-radio-group ng-if="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IN_COBERTURA_INVALIDEZ_TOT_AB==undefined ? $ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IN_COBERTURA_INVALIDEZ_TOT_AB='02' : ' '" flex="50" layout-gt-sm="row" ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IN_COBERTURA_INVALIDEZ_TOT_AB">
+								<md-radio-button ng-value="'02'">
+									No
+								</md-radio-button>
+								<md-radio-button ng-value="'01'">
+									Sí
+								</md-radio-button>
+							</md-radio-group>
+			    		</div>
+			    		<div layout="row" class="margin-top-10" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '02'">
+				    		<md-input-container class="md-block" flex-gt-sm>
+								<label>Profesión</label>
+								<md-select ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.CO_PROFESION" required>
+                                    <md-option ng-repeat="prof in $ctrl.tipos.coProfesion" ng-value="'{{prof.CO_FIELD}}'">{{prof.DS_FIELD}}</md-option>
+								</md-select>
+							</md-input-container>
+			    		</div>
+			    		<div layout="row" class="margin-top-10" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '02'">
+			    			<md-input-container class="md-block" flex-gt-sm>
+								<label>Capital</label>
+								<input ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA_PROFESIONAL.IM_CAPITAL_COBERTURA_VIDA" required>
+							</md-input-container>
+			    		</div>
+			    		<div layout="row" class="margin-top-10" ng-if="$ctrl.datos.BLOCK_MODALIDAD_VIDA.MODALIDAD_VIDA == '01'">
+			    			<md-input-container class="md-block" flex-gt-sm>
+								<label>Capital</label>
+								<input ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.BLOCK_COBERTURAS_VIDA.IM_CAPITAL_COBERTURA_VIDA" required>
+							</md-input-container>
+			    		</div>
+				    	<legend>Datos del pago
+					        <button id="btnDesplegarPoliza" type="button" class="btn btn-link" ng-click="isCollapsed4 = !isCollapsed4">
+					            <span ng-if="isCollapsed4" class="glyphicon glyphicon-chevron-down btnMostrar" title="Mostrar Datos de la Póliza"></span>
+					            <span ng-if="!isCollapsed4" class="glyphicon glyphicon-chevron-up btnOcultar" title="Ocultar Datos de la Póliza"></span>
+					        </button>
+					    </legend>
+					    <div class="collapsedDetalle" uib-collapse="isCollapsed4">
+			<!-- 	    		<h4>Datos del pago</h4> -->
+							<div class="separadorDesplegables"></div>
+							<div layout-gt-sm="row">
+								<md-input-container class="md-block" flex-gt-sm="70">
+									<label>Forma de pago</label>
+									<md-select ng-disabled="$ctrl.emitido!='0'" ng-model="$ctrl.datos.DATOS_PAGO.ID_FORMAPAGO" required>
+                                  	  <md-option ng-repeat="pag in $ctrl.tipos.formaPago" ng-value="'{{pag.CO_FIELD}}'">{{pag.DS_FIELD}}</md-option>
+									</md-select>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+					          		<label>{{ 'DATE_START' | translate }}</label>
+					          		<md-datepicker ng-disabled="$ctrl.emitido!='0'" ng-click="($ctrl.datos.DATOS_PAGO.FD_INICIO == undefined || $ctrl.datos.DATOS_PAGO.FD_INICIO == null) ? $ctrl.datos.DATOS_PAGO.FD_INICIO = null: ''" ng-model="$ctrl.datos.DATOS_PAGO.FD_INICIO" required></md-datepicker>
+					          	</md-input-container>
+							</div>
+				    	</div>
+					</div>
+					</form>
+    			</div>
+   			</md-content>
+    	</uib-tab>
+    	
+    	<uib-tab index="3" heading="Presupuesto" class="btn-sm" disable="$ctrl.formOtros=!formOtros.$valid" ng-click="$ctrl.pre.tarificarPresupuestos($ctrl.datos,'PRESUPUESTO_VIDA')">
+    		<md-content layout="row" layout-align="center none" layout-padding class="formCliente formClass form-scroll" resize ng-style="resizeHeight({{$ctrl.medidaEdicion}})">
+	    		<div layout="column" flex>
+					<md-card class="form-scroll">
+						<md-card-content class="form-scroll" style="padding:0px 16px;" resize ng-style="resizeHeight(330)">
+							<div ng-if="$ctrl.pre.cargar==true" id="buscandoGif" style="padding:0px 16px; display:table; z-index: 999999999; position: fixed; width: 100%; height: 100%;" resize ng-style="resizeHeight(330)">
+				            <div class = "centered" style="display:table-cell; vertical-align: middle;">
+								<div class = "blob-3"></div>
+								<div class = "blob-4"></div>
+							</div>
+				        </div>
+				        <table style="text-align: center" width="100%" ng-if="$ctrl.tarifas.length>0">
+							<thead> 
+						       <tr layout="row" layout-align="center center" style="z-index: 1">
+						       	   <th flex="10"></th>
+						           <th ng-click="$ctrl.pre.ordenarTabla('aseguradora')" layout="row" layout-align="center center" flex = "10">Aseguradora</th>
+						           <th ng-click="$ctrl.pre.ordenarTabla('producto')" flex="20" layout="row" layout-align="center center">Producto</th>
+								   <th ng-click="$ctrl.pre.ordenarTabla('modalidad')" flex="20" layout="row" layout-align="center center">Modalidad</th>
+								   <th ng-click="$ctrl.pre.ordenarTabla('prima')" flex="15" layout="row" layout-align="center center">Prima anual</th>
+								   <th flex="5" layout="row" layout-align="center center"></th>
+								   <th flex="20" layout="row" layout-align="center center"></th>
+						       </tr>
+						   </thead>
+						
+						   <tbody> <!-- Cuerpo de la tabla -->
+						       <tr layout="row" layout-align="center center" style="height:50px !important; z-index: 1" ng-repeat="tarifa in $ctrl.tarifas">
+						           <td flex="10">
+											<ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE != undefined || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE != undefined || tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE != null || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE != null)" on="tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="ERROR" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="INFO" ng-src="src/img/aseguradoras/INFO.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="WARN" ng-src="src/img/aseguradoras/WARN.png"
+			                                        width="30%" />
+			                                </ng-switch>
+			                                <ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE != undefined || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE != undefined || tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE != null || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE != null)" on="tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="ERROR" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="INFO" ng-src="src/img/aseguradoras/INFO.png"
+			                                        width="30%" />
+			                                    <img ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-switch-when="WARN" ng-src="src/img/aseguradoras/WARN.png"
+			                                        width="30%" />
+			                                </ng-switch>
+			                                <ng-switch ng-if="(tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined) && (tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE == undefined && tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE == undefined && tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE == undefined && tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE == undefined)" on="tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE || tarifa.LIST_MESSAGE[0].CO_MESSAGE_TYPE || tarifa.LIST_MENSAJE.MENSAJE.CO_MESSAGE_TYPE == undefined || tarifa.LIST_MENSAJE.MENSAJE[0].CO_MESSAGE_TYPE">
+			                                    <img ng-switch-default ng-src="src/img/aseguradoras/OK.png" width="30%" />
+			                                </ng-switch>
+			                                <img ng-if="tarifa.IM_PRIMA_ANUAL_TOT== 0 || tarifa.IM_PRIMA_ANUAL_TOT== null || tarifa.IM_PRIMA_ANUAL_TOT== undefined" ng-mouseover="$ctrl.verTooltip(tarifa)" class="mensajes" uib-tooltip-template="'src/presupuesto/form.presupuesto.modal/mensajes.modal.html'"
+			                                        tooltip-placement="auto right" ng-src="src/img/aseguradoras/ERROR.png"
+			                                        width="30%" />
+								   </td>
+						           <td flex = "10">
+										<img class="imgTarifa" width="60%" ng-src="src/img/aseguradoras/{{tarifa.ID_COMPANIA}}.png"/>
+								   </td>
+						           <td flex="20" layout="row" layout-align="center center">
+										{{tarifa.NO_PRODUCTO}}
+								   </td>
+								   <td flex="20" layout="row" layout-align="center center">
+										{{tarifa.NO_MODALIDAD}}
+								   </td>
+						           <td flex="15" layout="row" layout-align="center center">
+										<h4 ng-if="tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!=undefined && tarifa.IM_PRIMA_ANUAL_TOT!=0" class="color_titulo_h4">{{tarifa.IM_PRIMA_ANUAL_TOT}} €</h4>
+								   </td>
+						           <td flex="5" layout="row" layout-align="center center">
+										<md-icon md-svg-src="src/img/garantia.svg" ng-click="$ctrl.pre.verGarantias($event,tarifa)"></md-icon>
+								   </td>
+								   <td flex="20" layout="row" layout-align="center center">
+										<md-button ng-if="tarifa.IM_PRIMA_ANUAL_TOT!= 0 && tarifa.IM_PRIMA_ANUAL_TOT!= null && tarifa.IM_PRIMA_ANUAL_TOT!= undefined && tarifa.LIST_MESSAGE.CO_MESSAGE_TYPE!='ERROR'"  ng-click="$ctrl.contratarInTarificacion($index, $ctrl.pre.detalles, 'contratar', tarifa)"  ng-disabled="$ctrl.emitido!='0'" class="dark-yellow btnNuevo">
+											<md-icon>gavel</md-icon>
+											Contratar
+										</md-button>
+								   </td>
+						      </tr>
+						   </tbody>
+						</table>
+						<div layout="row" layout-align="center center" ng-if="$ctrl.pre.vista == 4">
+							<h3>No hay tarifas</h3>
+						</div>
+						</md-card-content>
+					</md-card>
+				</div>
+			</md-content>
+    	</uib-tab>
+    </uib-tabset>
+     <div layout="row" layout-align="center none">
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice>1" ng-click="$ctrl.anterior()">
+            <md-icon>navigate_before</md-icon>
+            Anterior
+        </md-button>
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice==3" ng-click="$ctrl.pre.descargarPresupuesto()">
+            <md-icon>picture_as_pdf</md-icon>
+            Exportar a PDF
+        </md-button>
+        &nbsp;
+        <md-button class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice==3" ng-click="$ctrl.pre.enviarPresupuestoPDF()">
+            <i class="fa-duotone fa-paper-plane"></i>
+            Enviar presupuestos
+        </md-button>
+        <md-button type="submit" class="md-raised md-primary medium-blue button-action-main" ng-if="$ctrl.indice<3" ng-click="$ctrl.siguiente($ctrl.indice)" form="{{$ctrl.formulario}}">
+            <md-icon>navigate_next</md-icon>
+            Siguiente
+        </md-button>
+    </div>
+</div>

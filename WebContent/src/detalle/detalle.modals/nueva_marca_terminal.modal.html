@@ -1,0 +1,35 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%;">
+	<md-toolbar style="background-color: white; min-height:25px;">
+		<div class="md-toolbar-tools" style="height:44px">
+			<h2>Añadir nueva marca</h2>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	            <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content>
+		<form name="$ctrl.formModalMarca" id="formModalMarca" flex class="formClass md-padding">
+			<div layout="row" layout-align="center center" class="margin-top-20">
+				<md-input-container flex="50">
+					<label>Nombre de la marca</label>
+					<input ng-model="$ctrl.form.marca" required>
+				</md-input-container>
+			</div>
+			<div layout="row" class="modalContenedorBtn" layout-align="center center" ng-if="$ctrl.loadMarca != true">
+				<md-button class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.saveBanda()"><i class="fa-light fa-floppy-disk" style="margin-right: 5px;"></i>AÑADIR MARCA</md-button>
+			</div>
+			<div class="cs-loader" ng-if="$ctrl.loadMarca == true" style="height: auto; width: 97%">
+				<div class="cs-loader-inner">
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+					<label>●</label>
+				</div>
+			</div>
+	</md-dialog-content>
+</md-dialog>

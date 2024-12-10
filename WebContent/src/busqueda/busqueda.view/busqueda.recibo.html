@@ -1,0 +1,76 @@
+<!-- Tabla de recbios -->
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<div class="grid-results" id="resultadosBusqueda">
+
+    <md-tabs class="estiloTabs" md-selected="$ctrl.active" md-dynamic-height md-border-bottom>
+        
+        <md-tab label="{{ 'SEARCH_RESULT' | translate }}">
+	        <div layout="row" layout-align="end center" class="md-padding">
+		        <md-button class="dark-blue btnSuperior btnNuevo" ng-click="$ctrl.verDetalle($ctrl.datosPoliza, 'renovar-poliza')" ng-if="$ctrl.datosPoliza != null && $ctrl.datosPoliza.ID_POLIZA != null && $ctrl.datosPoliza.IN_RENOVADA == true && $ctrl.permisos.IN_ESCRITURA === true">
+		            Renovar póliza
+		        </md-button>
+<!-- 		        <md-button class="dark-blue btnSuperior btnNuevo" ng-click="$ctrl.openNewRecibo()" ng-if="$ctrl.intoClientePoliza && $ctrl.permisos.IN_ESCRITURA === true"> -->
+<!-- 		            {{ 'NEW_RECEIPT' | translate }} -->
+<!-- 		        </md-button> -->
+		        <md-button ng-if="$ctrl.active==0 && $ctrl.gridRecibos.data!=undefined && $ctrl.vista == 4 && ($ctrl.parent.url == 'recibos' || $ctrl.parent.url == 'clientes') && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.exportarExcel()">
+		            <span style="font-size: 1.1em"><i class="fa-light fa-file-excel" style="margin-right: 5px"></i></span>{{ 'EXPORT_EXCEL' | translate }}
+		        </md-button>
+		                
+		        <!-- Botones de consulta GDPR -->
+		        <md-button class="dark-blue btnSuperior btnNuevo" ng-if="$ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true">
+		            <md-icon>lock_open</md-icon> {{ 'UNLOCK_CLIENT' | translate }}
+		        </md-button>
+		        <md-button ng-if="$ctrl.isConsultagdpr == true && $ctrl.permisos.IN_EXPORTAR == true" class="md-raised md-primary medium-blue button-action-main" ng-click="$ctrl.parent.exportarExcel()">
+		            <md-icon>file_copy</md-icon> {{ 'EXPORT_CLIENT' | translate }}
+		        </md-button>
+	        </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.vista == 3">
+                <h4 layout="row" layout-align="center center"><span class="material-icons-outlined md-padding">report_problem</span> {{ 'NOT_FOUND_RECEIPT' | translate }}</h4>
+            </div>
+
+            <div id="mensajeBuscar" class="mensajesBusqueda" ng-if="$ctrl.vista == 1">
+<!--                 <h2>Busque un recibo</h2> -->
+            </div>
+            <div id="buscandoGif" style="display:table; height: 50vh;" ng-if="$ctrl.vista == 2">
+                <div class="centered" style="display:table-cell; vertical-align: middle;">
+                    <div class="blob-3"></div>
+                    <div class="blob-4"></div>
+                </div>
+            </div>
+            <div ng-if="$ctrl.vista == 4 && $ctrl.tipo=='recibos' && $ctrl.permisos.IN_ESCRITURA == true" layout="row" layout-margin layout-align="right right">
+            	<md-button ng-click="$ctrl.bloquearRecibo()" class="md-raised md-primary medium-blue button-action-main">{{ 'LOCK' | translate }}</md-button>
+            	<md-button ng-click="$ctrl.desbloquearRecibo()" class="md-raised md-primary medium-blue button-action-main">{{ 'UNLOCK' | translate }}</md-button>
+            	<md-button ng-click="$ctrl.cambiarFContRecibo()" class="md-raised md-primary medium-blue button-action-main">{{ 'CHANGE_ACCOUNTING_DATE' | translate }}</md-button>
+            	<md-button ng-click="$ctrl.enviarsapRecibo()" class="md-raised md-primary medium-blue button-action-main">{{ 'SEND_SAP' | translate }}</md-button>
+            	<!-- <md-button ng-click="$ctrl.liquidarRecibo(0)" class="md-raised md-primary medium-blue button-action-main">Liquidar mediador</md-button> -->
+<!--             	<md-button ng-click="$ctrl.liquidarRecibo(1)" class="md-raised md-primary medium-blue button-action-main">Liquidar reaseguro</md-button> -->
+			</div>
+            <div>
+                <div ng-if="$ctrl.vista == 4 && ($ctrl.tipo=='recibosByCliente' || $ctrl.tipo=='recibosByPoliza')" class="ui-grid" ui-grid="$ctrl.gridRecibos" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize resize ng-style="resizeHeight({{$ctrl.medida}})"></div>
+                <div ng-if="$ctrl.vista == 4 && $ctrl.tipo=='recibos'" class="ui-grid" ui-grid="$ctrl.gridRecibos" ui-grid-pagination ui-grid-resize-columns ui-grid-auto-resize ui-grid-grouping ui-grid-selection resize ng-style="$ctrl.getTableHeight()"></div>
+            </div>
+
+        </md-tab>
+        <md-tab ng-repeat="detalles in $ctrl.numDetalles track by $index">
+            <md-tab-label ng-if="detalles != null">
+		   		<span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='remesa'">{{ 'RECEIPT' | translate }}: {{detalles.NU_RECIBO}}</span>
+		   		<span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='poliza' ">{{ 'POLICY_NU' | translate }}: {{detalles.NU_POLIZA}}</span>
+		   		<span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='tomador' ">{{ 'CLIENT' | translate }}: {{detalles.NO_NOMBRE}}</span>
+                <span ng-if="detalles != null && $ctrl.nomDetalles[$index]=='renovar-poliza' ">Renovación {{detalles.NU_POLIZA}}</span>
+		   		<span ng-if="detalles == null"><i class="fa-light fa-plus"></i> {{ 'NEW_RECEIPT' | translate }}</span>
+		   		<div class="close" aria-label="Close" ng-click="$ctrl.cerrarTab(detalles)">
+             				<span aria-hidden="true">×</span>
+             			</div>
+		   	</md-tab-label> 
+            <md-tab-body>
+		   		<detalle-sd id-detalle="detalles" ng-if="$ctrl.nomDetalles[$index]=='remesa'" tipo="'recibo'"></detalle-sd>
+		   		<detalle-sd llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='poliza'" id-detalle="$ctrl.detallesPoliza" tipo="'poliza'"></detalle-sd>
+		   		<detalle-sd llave="$ctrl.nomDetalles[$index]" ng-if="$ctrl.nomDetalles[$index]=='tomador'" id-detalle="$ctrl.detallesCliente" tipo="'cliente'"></detalle-sd>
+		   		<renovacion-polizas-app ng-if="$ctrl.nomDetalles[$index]=='renovar-poliza'" detalles="detalles"></renovacion-polizas-app>
+		   	</md-tab-body>		    
+        </md-tab>
+    </md-tabs>
+
+</div>

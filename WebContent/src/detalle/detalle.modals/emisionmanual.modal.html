@@ -1,0 +1,123 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog style="width:45%">
+	<md-toolbar>
+		<div class="md-toolbar-tools" style="height:44px">
+			<h4>Emisión manual</h4>
+			<md-button class="md-icon-button" ng-click="$ctrl.cancel()" style="right:20px; position:absolute">
+	          <md-icon aria-label="Close dialog">clear</md-icon>
+	        </md-button>
+        </div>
+	</md-toolbar>
+	<md-dialog-content style="height: 430px" class="md-dialog-content formCliente formClass form-scroll">
+		<div class="md-dialog-content">
+			<form class="formClass formCliente" ng-submit="$ctrl.guardar()">
+				<div flex="100" layout="column">
+					<div class="margin-top-20" layout="row">
+						<md-input-container class="md-block" flex="100">
+							<md-checkbox>Nueva póliza</md-checkbox>
+						</md-input-container>
+					</div>
+				
+					<div class="margin-top-20" layout="row">
+						<md-input-container class="md-block" flex="100">
+							<label>{{ 'INSURANCE_CARRIER' | translate }}</label>
+				            	<md-select required ng-model="$ctrl.form.ID_COMPANIA" ng-change="$ctrl.cambiarAseguradora()">
+				            		<md-option ng-repeat="aseguradora in $ctrl.aseguradoras" ng-value="aseguradora.ID_COMPANIA">
+						              	{{aseguradora.NO_COMPANIA}}
+						            </md-option>
+				            	</md-select>
+						</md-input-container>
+						<md-input-container flex="100" class="md-block">
+							<label>Producto</label>
+				            	<md-select required ng-model="$ctrl.form.ID_COMP_RAMO_PROD" ng-disabled="$ctrl.productos==undefined || $ctrl.productos==null">
+				            		<md-option ng-repeat="producto in $ctrl.productos" ng-value="producto.ID_COMP_RAMO_PROD">
+						              	{{producto.NO_PRODUCTO}}
+						            </md-option>
+				            	</md-select>
+						</md-input-container>
+					</div>
+					
+					<div class="margin-top-20" layout="row">
+						<md-input-container flex="100" class="md-block">
+							<label>Póliza</label>
+							<input required ng-model="$ctrl.form.NU_POLIZA">
+						</md-input-container>
+						<md-input-container flex="100" class="md-block">
+							<label>Importe total</label>
+							<input required ng-model="$ctrl.form.IM_PRIMA_ANUAL_TOT">
+						</md-input-container>
+					</div>
+					
+					<div class="margin-top-20" layout="row">
+						<md-input-container flex="100" class="md-block">
+							<label>Prima neta</label>
+							<input ng-model="$ctrl.form.IM_PRIMA_ANUAL">
+						</md-input-container>
+						<md-input-container flex="100" class="md-block">
+							<label>Código IBAN</label>
+							<input ng-model="$ctrl.form.CO_IBAN">
+						</md-input-container>
+					</div>
+					
+					<div class="margin-top-20 margin-bottom-20" layout="row">
+						<md-button ng-if="$ctrl.navegador != 'internet explorer'" class="md-raised md-primary medium-blue button-action-main" type="submit">
+							<md-icon>save</md-icon>
+							Guardar
+						</md-button>
+						<md-button ng-if="$ctrl.navegador == 'internet explorer'" ng-click="$ctrl.guardar()" class="md-raised md-primary medium-blue button-action-main">
+							<md-icon>save</md-icon>
+							Guardar
+						</md-button>
+					</div>
+					
+					
+					
+<!-- 					<div layout="column" style="padding:0px 14px;" flex="50"> -->
+<!-- 						<md-input-container style="margin-top: 20px; margin-bottom: 20px" class="md-block"> -->
+<!-- 							<label>Aseguradora</label> -->
+<!-- 				            	<md-select required ng-model="$ctrl.form.ID_COMPANIA" ng-change="$ctrl.cambiarAseguradora()"> -->
+<!-- 				            		<md-option ng-repeat="aseguradora in $ctrl.aseguradoras" ng-value="aseguradora.ID_COMPANIA"> -->
+<!-- 						              	{{aseguradora.NO_COMPANIA}} -->
+<!-- 						            </md-option> -->
+<!-- 				            	</md-select> -->
+<!-- 						</md-input-container> -->
+<!-- 						<md-input-container class="md-block"> -->
+<!-- 							<label>Póliza</label> -->
+<!-- 							<input required ng-model="$ctrl.form.NU_POLIZA"> -->
+<!-- 						</md-input-container> -->
+<!-- 						<md-input-container class="md-block"> -->
+<!-- 							<label>Prima neta</label> -->
+<!-- 							<input ng-model="$ctrl.form.IM_PRIMA_ANUAL"> -->
+<!-- 						</md-input-container> -->
+<!-- 					</div> -->
+<!-- 					<div layout="column" style="padding:0px 14px" flex="50"> -->
+<!-- 						<md-input-container style="margin-top: 40px; margin-bottom: 20px" class="md-block"> -->
+<!-- 							<label>Producto</label> -->
+<!-- 				            	<md-select required ng-model="$ctrl.form.ID_COMP_RAMO_PROD" ng-disabled="$ctrl.productos==undefined || $ctrl.productos==null"> -->
+<!-- 				            		<md-option ng-repeat="producto in $ctrl.productos" ng-value="producto.ID_COMP_RAMO_PROD"> -->
+<!-- 						              	{{producto.NO_PRODUCTO}} -->
+<!-- 						            </md-option> -->
+<!-- 				            	</md-select> -->
+<!-- 						</md-input-container> -->
+<!-- 						<md-input-container class="md-block"> -->
+<!-- 							<label>Importe total</label> -->
+<!-- 							<input required ng-model="$ctrl.form.IM_PRIMA_ANUAL_TOT"> -->
+<!-- 						</md-input-container> -->
+<!-- 						<md-input-container class="md-block"> -->
+<!-- 							<label>Código IBAN</label> -->
+<!-- 							<input ng-model="$ctrl.form.CO_IBAN"> -->
+<!-- 						</md-input-container> -->
+<!-- 					</div> -->
+				</div>
+<!-- 				<div flex="100" layout="row"> -->
+<!-- 					<md-button class="medium-green" type="submit" style="width: 40%; text-align: center"> -->
+<!-- 						<md-icon>save</md-icon> -->
+<!-- 						Guardar -->
+<!-- 					</md-button> -->
+<!-- 				</div> -->
+			</form>
+		</div>
+	</md-dialog-content>
+</md-dialog>

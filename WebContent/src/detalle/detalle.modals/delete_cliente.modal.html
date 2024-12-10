@@ -1,0 +1,30 @@
+<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+-->
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="height:44px">
+
+            <h4 class="modal-title" style="text-align: center">Confirmar</h4>
+
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content style="height: 25%" class="md-dialog-content formCliente formClass">
+
+        <div layout-gt-sm="row" layout-align="center">
+            <h3>¿Está seguro de dar de baja el cliente?</h3>
+        </div>
+<!--         <div flex="100" layout-gt-sm="row"> -->
+		<div flex="100" layout="row" layout-align="center" layout-margin>
+            <md-button class="btnModalSN medium-green btnNuevo" ng-click="$ctrl.borrarCliente(true)" flex>
+                <i class="fa-duotone fa-check-double"></i>
+                Sí
+            </md-button>
+            <md-button class="btnModalSN medium-orange btnNuevo" ng-click="$ctrl.borrarCliente(false)" flex>
+                <md-icon>clear</md-icon>
+                No
+            </md-button>
+        </div>
+    </md-dialog-content>
+</md-dialog>
