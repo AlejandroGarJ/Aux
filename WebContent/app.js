@@ -1,6 +1,8 @@
 import { COMPONENTS } from "./angular2/angularComponentsDeclaration";
 import { DetalleMediadorComponent } from "./angular2/src/detalle/detalle.componentes/detalle.mediador/detalle.mediador.component";
 
+
+ 
 var url = window.location.pathname;
 var origin = window.location.origin;
 (function (ng) {
@@ -87,6 +89,14 @@ var origin = window.location.origin;
       component
     );
   });
+
+  /* ng.directive(
+    (DetalleMediadorComponent.name.charAt(0).toLowerCase() + DetalleMediadorComponent.name.slice(1)).replace(
+      "Component",
+      ""
+    ),
+  ) */
+
 
   window.app = ng.module("App");
 

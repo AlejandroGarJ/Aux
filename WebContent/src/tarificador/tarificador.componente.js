@@ -1,6 +1,6 @@
 (function(ng) {	
 
-
+	console.log("Se declara App.js")
 	//Crear componente de app
     var tarificadorComponent = {
     		controllerAs: '$ctrl',

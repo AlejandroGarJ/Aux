@@ -27,10 +27,14 @@ import { Provincia } from "angular2/src/models/Provincia";
 import { productoRepeats } from "../../../validators/productoRepeats.validator";
 import { CONSTANTS } from "../../../shared/enums/constants";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { PruebaComponent } from "../../../componentePrueba/prueba.component";
 import { DialogComponent } from "../../../shared/components/dialogComponent/dialog.component";
 import { DIALOG_TYPES } from "../../../shared/enums/dialogTypes";
-import { Dialog } from "@angular/cdk/dialog";
+import { AppComponent } from "../../../../../app.component";
+import { Router, RouterModule } from "@angular/router";
+import { PruebaModule } from "../detalle.mediador/../../../../prueba.module";
+import { AppModule } from "../../../../../app.module";
+
+
 @Component({
   selector: "detalle-mediador",
   templateUrl: "./detalle.mediador.component.html",
@@ -53,8 +57,8 @@ import { Dialog } from "@angular/cdk/dialog";
     FlexLayoutModule,
     MatError,
     MatButtonModule,
-    DialogComponent,
-  ],
+    AppModule
+],
   providers: [TranslateService, HttpClient],
 })
 export class DetalleMediadorComponent {
@@ -144,9 +148,7 @@ export class DetalleMediadorComponent {
         .subscribe((res) => {
           if (res === "yes") {
             this.mediador = this.form.value;
-            console.log(this.mediador);
             this.tiposService.altaMediador(this.mediador).subscribe((res) => {
-              console.log(res);
             });
           }
         });
@@ -163,7 +165,6 @@ export class DetalleMediadorComponent {
   }
 
   verPagos() {
-    console.log(this.PARTNERS.controls[0]);
   }
   /* Acceder al array de partners de el formGroup */
   get PARTNERS() {
@@ -203,7 +204,6 @@ export class DetalleMediadorComponent {
     if (idPrograma) {
       idPrograma.valueChanges.subscribe((newVal) => {
         if (newVal) {
-          console.log(newVal);
           if (newVal === 2) {
             partnerGroup.addControl(
               "HARMONY_CONF",
@@ -267,7 +267,6 @@ export class DetalleMediadorComponent {
 
   ver() {
     this.mediador = this.form.value;
-    console.log(this.mediador);
   }
 
   private getProvincias() {
@@ -292,7 +291,6 @@ export class DetalleMediadorComponent {
     this.tiposService.getMediosPago({}).subscribe((res) => {
       if (res.status === 200) {
         this.mediosPago = res.body.TIPOS.TIPO;
-        console.log(this.mediosPago);
       }
     });
   }
@@ -312,7 +310,6 @@ export class DetalleMediadorComponent {
       .subscribe((res) => {
         if (res.status === 200) {
           this.tiposDestinatario = res.body.TIPOS.TIPO;
-          console.log(this.tiposDestinatario);
         }
       });
   }

@@ -14,6 +14,7 @@ import { DIALOG_TYPES } from "../../enums/dialogTypes";
   selector: "app-dialog",
   templateUrl: "./dialog.component.html",
   styleUrl: "./dialog.component.css",
+  standalone: true,
   imports: [
     MatButtonModule,
     MatDialogActions,

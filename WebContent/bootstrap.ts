@@ -7,6 +7,8 @@ import {
   downgradeInjectable,
 } from "@angular/upgrade/static";
 import { COMPONENTS } from "./angular2/angularComponentsDeclaration";
+import { DetalleMediadorComponent } from "./angular2/src/detalle/detalle.componentes/detalle.mediador/detalle.mediador.component";
+import { AppComponent } from "./angular2/../app.component";
 
 /* Definir el tipo de window.app */
 declare global {
@@ -16,7 +18,7 @@ declare global {
 }
 
 /* Recorrer los componentes Angular y usar ngDowngrade para usarlos desde Angularjs */
-COMPONENTS.forEach((component) => {
+/* COMPONENTS.forEach((component) => {
   window.app.directive(
     (component.name.charAt(0).toLowerCase() + component.name.slice(1)).replace(
       "Component",
@@ -24,7 +26,16 @@ COMPONENTS.forEach((component) => {
     ),
     downgradeComponent({ component }) as angular.IDirectiveFactory
   );
-});
+}); */
+console.log()
+
+window.app.directive(
+  (DetalleMediadorComponent.name.charAt(0).toLowerCase() + DetalleMediadorComponent.name.slice(1)).replace(
+    "Component",
+    ""
+  ),
+  downgradeComponent({ component:DetalleMediadorComponent, propagateDigest: false }) as angular.IDirectiveFactory
+);
 
 /* Arrancar la aplicación */
 platformBrowserDynamic()
